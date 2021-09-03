@@ -18,6 +18,7 @@
 %\usepackage{multirow}
 %\usepackage{subcaption}
 %\usepackage{fancyvrb}
+\usepackage{titlesec}
 \usepackage{setspace}
 \usepackage{fancyhdr}
 \usepackage{pdfpages}
@@ -27,7 +28,9 @@
 \usepackage{expl3}
 \usepackage[style=iso-numeric, backend=biber]{biblatex}
 \addbibresource{literature.bib}
-\AtBeginDocument{\renewcommand\appendixname{Príloha}}
+
+% Číslo kapitoly na rovnakom riadku ako názov
+\titleformat{\chapter}{\normalfont\huge\bf}{\thechapter}{1em}{}
 
 \raggedbottom
 \newcommand{\emptypage}{\newpage\thispagestyle{empty}\mbox{}\newpage}
@@ -75,7 +78,7 @@
 \newcommand{\StudyProgramme}[0] {Informatika}
 \newcommand{\StudyProgrammeEN}[0] {Informatics}
 \newcommand{\StudyField}[0] {Informatika}
-\newcommand{\Institute}[0] {Ústav počítačového inžinierstva a aplikovanej informatiky, FIIT STU}
+\newcommand{\Institute}[0] {Ústav počítačového inžinierstva a aplikovanej informatiky}
 \newcommand{\SignPlace}[0] {V Bratislave, }
 \newcommand{\SignDate}[0] {1.5.2022}
 
@@ -139,10 +142,10 @@ Text poďakovania
 \thispagestyle{empty}
 \section*{Anotácia}
 \University \\
-\uppercase{\Faculty} \\
-Študijný program: \text{\StudyProgramme}
+\uppercase{\Faculty}
 \vspace{-8pt}
 \begin{align*}
+& \text{Študijný program:} && \text{\StudyProgramme} \\
 & \text{Autor:} && \text{\Author} \\
 & \text{\Thesis:} && \text{\Title} \\
 & \text{Vedúci bakalárskej projektu:} && \text{\Supervisor} \\
@@ -156,10 +159,10 @@ Stručná charakteristika zadania bakalárskeho projektu ale predovšetkým výs
 \thispagestyle{empty}
 \section*{Annotation}
 \UniversityEN \\
-\uppercase{\FacultyEN} \\
-Degree course: \text{\StudyProgrammeEN}
+\uppercase{\FacultyEN}
 \vspace{-8pt}
 \begin{align*}
+& \text{Degree course:} && \text{\StudyProgrammeEN} \\
 & \text{Author:} && \text{\Author} \\
 & \text{\ThesisEN:} && \text{\TitleEN} \\
 & \text{Supervisor:} && \text{\Supervisor} \\
@@ -232,6 +235,8 @@ Tu sa musí presne špecifikovať, čo je pôvodné a čo riešiteľ prebral.
 \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
 \addtocontents{toc}{\cftpagenumbersoff{chapter}}
 \appendix
+\titleformat{\chapter}{\normalfont\huge\bf}{Príloha \thechapter:}{1em}{}
+
 
 % Príloha
 \setcounter{figure}{0}
