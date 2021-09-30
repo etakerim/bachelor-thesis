@@ -1,4 +1,4 @@
-## Bakalársky projekt 
+## Bakalársky projekt - Osnova
 
 ###### Tématické okruhy
 
@@ -8,9 +8,9 @@
 4. **Senzorika - Senzorová jednotka** - skladba, senzory: akcelerometer, gyroskop - opis fungovania MEMS, vlastnosti prístroja,  vlastnosti meraných veličín (m/s^2, ˚/s), vzorkovanie a A/D-prevodník a konverzia na veličinu
 5. **Formalizácia meranej veličiny (signálov)** - časový rad, vzorkovanie, okná, online algoritmus, požiadavky na efektívne algoritmy
 6. **Meranie vibrácií a šoku** - definícia, časovo-frekvenčná analýza, spektrogram, power spectrum density (dbFS)
-7. **Metódy analýzy signálu v časovej doméne **
+7. **Metódy analýzy signálu v časovej doméne**
    1. Číselné charakteristiky štatistického rozdelenia - momenty, kvantily, extrémy
-   2. Výchylky (anomálie) - definícia, bodové, kolektívne (disonanancie), kontextové výchylky / anomálie
+   2. Výchylky (anomálie) - definícia, bodové, kolektívne (disonanancie), kontextové výchylky / anomálie, binárny klasifikátor
    3. Algoritmy na identifikáciu špičiek - lokálne minimá a maximá, topografická prominencia, Z-score, T-score, generalized extreme Studentized deviate test, Median Absolute Deviate, Shewart Control Chart, CUSUM
    5. Konvolúcia a vzájomná korelácia - spárovanie hľadaných vzoriek v podobe kernelu s priebehom signálu
    7. Stabilná numerická integrácia rýchlosti a pozície, geometria akceleračného vektora - magnitúda, uhly, kvaternióny

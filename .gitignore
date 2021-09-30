@@ -1,1 +1,4 @@
-build 
+thesis/build
+*.elf
+*.bin
+*.o
