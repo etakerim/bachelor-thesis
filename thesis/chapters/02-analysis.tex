@@ -1,0 +1,126 @@
+\chapter{Analýza}
+
+\section{Senzorová sieť}
+Opis prostredia a konštrukčné obmedzenia - nízko-energetické zariadenia komunikujúce cez odľahčené sieťové
+protokoly so snahou spracovania v reálnom čase a ponechaním najdôležitejších informácii dolovaním z veľkého množstva zdrojových dát. Metódy prístupy: dopytové, periodický zber.
+\cite{wsn-overview}
+
+\subsection{Senzorová jednotka}
+Acquistion unit, Processing unit, Communication unit, ARM Cortex M4
+\cite{big-data-collection-wsn}
+
+\section{Monitorovanie vibrácií a šoku}
+Fyzikálny model vibrácii (s jedným stupňom voľnosti) ako oscilatórny systém, fyzikálne jednotky
+\cite{vibrations-shock}
+ 
+\subsection{Meranie fyzikálnej veličiny akcelerácie}
+Data pipeline - Technológia MEMS 3DOF akcelerometrov, Vzorkovanie, kvantovanie, kódovanie analógovo-digitálnym prevodíkom - vzorkovacia frekvencia, aliasing, prepočet z A/D hodnoty na akceleráciu. \cite{mdof-mems-accelerometers} 
+
+Adaptívne vzorkovanie - preskočenie vzorky, keď je predpoklad, že na základe existujúcich vzoriek vieme dostatočne dobre odhadnúť budúce čítania. \cite{adaptive-sampling}. Efekt zberu až po prekročení prahu intenzity akcelerácie na signál.
+
+\subsection{Odvodzovanie rýchlosti a polohy zo zrýchlenia}
+fyzikálne vzťahy pre polohu, rýchlosť a zrýchlenie, numerická derivácia a integrácia (obdĺžníkové, lichobežníkové, Simposonovo pravidlo) \cite{integration-acceleration-envelopes}
+
+\begin{equation}
+a = x_{ADC} \cdot \frac{(2^{b_{ADC}} / 2)}{(G_{res} \cdot g)};\; g = 9.81\,m/s^2;\; b_{ADC} = 12\,\mathrm{bit};\; G_{res} = 2\,g
+\end{equation}
+
+\section{Metódy analýzy signálu v časovej doméne}
+časový rad, okná
+\cite{time-series-analysis} \cite{practical-time-series} \cite{generalized-esd} \cite{twitter-esd}, 
+online algoritmus \cite{online-anomaly-detection}, 
+požiadavky na efektívne algoritmy
+	
+
+\subsection{Číselné charakteristiky štatistického rozdelenia}
+bodové odhady momentov. výberový priemer = stredná hodnota, výberový rozptyl (Welfordov online algoritmus), šikmosť, špicatosť, kvantily, normálne rozdelenie pravdepodobnosti
+
+\subsection{Algoritmy na rozpoznávanie špičiek}
+lokálne minimá a maximá extrémy - cez prvú a druhú deriváciu,
+topografická prominencia a izolácia - relatívna výška vrchola / extrému, 
+Z-score a Z-test: 
+\begin{equation}
+z = \frac{|x - \mu|}{\sigma} \approx \frac{|x - \bar{x}|}{S}
+\end{equation}
+Zisťovanie výchyliek testovaním štatistických hypotéz: generalized extreme Studentized deviate test, 
+Median Absolute Deviate
+\begin{equation}
+MAD = \mathrm{median}(|X_i - \bar{X}|)
+\end{equation}
+Shewart Control Chart, CUSUM \cite{change-theory}
+	 
+\subsection{Online detekcia anomálií a odchýliek pozorovaní}
+\cite{survey-univariate-time-series} 
+Množstvo prenášaných a spracovaných dát prevyšuje ľudskú schopnosť manuálneho prieskumu. Anomália je pozorovanie alebo postupnosť pozorovaní, ktoré sa významne odchyluje od distribúcie zvyšku dát. 
+\begin{itemize}
+	\item Bodové anomálie - $x_t$ je bodová anomália ak sa jeho hodnota významne odlišuje od všetkých 		
+		bodov v intervale $ [x_{t-k}; x_{t+k}] $
+	\item Kolektívne (disonanancie) - jednotlivé body nepredstavujú anomálne správanie, až ak vezmeme dlhšiu postupnosť môže byť označená za anomáliu.
+	\item Kontextové výchylky / anomálie - body sú normálne v určitom kontexte, ale v inom anomálne.
+\end{itemize}		
+
+\cite{review-outlier-datection} \cite{anomaly-detection-algorithms} \cite{outlier-analysis}
+\begin{equation}
+|x - \hat{x}| \geq \theta 
+\end{equation}
+
+Skóre anomálnosti, 	binárny klasifikátor, Falošne pozívny/negatívny, Matica zámen, Precision, Recall, 
+ROC - kvalita binárneho klasifikátora v závislosi od prahu, AUC
+
+\section{Frekvenčná a časovo-frekvenčná analýza signálu}
+vlastnosti frekvenčného spektra, decibele, spektrogram, odstup od šumu (SNR), power spectrum density (dbFS), spektrálny analyzátor 
+
+\subsection{Fourierová transformácia}
+Integrálne transformácie: Fourierová transformácia (CFT, DFT), Kosínusová transfomácia (MDCT), Vlnková transformácia (CWT) \cite{dct} \cite{casove-frekvencia-analyza-signalu}
+
+\begin{equation}
+T(n) = \int{f(t) K(t,x) \mathrm{dt}}
+\end{equation}
+
+\begin{equation}
+\mathcal{F}: X(\omega) = \int_{-\infty}^{+\infty}{x(t) \cdot e^{-i\omega t} \mathrm{dt}}
+\end{equation}
+
+\subsection{Algoritmus FFT pre DFT a DCT}
+Opis DIT radix-2 FFT algoritmus komplexných, reálny, pre MDCT \cite{fft-blackbox}
+
+\begin{equation}
+X(m) = \sum_{n = 0}^{N-1}{x(n) \cdot e^{-i2\pi n m / N}}
+\end{equation}
+
+Frekvenčné rozlíšenie
+\begin{equation}
+\Delta f = \frac{f_s}{N}
+\end{equation}
+
+\subsection{Oknové funkcie}
+Gaborová transformácia, Prehľad okien a ich transformácií (sinc), Efekt oknových funkcií na spectral leakage, výhodné percentá prekryvu FT 	\cite{understanding-dsp} \cite{signal-processing} \cite{spectral-density-estimation}
+
+\subsection{Filtre s konečnou impulznou odozvou}
+Roziel medzi FIR a IIR, Dolná pripusť, pásmová priepusť, horná pripusť,
+ Konvolúcia a konvolučné jadro, konvolučná veta, účel: identifikácia prítomnosti známej frekvencie v signále akcelerácie
+\begin{equation}
+y(n) = \sum_{k=0}^{D_y}{x(k) \cdot h(n-k)} = x(n) * h(n)
+\end{equation}
+
+Prenosová funkcia
+\begin{equation}
+H(\Omega) = \frac{Y(\Omega)}{X(\Omega)}
+\end{equation}	
+
+Detektor obálok	\footnote{\url{https://www.mathworks.com/help/dsp/ug/envelope-detection.html}} \footnote{\url{https://www.dsprelated.com/showarticle/938.php}}
+
+\subsection{Algoritmus separácie diskrétnej energie}
+Odhad okamžitej frekvencie, DESA, TKEO (Teager-Kaiserov energetický operátor) \cite{eeg-spanok} 
+\begin{equation}
+\psi(x(n)) = x^2(n) - x(n-1) \cdot x(n+1) \approx A^2\omega^2
+\end{equation}
+	
+\section{Kompresia na redukciu objemu dát pri prenose}
+Kompresný pomer
+\subsection{Bezstrátová kompresia}
+LZ77, Huffman 
+\subsection{Stratová kompresia}
+DCT, DWT, Stratová (Kvantizačné tabuľky)
+	
+\emptypage 

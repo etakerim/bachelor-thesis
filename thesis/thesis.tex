@@ -120,57 +120,9 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 \emptypage
 \pagenumbering{roman}
 
-% Čestné prehlásenie
-\thispagestyle{empty}
-\vspace*{\fill}
-\section*{Čestné prehlásenie}
-Čestne vyhlasujem, že som túto prácu vypracoval samostatne, na základe konzultácií
-a s použitím uvedenej literatúry.
+\input{chapters/acknowledgments}
 
-\vspace{3\medskipamount}\noindent
-\SignPlace \SignDate \hspace*{\fill} \signaturespace{5cm}{\Author}
-\emptypage
-
-% Poďakovanie
-\thispagestyle{empty}
-\vspace*{\fill}
-\section*{Poďakovanie}
-Text poďakovania
-\emptypage
-
-%Anotácia
-\thispagestyle{empty}
-\section*{Anotácia}
-\University \\
-\uppercase{\Faculty}
-\vspace{-8pt}
-\begin{align*}
-& \text{Študijný program:} && \text{\StudyProgramme} \\
-& \text{Autor:} && \text{\Author} \\
-& \text{\Thesis:} && \text{\Title} \\
-& \text{Vedúci bakalárskej projektu:} && \text{\Supervisor} \\
-& \text{Pedagogický vedúci:} && \text{\PedagogicalSupervisor} \\
-& \text{\Date}
-\end{align*}
-Stručná charakteristika zadania bakalárskeho projektu ale predovšetkým výsledkov bakalárskeho projektu v slovenskom a anglickom jazyku každá v rozsahu max. 1 strany A4 (hlavička + cca 150-200 slov).
-\emptypage
-
-%Anotácia EN
-\thispagestyle{empty}
-\section*{Annotation}
-\UniversityEN \\
-\uppercase{\FacultyEN}
-\vspace{-8pt}
-\begin{align*}
-& \text{Degree course:} && \text{\StudyProgrammeEN} \\
-& \text{Author:} && \text{\Author} \\
-& \text{\ThesisEN:} && \text{\TitleEN} \\
-& \text{Supervisor:} && \text{\Supervisor} \\
-& \text{Departmental advisor:} && \text{\PedagogicalSupervisor} \\
-& \text{\DateEN}
-\end{align*}
-Annotation text in English, 150-200 words.
-\emptypage
+\input{chapters/annotation}
 
 % Obsah
 \renewcommand{\contentsname}{Obsah}
@@ -181,43 +133,11 @@ Annotation text in English, 150-200 words.
 % Kapitoly
 \pagenumbering{arabic}
 
-% include{chapter1}
-\chapter{Úvod}
-Záverečná správa (= finálny dokument bakalárskej práce) musí mať rozsah minimálne 20 normovaných strán (60 znakov na riadok, 30 riadkov na stranu). Toto platí pre hlavný obsah, teda obsah bez príloh a technickej dokumentácie.
+\input{chapters/01-introduction}
 
-Záverečná správa o riešení bakalárskeho projektu by mala obsahovať súčasti uvedené nižšie. Presné pokynu sú súčasťou zadania bakalárskeho projektu, konzultujte s vedúcim bakalárskeho projektu.
+\input{chapters/02-analysis}
 
-Obsahové (aj formálne) požiadavky na priebežnú správu k riešeniu bakalárskeho projektu odovzdávané v rámci BP I sú stanovené rovnako po konzultácii s vedúcim bakalárskeho projektu a spravidla sú podmnožinou požiadaviek na záverečnú správu).
-
-\emptypage
-\chapter{Analýza}
-Táto časť bakalárskeho projektu má:
-
-\begin{itemize}
-\item poskytovať obraz o stave riešenia daného problému známeho z preštudovanej literatúry (nielen informácie z prednášok, prípadne skrípt a katalógov),
-\item  porovnanie podobných riešení, ich kategorizáciu s uvedením charakteristických atribútov atď., podľa charakteru bakalárskeho projektu
-\item  zdôvodnenie voľby spôsobu riešenia a stručný opis celkového spôsobu riešenia (napr. v opise sa treba sústrediť na prípadné modifikácie použitých štandardných metodík a ich zdôvodnenie z hľadiska splnenia cieľov projektu)
-\end{itemize}
-
-\section{Podsekcia}
-Text
-\emptypage
-
-
-\chapter{Opis riešenia}
-Táto časť bakalárskeho projektu obsahuje opis výsledkov riešenia jednotlivých etáp projektu. V prípade, že záverečný projekt nerieši všetky etapy, malo by byť v príslušnej časti uvedené kto, resp. kde sa príslušná etapa rieši/riešila/bude riešiť.
-
-Typické etapy riešenia pri tvorbe softvérového systému:
-\begin{itemize}
-    \item špecifikácia požiadaviek
-    \item návrh
-    \item implementácia (ak to zadanie požaduje)
-    \item overenie riešenia
-\end{itemize}
-
-Podľa možností treba vychádzať zo známych prístupov (napr. pri softvérových projektoch štruktúrovaný alebo objektovo orientovaný prístup) a techník (napr. blokové schémy, vývojové diagramy, UML, entito-relačné diagramy atď.). Táto časť práce závisí od konkrétneho zadania.
-Je dôležité prezentovať návrhové rozhodnutia, alternatívy, ktoré sa zvažovali pri riešení a samotný návrh riešenia zadaného problému. Štruktúrovanie textu tejto časti DP by malo vychádzať zo zadanej úlohy, ktorá sa rieši. Najmä v tejto časti študent preukazuje tvorivý prístup k riešeniu problémov a kritické myslenie.
-\emptypage
+\input{chapters/03-design}
 
 
 \chapter{Zhodnotenie}
