@@ -51,7 +51,7 @@ Súčasti senzorovej jednotky:
 
 Obmedzenia na senzorové uzly 
 \begin{itemize}
-\item Spotreba energie - energetická autonómia uzlov vo WSN umožňuje nasadzovanie zariadení do odlahlých miest pre využitie v inteligentných mestách alebo na účely ochrany prírody. životnosť senzorovej jednotky je ohraničená kapacitou batérie.
+\item Spotreba energie - energetická autonómia uzlov vo WSN umožňuje nasadzovanie zariadení do odľahlých miest pre využitie v inteligentných mestách alebo na účely ochrany prírody. životnosť senzorovej jednotky je ohraničená kapacitou batérie.
 \item Dosah komunikácie - Senzory disponujú obmedzenou energiou na vysielanie a dosah je negatívne ovplyvnený silou signálu na anténe. Z toho vyplývajú aj nižšie prenosové rýchlosti.
 \item Výpočtový výkon a úložisko - Nízka taktovacia frekvencia procesora v megaherzoch a veľkosti pracovných pamätí v stovkách kilobajoch alebo megabajtoch.
 \end{itemize}
@@ -61,14 +61,7 @@ Obmedzenia na senzorové uzly
 Za ideálnych okolností by sa mal online algoritmus učiť kontinuálne bez ukladania predošlých bodov a detekcií.
 V rozhodnutiach algoritmu sú zahrnuté informácie o všetkých predošlých bodoch do terajšieho rozhodnutia. Mal by mať schopnosť sa adaptovať dynamickému prostrediu, v ktorom pôsobí. Bez nutnosti manuálnych úprav parametrov modelu. Zároveň je žiaduce minimalizovať falošné pozitíva a negatíva pri detekcii udalostí.
 
-Kontinuálne spracovanie častokrát vyžaduje, aby boli dáta rozdelenie do rovnako dlhých blokov zvaných okná. Okno $\mathcal{W}_{\sigma, \pi}$ je funkciou morfujúca maticu vstupných dát $X$ do vektora $w = (W_1, ... , W_q)$  \cite{online-anomaly-detection} 
-
-\subsection{Mikrokontroléry ARM Cortex-M}
-Vlastnosti hardvéru a adaptérov vybraných periférnych zariadení (ADC, SPI, UART) 
-\cite{cortex-m3}
-
-\subsection{Bezdrôtová komunikácia cez SmartMesh IP}
-\cite{smartmesh-ip}
+Kontinuálne spracovanie častokrát vyžaduje, aby boli dáta rozdelenie do rovnako dlhých blokov zvaných okná. Okno $\mathcal{W}_{\sigma, \pi}$ je funkciou morfujúca maticu vstupných dát $X$ do vektora $w = (W_1, ... , W_q)$  \cite{online-anomaly-detection}
 
 \section{Monitorovanie vibrácií a šoku}
 Vibrácie sú pohyb hmoty okolo rovnovážneho stavu, ktorý býva vzniká zväčša ako vedľajší nežiaduci produkt
@@ -80,7 +73,13 @@ Odozva na mechanické vibrácie (voľné a nútené) a šok
 \cite{vibrations-shock}
  
 \subsection{Meranie fyzikálnej veličiny akcelerácie}
-Data pipeline - Technológia MEMS 3DOF akcelerometrov, Vzorkovanie, kvantovanie, kódovanie analógovo-digitálnym prevodíkom - vzorkovacia frekvencia, aliasing, prepočet z A/D hodnoty na akceleráciu. \cite{mdof-mems-accelerometers} 
+Data pipeline - Technológia MEMS 3DOF akcelerometrov, Vzorkovanie, kvantovanie, kódovanie analógovo-digitálnym prevodíkom -
+
+\subsection{MEMS kapacitný akcelerometer}
+\cite{mdof-mems-accelerometers} 
+
+\subsection{Analógovo-digitálny prevodník}
+vzorkovacia frekvencia, aliasing, prepočet z A/D hodnoty na akceleráciu. Kvantizačný šum
 
 Adaptívne vzorkovanie - preskočenie vzorky, keď je predpoklad, že na základe existujúcich vzoriek vieme dostatočne dobre odhadnúť budúce čítania. \cite{adaptive-sampling}. Efekt zberu až po prekročení prahu intenzity akcelerácie na signál.
 
@@ -100,6 +99,14 @@ požiadavky na efektívne algoritmy
 
 \subsection{Číselné charakteristiky štatistického rozdelenia}
 bodové odhady momentov. výberový priemer = stredná hodnota, výberový rozptyl (Welfordov online algoritmus), šikmosť, špicatosť, kvantily, normálne rozdelenie pravdepodobnosti
+
+\subsection{Prúdové algoritmy}
+stream algorithm models, Data Stream Model - cash register, turnstile, time series, window model
+Odhad momentov, Rátanie frekvencií, Zistenie či sa dopyt už vyskytol
+Count–min sketch (\url{https://florian.github.io/count-min-sketch/}) - probabilistická dátová štruktúra
+
+Shewart Control Chart, CUSUM
+
 
 \subsection{Online detekcia anomálií a odchýliek pozorovaní}
 Outlier je pozorovanie, ktoré sa odchyluje, tak významne od ostatných pozorovaní, že vzbudzuje
@@ -145,21 +152,24 @@ z = \frac{|x - \mu|}{\sigma} \approx \frac{|x - \bar{x}|}{S}
 Bežiaci priemerovací filter \cite{anomaly-detection-models}
 
 Zisťovanie výchyliek testovaním štatistických hypotéz: 
-generalized extreme Studentized deviate test, 
+generalized extreme Studentized deviate test \cite{generalized-esd} 
 
 Median Absolute Deviate (robustná štatistika na určenie vychýlenosti od normálu)
 \begin{equation}
 MAD = \mathrm{median}(|X_i - \bar{X}|)
 \end{equation}
 
-Shewart Control Chart, 
-CUSUM,
 Klastrovanie s DBSCAN / LOF
 \cite{change-theory}
 
 \subsection{Algoritmy na rozpoznávanie špičiek}
 lokálne minimá a maximá extrémy - cez prvú a druhú deriváciu,
 topografická prominencia a izolácia - relatívna výška vrchola / extrému, 
+
+\cite{survey-peaks-valleys}
+\cite{peek-mountaineer-method}
+\cite{ecg-r-peak-detection}
+\cite{ampd-algorithm}
 
 \section{Frekvenčná a časovo-frekvenčná analýza signálu}
 vlastnosti frekvenčného spektra, decibele, spektrogram, odstup od šumu (SNR), power spectrum density (dbFS), spektrálny analyzátor 
@@ -198,6 +208,7 @@ Frekvenčné rozlíšenie
 
 \subsection{Oknové funkcie}
 Gaborová transformácia, Prehľad okien a ich transformácií (sinc), Efekt oknových funkcií na spectral leakage, výhodné percentá prekryvu FT 	\cite{understanding-dsp} \cite{spectral-density-estimation}
+Priemerovanie a prekryv - Amplitude Flatness (AF), Power Flatness (PF), Overlap Correlation (OC)
 
 \subsection{Filtre s konečnou impulznou odozvou}
 Roziel medzi FIR a IIR, Dolná pripusť, pásmová priepusť, horná pripusť,

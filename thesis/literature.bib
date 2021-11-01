@@ -247,16 +247,6 @@
   groups  = {Outlier / Anomaly Detection},
 }
 
-@InProceedings{ts-clustering-meaningless,
-  author    = {Keogh, E. and Lin, J. and Truppel, W.},
-  booktitle = {Third IEEE International Conference on Data Mining},
-  title     = {Clustering of time series subsequences is meaningless: implications for previous and future research},
-  year      = {2003},
-  pages     = {115-122},
-  doi       = {10.1109/ICDM.2003.1250910},
-  groups    = {Outlier / Anomaly Detection},
-}
-
 @InProceedings{ts-large-scale-unusual,
   author    = {Hyndman, Rob J. and Wang, Earo and Laptev, Nikolay},
   booktitle = {2015 IEEE International Conference on Data Mining Workshop (ICDMW)},
@@ -326,7 +316,7 @@
   year      = {2002},
   pages     = {212-221},
   doi       = {10.1109/ICDE.2002.994711},
-  groups    = {Spectral analysis},
+  groups    = {Wavelet analysis},
 }
 
 @Article{vehicle-detection-seismic-sensor,
@@ -402,7 +392,7 @@
   groups  = {Accelerometer},
 }
 
-@Article{10.1145/3374750,
+@Article{real-time-pca,
   author     = {Chowdhury, Ranak Roy and Adnan, Muhammad Abdullah and Gupta, Rajesh K.},
   journal    = {ACM/IMS Trans. Data Sci.},
   title      = {Real-Time Principal Component Analysis},
@@ -428,15 +418,7 @@
   title     = {Wavelets and Subband Coding},
   year      = {1995},
   isbn      = {978-0-13-097080-0},
-  groups    = {Spectral analysis},
-}
-
-@Article{algorithms-peak-detection,
-  author = {Palshikar, Girish},
-  title  = {Simple Algorithms for Peak Detection in Time-Series},
-  year   = {2009},
-  month  = {01},
-  groups = {Time series models},
+  groups    = {Wavelet analysis},
 }
 
 @Book{vibrations-shock,
@@ -467,7 +449,7 @@
 }
 
 @Article{cwt-linear-algorithm,
-  author  = {Arrate Muñoz and Raphaël Ertlé and Michael Unser},
+  author  = {Arrate Munoz and Raphaël Ertlé and Michael Unser},
   journal = {Signal Processing},
   title   = {Continuous wavelet transform with arbitrary scales and O(N) complexity},
   year    = {2002},
@@ -476,7 +458,7 @@
   pages   = {749-757},
   volume  = {82},
   doi     = {https://doi.org/10.1016/S0165-1684(02)00140-8},
-  groups  = {Spectral analysis},
+  groups  = {Wavelet analysis},
   url     = {https://www.sciencedirect.com/science/article/pii/S0165168402001408},
 }
 
@@ -510,13 +492,6 @@
   groups  = {Spectral analysis},
 }
 
-@Unpublished{wavelety-banky-filtrov,
-  author = {Radoslav Vargic},
-  title  = {Wavelety a banky filtrov},
-  year   = {2003},
-  groups = {Spectral analysis},
-}
-
 @Book{multimedia,
   author  = {Gregor Rozinaj and Renata Rybárová and Ivan Minárik and Juraj Kačur},
   title   = {Multimédiá},
@@ -545,14 +520,91 @@
   groups    = {Sensor network},
 }
 
+@Article{survey-peaks-valleys,
+  author = {Roger Schneider},
+  title  = {Survey of Peaks/Valleys identificationin Time Series},
+  year   = {2011},
+  month  = aug,
+  note   = {Department of Informatics, University of Z\"urich},
+  groups = {Peak detection}
+}
+
+@Article{ampd-algorithm,
+  author  = {Scholkmann, Felix and Boss, Jens and Wolf, Martin},
+  journal = {Algorithms},
+  title   = {An Efficient Algorithm for Automatic Peak Detection in Noisy Periodic and Quasi-Periodic Signals},
+  year    = {2012},
+  issn    = {1999-4893},
+  number  = {4},
+  pages   = {588--603},
+  volume  = {5},
+  doi     = {10.3390/a5040588},
+  groups  = {Peak detection},
+  url     = {https://www.mdpi.com/1999-4893/5/4/588},
+}
+
+@Article{peek-mountaineer-method,
+  author  = {Arg\"uello-Prada, Erick Javier},
+  journal = {Revista Facultad de Ingeniería Universidad de Antioquia},
+  title   = {The mountaineer’s method for peak detection in photoplethysmographic signals},
+  year    = {2019},
+  month   = {Jan.},
+  number  = {90},
+  pages   = {42–50},
+  doi     = {10.17533/udea.redin.n90a06},
+  groups  = {Peak detection},
+  url     = {https://revistas.udea.edu.co/index.php/ingenieria/article/view/332019},
+}
+
+@Article{adc,
+  author  = {J. Pickering},
+  journal = {arXiv: Accelerator Physics},
+  title   = {Analogue to Digital and Digital to Analogue Converters (ADCs and DACs): A Review Update},
+  year    = {2016},
+  groups  = {Accelerometer},
+}
+
+@Article{data-streams,
+  author     = {Muthukrishnan, S.},
+  journal    = {Foundations and Trends in Theoretical Computer Science},
+  title      = {Data Streams: Algorithms and Applications},
+  year       = {2005},
+  issn       = {1551-305X},
+  month      = aug,
+  number     = {2},
+  pages      = {117–236},
+  volume     = {1},
+  address    = {Hanover, MA, USA},
+  doi        = {10.1561/0400000002},
+  groups     = {Time series models},
+  issue_date = {August 2005},
+  numpages   = {120},
+  publisher  = {Now Publishers Inc.},
+  url        = {\url{https://doi.org/10.1561/0400000002}},
+}
+
+@Article{ecg-r-peak-detection,
+  author  = {Rahman, M.S. and Choi, C. and Kim, Y.-P and Kim, S.},
+  journal = {Journal of Electrical Engineering and Technology},
+  title   = {A simple and robustness algorithm for ECG R-peak detection},
+  year    = {2018},
+  month   = {09},
+  pages   = {2080-2085},
+  volume  = {13},
+  doi     = {10.5370/JEET.2018.13.5.2080},
+  groups  = {Peak detection},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
 
 @Comment{jabref-meta: grouping:
 0 AllEntriesGroup:;
 1 StaticGroup:Sensor network\;0\;1\;0x000000ff\;\;\;;
-1 StaticGroup:Time series models\;0\;0\;0x1a3399ff\;\;\;;
-1 StaticGroup:Spectral analysis\;0\;0\;0xcc3333ff\;\;\;;
 1 StaticGroup:Accelerometer\;0\;0\;0x336633ff\;\;\;;
+1 StaticGroup:Time series models\;0\;0\;0x1a3399ff\;\;\;;
 1 StaticGroup:Outlier / Anomaly Detection\;0\;1\;0x80334dff\;\;\;;
+1 StaticGroup:Peak detection\;0\;0\;0xffff00ff\;\;\;;
 1 StaticGroup:Event / Change detection\;0\;1\;0x4d1a4dff\;\;\;;
+1 StaticGroup:Spectral analysis\;0\;0\;0xcc3333ff\;\;\;;
+1 StaticGroup:Wavelet analysis\;0\;0\;0x4d001aff\;\;\;;
 }
