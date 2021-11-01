@@ -5,3 +5,6 @@ jupyterlab==3.1.14
 matplotlib==3.4.3
 PyWavelets==1.1.1
 gpxpy==1.4.2
+ipywidgets==7.6.5
+ipympl==0.8.2
+

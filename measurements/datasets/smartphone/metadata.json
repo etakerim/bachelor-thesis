@@ -46,8 +46,7 @@
         "max_range": 78.4532,
         "min_delay_ms": 5,
         "sample_rate_hz": 200,
-        "gravity": true,
-        "chair": "out"
+        "gravity": true
     },
     "02_L9_CKD_T6A5.csv": {
         "started": "2021-09-16T10:54:35+02:00",
@@ -88,8 +87,7 @@
         "max_range": 78.4532,
         "min_delay_ms": 5,
         "sample_rate_hz": 200,
-        "gravity": true,
-        "chair": "in"
+        "gravity": true
     },
     "03_L4_CKD_T3M.csv": {
         "started": "2021-09-16T11:37:31+02:00",
