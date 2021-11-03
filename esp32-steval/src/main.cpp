@@ -65,13 +65,12 @@ void setup()
 
     // OpenLog
     pinMode(OPENLOG_VCC, OUTPUT);
-    digitalWrite(OPENLOG_VCC, LOW);
-    //pinMode(OPENLOG_VCC1, OUTPUT);
-    //pinMode(OPENLOG_VCC2, OUTPUT);
-    //gpio_set_drive_capability((gpio_num_t)OPENLOG_VCC, GPIO_DRIVE_CAP_3);
-    //gpio_set_drive_capability((gpio_num_t)OPENLOG_VCC1, GPIO_DRIVE_CAP_3);
-    //gpio_set_drive_capability((gpio_num_t)OPENLOG_VCC2, GPIO_DRIVE_CAP_3);
-    //REG_WRITE(GPIO_OUT_W1TC_REG, (7 << OPENLOG_VCC));
+    pinMode(OPENLOG_VCC1, OUTPUT);
+    pinMode(OPENLOG_VCC2, OUTPUT);
+    gpio_set_drive_capability((gpio_num_t) OPENLOG_VCC, GPIO_DRIVE_CAP_3);
+    gpio_set_drive_capability((gpio_num_t) OPENLOG_VCC1, GPIO_DRIVE_CAP_3);
+    gpio_set_drive_capability((gpio_num_t) OPENLOG_VCC2, GPIO_DRIVE_CAP_3);
+    REG_WRITE(GPIO_OUT_W1TC_REG, (7 << OPENLOG_VCC));
 
     // FTDI USB
     // Serial.begin(115200);
@@ -89,7 +88,7 @@ void setup()
     pinMode(IMU_INT1_AG, INPUT);
 
     // OpenLog
-    // REG_WRITE(GPIO_OUT_W1TS_REG, (7 << OPENLOG_VCC));
+    REG_WRITE(GPIO_OUT_W1TS_REG, (7 << OPENLOG_VCC));
     digitalWrite(OPENLOG_VCC, HIGH);
     delay(200);
     OpenLog.begin(OPEN_LOG_BAUDRATE, SERIAL_8N1, OPENLOG_RX, OPENLOG_TX);
@@ -109,13 +108,6 @@ void setup()
 
     digitalWrite(LED, HIGH);
     OpenLog.println("A_X[LSB] A_Y[LSB] A_Z[LSB]");
-    /* https://lastminuteengineers.com/handling-esp32-gpio-interrupts-tutorial/
-    
-        pinMode(BUTTON_PIN, INPUT_PULLUP);
-        attachInterrupt(BUTTON_PIN, isr, FALLING);  // LOW, HIGH, CHANGE, FALLING, RISSING
-        void IRAM_ATTR isr() { }
-        detachInterrupt(GPIOPin);
-    */
 }
 
 void loop()
@@ -143,4 +135,10 @@ void loop()
 4G 0.122
 8G 0.244
 16G 0.732
+
+pinMode(BUTTON_PIN, INPUT_PULLUP);
+attachInterrupt(BUTTON_PIN, isr, FALLING);  // LOW, HIGH, CHANGE, FALLING, RISSING
+void IRAM_ATTR isr() { }
+detachInterrupt(GPIOPin);
+
 */
