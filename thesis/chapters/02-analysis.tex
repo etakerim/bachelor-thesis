@@ -105,7 +105,7 @@ stream algorithm models, Data Stream Model - cash register, turnstile, time seri
 Odhad momentov, Rátanie frekvencií, Zistenie či sa dopyt už vyskytol
 Count–min sketch (\url{https://florian.github.io/count-min-sketch/}) - probabilistická dátová štruktúra
 
-Shewart Control Chart, CUSUM
+CUSUM
 
 
 \subsection{Online detekcia anomálií a odchýliek pozorovaní}
@@ -159,8 +159,9 @@ Median Absolute Deviate (robustná štatistika na určenie vychýlenosti od norm
 MAD = \mathrm{median}(|X_i - \bar{X}|)
 \end{equation}
 
-Klastrovanie s DBSCAN / LOF
 \cite{change-theory}
+
+\subsection{Klastrovanie s DBSCAN a LOF, Extrakcia features a PCA}
 
 \subsection{Algoritmy na rozpoznávanie špičiek}
 lokálne minimá a maximá extrémy - cez prvú a druhú deriváciu,
@@ -175,7 +176,7 @@ topografická prominencia a izolácia - relatívna výška vrchola / extrému,
 vlastnosti frekvenčného spektra, decibele, spektrogram, odstup od šumu (SNR), power spectrum density (dbFS), spektrálny analyzátor 
 
 \subsection{Fourierová transformácia}
-Diskrétna fourierová transformácia mapuje sinál dĺžky $N$ do množiny $N$ diskrétnych frekvenčných komponentov. \cite{signal-processing}
+Diskrétna fourierová transformácia mapuje signál dĺžky $N$ do množiny $N$ diskrétnych frekvenčných komponentov. \cite{signal-processing}
 \begin{equation}
 X = \mathbf{W}x; W_{nk} = e^{-i\frac{2\pi}{N}nk} = W_N^{nk}
 \end{equation}
@@ -222,9 +223,11 @@ Prenosová funkcia
 H(\Omega) = \frac{Y(\Omega)}{X(\Omega)}
 \end{equation}	
 
-Detektor obálok	\footnote{\url{https://www.mathworks.com/help/dsp/ug/envelope-detection.html}} \footnote{\url{https://www.dsprelated.com/showarticle/938.php}}
+\subsubsection{Detektor obálok}
+\footnote{\url{https://www.mathworks.com/help/dsp/ug/envelope-detection.html}}
+\footnote{\url{https://www.dsprelated.com/showarticle/938.php}}
 
-\subsection{Algoritmus separácie diskrétnej energie}
+\subsection{Hilbert–Huangova transformácia: Empirická modálna dekompozícia (EMD)}
 Odhad okamžitej frekvencie, DESA, TKEO (Teager-Kaiserov energetický operátor) \cite{eeg-spanok} 
 \begin{equation}
 \psi(x(n)) = x^2(n) - x(n-1) \cdot x(n+1) \approx A^2\omega^2
