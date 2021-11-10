@@ -11,18 +11,22 @@
 ]{geometry}
 %\usepackage{graphicx}
 %\usepackage{hyperref}
-%\usepackage{csquotes}
-%\usepackage{listings}
 %\usepackage{xcolor}
 %\usepackage{enumitem}
 %\usepackage{multirow}
 %\usepackage{subcaption}
 %\usepackage{fancyvrb}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+
 \usepackage{titlesec}
 \usepackage{setspace}
 \usepackage{fancyhdr}
 \usepackage{pdfpages}
 \usepackage[fleqn]{amsmath}
+\usepackage{nccmath}
 \usepackage{tocloft}
 \usepackage{csquotes}
 \usepackage{expl3}
@@ -35,8 +39,6 @@
 \raggedbottom
 \newcommand{\emptypage}{\newpage\thispagestyle{empty}\mbox{}\newpage}
 \newcommand{\signaturespace}[2]{
-  % #1 = width of the dotted line
-  % #2 = legend
   \begingroup
   \renewcommand{\arraystretch}{0}
   \begin{tabular}[t]{cc}
@@ -65,13 +67,15 @@
 \newcommand{\UniversityEN}[0] {Slovak University of Technology Bratislava}
 \newcommand{\Faculty}[0] {Fakulta informatiky a informačných technológií}
 \newcommand{\FacultyEN}[0] {Faculty of Informatics and Information Technologies}
-\newcommand{\Thesis}[0] {Bakalárska práca}
+\newcommand{\Thesis}[0] {Bakalárska práca}   % Priebežná správa o riešení BP1
 \newcommand{\ThesisEN}[0] {Bachelor's Thesis}
 \newcommand{\Title}[0] {Spracovanie dát generovaných senzorovou IoT sieťou}
 \newcommand{\TitleEN}[0] {Data Processing for Sensor IoT Network}
 \newcommand{\Author}[0] {Miroslav Hájek}
 \newcommand{\Supervisor}[0] {Ing. Marcel Baláž, PhD.}
 \newcommand{\PedagogicalSupervisor}[0] {Ing. Jakub Findura}
+\newcommand{\SupervisorEN}[0] {Dr. Marcel Baláž}
+\newcommand{\PedagogicalSupervisorEN}[0] {Jakub Findura}
 \newcommand{\RegNo}[0] {FIIT-1234-98765}
 \newcommand{\Date}[0] {Máj 2022}
 \newcommand{\DateEN}[0] {2022, May}
@@ -140,7 +144,6 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 
 \input{chapters/03-design}
 
-
 \chapter{Zhodnotenie}
 Hlavné výsledky práce, prípadne porovnanie s inými prístupmi, možné smery ďalšieho rozvíjania.
 Tu sa musí presne špecifikovať, čo je pôvodné a čo riešiteľ prebral.
@@ -158,43 +161,8 @@ Tu sa musí presne špecifikovať, čo je pôvodné a čo riešiteľ prebral.
 \appendix
 \titleformat{\chapter}{\normalfont\huge\bf}{Príloha \thechapter:}{1em}{}
 
-
 % Príloha
-\setcounter{figure}{0}
-%\setcounter{listing}{0}
-\chapter{Technická dokumentácia}
-\pagenumbering{arabic}
-\renewcommand*{\thepage}{A-\arabic{page}}
-
-Prílohy dopĺňajú hlavnú časť práce. Obsahujú napríklad podrobné informácie k jednotlivým
-etapám riešenia projektu. Typicky sa tu uvádza aj podstatná časť technickej dokumentácie.
-Pozor, prílohy nesmú obsahovať také informácie, ktoré sú pre pochopenie práce kľúčové. Tie
-musí obsahovať hlavná časť práce, ktorá musí byť úplná, celistvá.
-
-Súčasťou príloh nie je len textový obsah, ale aj ďalšie artefakty, ktoré sú výsledkom projektu,
-napr. počítačový kód, dátové vzorky, vedecký článok či plagát. Zvláštnu pozornosť venujte tým
-artefaktom, ktoré sú potrebné pre replikovateľnosť postupov opisovaných v práci (napr. aby
-mohol oponent pri vyhodnocovaní práce zopakovať uvádzané postupy a prísť k rovnakým
-záverom). 
-
-Digitálne artefakty sa prikladajú na elektronickom médiu. K akémukoľvek
-digitálnemu obsahu treba uviesť v dokumente priebežnej či záverečnej správy
-bakalárskej/diplomovej práce primeraný textový opis, preto nezabudnite digitálne médium
-zdokumentovať. Prinajmenšom medzi prílohy zaraďte kapitolu "Obsah elektronického média".
-Na prílohy sa nezabudnite z hlavnej časti práce primerane odkazovať.
-
-Obsah technickej dokumentácie závisí od povahy riešeného problému. Uvádza sa technická dokumentácia k systému (počítačový, softvérový), ktorý bol vytvorený v rámci riešenia projektu (ak sa toto v zadaní požadovalo). Samotný obsah a rozsah závisí aj od účelu vytvoreného systému (produkt, experimentovanie a pod.)
-V prípade softvérového systému technická dokumentácia spravidla obsahuje časti v náväznosti na etapy tvorby softvérového systému:
-\begin{itemize}
-	\item dokumentáciu k etape špecifikácie požiadaviek
-    \item dokumentáciu k etape návrhu projektu
-    \item dokumentáciu k implementácii
-    \item v prípade, že súčasťou riešenia sú programy, dokumentáciu k implementácii tvoria zdrojové texty programov
-    \item v prípade, že súčasťou riešenia je návrh zariadenia, dokumentáciu k implementácii tvorí technická dokumentácia (schémy zapojenia, návrh dosiek plošných spojov, schémy rozmiestnenia súčiastok, zoznam použitých súčiastok, opis konektorov atď.)
-    \item dokumentáciu k overeniu riešenia
-    \item dokumentáciu k používaniu a údržbe (návody na použitie a údržbu projektu)
-\end{itemize}
-
+\input{chapters/appendix}
 
 % Harmonogram práce
 \thispagestyle{empty}
