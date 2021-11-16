@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="numerical-integration.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="1.0330822"
+     inkscape:cx="633.54106"
+     inkscape:cy="659.67644"
+     inkscape:window-width="1920"
+     inkscape:window-height="1006"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid6233" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Vrstva 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#999999;stroke:#333333;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="rect7396"
+       width="7.9375"
+       height="29.104166"
+       x="85.989586"
+       y="121.70832"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <rect
+       style="fill:#999999;stroke:#333333;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="rect7394"
+       width="7.9375"
+       height="14.552083"
+       x="78.052086"
+       y="136.26042"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <rect
+       style="fill:#999999;stroke:#333333;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="rect7392"
+       width="7.9375"
+       height="11.90625"
+       x="70.114586"
+       y="138.90625"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <rect
+       style="fill:#999999;stroke:#333333;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="rect7390"
+       width="7.9375"
+       height="21.166666"
+       x="62.177082"
+       y="129.64583"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <rect
+       style="fill:#999999;stroke:#333333;stroke-width:0.290292;stroke-linejoin:bevel"
+       id="rect7388"
+       width="7.9375024"
+       height="30.427082"
+       x="54.239582"
+       y="120.3854"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <rect
+       style="fill:#999999;stroke:#333333;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="rect7386"
+       width="7.9375"
+       height="35.71875"
+       x="46.302086"
+       y="115.09374"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <rect
+       style="fill:#999999;stroke:#333333;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="rect7384"
+       width="7.9375"
+       height="25.135416"
+       x="38.364586"
+       y="125.67707"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 38.364583,103.1875 0,47.625 60.854167,0"
+       id="path857"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 96.790926,148.91699 2.692407,1.89551 -2.666107,1.86435"
+       id="path1448"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 36.456816,105.86098 1.894543,-2.69309 1.865308,2.66544"
+       id="path1448-6"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="34.239346"
+       y="109.20098"
+       id="text2874"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan2872"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="34.239346"
+         y="109.20098">a</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="91.349663"
+       y="155.34686"
+       id="text2874-7"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan2872-5"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="91.349663"
+         y="155.34686">t</tspan></text>
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124"
+       cx="38.368141"
+       cy="132.27025"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3"
+       cx="46.334068"
+       cy="120.4992"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5"
+       cx="54.220623"
+       cy="112.45567"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6"
+       cx="62.251823"
+       cy="126.97911"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-2"
+       cx="70.138931"
+       cy="133.63451"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-2-9"
+       cx="78.081703"
+       cy="144.18037"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-2-9-1"
+       cx="86.042175"
+       cy="130.93477"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-2-9-1-2"
+       cx="93.91877"
+       cy="115.12894"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/rectangular-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       id="rect7396-2"
+       style="fill:#999999;stroke:#333333;stroke-width:0.264999;stroke-linejoin:bevel"
+       d="m 160.07292,130.96875 7.9375,-15.875 0,35.71876 h -7.9375 z"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       id="rect7394-6"
+       style="fill:#999999;stroke:#333333;stroke-width:0.264999;stroke-linejoin:bevel"
+       d="m 152.13542,144.19792 7.9375,-13.22917 0,19.84375 h -7.9375 z"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       id="rect7392-1"
+       style="fill:#999999;stroke:#333333;stroke-width:0.264999;stroke-linejoin:bevel"
+       d="m 144.19792,133.61458 7.9375,10.58334 0,6.61458 h -7.9375 z"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       id="rect7390-8"
+       style="fill:#999999;stroke:#333333;stroke-width:0.264999;stroke-linejoin:bevel"
+       d="m 136.26042,127 7.9375,6.61458 2e-5,17.19791 h -7.9375 z"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       id="rect7388-7"
+       style="fill:#999999;stroke:#333333;stroke-width:0.290292;stroke-linejoin:bevel"
+       d="m 128.32292,112.44792 7.9375,14.55208 -2e-5,23.81249 h -7.93749 z"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       id="rect7386-9"
+       style="fill:#999999;stroke:#333333;stroke-width:0.264999;stroke-linejoin:bevel"
+       d="m 120.38542,120.38542 7.9375,-7.9375 0,38.36458 -7.9375,1e-5 z"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       id="rect7384-2"
+       style="fill:#999999;stroke:#333333;stroke-width:0.264999;stroke-linejoin:bevel"
+       d="m 112.44792,132.29167 7.93749,-11.90625 0,30.42709 h -7.9375 z"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 112.44791,103.18751 v 47.625 h 60.85417"
+       id="path857-0"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 172.19719,148.917 2.6924,1.89551 -2.6661,1.86435"
+       id="path1448-2"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 110.54014,105.86099 1.89455,-2.69309 1.86531,2.66544"
+       id="path1448-6-3"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="108.32268"
+       y="109.201"
+       id="text2874-75"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan2872-9"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="108.32268"
+         y="109.201">a</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="165.433"
+       y="155.34686"
+       id="text2874-7-2"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan2872-5-2"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="165.433"
+         y="155.34686">t</tspan></text>
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-8"
+       cx="112.45147"
+       cy="132.27025"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-9"
+       cx="120.4174"
+       cy="120.49921"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-7"
+       cx="128.30396"
+       cy="112.45568"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-3"
+       cx="136.2383"
+       cy="127.06059"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-2-6"
+       cx="144.22227"
+       cy="133.63451"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-2-9-12"
+       cx="152.16505"
+       cy="144.18037"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-2-9-1-9"
+       cx="160.12552"
+       cy="130.93477"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-2-9-1-2-3"
+       cx="168.00212"
+       cy="115.12894"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/trapezoidal-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       id="rect7384-2-5"
+       style="fill:#999999;stroke:#333333;stroke-width:0.373453;stroke-linejoin:bevel"
+       d="m 113.83303,195.80198 c 3.10945,-5.76608 5.23347,-8.39541 7.80561,-11.7814 2.71553,-3.57475 5.38017,-6.91702 8.03109,-8.03739 2.59907,-1.09845 5.99831,11.33908 7.80475,14.58776 1.43177,2.57488 6.03959,4.64166 8.06788,6.63438 3.94722,3.878 4.38776,10.45113 7.95766,10.46791 2.74761,0.0129 5.2128,-5.79272 7.9743,-13.17627 2.51502,-6.72454 5.32474,-15.04183 7.85901,-15.90322 v 35.71875 l -55.50032,-0.0469 z"
+       sodipodi:nodetypes="csssssscccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 121.70833,183.88541 V 214.3125"
+       id="path14054"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 113.77082,166.68751 v 47.625 h 60.85417"
+       id="path857-0-0"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 173.5201,212.417 2.6924,1.89551 -2.6661,1.86435"
+       id="path1448-2-3"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 111.86305,169.36099 1.89455,-2.69309 1.86531,2.66544"
+       id="path1448-6-3-6"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="109.64559"
+       y="172.701"
+       id="text2874-75-1"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan2872-9-0"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="109.64559"
+         y="172.701">a</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:5.64444px;line-height:1.25;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="166.75591"
+       y="218.84686"
+       id="text2874-7-2-6"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan2872-5-2-3"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="166.75591"
+         y="218.84686">t</tspan></text>
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-8-2"
+       cx="113.77438"
+       cy="195.77025"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-9-0"
+       cx="121.7403"
+       cy="183.99921"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 129.64583,175.94791 V 214.3125"
+       id="path14056"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-7-6"
+       cx="129.62686"
+       cy="175.95569"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 137.58333,190.5 v 23.8125"
+       id="path14171"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-3-1"
+       cx="137.5612"
+       cy="190.56059"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 145.52083,197.11458 V 214.3125"
+       id="path14173"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-2-6-5"
+       cx="145.54518"
+       cy="197.13451"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 153.45833,207.69791 v 6.61459"
+       id="path14175"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-2-9-12-5"
+       cx="153.48796"
+       cy="207.68037"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 161.39583,194.46875 V 214.3125"
+       id="path14177"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-2-9-1-9-4"
+       cx="161.44843"
+       cy="194.43477"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <ellipse
+       style="fill:#000080;stroke:#000080;stroke-width:0.18707;stroke-linejoin:bevel"
+       id="path6124-3-5-6-2-9-1-2-3-7"
+       cx="169.32503"
+       cy="178.62894"
+       rx="0.60499668"
+       ry="0.5943926"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/simpson-rule.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+  </g>
+</svg>
