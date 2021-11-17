@@ -9,18 +9,13 @@
 	right=3.5cm,
 	left=2.5cm
 ]{geometry}
-%\usepackage{graphicx}
-%\usepackage{hyperref}
-%\usepackage{xcolor}
-%\usepackage{enumitem}
-%\usepackage{multirow}
 \usepackage{subcaption}
 %\usepackage{fancyvrb}
-
+\usepackage{amsfonts}
+\usepackage{amssymb}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{listings}
-
 \usepackage{titlesec}
 \usepackage{setspace}
 \usepackage{fancyhdr}
@@ -32,6 +27,10 @@
 \usepackage{expl3}
 \usepackage[style=iso-numeric, backend=biber]{biblatex}
 \addbibresource{literature.bib}
+
+\makeatletter
+\renewcommand*{\ALG@name}{Algoritmus}
+\makeatother
 
 % Číslo kapitoly na rovnakom riadku ako názov
 \titleformat{\chapter}{\normalfont\huge\bf}{\thechapter}{1em}{}

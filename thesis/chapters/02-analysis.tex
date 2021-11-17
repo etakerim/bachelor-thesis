@@ -250,58 +250,115 @@ ako akcelerácia je aj signál rýchlosti opäť integrovaný a korigovaný obá
 potlačenie prítomnosti jednosmernej zložky v podobe hornej priepuste (pozri \ref{fir-filter}).
 
 \section{Metódy analýzy signálu v časovej doméne}
-Pozorovania prichádzajú postupne sekvenčne v čase, preto prirodzeným spôsobom spracovania dát bude nahliadanie na nich
-ako na časový rad...Spracovanie v reálnom čase vyžaduje, aby sa z nekompletných dát dokázala generovať zmysluplná odpoveď
-za použitia čo najmenej prostriedkov...
+Pozorovania veličiny predstavujú udalosti merané sekvenčne v čase, kde je s každou obdržanou hodnotou $x_i$ viazaná unikátna 
+časová značka $t_i$. Postupnosť jednotlivých čítaní je jednorozmerný časový rad znázoriteľný ako usporiadaná množina dvojíc pečiatky 
+rastúcej v čase a nasnímanej úrovne: $T = \{(t_1, x_1),(t_2, x_2), …, (t_n, x_n)\}$. Vzorkovaním v pravidelných intervaloch stačí 
+uvažovať namiesto časových značiek o celočíselných indexoch, ktoré určujú pozíciu prvkov vo vektore pozorovaní: 
+$\mathbf{x} = (x_1, x_2, …, x_n)^T$. 
+Keď sú súčasne zaznamenávané viaceré dátové body hovoríme o matici pozorovaní $X_{n,m}$, či o viacrozmernom časovom rade.
 
-časový rad (postupnosť pozorovaní) $A: N -> R^3$
-In terms of linear algebra, the input dataset can be defined as a n × d matrix X n,d containing the data point vectors as rows:
-okná Let the function W be the windowing function morphing the matrix X from 1.8 to the vector of q matrices
-w = (W1 , W2 , ..., Wq).
-\cite{practical-time-series}
-online algoritmus
-\cite{data-streams}
-\cite{online-anomaly-detection}
-požiadavky na efektívne algoritmy
+Pri veľkom objeme prichádzajúcich vzoriek produkované senzormi, nie je uskutočniteľné ich úplné uchovanie ani spracovanie celkého 
+dátového toku naraz. Častokrát by stratégia neuváženého odkladania viedla k plýtvaniu zdrojov a zbytočnému archivovaniu údajov s nízkou 
+informačnou hodnotou. Vhodnejšie je agregovanie toku údajov podľa preddefinovaného zmysluplného kritéria, ktoré by umožňovalo zachytiť 
+významné rysy a prompte zodpovedať na vyžadované dopyty. Napríklad zrýchlenie vozidla v konkrétnom okamihu nebude až tak podstatné v 
+porovnaní so znalosťou trvania úsekov pridávania alebo brzdenia, či priemernej prudkosti s akou tieto aktivity boli činené. 
 
-%\subsection{Prúdové algoritmy}
-Data Stream Model - cash register, turnstile, time series, / expanding vs. sliding window model
-- Processing time per item ai in the stream. (Proc. Time)
-- Space used to store the data structure on At at time t. (Storage)
-- Time needed to compute functions on A. (Compute or query time.)
-% Sequential K-means https://stackoverflow.com/questions/3698532/online-k-means-clustering
-\newpage
+\subsubsection{Prúdové algoritmy}
+Priamočiarou realizáciou agregácie je nahliadať na prvky časového radu postupne ako prichádzajú. 
+Prúdové algoritmy pôsobiace v reálnom čase, a teda neschopné vidieť finálny vektor vzoriek vstupu sa vyznačujú vlastnosťou, že 
+vyprodukujú len na základe takého čiastkového vstupu parciálny výsledok platný pre dosiaľ sa vyskytnutú podmnožinu. Online algoritmus 
+spracúvajúci neprestajný potenciálne nekonečne sa rozširujúcu vstupnú sadu sa ideálne vyznačuje sublineárnou alebo polylogaritmickou 
+časovou zložitosťou spracovanie jednotlivých prvkov, celkové spracovanie, a sú žiaduce sublineárne pamäťové nároky \cite{data-streams}. 
+Nie za každej situácie sú však dané nároky z praktických dôvodov naplniteľné, snaha je sa k nim aspoň čo najlepšie priblížiť. 
+
+Bod $x_i$, ktorý je súčasťou prúdu sa pri online agregácii zaráta do každého relevantného počítadla, a môže byť ihneď zabudnutý, čo sa 
+označuje ako turniketový, prípadne pokladňový, model. Turniket je všeobecnejší formalizmus ako pokladňa, pretože umožňuje prvky z 
+počítadla aj odrátavať \cite{data-streams}. Tak namiesto nevýznačného poznatku, že aktuálne vstúpil nový zákazník bude rovno známe, 
+koľko je vnútri zákazníkov dohromady. Z ilustrácie nevyplýva, ktorý fakt je za daných okolností podstatnejší, ale individuálny alarm 
+pri vstupe je hneď vykonaný a nepotrebuje byť spočítaný. 
+
+\subsubsection{Posuvné a rozširujúce sa okná}
+Časový rad $\left(x_i\right)_{i = 0}^{n}$ s dĺžkou $n$ môže byť pre účely výpočtu sumárnych štatistík rozdelený oknovou funkciou 
+$\mathcal{W}_{l, d}$ na podpostupnosti nazývané okná. Posuvné okná (,,rolling window'') majú spravidla konštatnú dĺžku $l$ 
+menšiu ako celkovú veľkosť radu a sú aplikované s krokom odstupu $d$ pozorovaní. Rad potom pozostáva z $ (n - (l  - 1)) / d$ okien 
+\cite{online-anomaly-detection}. Prirodzene sa posuvné okná objavujú pri manipulácii s vyrovnávacou pamäťou, ktoré sa využívajú pri blokovom prenose z adaptéra senzora do hlavnej pamäte. Vtedy sa veľkosť bloku rovná kroku posunu $l = d$.
+
+Rozširujúce sa okná (,,expanding window'') nachádzajú uplatnenie v menej prípadoch, spravidla sa jedná o inkrementálny 
+odhad globálnej štatistiky, ktorá má zmysel prevažne pri sledovaní stabilného javu. \cite{practical-time-series}. Okno začína na 
+stanovenej minimálnej veľkosti a s pribúdajúcim počtom bodov ich zahŕňa, čím sa zväčšuje. Dostavuje sa rovnaký výsledok ako v 
+turniketovom modeli, ale navyše neplatí obmedzenie zahadzovania už započítaných údajov, ale dokážeme teoreticky operovať so všetkými 
+vzorkami vrámci okna.  
 
 \subsection{Číselné charakteristiky štatistického rozdelenia}
-bodové odhady momentov
-výberový priemer = stredná hodnota,
-RMS
-výberový rozptyl (Welfordov online algoritmus), smerodajná odchýlka
-šikmosť,
-špicatosť,
-kvantily, medzikvartilové rozpätie
-normálne rozdelenie pravdepodobnosti
-korelácia medzi osami
+Náhodné vibrácie vyskytujúce sa pri skutočných materiáloch sú stochastický proces, ktorý tvorí sekvencia časovo indexovaných 
+náhodných premenných. Časový rad predstavuje realizáciu tohto stochastického procesu $\mathbf{Y} = (X_1, X_2, ..., X_n)^T$, kde $X_t$ 
+je náhodná premenná so svojím rozdelením pravdepodobnosti. Všeobecne zvykneme predpokladať pri ideálnych stacionárnych otrasoch, teda 
+oscilujúcich okolo nemennej strednej hodnoty, že premenné pochádzajú z unimodálnej Gaussovej distribúcie $N(\mu, \sigma^2)$  
+\cite{vibrations-shock}. 
+
+Sumárna deskripcia senzorom meraného deja pre extrakciu typických čŕt konkrétnych situácií sa uskutočňuje viacerými štatistikami
+$h_n(X_1, X_2, ..., X_n)$ odhadujúcimi funkciu hustoty štatistického rozdelenia. Rozlišujeme momentové a kvantilové charakteristiky.
+
+bodové odhady momentov,
+priemer, medián, modus
+
+Peak-to-peak 
+	$$x_{PK} = \max_{x \in T}\{x_1, ..., x_n\} - \min_{x \in T}\{x_1, ..., x_n\}$$
+kvadratický priemer - RMS (efektívna hodnota) 
+	$$x_{RMS} = \sqrt{\frac{1}{n}\sum_{i=0}^{n}{x_i^2}}$$
+ 
+výberový priemer = stredná hodnota = jednosmerná zložka
+	$$ \bar{x} = \frac{1}{n} \sum_{t = 0}^{n}{x_t} $$
+výberový rozptyl, smerodajná odchýlka
+	$$ \sigma^2 = \frac{1}{n - 1} \sum_{t = 0}^{n}{(x_t - \bar{x})^2} $$
+	$$ \sigma = x_{RMS}^2 - \bar{x}^2 $$ (numerická nestabilita)
+	Welfordov online algoritmus \cite{knuth}:
+\begin{ceqn}\begin{align}
+   M_1 = x_1; M_k = M_{k-1} + \frac{(x_n - M_{k-1}}{k}) \\
+   S_1 = 0; S_k = S_{k-1} + (x_k + M_{k-1})(x_k + M_k)  \\
+   \sigma = \sqrt{S_n / (n - 1)}
+\end{align}\end{ceqn}
+
+šikmosť - záporné skosenie ľavý chvost distribúcie je dlhší a vrchol napravo $m^3 / s^3$
+špicatosť - štvrtý moment $m^4 / s^4$
+
+kvantily - kumulatívna distribučná funkcia 
+	$$ P(X \leq Q_p) = p; F(Q_p) = p $$
+medzikvartilové rozpätie
+	$$ IQR = F(0.75) - F(0.25) $$
+korelácia medzi osami - všetky kombinácie osí - pohyb sa prejavuje v diagonálnom smere $3C2 = 3$ $XY, XZ, YZ$ kovariančná / korelačná matica
+$$cov(x, y) = \frac{1}{n} \sum_{i=0}^{n}{(x_i - \bar{x})(y_i - \bar{y})} $$
+$$\rho(x, y) = \frac{cov(x, y)}{s_x s_y} $$
+
+vierohodnosť - odhad parametrov rozdelenia, ktorá je najpravdepodobejšia na základe (nadobúda) na základe experimentálnych dát 
+Median Absolute Deviate (robustná štatistika na určenie vychýlenosti od normálu) - triedenie vs quickselect + median-of-medians v O(n)
+% https://rcoh.me/posts/linear-time-median-finding/
+\begin{equation}
+MAD = \mathrm{median}(|X_i - \bar{X}|)
+\end{equation}
 
 \subsection{Algoritmy na rozpoznávanie špičiek}
 \label{peak-detection}
-lokálne minimá a maximá extrémy - cez prvú a druhú deriváciu,
+lokálne minimá a maximá extrémy - cez prvú a druhú deriváciu, 
+\cite{survey-peaks-valleys}
+$x_0 \in I$
+lokálne maximum $f(x_0) \geq f(x), \forall x \in I$ 
+lokálne minimum  $f(x_0) \leq f(x), \forall x \in I$
+globálne ak interval predstavuje celý definičný obor funkcie
+
 topografická prominencia a izolácia - relatívna výška vrchola / extrému
+
 vyhladzovanie: mean filter, derivative filter (diskrétny derivačný operátor) - sobel filter, Savitzky–Golay filter
+\cite{spectrometry-peak-detection}
+
 Vzájomná korelácia - jadra vrchola a signálu
 detect peaks in a signal and to measure their positions, heights, widths, and/or areas
-
-\cite{spectrometry-peak-detection}
-\cite{survey-peaks-valleys}
-\cite{ecg-r-peak-detection}
-\cite{ampd-algorithm}
-
-\subsubsection{Fixný počet maxím}
-$$ y = max{x_0, x_1, x_2, x_3}$$
 
 
 \subsubsection{Detekcia prahom pri periodických javoch}
 Nad + pod konštantný prah y < t, y > t
+$$ y = max{x_0, x_1, x_2, x_3}$$
+$$ x > \hat{x} $$ má väčšiu šancu byť maximom ako pod priemerom
 Napr. 75\% rozsahu: $t\ =\frac{\frac{u\ \ +\ d}{2}+u}{2}$
 
 \subsubsection{Význačnosť vrchola spomedzi susedov}
@@ -310,26 +367,37 @@ Preskočí špičky s absolútnou magnitúdou menšou ako \verb|height|. Vo vnú
 \begin{equation}
 \forall c \in \{y_{i-k}, ... y_{i+k}\} - \{y_i\}; \; y_i - c \geq -\epsilon
 \end{equation}
+\cite{survey-peaks-valleys} 
+$ x_{i-1} < x_i > x_{i+1}, \forall i = 2, 3, ..., n - 1$
+$ x_1 > x_2, x_n > x_{n-1}$
 
-\begin{lstlisting}[language=Python]
-def find_peaks(y: list, k: int, epsilon: float=0, height: float=None) -> list:
-    spikes = []
-
-    for a in range(k, y.size - k):
-        if height is not None and abs(y[a]) < height:
-            continue
-        locmax = True
-        for b in range(-k, k):
-            if b != 0 and y[a + b] - y[a] > epsilon:
-                locmax = False
-        if locmax:
-            spikes.append(a)
-
-    return spikes
-\end{lstlisting}
 \url{https://terpconnect.umd.edu/~toh/spectrum/PeakFindingandMeasurement.htm}
 
-\subsubsection{Algoritmus Negative Zero-Crossing}
+\begin{algorithm}
+\caption{Najvyšší spomedzi susedov}
+\begin{algorithmic}[1]
+\Function{Find\_Peaks}{$\vec{y}$, $k$, $\epsilon$, $h$}
+	\State $peaks \gets \{\}$ 	\Comment{Množina indexov nájdených špičiek v signále $y$}
+	\For{$i \gets k$ \textbf{to} $length(y) - k$}
+		\If {$h \neq null$ \textbf{and} $|y[i]| < h$}  \Comment{Ignoruj príliš nízke magnitúdy}
+			\State \textbf{continue}
+		\EndIf
+		\State $possible\_peak \gets true$
+		\For{$j \gets -k$ \textbf{to} $k$}
+			\If {$b \neq 0$ \textbf{and} $y[i + j] - y[i] > \epsilon$}
+				\State $possible\_peak \gets false$     \Comment{Vrchol nemá postačujúcu prominenciu}
+			\EndIf
+		\EndFor
+		\If {$possible\_peak = true$}
+			\State $peaks \gets peaks \cup {j}$
+		\EndIf
+	\EndFor
+	\State \Return $peaks$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Algoritmus prechodu nulou do záporu}
 Nájdi vo $n$-krát vyhladenom signále body, že platí: $f'(x) = 0$, kde $f''(x) < 0$ a $|f''(x)| > \theta$. Pre odstránenie hraničných efektov použiť mód 'valid' s prísušným posunom hraníc polí.
 
 Diskrétna verzia:
@@ -346,10 +414,134 @@ Parametre:
 \item $smooth$: počet vyhladzovaní
 \end{itemize}
 
+\begin{algorithm}
+\caption{Prechod druhej derivácie nulou do záporu}
+\begin{algorithmic}[1]
+\Function{Find\_Peaks\_Zero\_Crossing}{$\vec{y}$, $k$, $\epsilon$, $slope$}
+	\State $peaks \gets \{\}$
+	\For{$i \gets k$ \textbf{to} $length(y) - k$}
+		\If {($|y[i+k] - y[i-k]| \leq \epsilon$ \textbf{and} 
+		     \State $(y[i+k] - y[i]) - (y[i] - y[i-k]) < 0$ \textbf{and}
+		     \State $|(y[i+k] - y[i]) - (y[i] - y[i-k])| > slope$)}
+		    \State $peaks \gets peaks \cup i$
+		
+		\EndIf
+	\EndFor
+	\State \Return $peaks$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
 \subsubsection{Algoritmus horského turistu}
-Obsahuje pamäťový efekt pre dočasné zmeny a berie ich do úvahy ak lokálne záchvevy prekročia tolerovanú úroveň. Ak sa zmení 'slope' oproti predošlému kroku DeltaY, tak hneď neoznačí za zmenu medzi dolinou a vrcholom, ale až po prekročení nastavených prahov. Skutočnosť z reality: jama != údolie \cite{peek-mountaineer-method}
+Obsahuje pamäťový efekt pre dočasné zmeny a berie ich do úvahy ak lokálne záchvevy prekročia tolerovanú úroveň. Ak sa zmení 'slope' oproti predošlému kroku DeltaY, tak hneď neoznačí za zmenu medzi dolinou a vrcholom, ale až po prekročení nastavených prahov. Skutočnosť z reality: jama != údolie 
+\cite{peek-mountaineer-method}
 
 
+\begin{algorithm}
+\caption{Horský turista}
+\begin{algorithmic}[1]
+\Function{Find\_Peaks\_Mountaineer}{$\vec{y}$}
+	\State $peaks \gets \{\}$ 	\Comment{Množina nájdených vrcholov v signále $y$}
+	\State $valleys \gets \{\}$ 	\Comment{Množina nájdených údolí v signále $y$}
+	\State $num_steps \gets 0$ 
+	\State $threshold \gets 6$
+	\State $possible\_peak \gets false$ 
+	\State $possible\_valley \gets false$  
+	
+	\For{$i \gets 1$ \textbf{to} $length(y)$}
+		\If {$y[i] > y[i-1]$}
+			\State $num\_upsteps \gets num_upsteps + 1$		
+			\If {$possible\_valley = false$} 					
+				\State $possible\_valley \gets true$			\Comment{Objavenie možného údolia}
+				\State $y\_valley \gets (i - 1, y[i-1])$
+			\EndIf
+		\Else
+			\If {$num\_upsteps \geq threshold$}
+				\State $possible\_peak \gets true$				\Comment{Objavenie možného vrchola}
+				\State $y\_peak \gets (i - 1, y[i-1])$
+			\Else
+				\If {$possible\_valley = true$ \textbf{and} $y[i] leq y\_valley$}
+					\State $y_valley \gets (i, y[i])$
+				\EndIf
+				\If {$possible\_peak = true$}
+					\If {$y[i - 1] > y\_peak$}
+						\State $y\_peak \gets (i - 1, y[i-1])$
+					\Else
+						\State $peaks \gets peaks \cup y\_peak$
+					\EndIf
+		
+					\If {$possible\_valley = true$} 
+						\State $valleys \gets valleys \cup y\_valley$
+					\EndIf
+					\State $threshold \gets 0.6 \cdot threshold$
+					\State $possible\_peak \gets false$
+				\EndIf
+			\EndIf
+			\State $num\_upsteps \gets 0$
+		\EndIf
+	\EndFor
+	\State \Return $peaks$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Zjednodušený algoritmus horského turistu so zavedením tolerancií}
+\begin{algorithmic}[1]
+\Function{Find\_Peaks\_Hill\_Walker}{$\vec{y}$, $tolerance$, $hole$, $prominence$}
+	\State $peaks \gets \{\}$
+	\State $i\_change \gets 0$
+	\State $y\_valley \gets 0$
+	\State $possible\_change \gets false$
+	\State $uphill \gets (y[1] - y[0]) \geq 0$
+	
+	\For{$i \gets 1$ \textbf{to} $length(y)$}
+		\State $y\_step \gets y[i] - y[i-1]$
+        \State $slope \gets y\_step \geq 0$
+
+        \If {$possible\_change = false$ \textbf{and} $uphill \neq slope$}
+        	\State $possible\_change \gets true$   \Comment{Označenie potenciálneho extrému}
+        	\State $i\_change \gets i - 1$
+        \ElsIf {$possible\_change = true$ \textbf{and} $uphill = slope$}
+        	\State $possible\_change \gets false$  \Comment{Potenciálny extrém bol zachvením}
+        \EndIf
+        
+        \If {($possible\_change = true$
+        	\State \textbf{and} $uphill \neq slope$
+        	\State \textbf{and} $|i - i\_change| > hole$
+        	\State \textbf{and} $|y[i] - y[i\_change]| > tolerance$)}
+
+        	\State $posible\_change \gets False$
+        	\State $prev\_uphill \gets uphill$
+        	\State $uphill \gets slope$
+        	\Comment{Významný lokálny extrém potvrdený}
+        	
+        	\If {$prev\_uphill = false$ \textbf{and} $uphill = true$}
+				\State $y\_valley \gets y[i\_change]$   \Comment{Nájdené údolie}
+                
+            \ElsIf {($prev\_uphill = true$ 
+            		\State \textbf{and} $uphill = false$
+            		\State \textbf{and}  $|y[i - hole] - y\_valley| > prominence$)}
+				\State $y\_peak \gets y[i\_change]$    \Comment{Skutočný vrchol identifikovaný}
+				\State $peaks \gets peaks \cup i_change$              
+            \EndIf      	
+        \EndIf       
+	\EndFor
+	\State \Return $peaks$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Automatický viacúrovňový detektor špičiek v kvázi-periodickom signále}
+\cite{ampd-algorithm}
+Uniformne vzorkovaný signál pozostávajúci z komponentu periodických a kvázi-periodických špičiek
+1.krok: zo vstupu $x = [x_1, ..., x_N]$ odstrániť trend a vypočítať local maxima scalogram (LMS). Lokálne maximá signálu sú určené 
+posuvnými oknami s premenlivou veľkosťou okna $k$ ${w_k = 2k | k = 1, 2, ..., \left\lceil N/2 \right\rceil - 1}$
+2. krok riadkový súčet LMS matice
+3. krok preškálovanie matice
+4.krok stĺpcová smerodajná odchýlka upravenej matice, špička je pri nulovej sigme.
+
+\newpage
 \subsection{Online detekcia anomálií a odchýliek pozorovaní}
 \cite{generalized-esd}
 \cite{twitter-esd},
@@ -398,11 +590,6 @@ Bežiaci priemerovací filter \cite{anomaly-detection-models}
 
 Zisťovanie výchyliek testovaním štatistických hypotéz:
 generalized extreme Studentized deviate test \cite{generalized-esd}
-
-Median Absolute Deviate (robustná štatistika na určenie vychýlenosti od normálu)
-\begin{equation}
-MAD = \mathrm{median}(|X_i - \bar{X}|)
-\end{equation}
 
 
 \section{Frekvenčná a časovo-frekvenčná analýza signálu}
@@ -522,8 +709,6 @@ Obmedzenia na senzorové uzly
 
 Za ideálnych okolností by sa mal online algoritmus učiť kontinuálne bez ukladania predošlých bodov a detekcií.
 V rozhodnutiach algoritmu sú zahrnuté informácie o všetkých predošlých bodoch do terajšieho rozhodnutia. Mal by mať schopnosť sa adaptovať dynamickému prostrediu, v ktorom pôsobí. Bez nutnosti manuálnych úprav parametrov modelu. Zároveň je žiaduce minimalizovať falošné pozitíva a negatíva pri detekcii udalostí.
-
-Kontinuálne spracovanie častokrát vyžaduje, aby boli dáta rozdelenie do rovnako dlhých blokov zvaných okná. Okno $\mathcal{W}_{\sigma, \pi}$ je funkciou morfujúca maticu vstupných dát $X$ do vektora $w = (W_1, ... , W_q)$  \cite{online-anomaly-detection}
 
 
 \emptypage
