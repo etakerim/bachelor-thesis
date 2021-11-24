@@ -120,8 +120,7 @@ dvojnásobkom maximálnej frekvencie snímaného signálu.
 Každej vzorke je následne v procese kvantovania priradená diskrétna hodnota s konečným počtom $n$ bitov, ktorá je najbližšia možná ku
 skutočnej hladine analógového vstupu. Dochádza pritom k istému zaokrúhľovaniu z dôvodu nepresnosti vyjadrenia spojitej domény amplitúd
 diskrétnym číslom. Tento jav označujeme ako kvantizačný šum, ktorý je najviac polovicou z maximálnej rozlíšiteľnej zmeny signálu a
-trpia nim všetky existujúce A/D prevodníky. Rovnako tak sa u všetkých prevodníkov prejavuje aspoň nepatrná miera nelinearity výstupného
-kódu, chýbajúce kódy alebo ich nemonotónnosť.
+trpia nim všetky existujúce A/D prevodníky.
 
 \begin{figure}[h]
 	\centering
@@ -137,7 +136,7 @@ Napríklad pri 12-bitovom A/D prevodníku s referenčným napätím $3.3V$ je te
 bit $3.3V / 2^{12} = 0.81 mV$. Ak je rozhranie senzora priamo vybavené analógovým výstupom nič nebráni v použití presnejšieho
 prevodníka, napriek tomu najmenší merateľný dielik je zdola stále ohraničený citlivosťou akcelerometra.
 
-Číslicovú hodnotu v dvojkovom doplnku získanú konverziou $\hat{x}$ je z dôvodu širšej zrozumiteľnosti žiaduce prepočítať na
+Číslicová hodnota v dvojkovom doplnku získanú konverziou $\hat{x}$ je prepočítaná na
 štandardné fyzikálne jednotky pre zrýchlenie, $a$ v $m/s^2$). $R$ prestavuje nastavený dynamický rozsah v jednotkách $g$ a $n$
 je počet bitov A/D prevodníka.
 \begin{ceqn}\begin{align}
@@ -273,10 +272,13 @@ vyprodukujú len na základe takého čiastkového vstupu parciálny výsledok p
 
 Online algoritmus  spracúvajúci neprestajný potenciálne nekonečne sa rozširujúcu vstupnú sadu sa ideálne vyznačuje sublineárnou alebo 
 polylogaritmickou časovou zložitosťou spracovanie jednotlivých prvkov, celkové spracovanie, a sú žiaduce sublineárne pamäťové nároky 
-\cite{data-streams}. Nie za každej situácie sú však dané nároky z praktických dôvodov naplniteľné, snaha je sa k nim aspoň čo najlepšie 
-priblížiť. Bod $x_i$, ktorý je súčasťou prúdu sa pri online agregácii zaráta do každého relevantného počítadla, a môže byť ihneď 
-zabudnutý, čo sa označuje ako turniketový, prípadne pokladňový, model. Turniket je všeobecnejší formalizmus ako pokladňa, pretože 
-umožňuje prvky z počítadla aj odrátavať \cite{data-streams}.
+\cite{data-streams}. 
+
+Za ideálnych okolností by sa mal online algoritmus učiť kontinuálne bez ukladania predošlých bodov a detekcií.
+V rozhodnutiach algoritmu sú zahrnuté informácie o všetkých predošlých bodoch do terajšieho rozhodnutia. 
+Mal by mať schopnosť sa adaptovať dynamickému prostrediu, v ktorom pôsobí, bez nutnosti manuálnych úprav parametrov modelu. 
+Zároveň je žiaduce minimalizovať falošné pozitíva a negatíva pri detekcii udalostí. V turniketovom modeli sa pri online 
+agregácii bod $x_i$ načítaný v prúde, zaráta do každého relevantného počítadla, a môže byť ihneď zabudnutý \cite{data-streams}.
 
 \subsection{Posuvné a rozširujúce sa okná}
 Časový rad $\left(x_i\right)_{i = 0}^{n}$ s dĺžkou $n$ môže byť pre účely výpočtu sumárnych štatistík rozdelený oknovou funkciou 
@@ -435,8 +437,8 @@ musí byť dostatočne pravidelný, aby bol nezameniteľne odlíšiteľný.
 Doplnkom ku rozpoznávaniu špičiek podľa absolútnej prahovej úrovne je porovnávanie bodov na 
 obe strany od preskúmavaného vrchola, čím zistíme relatívnu významnosť extrému pre najbližšie susedstvo.
 Aby bola hodnota na danej pozícii $t$ označená za špičku v okolí pozostávajúcom z $k$ priľahlých bodov,
-musí byť väčšia, respektíve u špičky so zápornou amplitúdou nižšia v porovnaní s oboma hodnotami.
-Pre okrajové dátové body $f[0]$ a $f[n]$ dochádza k porovnaniu iba s jediným susedom \cite{survey-peaks-valleys}.
+musí byť v porovnaní so všetkými väčšia. Pre okrajové dátové body $f[0]$ a $f[n]$ dochádza k porovnaniu 
+iba z jednej strany \cite{survey-peaks-valleys}.
 \begin{ceqn}\begin{align}
 f[t-i] < f[t] > f[t+i],\quad \forall i \in 1, 2, ..., k
 \end{align}\end{ceqn}
@@ -444,13 +446,7 @@ f[t-i] < f[t] > f[t+i],\quad \forall i \in 1, 2, ..., k
 Algoritmus č.\ref{algo:neighbours} ,,najvyšší spomedzi susedov'' 
 \footnote{\url{https://terpconnect.umd.edu/~toh/spectrum/PeakFindingandMeasurement.htm}} 
 prechádza postupne pozorovania veličiny zo zoznamu $y$ a ku kandidátnej špičke na indexe $i$ preveruje najbližších
-$k$ hodnôt na obe strany, ak existujú. Keď po preskúmaní zostáva $y[i]$ najväčšou hodnotou spomedzi susedov
-v rozmedzí $[a; b]$, za tolerancie strmosti stúpania $\varepsilon$ medzi pozorovaniam, a súčasne je relatívna 
-výška vrcholu väčšia oproti nižšiemu okraju než nastavený parameter $h_{rel}$ potom je kandidátny bod prehlásený
-za skutočnú špičku a pridaný do zoznamu $peaks$. Súčasťou algoritmu je tiež preskočenie hodnôt, ktoré nespĺňajú
-základný predpoklad pre absolútnu amplitúdu $h$. Časová zložitosť pre rozhodnutie o jednej špičke je
-lineárna v závislosti od veľkosti posuvného okna uvažovaného susedstva $\mathcal{O}(2k)$.
- 
+$k$ hodnôt na obe strany, ak existujú.
 \begin{algorithm}[h]
 \caption{Najvyšší spomedzi susedov}
 \begin{algorithmic}[1]
@@ -477,6 +473,14 @@ lineárna v závislosti od veľkosti posuvného okna uvažovaného susedstva $\m
 \end{algorithmic}
 \label{algo:neighbours}
 \end{algorithm}
+Keď po preskúmaní zostáva $y[i]$ najväčšou hodnotou spomedzi susedov
+v rozmedzí $[a; b]$, za tolerancie strmosti stúpania $\varepsilon$ medzi pozorovaniam, a súčasne je relatívna 
+výška vrcholu väčšia oproti nižšiemu okraju než nastavený parameter $h_{rel}$ potom je kandidátny bod prehlásený
+za skutočnú špičku a pridaný do zoznamu $peaks$. 
+
+Súčasťou algoritmu je tiež preskočenie hodnôt, ktoré nespĺňajú základný predpoklad pre absolútnu amplitúdu $h$. 
+Časová zložitosť pre rozhodnutie o jednej špičke je lineárna v závislosti od veľkosti posuvného okna uvažovaného
+susedstva $\mathcal{O}(2k)$.
 
 \subsubsection{Algoritmus prechodu nulou do záporu}
 Pomyselné vrcholy a údolia v zosnímaných hodnotách sú miestom, kde sa mení smer úrovní amplitúdy zo stúpania na klesanie alebo
@@ -488,12 +492,6 @@ Viacnásobné vyhladenie signálu predom je nesmierne dôležité,
 pretože algoritmus č.\ref{algo:zero-crossing} ,,prechodu nulou do záporu'' (Negative Zero-Crossing) je nesmierne citlivý
 na zákmity a nesprávneby ich považoval za špičky. Zvýšenie odolnosti proti takýmto tendenciám sa dosahuje dlhšou sečnicou
 spájajúcou bod $i$ s $k$-tou vzorkou vedľa, ktorá sa použije namiesto diferencie s jednotkovým krokom.
-
-Označenie kandidátneho bodu za špičku v zozname hodnôt $y$ stojí na teda troch kritériách. Sklon sečnice sa musí v 
-rámci tolerancie $\varepsilon$ blížiť nule, rozdiel prvých diferencií $\Delta y[i+k] - \Delta[i]$ musí byť záporný a veľkosť 
-rozdielu diferencií prekračuje prahovú strmosť kopca $slope$, kde leží uvažovaný vrchol. Časová zložitosť
-pre jednu špičku je $\mathcal{O}(1)$. 
-
 \begin{algorithm}[h]
 \caption{Prechod prvej derivácie nulou do záporu}
 \begin{algorithmic}[1]
@@ -512,6 +510,11 @@ pre jednu špičku je $\mathcal{O}(1)$.
 \end{algorithmic}
 \label{algo:zero-crossing}
 \end{algorithm}
+
+Označenie kandidátneho bodu za špičku v zozname hodnôt $y$ stojí na teda troch kritériách. Sklon sečnice sa musí v 
+rámci tolerancie $\varepsilon$ blížiť nule, rozdiel prvých diferencií $\Delta y[i+k] - \Delta[i]$ musí byť záporný a veľkosť 
+rozdielu diferencií prekračuje prahovú strmosť kopca $slope$, kde leží uvažovaný vrchol. Časová zložitosť
+pre jednu špičku je $\mathcal{O}(1)$. 
 
 \begin{figure}[h]
     \centering
@@ -533,7 +536,6 @@ ignorovaná, lebo ani na lesnom chodníku sa nepovažuje každá jama alebo vydu
 
 Domnelý vrchol je označený za lokálne maximum, keď spĺňa parametre pre topografické vlastnosti minimálnej akceptovateľnej 
 prominencie a izolácie (obr. \ref{fig:topography}. Prominencia znamená relatívnu výšku oproti predošlej navštívenej doline. Izolácia vyčísľuje vzdialenosť k najbližšiemu skoršiemu vrcholu. Podobný algoritmus už existuje v literatúre \cite{peek-mountaineer-method}, avšak nižšie prezentovaný pseudokód je oproti nemu zjednodušený a doplnený o požadované tolerancie.
-
 \begin{algorithm}[h]
 \caption{Algoritmus horského turistu}
 \begin{algorithmic}[1]
@@ -581,47 +583,52 @@ prominencie a izolácie (obr. \ref{fig:topography}. Prominencia znamená relatí
 \end{algorithmic}
 \label{algo:mountain-hiker}
 \end{algorithm}
+\afterpage{\clearpage}
 
 \subsection{Metriky pre binárny klasifikátor}
-% porovnanie uvedených algoitmov
-Skutočne pozitívny a negatívny $TP$ (hit), $TN$ (miss) - výsledok zodpovedaná značke z anotovaného datasetu skučnému výsledku
-Falošne pozívny $FP$ (chyba I. rádu) - proces je normálny, ale registrujeme neočakávané správanie,
-Falošne negatívny $FN$ (chyba II. rádu) - proces je abnormálny, ale správanie prechádza bez povšimnutia
-Matica zámen 
-\begin{table}[]
-\begin{tabular}{|l|l|l|}
-\hline
-             & s Špička & s Nie špička \\ \hline
-k Špička     & TP       & FP           \\ \hline
-k Nie špička & FN       & TN           \\ \hline
-\end{tabular}
-\end{table}
+Uviedli sme tri rozdielne rovnocenné prístupy odhalenia špičiek uplatniteľné v nasadení online na sústavný prúd údajov
+separovaný do blokov posuvným oknom. Rozobrali sme algoritmus opierajúci sa o porovnávanie striktne usporiadaných 
+susedov na obe stany, algoritmus využívajúci sklon sečníc vychádzajúc s vlastností prvej derivácie a napokon
+stavový automat odvolávajúci sa na sekvenčne preskúmavanú topografiu krivky grafu. Spoločným rysom zmienených techník 
+je vykonávanie binárne zaradenie pre každú vzorku, či sa sa nachádza alebo nenachádza na aktuálnej pozícií vrchol.
 
-Senzitivita, Recall, - tie ktoré NIE SÚ prehlásené za špičky určite NIE SÚ špičky, čo najväčší (nájdené)
-$$ TPR = \frac{TP}{P} = \frac{TP}{TP + FN} $$
+Rozhodnutie môže viesť k správnemu $P$ alebo nesprávnemu $N$ riešeniu vzhľadom na objektívnu pravdu 
+sprostredkovanú anotovanými dátami. Keď sa kategorizácia zhoduje s realitou dostávame skupiny 
+skutočne pozitívnych $TP$ a skutočne negatívnych $TN$. V prípade, že sa klasifikátor pomýli vyjde buď chyba
+prvého rádu $FP$, kedy registrujeme neexistujúcu špičku, alebo chyba druhého rádu $FN$, kedy ju prehliadneme.
+Umiestnením počtov charakteru rozhodnutí do tabuľky vzniká matica zámen.
 
-Chybovosť - čo najmenší
-$$  FPR = \frac{FP}{FP + TN}$$
+Úspešnosť klasifikačných algoritmov pre ich vzájomné porovnanie kvantifikujú viaceré metriky. Na odladenie parametrov 
+vplývajúcich na náchylnosť preferovať kladné alebo záporné výsledky sa vzťahuje \emph{prevalencia} výskytu očakávaného
+javu: $P / (P+N)$ v samotných dátach. Snahou rozhodovania je maximalizovať senzitivitu a špecifickosť výsledkov algoritmu. 
+\emph{Senzitivita} (\ref{equ:sensitivity}) udáva koľko bodov, ktoré sú prehlásené za špičky naozaj je špičkami. 
+\emph{Špecifickosť} (\ref{equ:specifity}) sa zameriava na potvrdenie, aké množstvo pozorovaní nepovažovaných za špičky,
+nie sú nimi aj skutočne. 
+\begin{ceqn}\begin{align}
+TPR = \frac{TP}{P} = \frac{TP}{TP + FN} \label{equ:sensitivity} \\
+TNR = \frac{TN}{N} = \frac{TN}{TN + FP} \label{equ:specifity}
+\end{align}\end{ceqn}
 
-Špecifita - tie ktoré SÚ prehlásené za špičky určite nie SÚ špičky
-$$ TNR = \frac{TN}{N} = \frac{TN}{TN + FP} $$
+Presnosť určenia lokálneho extrému sa skladá z správnosti (\ref{equ:ppv}) a precíznosti (\ref{equ:accuracy}),
+ktoré je rovnako žiaduce dosahovať čo najbližšie sto percentám, pri nízkej chybovosti (\ref{equ:error-rate}), čiže
+nízkeho počtu falošných poplachov.
+\begin{ceqn}\begin{align}
+PPV = \frac{TP}{TP + FP} \label{equ:ppv} \\
+ACC = \frac{TP + TN}{P + N}\label{equ:accuracy} \\
+FPR = \frac{FP}{FP + TN} \label{equ:error-rate}
+\end{align}\end{ceqn}
 
-Presnosť - Precision
-$$ PPV = \frac{TP}{TP + FP} $$
-
-Accuracy (Presnosť) - koľko zo všetkých identifikuje správne
-$$ ACC = \frac{TP + TN}{P + N} = \frac{TP + TN}{TP + TN + FP + FN} $$
-
-F-score - harmonický priemer precision a recall
-$$ F_1 = 2 \cdot \frac{PPV \cdot TPR}{PPV + TPR}$$
-
-ROC - kvalita binárneho klasifikátora v závislosi od prahu, 
-
-AUC - x (FPR) ku y (TRP) s rôznym prahom
-\cite{anomaly-detection-algorithms}
-\cite{wsn-outlier-detection-survey}
+Štandardným nástrojom na vyjadrenie kvality binárneho klasifikátora je \emph{ROC krivka} zakresľujúca 
+senzitivitu $TPR$ vo zvislom smere voči vodorovnej chybovosti $FPR$. ROC vytvoríme graduálnym posúvaním prahu 
+pre klasifikáciu prostredníctvom parametrov algoritmu. Použiteľný algoritmus sa vyznačuje vypuklou krivkou
+smerom k ľavému hornému rohu nad diagonálou, ktorá by sprevádzala počínanie náhodného rozhodovania. Dokonalá
+metóda pri dosahovala stopercentnú senzitivitu za nulovej chyby. Vyjadrením plochy pod ROC krivkou je miera AUC,
+ktorá umožňuje približné číselné porovnanie rôznych získaných kriviek.
 
 \section{Frekvenčná a časovo-frekvenčná analýza signálu}
+Vibrácie prítomné v získanom zázname zrýchlenia sa prejavujú s variabilnou pravidelnosťou a cyklickým opakovaním, ktoré
+vyplýva z povahy monitorovaného pohybu.
+
 \cite{time-series-analysis}
 vlastnosti frekvenčného spektra,
 decibele, 
@@ -640,31 +647,71 @@ Inverzná transformácia
 x = \frac{1}{N}\mathbf{W}^H X
 \end{equation}
 
-Integrálne transformácie: Fourierová transformácia (CFT, DFT), Kosínusová transfomácia (MDCT), Vlnková transformácia (CWT) \cite{dct} \cite{casove-frekvencia-analyza-signalu}
+Integrálne transformácie: Fourierová transformácia (CFT, DFT), Kosínusová transfomácia (MDCT), \cite{dct} 
+\cite{casove-frekvencia-analyza-signalu}
 
-\begin{equation}
-T(n) = \int{f(t) K(t,x) \mathrm{dt}}
-\end{equation}
-
-\begin{equation}
+\begin{ceqn}\begin{align}
 \mathcal{F}: X(\omega) = \int_{-\infty}^{+\infty}{x(t) \cdot e^{-i\omega t} \mathrm{dt}}
-\end{equation}
+\end{align}\end{ceqn}
 
 \subsection{Algoritmus FFT pre DFT a DCT}
 Opis DIT radix-2 FFT algoritmus komplexných, reálny, pre MDCT \cite{fft-blackbox}
+konštantný digitalizačný krok bez prerušení a navyše dĺžka radu musí byť celočíselná mocnina dvoch (s.29)
 
-\begin{equation}
-X(m) = \sum_{n = 0}^{N-1}{x(n) \cdot e^{-i2\pi n m / N}}
-\end{equation}
+prevádza konečnú sekvenciu dát na súčet kosínov oscilujúcich na rôznych frekvenciách
+
+\begin{ceqn}\begin{align}
+X[m] &= \sum_{n = 0}^{N-1}{x[n] \cdot e^{-i2\pi n m / N}} \\
+X[m] &= \sum_{n = 0}^{N-1}{x[n] \cdot [\cos(2\pi n m / N) - i \cdot \sin(2\pi n m / N)]}
+\end{align}\end{ceqn}
 
 Frekvenčné rozlíšenie
 \begin{equation}
 \Delta f = \frac{f_s}{N}
 \end{equation}
 
+$$X_{k}=\sum_{n=0}^{N-1} x_{n}\cos \left[\,{\frac{\pi}{N}}\left(n+{\frac{1}{2}}\right)k\right]\qquad \,
+k=0,\ \dots \ N-1 $$
+$$X_{k}=\sum _{n=0}^{N-1}x_{n}\cos \left[\,{frac{\pi}{N}}\,\left(n+{1}/{2}\right)\left(k+{1}/{2}\right)\right]\qquad
+\,k=0,\ \ldots \ N-1$$
+$$X_{k}=\sum _{n=0}^{2N-1}x_{n}\cos \left[{\frac {\pi }{N}}\left(n+{\frac {1}{2}}+{\frac {N}{2}}\right)\left(k+{\frac {1}{2}}\right)\right]$$
+
 \subsection{Oknové funkcie}
-Gaborová transformácia, Prehľad okien a ich transformácií (sinc), Efekt oknových funkcií na spectral leakage, výhodné percentá prekryvu FT 	\cite{understanding-dsp} \cite{spectral-density-estimation}
-Priemerovanie a prekryv - Amplitude Flatness (AF), Power Flatness (PF), Overlap Correlation (OC)
+the DFT implicitly assumes that the signal is periodic, i.e. that the time series of length N repeats itself
+infinitely in a cyclic manner.  If the frequency of the sinusoidal input
+signal is not an exact multiple of the frequency resolution fres , i.e. does not fall in the exact
+center of a frequency bin, this assumption is not true, and the DFT will ‘see’ a discontinuity
+between the last sample and the first sample due to the cyclic continuation. That discontinuity
+spreads power all across the spectrum. \cite{spectral-density-estimation}
+
+Pri FT dostávame frekvenčné zložky za prítomné v celkom priebehu v rôznych časových okamihoch, keby sme chceli
+dosiahnuť lepšiu lokalizáciu v čase, tak prvý pokus ponúka Gáborova transformácia. Princíp neurčitosti: sústredenosť 
+vo frekvenčnej domény vyvoláva neurčitosť v čase a symetricky naopak.
+
+Dochádza k vynásobenie zdrojového signálu koeficientmi okna pre odstránenie hraničných efektov, ktoré spôsobujú/vnášajú
+neexistujúce periodické komponenty, na okraji okna preto znižuje úroveň na nulu. Snahou je dokonalé izolovanie frekvenčného
+pásma, ale pri FT dostávame sinc.
+Prehľad okien - symetrické okolo stredu
+
+\begin{ceqn}\begin{align}
+\text{Obdĺžníkové (rovnomerné) okno} w(n) &= 1,\, n = 0, 1, ..., N - 1 \\
+\text{Trojuholníkové (Barlett) okno} 
+	w(n) &= 
+	\begin{cases} 
+		\frac{n}{N / 2}; n = 0, \dots, N / 2 \\
+	 	2 - \frac{n}{N / 2}; n = N/2+1, \dots, N - 1  
+	\end{cases} \\
+\text{Hanningovo okno} w(n) &= 0.5 - 0.5\cos(2\pi n / N)  \\
+\text{Hammingovo okno} w(n) &= 0.54 - 0.46\cos(2\pi n / N) \\
+\text{Blackman-Harrisovo okno} w(n) &= 0.35875 - 0.48829\cos(z) + 0.14128 cos(2z) - 0.01168 cos(3z), z = 2\pi n / N
+\end{align}\end{ceqn}
+
+Efekt oknových funkcií na spektrálny leakage efekt (únik spektra)
+výhodné percentá prekryvu FT 	\cite{understanding-dsp} \cite{spectral-density-estimation}
+Priemerovanie a prekryv:
+- Amplitude Flatness (AF)
+- Power Flatness (PF)
+- Overlap Correlation (OC)
 
 \subsection{Filtre s konečnou impulznou odozvou}
 \label{fir-filter}
@@ -673,18 +720,21 @@ Roziel medzi FIR a IIR, Dolná pripusť, pásmová priepusť, horná pripusť,
 \begin{equation}
 y(n) = \sum_{k=0}^{D_y}{x(k) \cdot h(n-k)} = x(n) * h(n)
 \end{equation}
-
-Prenosová funkcia
-\begin{equation}
-H(\Omega) = \frac{Y(\Omega)}{X(\Omega)}
-\end{equation}
+Prenosová funkcia - koeficienty filtra
 
 \subsubsection{Detektor obálok}
 \footnote{\url{https://www.mathworks.com/help/dsp/ug/envelope-detection.html}}
 \footnote{\url{https://www.dsprelated.com/showarticle/938.php}}
+- Square-Law / Full-Wave
+- umocnenie dvomi  (alebo absolútna hodnota)
+- amplifikácia faktorom 2 (zostane iba horná polovica)
+- decimácia 1.5 (podvzorkovanie)
+- dolná priepusť FIR
+- druhá odmocnina pre odstránenie skreslenia spôsobeného úvodným umocnením
+- 
 
 \section{Senzorová sieť}
-Nízko-energetické zariadenia komunikujúce cez odľahčené sieťové protokoly so snahou spracovania v reálnom čase a ponechaním najdôležitejších informácii dolovaním z veľkého množstva zdrojových dát. Cloud / Fog comuting. Sink a Edge nodes
+Nízko-energetické zariadenia komunikujúce cez odľahčené sieťové protokoly so snahou spracovania v reálnom čase a ponechaním najdôležitejších informácii dolovaním z veľkého množstva zdrojových dát. Cloud / Hmlové počítanie. okrajový a sink (zoskupujúci) uzol
 
 Vlastnosti senzorovej siete
 \begin{itemize}
@@ -711,26 +761,9 @@ CEP - Complex event processing - spracúva toky udalosti zo zdrojov reálneho sv
 \item Podmienka - uvažuje ktorá časť udalosti bude braná do úvahy pri spracovaní, napr. môže ísť o prekročenie prahu
 \item Akcia - aká sada úloh má byť vykonaná pri detekcii udalosti
 \end{itemize}
-
-Behové pravidlá sú spracúvané vo viacerých fázach
-\begin{itemize}
-\item Signalizácia - detekcia udalosti
-\item Spustenie - asociácia udalosti so sadou pravidiel
-\item Vyhodnotenie - vyhodnotenie podmienky
-\item Plánovanie - stanovenie poradia vykonania
-\item Vykonanie - vykonanie pravidlá
-\end{itemize}
 \cite{processing-information-flows}
 
-\subsection{Senzorová jednotka}
-
-Súčasti senzorovej jednotky:
-\begin{itemize}
-\item Zberná jednotka
-\item Výpočtová jednotka
-\item Komunikačná jednotka
-\item Napájacia jednotka
-\end{itemize}
+Súčasti senzorovej jednotky: Zberná jednotka, Výpočtová jednotka, Komunikačná jednotka, Napájacia jednotka
 
 Obmedzenia na senzorové uzly
 \begin{itemize}
@@ -740,9 +773,10 @@ Obmedzenia na senzorové uzly
 \end{itemize}
 \cite{big-data-collection-wsn}
 
+Bluetooth, BLE -  IEEE 802.15.1 bezdrôtová technológia s krátkym dosahom spravidla do 10 m (0,5mW pri 0.5m, 1mW pri 1m, 2.5mW pre 10m, 10mW pre 20m) na ultra krátkych vlnách 2.402 GHz - 2.48 GHz.
+SDP, RFCOMM náhradou za sériové porty + L2CAP. (symetrická komunikácia) \url{https://www.bluetooth.com/specifications/specs/rfcomm-1-2/}
+Wifi - 802.11 (klient-server cez prístupový bod) - TCP/IP sieťový zásobník, CoAP, MQTT na 6LoWPAN 
+LoRa 863-870Hz
+IEEE802.15.4e (Smart Mesh IP)  Time Synchronized Mesh Protocol (TSMP) The TSMP includes a Time Slotted Channel Hopping (TSCH) media access layer (MAC). TSCH works by dividing time into ‘slots’, and providing a mechanism to map time slots to channels with a pre-assigned hopping sequence.
+Zigbee
 
-Za ideálnych okolností by sa mal online algoritmus učiť kontinuálne bez ukladania predošlých bodov a detekcií.
-V rozhodnutiach algoritmu sú zahrnuté informácie o všetkých predošlých bodoch do terajšieho rozhodnutia. Mal by mať schopnosť sa adaptovať dynamickému prostrediu, v ktorom pôsobí. Bez nutnosti manuálnych úprav parametrov modelu. Zároveň je žiaduce minimalizovať falošné pozitíva a negatíva pri detekcii udalostí.
-
-
-\emptypage
