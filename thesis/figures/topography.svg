@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   sodipodi:docname="topography.svg"
+   id="svg5"
+   version="1.1"
+   viewBox="0 0 210 297"
+   height="297mm"
+   width="210mm"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20, custom)"
+   inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.4609989"
+     inkscape:cx="400.06875"
+     inkscape:cy="197.46764"
+     inkscape:window-width="1920"
+     inkscape:window-height="1006"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Vrstva 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264999;stroke-linejoin:bevel"
+       d="m 15.488,99.3644 h 174.216 m -174.216,0 0.151724,-88.619007 M 15.488,99.3644 c 0.1942,-0.8519 1.5532,-6.2962 1.7474,-7.3021 0.1943,-1.0058 0.3885,-2.0463 0.5827,-3.031 0.1942,-0.9846 0.3885,-1.9103 0.5827,-2.7231 0.1942,-0.8128 0.3884,-1.5113 0.5826,-2.1061 0.1943,-0.5947 0.3885,-1.0869 0.5827,-1.5453 0.1942,-0.4583 0.3884,-0.8858 0.5827,-1.3711 0.1942,-0.4854 0.3884,-1.0319 0.5826,-1.6994 0.1943,-0.6675 0.3885,-1.4578 0.5827,-2.3686 0.1942,-0.9107 0.3884,-1.9412 0.5827,-3.027 0.1942,-1.0859 0.3884,-2.2243 0.5826,-3.3227 0.1942,-1.0985 0.3885,-2.1534 0.5827,-3.0931 0.1942,-0.9396 0.3884,-1.7616 0.5827,-2.4526 0.1942,-0.691 0.3884,-1.2511 0.5826,-1.7316 0.1942,-0.4806 0.3885,-0.8839 0.5827,-1.2973 0.1942,-0.4134 0.3884,-0.8403 0.5826,-1.3557 0.1943,-0.5154 0.3885,-1.1219 0.5827,-1.841 0.1942,-0.719 0.3885,-1.5507 0.5827,-2.4506 0.1942,-0.8999 0.3884,-1.8656 0.5826,-2.8098 0.1943,-0.9441 0.3885,-1.8632 0.5827,-2.6733 0.1942,-0.8101 0.3884,-1.5084 0.5827,-2.0592 0.1942,-0.5508 0.3884,-0.9534 0.5826,-1.2389 0.1942,-0.2856 0.3885,-0.4558 0.5827,-0.5914 0.1942,-0.1356 0.3884,-0.2399 0.5827,-0.3989 0.1942,-0.159 0.3884,-0.3758 0.5826,-0.6951 0.1942,-0.3192 0.3885,-0.7421 0.5827,-1.2474 0.1942,-0.5054 0.3884,-1.0918 0.5826,-1.6836 0.1943,-0.5918 0.3885,-1.1857 0.5827,-1.6924 0.1942,-0.5067 0.3885,-0.9228 0.5827,-1.1936 0.1942,-0.2707 0.3884,-0.3944 0.5826,-0.3806 0.1943,0.0137 0.3885,0.1642 0.5827,0.3822 0.1942,0.218 0.3884,0.5007 0.5827,0.7567 0.1942,0.2559 0.3884,0.4817 0.5826,0.6122 0.1943,0.1305 0.3885,0.1639 0.5827,0.0961 0.1942,-0.0678 0.3884,-0.2362 0.5827,-0.4466 0.1942,-0.2105 0.3884,-0.4602 0.5826,-0.6603 0.1942,-0.2 0.3885,-0.347 0.5827,-0.3704 0.1942,-0.0234 0.3884,0.0791 0.5826,0.3207 0.1943,0.2415 0.3885,0.6221 0.5827,1.0895 0.1942,0.4674 0.3885,1.0193 0.5827,1.5655 0.1942,0.5463 0.3884,1.0834 0.5826,1.531 0.1943,0.4475 0.3885,0.803 0.5827,1.038 0.1942,0.235 0.3884,0.3493 0.5827,0.381 0.1942,0.0317 0.3884,-0.017 0.5826,-0.0631 0.1943,-0.0462 0.3885,-0.0863 0.5827,-0.0385 0.1942,0.0479 0.3884,0.1868 0.5827,0.4523 0.1942,0.2656 0.3884,0.6586 0.5826,1.1485 0.1942,0.4898 0.3885,1.0747 0.5827,1.6731 0.1942,0.5983 0.3884,1.2068 0.5827,1.7362 0.1942,0.5294 0.207629,0.722706 0.401829,1.038106 0.1942,0.3154 0.569271,0.751594 0.763471,0.817194 0.1942,0.0656 0.3884,0.0156 0.5826,-0.0774 0.1943,-0.093 0.221881,-0.174799 0.416081,-0.258699 0.1942,-0.0839 0.555019,-0.166801 0.749319,-0.0893 0.1942,0.0775 0.305352,0.290985 0.499552,0.583785 0.1943,0.2927 0.471548,0.663815 0.665748,1.097015 0.1942,0.4332 0.292975,1.134214 0.487275,1.544314 0.09708,0.205057 0.572831,1.661327 0.542416,3.127791 -0.06301,3.037979 0.445578,2.877583 0.542699,2.988857 m 0,0 c 2.313931,0.864033 2.138713,-0.44212 2.661116,-1.321313 0.524312,-0.882406 0.689446,-1.94194 1.075948,-2.474245 1.091549,-1.503322 1.195766,-2.057212 1.324441,-2.221663 m 0,0 c 0.1942,-0.1356 0.163805,-0.452241 0.358105,-0.820041 0.1942,-0.3677 0.3884,-0.8305 0.5826,-1.303 0.1942,-0.4725 0.3885,-0.9515 0.5827,-1.3502 0.1942,-0.3987 0.3884,-0.7142 0.5827,-0.9044 0.1942,-0.1902 0.3884,-0.2541 0.5826,-0.2159 0.1942,0.0381 0.3885,0.1769 0.5827,0.3394 0.1942,0.1625 0.3884,0.3456 0.5826,0.4625 0.1943,0.1169 0.3885,0.1644 0.5827,0.0933 0.1942,-0.0711 0.3885,-0.2622 0.5827,-0.5573 0.1942,-0.2951 0.3884,-0.6932 0.5826,-1.1209 0.1943,-0.4278 0.3885,-0.8821 0.5827,-1.2711 0.1942,-0.389 0.3884,-0.7093 0.5827,-0.8993 0.1942,-0.1899 0.3884,-0.2476 0.5826,-0.1742 0.1943,0.0734 0.3885,0.2774 0.5827,0.5493 0.1942,0.2719 0.3884,0.609 0.5827,0.9217 0.1942,0.3128 0.3884,0.5977 0.5826,0.7872 0.1942,0.1895 0.3885,0.2814 0.5827,0.2669 0.1942,-0.0145 0.3884,-0.135 0.5826,-0.3063 0.1943,-0.1712 0.3885,-0.3905 0.5827,-0.5681 0.1942,-0.1775 0.3885,-0.3098 0.5827,-0.3206 0.1942,-0.0108 0.3884,0.1024 0.5826,0.3609 0.1943,0.2586 0.3885,0.6628 0.5827,1.1679 0.1942,0.505 0.3884,1.1087 0.5827,1.7242 0.1942,0.6155 0.3884,1.2395 0.5826,1.7896 0.1943,0.5501 0.3885,1.0238 0.5827,1.3876 0.1942,0.3637 0.3884,0.6171 0.5827,0.7932 0.1942,0.1761 0.3884,0.2769 0.5826,0.3836 0.1942,0.1068 0.3885,0.2229 0.5827,0.4335 0.1942,0.2106 0.3884,0.5188 0.5827,0.9667 0.1942,0.4479 0.3884,1.0367 0.5826,1.7422 0.1942,0.7056 0.3885,1.5266 0.5827,2.3848 0.1942,0.8581 0.3884,1.7503 0.5826,2.5857 0.1943,0.8354 0.3885,1.6108 0.5827,2.2709 0.1942,0.66 0.3884,1.2031 0.5827,1.6385 0.1942,0.4354 0.3884,0.764 0.5826,1.0536 0.1943,0.2895 0.3885,0.543 0.5827,0.849 0.1942,0.306 0.3884,0.668 0.5827,1.1466 0.1942,0.4786 0.3884,1.0758 0.5826,1.7905 0.1942,0.7148 0.3885,1.5464 0.5827,2.4318 0.1942,0.8853 0.3884,1.8215 0.5827,2.7161 0.1942,0.8946 0.3884,1.7441 0.5826,2.4759 0.1942,0.7318 0.3885,1.3435 0.5827,1.8204 0.1942,0.477 0.3884,0.8192 0.5826,1.0769 0.1943,0.2578 0.3885,0.4335 0.5827,0.6143 0.1942,0.1808 0.3885,0.3701 0.5827,0.6439 0.1942,0.2738 0.3884,0.6347 0.5826,1.1058 0.1943,0.4711 0.3885,1.0527 0.5827,1.7016 0.1942,0.649 0.3884,1.3631 0.5827,2.0557 0.1942,0.6926 0.3884,1.3602 0.5826,1.9188 0.1942,0.5585 0.3885,1.005 0.5827,1.3029 0.1942,0.2979 0.3884,0.4463 0.5827,0.4756 0.1942,0.0292 0.3884,-0.0591 0.5826,-0.1846 0.1942,-0.1254 0.3885,-0.2847 0.5827,-0.3909 0.1942,-0.1062 0.3884,-0.1564 0.5826,-0.104 0.1943,0.0523 0.3885,0.2083 0.5827,0.4486 0.1942,0.2402 0.3885,0.5634 0.5827,0.8951 0.1942,0.3317 0.3884,0.6686 0.5826,0.9216 0.1943,0.253 0.3885,0.4187 0.5827,0.4415 0.1942,0.0229 0.3884,-0.0989 0.5827,-0.3567 0.1942,-0.2578 0.3884,-0.6508 0.5826,-1.1107 0.1943,-0.4598 0.3885,-0.9837 0.5827,-1.4796 0.1942,-0.4958 0.3884,-0.9604 0.5827,-1.3273 0.1942,-0.3669 0.3884,-0.6341 0.5826,-0.7959 0.1942,-0.1617 0.3885,-0.2186 0.5827,-0.2277 0.1942,-0.0092 0.3884,0.0266 0.5826,0.0189 0.1943,-0.0078 0.3885,-0.0626 0.5827,-0.2355 0.1942,-0.1729 0.3885,-0.4664 0.5827,-0.8948 0.1942,-0.4283 0.3884,-0.9917 0.5826,-1.6388 0.1943,-0.6472 0.3885,-1.3759 0.5827,-2.0962 0.1942,-0.7203 0.3884,-1.4288 0.5827,-2.0443 0.1942,-0.6154 0.3884,-1.1352 0.5826,-1.5297 0.1943,-0.3945 0.3885,-0.6633 0.5827,-0.8433 0.1942,-0.18 0.3884,-0.2733 0.5827,-0.3624 0.1942,-0.0892 0.3884,-0.1776 0.5826,-0.3479 0.1942,-0.1703 0.3885,-0.4255 0.5827,-0.8028 0.1942,-0.3773 0.3884,-0.8775 0.5827,-1.4714 0.1942,-0.5939 0.3884,-1.2799 0.5826,-1.9772 0.1943,-0.6974 0.3883,-1.4027 0.5823,-2.0267 0.195,-0.6241 0.389,-1.1636 0.583,-1.5682 0.194,-0.4047 0.388,-0.673 0.583,-0.8202 0.194,-0.1472 0.388,-0.1744 0.582,-0.1535 0.195,0.0208 0.389,0.0865 0.583,0.1078 0.194,0.0212 0.388,-0.0054 0.583,-0.1381 0.194,-0.1327 0.388,-0.3732 0.582,-0.717 0.195,-0.3438 0.389,-0.7899 0.583,-1.2733 0.194,-0.4833 0.388,-1.0009 0.583,-1.462 0.194,-0.4612 0.388,-0.8624 0.582,-1.1365 0.195,-0.2741 0.389,-0.419 0.583,-0.4274 0.194,-0.0083 0.388,0.1195 0.583,0.3269 0.194,0.2073 0.388,0.4915 0.582,0.7621 0.195,0.2707 0.389,0.5244 0.583,0.6854 0.194,0.1611 0.388,0.227 0.583,0.1775 0.194,-0.0495 0.388,-0.2147 0.582,-0.4502 0.195,-0.2355 0.389,-0.5391 0.583,-0.825 0.194,-0.2858 0.388,-0.5503 0.583,-0.714 0.194,-0.1638 0.388,-0.224 0.582,-0.1512 0.195,0.0727 0.389,0.2791 0.583,0.5816 0.194,0.3026 0.388,0.6996 0.583,1.1062 0.194,0.4066 0.388,0.8195 0.582,1.1514 0.195,0.3319 0.389,0.5799 0.583,0.7004 0.194,0.1205 0.388,0.1125 0.583,-0.0012 0.194,-0.1136 0.388,-0.3315 0.582,-0.5775 0.195,-0.246 0.389,-0.517 0.583,-0.7259 0.194,-0.2088 0.388,-0.3523 0.583,-0.38 0.194,-0.0276 0.388,0.0619 0.582,0.2544 0.195,0.1924 0.389,0.4866 0.583,0.8104 0.194,0.3238 0.388,0.6741 0.583,0.959 0.194,0.285 0.44164,13.160721 0.63564,13.245721 0.195,0.0849 0.33536,-12.622821 0.52936,-12.804221 0.194,-0.1815 0.388,-0.4957 0.583,-0.8808 0.194,-0.3851 0.388,-0.8384 0.582,-1.27 0.195,-0.4317 0.389,-0.8383 0.583,-1.1509 0.194,-0.3126 0.388,-0.5291 0.583,-0.6389 0.194,-0.1097 0.388,-0.1131 0.582,-0.0639 0.194,0.0492 0.389,0.1484 0.583,0.2084 0.194,0.06 0.388,0.0772 0.583,-0.0249 0.194,-0.1021 0.388,-0.3261 0.582,-0.6944 0.194,-0.3683 0.389,-0.8812 0.583,-1.4948 0.194,-0.6137 0.388,-1.3259 0.583,-2.0498 0.194,-0.7239 0.388,-1.4562 0.582,-2.1138 0.194,-0.6575 0.389,-1.2374 0.583,-1.7048 0.194,-0.4674 0.388,-0.8215 0.583,-1.094 0.194,-0.2724 0.388,-0.465 0.582,-0.658 0.194,-0.1931 0.389,-0.3901 0.583,-0.6763 0.194,-0.2861 0.388,-0.6644 0.583,-1.1782 0.194,-0.5137 0.388,-1.1641 0.582,-1.9281 0.194,-0.764 0.389,-1.6403 0.583,-2.5513 0.194,-0.9109 0.388,-1.8534 0.583,-2.7361 0.194,-0.8827 0.388,-1.7024 0.582,-2.4025 0.194,-0.7 0.389,-1.2789 0.583,-1.744 0.194,-0.4652 0.388,-0.8177 0.583,-1.1241 0.194,-0.3065 0.388,-0.5698 0.582,-0.8788 0.194,-0.309 0.389,-0.6669 0.583,-1.1356 0.194,-0.4688 0.388,-1.0502 0.583,-1.7447 0.194,-0.6945 0.388,-1.5016 0.582,-2.3592 0.194,-0.8575 0.389,-1.7628 0.583,-2.6235 0.194,-0.8607 0.388,-1.6733 0.583,-2.3646 0.194,-0.6912 0.388,-1.2586 0.582,-1.6863 0.194,-0.4276 0.389,-0.7156 0.583,-0.913 0.194,-0.1975 0.388,-0.3069 0.583,-0.4153 0.194,-0.1083 0.388,-0.2191 0.582,-0.4093 0.194,-0.1902 0.389,-0.4625 0.583,-0.8416 0.194,-0.3791 0.388,-0.8654 0.583,-1.4173 0.194,-0.552 0.388,-1.1675 0.582,-1.7606 0.194,-0.5932 0.389,-1.1606 0.583,-1.6179 0.194,-0.4573 0.388,-0.8016 0.583,-0.9953 0.194,-0.1937 0.388,-0.2359 0.582,-0.156 0.194,0.08 0.389,0.2805 0.583,0.5214 0.194,0.2408 0.388,0.5189 0.583,0.7463 0.194,0.2275 0.388,0.4013 0.582,0.4735 0.194,0.0722 0.389,0.0416 0.583,-0.0743 0.194,-0.116 0.388,-0.3159 0.583,-0.5266 0.194,-0.2108 0.388,-0.429 0.582,-0.5659 0.194,-0.1368 0.389,-0.1887 0.583,-0.0995 0.194,0.0891 0.388,0.3212 0.582,0.6888 0.195,0.3676 0.389,0.8699 0.583,1.4392 0.194,0.5692 0.389,1.2027 0.583,1.8079 0.194,0.6053 0.388,1.1792 0.582,1.6539 0.195,0.4748 0.389,0.8484 0.583,1.1134 0.194,0.265 0.389,0.4219 0.583,0.5267 0.194,0.1047 0.388,0.16 0.582,0.2539 0.195,0.0939 0.389,0.2301 0.583,0.4802 0.194,0.2501 0.389,0.6167 0.583,1.1153 0.194,0.4987 0.388,1.1296 0.582,1.8427 0.195,0.7131 0.389,1.5063 0.583,2.2898 0.194,0.7836 0.389,1.5541 0.583,2.2297 0.194,0.6756 0.388,1.2537 0.582,1.7033 0.195,0.4495 0.389,0.7701 0.583,0.9975 0.194,0.2273 0.389,0.3634 0.583,0.4905 0.194,0.127 0.388,0.2484 0.582,0.4474 0.195,0.1991 0.389,0.4788 0.583,0.8778 0.194,0.3991 0.389,0.9184 0.583,1.5303 0.194,0.612 0.388,1.315 0.582,2.0292 0.195,0.7142 0.389,1.4364 0.583,2.0773 0.194,0.6408 0.389,1.1969 0.583,1.6172 0.194,0.4202 0.388,0.7031 0.582,0.8626 0.195,0.1596 0.389,0.1969 0.583,0.1835 0.194,-0.0135 0.389,-0.0746 0.583,-0.0935 0.194,-0.0189 0.388,0.0077 0.582,0.1396 0.195,0.132 0.389,0.371 0.583,0.7142 0.194,0.3432 0.389,0.7899 0.583,1.2762 0.194,0.4863 0.388,1.0094 0.582,1.4788 0.195,0.4694 0.389,0.8818 0.583,1.1693 0.194,0.2876 0.389,0.448 0.583,0.4731 0.194,0.0251 0.388,-0.085 0.582,-0.2743 0.195,-0.1893 0.389,-0.4553 0.583,-0.7074 0.194,-0.2522 0.389,-0.4871 0.583,-0.628 0.194,-0.1409 0.388,-0.1853 0.582,-0.1112 0.195,0.0742 0.389,0.2671 0.583,0.5349 0.194,0.2679 0.389,0.6085 0.583,0.9365 0.194,0.328 0.388,0.64 0.582,0.856 0.195,0.216 0.389,0.3331 0.583,0.3209 0.194,-0.0123 0.389,-0.1547 0.583,-0.391 0.194,-0.2364 0.388,-0.565 0.582,-0.9015 0.195,-0.3365 0.389,-0.6776 0.583,-0.9356 0.194,-0.258 0.388,-0.4299 0.583,-0.4708 0.194,-0.041 0.388,0.05 0.582,0.2515 0.195,0.2014 0.389,0.512 0.583,0.8562 0.194,0.3443 0.388,0.7191 0.583,1.0369 0.194,0.3178 0.388,0.5753 0.582,0.7208 0.195,0.1455 0.389,0.1776 0.583,0.1088 0.194,-0.0687 0.388,-0.2371 0.583,-0.4342 0.194,-0.1971 0.388,-0.4197 0.582,-0.5763 0.195,-0.1566 0.389,-0.2437 0.583,-0.1981 0.194,0.0457 0.388,0.2261 0.583,0.5424 0.194,0.3164 0.388,0.7682 0.582,1.2944 0.195,0.5261 0.389,1.124 0.583,1.7034 0.194,0.5794 0.388,1.137 0.583,1.6026 0.194,0.4655 0.388,0.8368 0.582,1.1015 0.195,0.2647 0.389,0.423 0.583,0.5272 0.194,0.1042 0.388,0.1568 0.583,0.2465 0.194,0.0896 0.388,0.2198 0.582,0.4673 0.195,0.2476 0.389,0.6153 0.583,1.1264 0.194,0.5111 0.388,1.1661 0.583,1.9218 0.194,0.7558 0.388,1.6103 0.582,2.4767 0.195,0.8664 0.389,1.7415 0.583,2.541 0.194,0.7995 0.388,1.5208 0.583,2.127 0.194,0.6062 0.388,1.0967 0.582,1.5014 0.195,0.4047 0.389,0.7253 0.583,1.0413 0.194,0.3161 0.388,0.6309 0.583,1.0298 0.194,0.399 0.388,0.8852 0.582,1.5029 0.195,0.6177 0.389,1.3681 0.583,2.2294 0.194,0.8613 0.388,1.8323 0.583,2.8359 0.194,1.0036 0.388,2.0367 0.582,3.0077 0.195,0.971 0.389,1.8766 0.583,2.6589 0.194,0.7823 0.388,1.4397 0.583,1.9783 0.194,0.5386 0.388,0.9592 0.582,1.3277 0.195,0.3685 0.389,0.6876 0.583,1.0462 0.194,0.3586 0.388,0.7601 0.583,1.2672 0.194,0.5071 0.388,1.1219 0.582,1.8464 0.195,0.7244 0.389,1.558 0.583,2.4397"
+       title="t 0.05*sin(45*t) + sin(0.4*t) + 0.5*sin(t) + 0.8*sin(2*t)+0.3*sin(6*t)+0.9*cos(2*t)+0.3*cos(6*t)"
+       id="path3006"
+       sodipodi:nodetypes="cccccccsccccccccccsccscsccsccccsccsccsccscsccscccccccsscsccscsccssccccssccscsscsscscssccscccccccscccccccsccscscsssccccsccsccscccccccccsccsccscssccccccccccccccccccccccccscccccscccccscsscscccsccccsscsccsccssccccssccsccccsccccccccsccsccsscccccscscccscssccsccsccsccccscccccccccccsccsccsccscccccsccsccscc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <circle
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="path3839"
+       cx="33.497284"
+       cy="40.190357"
+       r="1.0583333"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <circle
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="path3839-3"
+       cx="62.328487"
+       cy="48.462212"
+       r="1.0583333"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <circle
+       style="fill:#ff0000;stroke:#ff0000;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="path3839-3-6"
+       cx="140.46686"
+       cy="22.200083"
+       r="1.0583333"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <circle
+       style="fill:#0000ff;stroke:#0000ff;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="path3839-3-6-7"
+       cx="89.09185"
+       cy="96.195831"
+       r="1.0583333"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <circle
+       style="fill:#0000ff;stroke:#0000ff;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="path3839-3-6-7-5"
+       cx="16.358463"
+       cy="98.393066"
+       r="1.0583333"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <circle
+       style="fill:#0000ff;stroke:#0000ff;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="path3839-3-6-7-5-3"
+       cx="189.98006"
+       cy="98.525841"
+       r="1.0583333"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <circle
+       style="fill:#0000ff;stroke:#0000ff;stroke-width:0.264999;stroke-linejoin:bevel"
+       id="path3839-3-6-7-5-3-7"
+       cx="51.017925"
+       cy="62.363235"
+       r="1.0583333"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="149.52274"
+       y="98.297806"
+       id="text7164"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan7162"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="149.52274"
+         y="98.297806">referečná hladina</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="141.74866"
+       y="66.91375"
+       id="text7164-6"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan7162-1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="141.74866"
+         y="66.91375">amplitúda</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="141.74866"
+         y="72.205414"
+         id="tspan31251">(absolutná výška)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:0.95;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="180.34792"
+       y="54.274635"
+       id="text7164-6-4"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="180.34792"
+         y="54.274635"
+         id="tspan51145">vertikálna</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="180.34792"
+         y="58.296299"
+         id="tspan61266">toleracia </tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="142.78566"
+       y="15.537281"
+       id="text7164-2"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan7162-9"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="142.78566"
+         y="15.537281">vrchol (špička)</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="142.78566"
+         y="20.828943"
+         id="tspan21813">lokálne maximum</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="90.712189"
+       y="46.554184"
+       id="text7164-2-0-0"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="90.712189"
+         y="46.554184"
+         id="tspan26084-3">izolácia</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="76.417221"
+       y="56.179745"
+       id="text7164-2-0-0-9"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="76.417221"
+         y="56.179745"
+         id="tspan26084-3-7">prominencia</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="76.417221"
+         y="61.471409"
+         id="tspan45173">(relatívna výška)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.25;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="47.41684"
+       y="91.878304"
+       id="text7164-2-1"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         id="tspan7162-9-2"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="47.41684"
+         y="91.878304">údolie (špička)</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="47.41684"
+         y="97.169968"
+         id="tspan23369">lokálne mimimum</tspan></text>
+    <g
+       id="g31768"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300">
+      <path
+         style="fill:#000000;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 140.49808,23.276078 V 99.316282"
+         id="path29899"
+         sodipodi:nodetypes="cc" />
+      <path
+         sodipodi:type="star"
+         style="fill:#000000;stroke:#1a1a1a;stroke-width:1.00157;stroke-linejoin:bevel"
+         id="path30363"
+         inkscape:flatsided="false"
+         sodipodi:sides="3"
+         sodipodi:cx="527.05273"
+         sodipodi:cy="104.08364"
+         sodipodi:r1="7.0812225"
+         sodipodi:r2="3.540611"
+         sodipodi:arg1="-1.5707963"
+         sodipodi:arg2="-0.52359878"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         d="m 527.05273,97.002419 3.06626,5.310921 3.06626,5.31091 -6.13252,0 -6.13251,0 3.06626,-5.31091 z"
+         transform="matrix(0.26458333,0,0,0.26458333,1.0487124,-2.3891449)"
+         inkscape:transform-center-x="1.7568425e-06"
+         inkscape:transform-center-y="-0.46839369" />
+      <path
+         sodipodi:type="star"
+         style="fill:#000000;stroke:#1a1a1a;stroke-width:1.00157;stroke-linejoin:bevel"
+         id="path30363-2"
+         inkscape:flatsided="false"
+         sodipodi:sides="3"
+         sodipodi:cx="527.05273"
+         sodipodi:cy="104.08364"
+         sodipodi:r1="7.0812225"
+         sodipodi:r2="3.540611"
+         sodipodi:arg1="-1.5707963"
+         sodipodi:arg2="-0.52359878"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         transform="matrix(0.26458333,0,0,-0.26458333,1.0487124,124.9815)"
+         inkscape:transform-center-x="1.7568425e-06"
+         inkscape:transform-center-y="0.46839389"
+         d="m 527.05273,97.002419 3.06626,5.310921 3.06626,5.31091 -6.13252,0 -6.13251,0 3.06626,-5.31091 z" />
+    </g>
+    <g
+       id="g46919"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300">
+      <g
+         id="g46874">
+        <path
+           style="fill:#000000;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           d="M 62.37025,49.69913 62.211876,62.610114"
+           id="path29899-5"
+           sodipodi:nodetypes="cc" />
+        <path
+           sodipodi:type="star"
+           style="fill:#000000;stroke:#1a1a1a;stroke-width:1.00157;stroke-linejoin:bevel"
+           id="path30363-2-28"
+           inkscape:flatsided="false"
+           sodipodi:sides="3"
+           sodipodi:cx="527.05273"
+           sodipodi:cy="104.08364"
+           sodipodi:r1="7.0812225"
+           sodipodi:r2="3.540611"
+           sodipodi:arg1="-1.5707963"
+           sodipodi:arg2="-0.52359878"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           transform="matrix(0.18363028,0,0,-0.18363028,-34.570965,80.422695)"
+           inkscape:transform-center-x="2.3717683e-06"
+           inkscape:transform-center-y="0.32508271"
+           d="m 527.05273,97.002419 3.06626,5.310921 3.06626,5.31091 -6.13252,0 -6.13251,0 3.06626,-5.31091 z" />
+      </g>
+      <path
+         sodipodi:type="star"
+         style="fill:#000000;stroke:#1a1a1a;stroke-width:1.00157;stroke-linejoin:bevel"
+         id="path30363-2-28-6"
+         inkscape:flatsided="false"
+         sodipodi:sides="3"
+         sodipodi:cx="527.05273"
+         sodipodi:cy="104.08364"
+         sodipodi:r1="7.0812225"
+         sodipodi:r2="3.540611"
+         sodipodi:arg1="-1.5707963"
+         sodipodi:arg2="-0.52359878"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         transform="matrix(-0.18363028,0,0,0.18363028,159.15309,31.886549)"
+         inkscape:transform-center-x="-5.0280526e-06"
+         inkscape:transform-center-y="-0.32508317"
+         d="m 527.05273,97.002419 3.06626,5.310921 3.06626,5.31091 -6.13252,0 -6.13251,0 3.06626,-5.31091 z" />
+    </g>
+    <path
+       style="fill:#000000;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 178.70356,49.028513 0.0689,13.47041"
+       id="path29899-5-4"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       sodipodi:type="star"
+       style="fill:#000000;stroke:#1a1a1a;stroke-width:1.00157;stroke-linejoin:bevel"
+       id="path30363-2-28-7"
+       inkscape:flatsided="false"
+       sodipodi:sides="3"
+       sodipodi:cx="527.05273"
+       sodipodi:cy="104.08364"
+       sodipodi:r1="7.0812225"
+       sodipodi:r2="3.540611"
+       sodipodi:arg1="-1.5707963"
+       sodipodi:arg2="-0.52359878"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       transform="matrix(0.18363028,0,0,-0.18363028,81.920719,70.795348)"
+       inkscape:transform-center-x="2.3717683e-06"
+       inkscape:transform-center-y="0.32508271"
+       d="m 527.05273,97.002419 3.06626,5.310921 3.06626,5.31091 -6.13252,0 -6.13251,0 3.06626,-5.31091 z"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       sodipodi:type="star"
+       style="fill:#000000;stroke:#1a1a1a;stroke-width:1.00157;stroke-linejoin:bevel"
+       id="path30363-2-28-6-8"
+       inkscape:flatsided="false"
+       sodipodi:sides="3"
+       sodipodi:cx="527.05273"
+       sodipodi:cy="104.08364"
+       sodipodi:r1="7.0812225"
+       sodipodi:r2="3.540611"
+       sodipodi:arg1="-1.5707963"
+       sodipodi:arg2="-0.52359878"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       transform="matrix(-0.18363028,0,0,0.18363028,275.55532,40.796723)"
+       inkscape:transform-center-x="-5.0280526e-06"
+       inkscape:transform-center-y="-0.32508317"
+       d="m 527.05273,97.002419 3.06626,5.310921 3.06626,5.31091 -6.13252,0 -6.13251,0 3.06626,-5.31091 z"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <g
+       id="g31768-8"
+       transform="matrix(0,0.99991608,-0.86726865,0,149.71471,-92.092647)"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300">
+      <path
+         style="fill:#000000;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 140.49808,23.276078 V 99.316282"
+         id="path29899-7"
+         sodipodi:nodetypes="cc" />
+      <path
+         sodipodi:type="star"
+         style="fill:#000000;stroke:#1a1a1a;stroke-width:1.00157;stroke-linejoin:bevel"
+         id="path30363-9"
+         inkscape:flatsided="false"
+         sodipodi:sides="3"
+         sodipodi:cx="527.05273"
+         sodipodi:cy="104.08364"
+         sodipodi:r1="7.0812225"
+         sodipodi:r2="3.540611"
+         sodipodi:arg1="-1.5707963"
+         sodipodi:arg2="-0.52359878"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         transform="matrix(0.26458333,0,0,0.26458333,1.0487124,-2.3891449)"
+         inkscape:transform-center-x="1.7568425e-06"
+         inkscape:transform-center-y="-0.46839369"
+         d="m 527.05273,97.002419 3.06626,5.310921 3.06626,5.31091 -6.13252,0 -6.13251,0 3.06626,-5.31091 z" />
+      <path
+         sodipodi:type="star"
+         style="fill:#000000;stroke:#1a1a1a;stroke-width:1.00157;stroke-linejoin:bevel"
+         id="path30363-2-2"
+         inkscape:flatsided="false"
+         sodipodi:sides="3"
+         sodipodi:cx="527.05273"
+         sodipodi:cy="104.08364"
+         sodipodi:r1="7.0812225"
+         sodipodi:r2="3.540611"
+         sodipodi:arg1="-1.5707963"
+         sodipodi:arg2="-0.52359878"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         transform="matrix(0.26458333,0,0,-0.26458333,1.0487124,124.9815)"
+         inkscape:transform-center-x="1.7568425e-06"
+         inkscape:transform-center-y="0.46839389"
+         d="m 527.05273,97.002419 3.06626,5.310921 3.06626,5.31091 -6.13252,0 -6.13251,0 3.06626,-5.31091 z" />
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:1.05999995,0.52999997,0.26499999,0.52999997;stroke-dashoffset:0"
+       d="m 52.183822,62.677657 20.51426,0.08936"
+       id="path37148"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458299;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:1.05833194,0.26458299;stroke-dashoffset:0"
+       d="m 62.832932,56.237085 13.12677,-0.390259"
+       id="path42740"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.05833, 0.264583;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 75.160509,92.762981 87.508042,96.31701"
+       id="path42740-1"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.05833, 0.529166, 0.264583, 0.529166;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 158.45059,53.081977 c 20.32239,0 20.25297,-0.09921 20.25297,-0.09921"
+       id="path45882"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.05833, 0.529166, 0.264583, 0.529166;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 158.51951,58.708514 c 20.32239,0 20.25297,-0.09921 20.25297,-0.09921"
+       id="path45882-3"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:0.95;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="109.62376"
+       y="90.193222"
+       id="text7164-6-4-3"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300"><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="109.62376"
+         y="90.193222"
+         id="tspan51145-6">horizontálna</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';stroke-width:0.264583"
+         x="109.62376"
+         y="94.214882"
+         id="tspan63198">tolerancia </tspan></text>
+    <g
+       id="g57624"
+       transform="matrix(0,1,1,0,29.1186,-39.965231)"
+       inkscape:export-filename="/home/miroslav/fiit-stu/BP/bachelor-thesis/thesis/figures/topography.png"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300">
+      <path
+         style="fill:#000000;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 125.65489,82.13839 0.0689,13.47041"
+         id="path29899-5-4-1"
+         sodipodi:nodetypes="cc" />
+      <path
+         sodipodi:type="star"
+         style="fill:#000000;stroke:#1a1a1a;stroke-width:1.00157;stroke-linejoin:bevel"
+         id="path30363-2-28-7-0"
+         inkscape:flatsided="false"
+         sodipodi:sides="3"
+         sodipodi:cx="527.05273"
+         sodipodi:cy="104.08364"
+         sodipodi:r1="7.0812225"
+         sodipodi:r2="3.540611"
+         sodipodi:arg1="-1.5707963"
+         sodipodi:arg2="-0.52359878"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         transform="matrix(0.18363028,0,0,-0.18363028,28.872046,103.90523)"
+         inkscape:transform-center-x="2.3717683e-06"
+         inkscape:transform-center-y="0.32508271"
+         d="m 527.05273,97.002419 3.06626,5.310921 3.06626,5.31091 -6.13252,0 -6.13251,0 3.06626,-5.31091 z" />
+      <path
+         sodipodi:type="star"
+         style="fill:#000000;stroke:#1a1a1a;stroke-width:1.00157;stroke-linejoin:bevel"
+         id="path30363-2-28-6-8-6"
+         inkscape:flatsided="false"
+         sodipodi:sides="3"
+         sodipodi:cx="527.05273"
+         sodipodi:cy="104.08364"
+         sodipodi:r1="7.0812225"
+         sodipodi:r2="3.540611"
+         sodipodi:arg1="-1.5707963"
+         sodipodi:arg2="-0.52359878"
+         inkscape:rounded="0"
+         inkscape:randomized="0"
+         transform="matrix(-0.18363028,0,0,0.18363028,222.50665,73.9066)"
+         inkscape:transform-center-x="-5.0280526e-06"
+         inkscape:transform-center-y="-0.32508317"
+         d="m 527.05273,97.002419 3.06626,5.310921 3.06626,5.31091 -6.13252,0 -6.13251,0 3.06626,-5.31091 z" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.05833, 0.529166, 0.264583, 0.529166;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 105.40192,86.191854 c 20.32239,0 20.25297,-0.09921 20.25297,-0.09921"
+         id="path45882-32" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:1.05833, 0.529166, 0.264583, 0.529166;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 105.47084,91.818391 c 20.32239,0 20.25297,-0.09921 20.25297,-0.09921"
+         id="path45882-3-0" />
+    </g>
+  </g>
+</svg>

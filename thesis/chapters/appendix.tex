@@ -1,3 +1,9 @@
+% no page numbers for appendicies
+\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+\addtocontents{toc}{\cftpagenumbersoff{chapter}}
+\appendix
+\titleformat{\chapter}{\normalfont\huge\bf}{Príloha \thechapter:}{1em}{}
+
 \setcounter{figure}{0}
 %\setcounter{listing}{0}
 \chapter{Technická dokumentácia}
@@ -32,4 +38,23 @@ V prípade softvérového systému technická dokumentácia spravidla obsahuje �
     \item dokumentáciu k overeniu riešenia
     \item dokumentáciu k používaniu a údržbe (návody na použitie a údržbu projektu)
 \end{itemize}
+
+% Harmonogram práce
+\thispagestyle{empty}
+\chapter{Harmonogram práce}
+\pagenumbering{arabic}
+\renewcommand*{\thepage}{B-\arabic{page}}
+\section{Zimný semester}
+\section{Letný semester}
+
+% Digitálne médium
+\thispagestyle{empty}
+
+\chapter{Obsah digitálneho média}
+\pagenumbering{arabic}
+\renewcommand*{\thepage}{C-\arabic{page}}
+\par Evidenčné číslo práce v informačnom systéme: \RegNo
+\par Obsah digitálnej časti práce (archív ZIP):
+\par Názov odovzdaného archívu: ...zip
+
  
