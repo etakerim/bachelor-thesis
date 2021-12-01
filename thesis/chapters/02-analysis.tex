@@ -259,13 +259,12 @@ uvažovať namiesto časových značiek o celočíselných indexoch, ktoré urč
 $\mathbf{x} = (x_1, x_2, …, x_n)^T$. Keď sú súčasne zaznamenávané viaceré dátové body hovoríme o matici pozorovaní $X_{n,m}$, či o 
 viacrozmernom časovom rade.
 
+\subsection{Prúdové algoritmy}
 Pri veľkom objeme prichádzajúcich vzoriek produkované senzormi, nie je uskutočniteľné ich úplné uchovanie ani spracovanie celkého 
 dátového toku naraz. Častokrát by stratégia neuváženého odkladania viedla k plýtvaniu zdrojov a zbytočnému archivovaniu údajov s nízkou 
 informačnou hodnotou. Vhodnejšie je agregovanie toku údajov podľa preddefinovaného zmysluplného kritéria, ktoré by umožňovalo zachytiť 
-významné rysy a prompte zodpovedať na vyžadované dopyty. Napríklad zrýchlenie vozidla v konkrétnom okamihu nebude až tak podstatné v 
-porovnaní so znalosťou trvania úsekov pridávania alebo brzdenia, či priemernej prudkosti s akou tieto aktivity boli činené. 
+významné rysy a prompte zodpovedať na vyžadované dopyty. 
 
-\subsection{Prúdové algoritmy}
 Priamočiarou realizáciou agregácie je nahliadať na prvky časového radu postupne ako prichádzajú. 
 Prúdové algoritmy pôsobiace v reálnom čase, a teda neschopné vidieť finálny vektor vzoriek vstupu sa vyznačujú vlastnosťou, že 
 vyprodukujú len na základe takého čiastkového vstupu parciálny výsledok platný pre dosiaľ sa vyskytnutú podmnožinu. 
@@ -281,7 +280,7 @@ Zároveň je žiaduce minimalizovať falošné pozitíva a negatíva pri detekci
 agregácii bod $x_i$ načítaný v prúde, zaráta do každého relevantného počítadla, a môže byť ihneď zabudnutý \cite{data-streams}.
 
 \subsection{Posuvné a rozširujúce sa okná}
-Časový rad $\left(x_i\right)_{i = 0}^{n}$ s dĺžkou $n$ môže byť pre účely výpočtu sumárnych štatistík rozdelený oknovou funkciou 
+Časový rad $\left(x_i\right)_{i = 0}^{n}$ s dĺžkou $n$ môže byť pre účely výpočtu sumárnych štatistík rozdelený okennou funkciou 
 $\mathcal{W}_{l, d}$ na podpostupnosti nazývané okná. 
 
 \emph{Posuvné okná} (,,rolling window'') majú spravidla konštatnú dĺžku $l$ 
@@ -398,7 +397,7 @@ sa získanou úrovňou, šírka obsahujúca údaj o trvaní, či plocha stvárň
 
 Ekvivalentne sa špičky z matematického hľadiska stotožňujú s lokálnymi extrémami funkcie, čo sú maximá (vrcholy) a minimá (údolia). 
 Podľa definície je lokálne maximum $t_0$ bodom, ktorý má vyššiu funkčnú hodnotu ako všetky ostatné body na intervale 
-$t_0 \in I$ (\ref{equ:local-maxima}), lokálne minimum má naopak najnižšiu hodnotu na intervale (\ref{equ:local-minima}) 
+$t_0 \in I$ (\ref{equ:local-maxima}), lokálne minimum má na intervale najmenšiu hodnotu (\ref{equ:local-minima}) 
 \cite{survey-peaks-valleys}. 
 
 \begin{ceqn}\begin{align}
@@ -516,13 +515,6 @@ rámci tolerancie $\varepsilon$ blížiť nule, rozdiel prvých diferencií $\De
 rozdielu diferencií prekračuje prahovú strmosť kopca $slope$, kde leží uvažovaný vrchol. Časová zložitosť
 pre jednu špičku je $\mathcal{O}(1)$. 
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.9\textwidth]{figures/topography.png}
-    \caption{Topografia priebehu signálu}
-    \label{fig:topography}
-\end{figure}
-
 \subsubsection{Algoritmus horského turistu}
 Zanesením do grafu pripomína priebeh funkcie kmitajúceho deja členité pohorie. Na problém rozhodovania sa o tom, či danú lokalitu
 považovať za vrchol možno nahliadať z pohľadu chodca cestujúceho po krivke z lineárne interpolovaných vzoriek. V princípe
@@ -533,6 +525,12 @@ Algoritmus č.\ref{algo:mountain-hiker} horského turistu na začiatku púte z p
 smerov sa krivka uberá. V prípade, že po druhom kroku dôjde k zmene smeru zapíše sa indikácia možného spádu kopca. 
 Výchylka môže byť v dôsledku neprekročenia prahových úrovní v horizontálnej ($hole$) a vertikálnej ($tolerance$) osi 
 ignorovaná, lebo ani na lesnom chodníku sa nepovažuje každá jama alebo vydutie za horu. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/topography.png}
+    \caption{Topografia priebehu signálu}
+    \label{fig:topography}
+\end{figure}
 
 Domnelý vrchol je označený za lokálne maximum, keď spĺňa parametre pre topografické vlastnosti minimálnej akceptovateľnej 
 prominencie a izolácie (obr. \ref{fig:topography}. Prominencia znamená relatívnu výšku oproti predošlej navštívenej doline. Izolácia vyčísľuje vzdialenosť k najbližšiemu skoršiemu vrcholu. Podobný algoritmus už existuje v literatúre \cite{peek-mountaineer-method}, avšak nižšie prezentovaný pseudokód je oproti nemu zjednodušený a doplnený o požadované tolerancie.
@@ -587,16 +585,16 @@ prominencie a izolácie (obr. \ref{fig:topography}. Prominencia znamená relatí
 
 \subsection{Metriky pre binárny klasifikátor}
 Uviedli sme tri rozdielne rovnocenné prístupy odhalenia špičiek uplatniteľné v nasadení online na sústavný prúd údajov
-separovaný do blokov posuvným oknom. Rozobrali sme algoritmus opierajúci sa o porovnávanie striktne usporiadaných 
-susedov na obe stany, algoritmus využívajúci sklon sečníc vychádzajúc s vlastností prvej derivácie a napokon
+separovaný do blokov posuvným oknom. Rozobrali sme algoritmus opierajúci sa o porovnávanie susedov na obe strany, 
+algoritmus využívajúci sklon sečníc vychádzajúc s vlastností prvej derivácie a napokon
 stavový automat odvolávajúci sa na sekvenčne preskúmavanú topografiu krivky grafu. Spoločným rysom zmienených techník 
 je vykonávanie binárne zaradenie pre každú vzorku, či sa sa nachádza alebo nenachádza na aktuálnej pozícií vrchol.
 
-Rozhodnutie môže viesť k správnemu $P$ alebo nesprávnemu $N$ riešeniu vzhľadom na objektívnu pravdu 
+Rozhodnutie môže viesť k správnemu ($P$) alebo nesprávnemu ($N$) riešeniu vzhľadom na objektívnu pravdu 
 sprostredkovanú anotovanými dátami. Keď sa kategorizácia zhoduje s realitou dostávame skupiny 
 skutočne pozitívnych $TP$ a skutočne negatívnych $TN$. V prípade, že sa klasifikátor pomýli vyjde buď chyba
 prvého rádu $FP$, kedy registrujeme neexistujúcu špičku, alebo chyba druhého rádu $FN$, kedy ju prehliadneme.
-Umiestnením počtov charakteru rozhodnutí do tabuľky vzniká matica zámen.
+Umiestnením počtov charakteru rozhodnutí do tabuľky vzniká matica zámen \cite{binary-classifier}.
 
 Úspešnosť klasifikačných algoritmov pre ich vzájomné porovnanie kvantifikujú viaceré metriky. Na odladenie parametrov 
 vplývajúcich na náchylnosť preferovať kladné alebo záporné výsledky sa vzťahuje \emph{prevalencia} výskytu očakávaného
@@ -619,108 +617,181 @@ FPR = \frac{FP}{FP + TN} \label{equ:error-rate}
 \end{align}\end{ceqn}
 
 Štandardným nástrojom na vyjadrenie kvality binárneho klasifikátora je \emph{ROC krivka} zakresľujúca 
-senzitivitu $TPR$ vo zvislom smere voči vodorovnej chybovosti $FPR$. ROC vytvoríme graduálnym posúvaním prahu 
+senzitivitu $TPR$ vo zvislom smere voči vodorovnej chybovosti $FPR$. ROC vytvoríme postupným posúvaním prahu 
 pre klasifikáciu prostredníctvom parametrov algoritmu. Použiteľný algoritmus sa vyznačuje vypuklou krivkou
 smerom k ľavému hornému rohu nad diagonálou, ktorá by sprevádzala počínanie náhodného rozhodovania. Dokonalá
-metóda pri dosahovala stopercentnú senzitivitu za nulovej chyby. Vyjadrením plochy pod ROC krivkou je miera AUC,
-ktorá umožňuje približné číselné porovnanie rôznych získaných kriviek.
+metóda pri dosahovala stopercentnú senzitivitu za nulovej chyby. Vyjadrením plochy pod 
+ROC krivkou je miera AUC, ktorá umožňuje približné číselné porovnanie rôznych získaných kriviek \cite{roc-analysis}.
 
 \section{Frekvenčná a časovo-frekvenčná analýza signálu}
-Vibrácie prítomné v získanom zázname zrýchlenia sa prejavujú s variabilnou pravidelnosťou a cyklickým opakovaním, ktoré
-vyplýva z povahy monitorovaného pohybu.
-
-\cite{time-series-analysis}
-vlastnosti frekvenčného spektra,
-decibele, 
-spektrogram,
-odstup od šumu (SNR),
-power spectrum density (dbFS),
-spektrálny analyzátor
-
-\subsection{Fourierová transformácia}
-Diskrétna fourierová transformácia mapuje signál dĺžky $N$ do množiny $N$ diskrétnych frekvenčných komponentov. \cite{signal-processing}
-\begin{equation}
-X = \mathbf{W}x; W_{nk} = e^{-i\frac{2\pi}{N}nk} = W_N^{nk}
-\end{equation}
-Inverzná transformácia
-\begin{equation}
-x = \frac{1}{N}\mathbf{W}^H X
-\end{equation}
-
-Integrálne transformácie: Fourierová transformácia (CFT, DFT), Kosínusová transfomácia (MDCT), \cite{dct} 
-\cite{casove-frekvencia-analyza-signalu}
+Periodické deje v signále sú extrahované zo sekvencie vzoriek v časovej doméne transformovaným do domény frekvenčnej.
+Premenou dochádza k odhadu sumárnej intenzity jednotlivých rozsahov zložiek spektra, pričom rozlíšenie je
+podmienené vzorkovacou frekvenciou $f_s$ a celkovým počtom meraní $N$ (\ref{equ:freq-resolution}) \cite{understanding-dsp}. 
 
 \begin{ceqn}\begin{align}
-\mathcal{F}: X(\omega) = \int_{-\infty}^{+\infty}{x(t) \cdot e^{-i\omega t} \mathrm{dt}}
+\Delta f = \frac{f_s}{N} \label{equ:freq-resolution}
 \end{align}\end{ceqn}
 
-\subsection{Algoritmus FFT pre DFT a DCT}
-Opis DIT radix-2 FFT algoritmus komplexných, reálny, pre MDCT \cite{fft-blackbox}
+Kompromis potrebný učiniť pri spektrálnej analýze tkvie vo vyvážení dĺžky úseku pre časovú lokalizáciu frekvenčného obrazu, 
+a jeho výslednej detailnosti na strane druhej. Prechod medzi časovou a frekvenčnou doménou postihuje princíp neurčitosti
+znamenajúci, že pri raste rozlíšenia v čase strácame rozlíšenie vo frekvenciách a naopak. O požadovanom množstve pozorovaní 
+pre konkrétnu granularitu spektra taktiež hovorí vzťah (\ref{equ:freq-resolution}). Rozpätie frekvencií spadajúce do
+diskrétneho frekvenčného vedierka $k$ sú počínajúc $k\Delta f$ po $(k+1)\Delta f$.
+ 
+\subsection{Diskrétna fourierová a kosínusová transformácia}
+Diskrétna fourierová transformácia (DFT) je aparát na učenie harmonického zloženia signálu. Zobrazuje vektor komplexných
+čísel $y$ dĺžky $N$ do vektora $N$ frekvenčných komponentov. Na vypočítanie $k$-teho frekvenčného vedierka sú 
+prvky sekvencie pozorovaní prenásobené zodpovedajúcim exponenciálnym členom tzv. \emph{twiddle factor}. Inverzná transformácia
+sa líši iba opačným znamienkom exponenta a získané hodnoty sa zvyknú normovať podelením $N$.
+\begin{ceqn}\begin{align}
+\tag{DFT} Y[k] &= \sum_{n=0}^{N - 1}{x[n] \cdot W_N^{nk}};\quad k = 0, \dots, N - 1 \\
+W_{N}^{nk} &= \exp{\left(-i2\pi nk \, /\, N\right)}
+\end{align}\end{ceqn}
+
+Alternatívne sa pre praktické aplikácie vyjadruje exponenciálny faktor v goniometrickom tvare:
+\begin{ceqn}\begin{align}
+W_{N}^{nk} = \cos(2\pi nk/ N) - i \cdot \sin(2\pi nk/ N)
+\end{align}\end{ceqn}
+
+Spektrálne komponenty opísané vektorom komplexných fourierových koeficientov majú magnitúdy dané veľkosťami komplexných čísel
+(\ref{equ:magnitude-spectrum}). Pre reálne čísla je výstup z DFT zrkadlovo symetrický, čo zapríčiňuje nadbytočnosť výsledkov
+nad pozíciou  $N/2$. Rovnako naznačuje reformulácia vety o vzorkovaní, že za vzorkovacej frekvencie $f_s$ sú zapríčinením aliasingu v signále prítomné  frekvencie do maximálne polovice $f_s$. Energia nesená frekvenciou je druhou mocninou magnitúdy, ale častejšie sa 
+objavuje reprezentácia relatívneho energetického spektra v decibeloch (\ref{equ:decibel-spectrum}) \cite{understanding-dsp}.
+\begin{ceqn}\begin{align}
+|Y[k]| = \sqrt{\Re\{Y[k]\}^2 + \Im\{Y[k]\}^2} \label{equ:magnitude-spectrum} \\
+Y_{dB}[k] = 20 \cdot \log_{10}{ \left( \frac{|Y[m]|}{\max\{|Y[m]|\}} \right)} \label{equ:decibel-spectrum}
+\end{align}\end{ceqn}
+
+%TODO
+Kosínusová transfomácia (DCT) (DCT-II, DCT-III (inverzná k II), DCT-IV (sama sebe inverzom)),
+
+Koeficienty pre kosínusové transformácie\cite{dct}
+\begin{ceqn}\begin{align}
+\tag{DCT-II} W_{N}^{nk} &= \cos{\left[\left(n + \frac{1}{2}\right) k\frac{\pi}{N}\right]} \\
+\tag{DCT-III} W_{N}^{nk} &= \cos{\left[n \left(k + \frac{1}{2} \right) \frac{\pi}{N}\right]}  \\
+\tag{DCT-IV} W_{N}^{nk} &= \cos{\left[\left(n + \frac{1}{2} \right) \left(k + \frac{1}{2} \right) \frac{\pi}{N} \right]} \\
+\tag{MDCT} W_{N}^{nk} &= \cos{\left[\left(n + \frac{1}{2} + \frac{N}{2} \right) \left(k + \frac{1}{2} \right) \frac{\pi}{N} \right]};\quad n = 0, \dots, 2N - 1
+\end{align}\end{ceqn}
+
+
+
+\subsection{Algoritmus FFT}
 konštantný digitalizačný krok bez prerušení a navyše dĺžka radu musí byť celočíselná mocnina dvoch (s.29)
-
+motýliky (butterfly)
 prevádza konečnú sekvenciu dát na súčet kosínov oscilujúcich na rôznych frekvenciách
+\cite{fft-blackbox} \cite{fast-dct} \cite{dit-dif-fft} \cite{computer-vision-fft}
 
-\begin{ceqn}\begin{align}
-X[m] &= \sum_{n = 0}^{N-1}{x[n] \cdot e^{-i2\pi n m / N}} \\
-X[m] &= \sum_{n = 0}^{N-1}{x[n] \cdot [\cos(2\pi n m / N) - i \cdot \sin(2\pi n m / N)]}
-\end{align}\end{ceqn}
 
-Frekvenčné rozlíšenie
-\begin{equation}
-\Delta f = \frac{f_s}{N}
-\end{equation}
+The computational complexity of DFT is substantially reduced by using the following
+kntrigonometric symmetry and periodicity of the twiddle factor 
 
-$$X_{k}=\sum_{n=0}^{N-1} x_{n}\cos \left[\,{\frac{\pi}{N}}\left(n+{\frac{1}{2}}\right)k\right]\qquad \,
-k=0,\ \dots \ N-1 $$
-$$X_{k}=\sum _{n=0}^{N-1}x_{n}\cos \left[\,{frac{\pi}{N}}\,\left(n+{1}/{2}\right)\left(k+{1}/{2}\right)\right]\qquad
-\,k=0,\ \ldots \ N-1$$
-$$X_{k}=\sum _{n=0}^{2N-1}x_{n}\cos \left[{\frac {\pi }{N}}\left(n+{\frac {1}{2}}+{\frac {N}{2}}\right)\left(k+{\frac {1}{2}}\right)\right]$$
+N koplexných sčítaní, N/2 komplexných násobení
 
-\subsection{Oknové funkcie}
-the DFT implicitly assumes that the signal is periodic, i.e. that the time series of length N repeats itself
-infinitely in a cyclic manner.  If the frequency of the sinusoidal input
-signal is not an exact multiple of the frequency resolution fres , i.e. does not fall in the exact
-center of a frequency bin, this assumption is not true, and the DFT will ‘see’ a discontinuity
-between the last sample and the first sample due to the cyclic continuation. That discontinuity
-spreads power all across the spectrum. \cite{spectral-density-estimation}
+Decimácia v čase vs. Decimácia vo frekvencii. 
+Motýlikový diagram Cooley-Tukey vs. Gentleman-Sande
+twiddle factor a ich uloženie v pamäti + predvypočítavanie
+Opis DIT radix-2 FFT algoritmus
 
-Pri FT dostávame frekvenčné zložky za prítomné v celkom priebehu v rôznych časových okamihoch, keby sme chceli
-dosiahnuť lepšiu lokalizáciu v čase, tak prvý pokus ponúka Gáborova transformácia. Princíp neurčitosti: sústredenosť 
-vo frekvenčnej domény vyvoláva neurčitosť v čase a symetricky naopak.
+Real DFT
+
+FCT
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/dit-butterfly.png}
+    \caption{Decimácia v čase}
+    \label{fig:dit-butterfly}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/dit-butterfly.png}
+    \caption{Decimácia vo frekvencii}
+    \label{fig:dif-butterfly}
+\end{subfigure}
+\caption{Motýlikové diagramy algoritmu FFT}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Length-4-DIT-radix-2-FFT.png}
+    \caption{Decimácia v čase}
+    \label{fig:dit-fft}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/Length-4-DIF-radix-2-FFT.png}
+    \caption{Decimácia vo frekvencii}
+    \label{fig:dif-fft}
+\end{subfigure}
+\caption{FFT s radixom 2 na štyroch bodoch \cite{dit-dif-fft}}
+\end{figure}
+
+
+\subsection{Okenné funkcie}
+Oknové funkcie ováhujú vstupný vektor.Krátkodobá FT
+DFT implicitne predpokladá periodickosť, že časový rad dĺžky N sa opakuje cyklicky do nekonečna. Ak frekvencia
+sínusového vstupu nie je presným násobkom frekvenčného rozlíšenia, čiže nespadá presne do centra frekvenčného 
+vedierka (bin), tento predpoklad nie je naplnený a DFT sa bude chovať akoby v prítomnosti nespojitosti
+medzi poslednou a prvou vzorkou, z dôvodu cyklického opakovania. Diskontinuita sa rozšíri naprieč spektrom prejavom 
+Gibbsovho javu. 
+ 
+Oknové funkcie vyžadujú kompromis medzi šírkou výsledných špičiek v frekvenčnej doméne, presnosti v amplitúde
+a miera poklesu úniku spektra (spectral leakage) do ostatných frekvenčných vedierok. \cite{spectral-density-estimation}
 
 Dochádza k vynásobenie zdrojového signálu koeficientmi okna pre odstránenie hraničných efektov, ktoré spôsobujú/vnášajú
 neexistujúce periodické komponenty, na okraji okna preto znižuje úroveň na nulu. Snahou je dokonalé izolovanie frekvenčného
 pásma, ale pri FT dostávame sinc.
-Prehľad okien - symetrické okolo stredu
 
+Prehľad okien - symetrické okolo stredu \cite{understanding-dsp}
 \begin{ceqn}\begin{align}
-\text{Obdĺžníkové (rovnomerné) okno} w(n) &= 1,\, n = 0, 1, ..., N - 1 \\
-\text{Trojuholníkové (Barlett) okno} 
+\tag{Obdĺžníkové} w(n) &= 1,\, n = 0, 1, ..., N - 1 \\
+\tag{Trojuholníkové} 
 	w(n) &= 
 	\begin{cases} 
 		\frac{n}{N / 2}; n = 0, \dots, N / 2 \\
 	 	2 - \frac{n}{N / 2}; n = N/2+1, \dots, N - 1  
 	\end{cases} \\
-\text{Hanningovo okno} w(n) &= 0.5 - 0.5\cos(2\pi n / N)  \\
-\text{Hammingovo okno} w(n) &= 0.54 - 0.46\cos(2\pi n / N) \\
-\text{Blackman-Harrisovo okno} w(n) &= 0.35875 - 0.48829\cos(z) + 0.14128 cos(2z) - 0.01168 cos(3z), z = 2\pi n / N
+\tag{Welch} w(n) &= 1 - ((2n / N) - 1)^2 \\
+\tag{Hann} w(n) &= \cos^2((2\pi n / N - \pi) / N)  \\
+\tag{Hamming} w(n) &= 0.54 - 0.46\cos(2\pi n / N)
 \end{align}\end{ceqn}
 
-Efekt oknových funkcií na spektrálny leakage efekt (únik spektra)
-výhodné percentá prekryvu FT 	\cite{understanding-dsp} \cite{spectral-density-estimation}
+výhodné percentá prekryvu FT, čím užšie okno tým vyžadujú väčší prekryv
 Priemerovanie a prekryv:
 - Amplitude Flatness (AF)
 - Power Flatness (PF)
 - Overlap Correlation (OC)
 
+
+Welchova metóda na zníženie šumu, spriemerovanie spektier z po sebe idúcich úsekov na zníženie rozpylu pri spektre stochastického
+javu.
+
+Sumarizácia:
+Proces FT - Preprocessing: DC and trend removal: 
+Oknovanie (predpočítané koeficienty okna pre N) a 
+FFT motýliky (predpočítané twiddle factors pre N)
+
 \subsection{Filtre s konečnou impulznou odozvou}
 \label{fir-filter}
-Roziel medzi FIR a IIR, Dolná pripusť, pásmová priepusť, horná pripusť,
+Roziel medzi FIR a IIR, Dolná pripusť, pásmová priepusť, horná pripusť, pre ideálny filter 
  Konvolúcia a konvolučné jadro, konvolučná veta, účel: identifikácia prítomnosti známej frekvencie v signále akcelerácie
-\begin{equation}
-y(n) = \sum_{k=0}^{D_y}{x(k) \cdot h(n-k)} = x(n) * h(n)
-\end{equation}
+\begin{ceqn}\begin{align}
+y[k] = \sum_{k=0}^{N - 1}{x[k] \cdot h(n - k)} = x[n] * h[n]
+\end{align}\end{ceqn} 
+ 
 Prenosová funkcia - koeficienty filtra
+\cite{signal-processing} s.125 + popísať, že je možné aplikovať FFT pri výpočte konvolúcie Konvolučná veta
+Frekvenčná odozva filtra je daná fourierovu transformáciu sinc, keď chceme fitrovať nejakú frekv. musíme
+aplikovať sinc kernel (maska)
+
+$h(n) = \frac{1}{\pi n} \cdot (\sin(\omega_2 n) - \sin(\omega_1 n)); \; \omega = 2\pi f; \; sinc(x) = \frac{\sin(\pi x)}{\pi x}$
+$h(n) = 2f_2 \cdot \mathrm{sinc}(2 f_2 n) - 2f_1 \cdot \mathrm{sinc}(2 f_1 n)$
 
 \subsubsection{Detektor obálok}
 \footnote{\url{https://www.mathworks.com/help/dsp/ug/envelope-detection.html}}
@@ -730,11 +801,12 @@ Prenosová funkcia - koeficienty filtra
 - amplifikácia faktorom 2 (zostane iba horná polovica)
 - decimácia 1.5 (podvzorkovanie)
 - dolná priepusť FIR
-- druhá odmocnina pre odstránenie skreslenia spôsobeného úvodným umocnením
-- 
+- druhá odmocnina pre odstránenie skreslenia spôsobeného úvodným umocnením 
+
 
 \section{Senzorová sieť}
-Nízko-energetické zariadenia komunikujúce cez odľahčené sieťové protokoly so snahou spracovania v reálnom čase a ponechaním najdôležitejších informácii dolovaním z veľkého množstva zdrojových dát. Cloud / Hmlové počítanie. okrajový a sink (zoskupujúci) uzol
+Nízko-energetické zariadenia komunikujúce cez odľahčené sieťové protokoly so snahou spracovania v reálnom čase a ponechaním najdôležitejších informácii dolovaním z veľkého množstva zdrojových dát. Cloud / Hmlové počítanie. 
+Edge computing okrajový a sink (zoskupujúci) uzol \cite{edge-computing-survey} \cite{edge-vision} \cite{edge-overview}
 
 Vlastnosti senzorovej siete
 \begin{itemize}
@@ -772,6 +844,17 @@ Obmedzenia na senzorové uzly
 \item Výpočtový výkon a úložisko - Nízka taktovacia frekvencia procesora v megaherzoch a veľkosti pracovných pamätí v stovkách kilobajoch alebo megabajtoch.
 \end{itemize}
 \cite{big-data-collection-wsn}
+
+Edge computing is a form of distributed computing
+
+distributed computing divides a single task between multiple computers to achieve a common goal
+
+address the same problem: proximity. Moving the computer workload closer to the consumer reduces latency, bandwidth and overhead for the centralized data center, komunikujú a koorinujú svoje aktivity výmenou / zasielaním (predávaním) správ medzi komponentami,
+pamäť je oddelená
+
+Improved response time, Offline availability, Offline availability
+
+Like the edge, fog computing moves the workload closer to the network edge, reducing data travel, latency and bandwidth. Whereas edge computing moves the process to devices, though, fog computing happens across one or more nodes in a network.
 
 Bluetooth, BLE -  IEEE 802.15.1 bezdrôtová technológia s krátkym dosahom spravidla do 10 m (0,5mW pri 0.5m, 1mW pri 1m, 2.5mW pre 10m, 10mW pre 20m) na ultra krátkych vlnách 2.402 GHz - 2.48 GHz.
 SDP, RFCOMM náhradou za sériové porty + L2CAP. (symetrická komunikácia) \url{https://www.bluetooth.com/specifications/specs/rfcomm-1-2/}
