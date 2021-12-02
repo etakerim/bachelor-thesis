@@ -30,8 +30,16 @@
 \usepackage[style=iso-numeric, backend=biber]{biblatex}
 \addbibresource{literature.bib}
 
+% Rovnice
+\newcommand{\listequationsname}{Zoznam rovníc}
+\newlistof{myequations}{equ}{\listequationsname}
+\newcommand{\myequations}[1]{
+\addcontentsline{equ}{myequations}{\protect\numberline{\theequation}\quad #1}}
+
+% Algoritmy
 \makeatletter
 \renewcommand*{\ALG@name}{Algoritmus}
+\renewcommand{\listalgorithmname}{Zoznam algoritmov}
 \makeatother
 
 % Číslo kapitoly na rovnakom riadku ako názov
@@ -54,7 +62,8 @@
 
 \pagestyle{fancy}
 \fancyhf{}  % clear all header and footers
-\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[LO]{\leftmark}
+\fancyhead[RE]{\rightmark}
 \fancyfoot[LE, RO]{\thepage}
 \fancypagestyle{plain}{
   \fancyhf{}%
@@ -68,7 +77,7 @@
 \newcommand{\UniversityEN}[0] {Slovak University of Technology Bratislava}
 \newcommand{\Faculty}[0] {Fakulta informatiky a informačných technológií}
 \newcommand{\FacultyEN}[0] {Faculty of Informatics and Information Technologies}
-\newcommand{\Thesis}[0] {Bakalárska práca}   % Priebežná správa o riešení BP1
+\newcommand{\Thesis}[0] {Priebežná správa o riešení BP1}   % Priebežná správa o riešení BP1 % Bakalárska práca
 \newcommand{\ThesisEN}[0] {Bachelor's Thesis}
 \newcommand{\Title}[0] {Spracovanie dát generovaných senzorovou IoT sieťou}
 \newcommand{\TitleEN}[0] {Data Processing for Sensor IoT Network}
@@ -78,8 +87,8 @@
 \newcommand{\SupervisorEN}[0] {Dr. Marcel Baláž}
 \newcommand{\PedagogicalSupervisorEN}[0] {Jakub Findura}
 \newcommand{\RegNo}[0] {FIIT-5212-102927}
-\newcommand{\Date}[0] {Máj 2022}
-\newcommand{\DateEN}[0] {2022, May}
+\newcommand{\Date}[0] {December 2021}
+\newcommand{\DateEN}[0] {2021, December}
 \newcommand{\StudyProgramme}[0] {Informatika}
 \newcommand{\StudyProgrammeEN}[0] {Informatics}
 \newcommand{\StudyField}[0] {Informatika}
@@ -89,7 +98,6 @@
 
 
 \begin{document}
-
 % Obal
 \input{chapters/titlepage}
 \begin{flushleft}
@@ -97,8 +105,7 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 \vspace{\medskipamount}
 \Date
 \end{flushleft}
-
-\emptypage
+\emptypage 
 
 % Titulný list
 \input{chapters/titlepage}
@@ -114,8 +121,7 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 \vspace{2\bigskipamount}
 \Date
 \end{flushleft}
-
-\emptypage
+\emptypage 
 
 % Zadanie
 \newpage
@@ -126,15 +132,19 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 \emptypage
 \pagenumbering{roman}
 
-\input{chapters/acknowledgments}
+%\input{chapters/acknowledgments}
 
-\input{chapters/annotation}
+%\input{chapters/annotation}
 
 % Obsah
 \renewcommand{\contentsname}{Obsah}
-\thispagestyle{empty}
+\pagestyle{empty}
 \tableofcontents{}
+\listoffigures
+\listofmyequations
+%\listofalgorithms
 \emptypage
+\pagestyle{fancy}
 
 % Kapitoly
 \pagenumbering{arabic}
@@ -143,12 +153,9 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 
 \input{chapters/02-analysis}
 
-%\input{chapters/03-design}
+\input{chapters/03-design}
 
 %\chapter{Zhodnotenie}
-%Hlavné výsledky práce, prípadne porovnanie s inými prístupmi, možné smery ďalšieho rozvíjania.
-%Tu sa musí presne špecifikovať, čo je pôvodné a čo riešiteľ prebral.
-%\emptypage
 
 
 \pagenumbering{gobble}

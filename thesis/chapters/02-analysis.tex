@@ -40,18 +40,27 @@ voľnosti (1DOF) kmitajúceho telesa s pružinou a tlmičom \cite{vibrations-sho
 	\caption{Model oscilujúceho systému s pružinou a tlmičom}
 \end{figure}
 
-Pri pôsobení vonkajšej sily $F$ na hmotu upevnenú na pružine vznikajú nútené vibrácie, ktoré ju vychyľujú z rovnovážnej polohy. Uvedená sila je charakterizovaná druhým Newtonovým zákonom v tvare $F = ma$, kde $m$ je hmotnosť telesa a $a$ predstavuje zrýchlenie. V protismere pôsobí sila vyvolaná pružinou $F_s = -kx$ a tlmiacim členom $F_d = -cv$, kde $k$ je tuhosť pružiny ovplynená jej konštrukciou, $c$ je tlmiaci koeficient, $x$ je vychýlenie z rovnovážneho stavu, a $v$ rýchlosť vychýlenia. 
+Pri pôsobení vonkajšej sily $F$ na hmotu upevnenú na pružine vznikajú nútené vibrácie, ktoré ju vychyľujú z rovnovážnej polohy.
+Uvedená sila je charakterizovaná druhým Newtonovým zákonom v tvare $F = ma$, kde $m$ je hmotnosť telesa a $a$ predstavuje zrýchlenie.
+V protismere pôsobí sila vyvolaná pružinou $F_s = -kx$ a tlmiacim členom $F_d = -cv$, kde $k$ je tuhosť pružiny ovplynená jej konštrukciou,
+$c$ je tlmiaci koeficient, $x$ je vychýlenie z rovnovážneho stavu, a $v$ rýchlosť vychýlenia.
 
-Fyzickým obmedzením  telesa, ktorým je viazaný na pevnú podložku dochádza pri zanedbaní deformácie k takmer zaručenému návratu do rovnovážnej polohy a to nám umožňuje merať intenzitu vibrácií cez zrýchlenie ťažidla. Výslednú silu v jednom smere získame sčítaním síl podieľajúcich sa na dynamike telesa.
+Fyzickým obmedzením  telesa, ktorým je viazaný na pevnú podložku dochádza pri zanedbaní deformácie k takmer zaručenému návratu do rovnovážnej
+polohy a to nám umožňuje merať intenzitu vibrácií cez zrýchlenie ťažidla. Výslednú silu v jednom smere získame sčítaním síl podieľajúcich sa na dynamike telesa.
+\myequations{Fyzikálny model oscilujúceho systému s pružinou a tlmičom}
 \begin{ceqn}\begin{align}
  	F(t) = ma - cv - kx
 \end{align}\end{ceqn}
+
 Pri použití trojosového akcelerometra, kedy sú evidované všetky tri priestorové súradnice časovo-premennej akcelerácie dostávame
 nasledujúcu rovnicu vo vektorovom tvare:
+\myequations{Newtonov zákon sily}
 \begin{ceqn}\begin{align}
    \vec{a}(t) = \frac{\vec{F}(t)}{m}
 \end{align}\end{ceqn}
+
 Magnitúda akcelerácie s troma súradnicami je daná $L_2$ normou vektora $\vec{a} = (a_x, a_y, a_z)$:
+\myequations{Magnitúda vektora akcelerácie}
 \begin{ceqn}\begin{align}
    |a| = \sqrt{a_x^2 + a_y^2 + a_z^2}
 \end{align}\end{ceqn}
@@ -72,10 +81,10 @@ na pevné elektródy, ktoré môžu byť usporiadané jednostranne alebo ako dif
 Pri diferenčnom páre spôsobí pohyb doštičky ťažidla medzi elektródami zmenu kapacít a ich rozdielom je možné zistiť aplikovanú silu a
 cez uvedený vzťah zrýchlenie. Na zvýšenie celkovej kapacity sa používa viacero párov elektród zapojených paralelne. Pred prevodom na
 číslicový signál musí napäťová úroveň zo senzora prejsť úpravou zahŕňajúcou nábojovocitlivý predzosilňovač, osovú demoduláciu a anti-
-aliasingové filtrovanie. 
+aliasingové filtrovanie.
 
-Viacosové akcelerometre vyžadujú viaceré opísané štruktúry orientované kolmo na seba, podľa obr. \ref{fig:mems}, s ohľadom na počet 
-vyžadovaných stupňov voľnosti, pričom v skutočných senzoroch vždy existuje aspoň minimálna závislosť medzi osami rádovo najviac v 
+Viacosové akcelerometre vyžadujú viaceré opísané štruktúry orientované kolmo na seba, podľa obr. \ref{fig:mems}, s ohľadom na počet
+vyžadovaných stupňov voľnosti, pričom v skutočných senzoroch vždy existuje aspoň minimálna závislosť medzi osami rádovo najviac v
 jednotkách percent. Teplota ovplyvňuje citlivosť MEMS akcelerometrov len nepatrne v stotinách percenta na stupeň Celzia.
 
 Akcelerometre sa odlišujú v niekoľkých dôležitých vlastnostiach, ktoré zvyknú byť nastaviteľné vo výrobcom stanovenom rozsahu
@@ -97,13 +106,13 @@ hodnota výstupného napätia a tým aj výstupného registra.
 
 \emph{Šírka pásma} senzora v \emph{Hz} predurčuje rozsah frekvencie vibrácií, ktoré je možné zachytiť. Podmienená je zvolenou
 početnosťou  čítania akcelerácie za sekundu, čiže vzorkovacou frekvenciou. Stanovuje sa tiež nastaviteľným parameterom \emph{ODR}
-(Output Data Rate) - výstupný dátový tok, pričom šírka pásma je spravidla polovicou ODR. Menej uvádzanou vlastnosťou býva 
-\emph{frekvenčná odozva} senzora, ktorá určuje o koľko sa v rámci tolerancie odlišuje skutočná 
-citlivosť od referenčnej pre zodpovedajúcu frekvenciu vibrácii. 
+(Output Data Rate) - výstupný dátový tok, pričom šírka pásma je spravidla polovicou ODR. Menej uvádzanou vlastnosťou býva
+\emph{frekvenčná odozva} senzora, ktorá určuje o koľko sa v rámci tolerancie odlišuje skutočná
+citlivosť od referenčnej pre zodpovedajúcu frekvenciu vibrácii.
 
-Na meranie zrýchlenia má nevyhnutný vplyv šum zapríčinený Brownovým  pohybom a nedokonalosťou skutočných materiálov v štruktúre 
-akcelerometra. Intenzita šumu rastie inverznou odmocninou so šírkou pásma, čiže s častejším meraním získavame menšiu presnosť. Pri 
-dostatočnom odstupe signálu od šumu, $SNR = P_{signal} / P_{šum}$, umožňuje hardvér akcelerometra vzorkovať amplitúdy až nad stanovený 
+Na meranie zrýchlenia má nevyhnutný vplyv šum zapríčinený Brownovým  pohybom a nedokonalosťou skutočných materiálov v štruktúre
+akcelerometra. Intenzita šumu rastie inverznou odmocninou so šírkou pásma, čiže s častejším meraním získavame menšiu presnosť. Pri
+dostatočnom odstupe signálu od šumu, $SNR = P_{signal} / P_{šum}$, umožňuje hardvér akcelerometra vzorkovať amplitúdy až nad stanovený
 prah generovaním prerušenia, čím sa dokáže efektívne zbaviť nevýznamných fluktuácií.
 
 \subsection{Analógovo-digitálny prevodník}
@@ -111,16 +120,17 @@ Spojitá napäťová úroveň transformuje analógovo-digitálny (A/D) prevodní
 hodnôt. Vstupný signál najprv prechádza fázou vzorkovania, kedy sa vzorky zaznamenávajú v pravidelných intervaloch. Počet vzoriek
 odčítaných za sekundu je vyjadrený vzorkovacou frekvenciou $f_s$ v $Hz$. Časový rozdiel medzi vzorkami, nazývaný perióda vzorkovania,
 je prevrátenou hodnotou vzorkovacej frekvencie $T_s = \frac{1}{f_s}$. Pre presnú rekonštrukciu pásmovo obmedzeného signálu v hraniciach
-$[-f_{max}; f_{max}]$ je nevyhnuté podľa \emph{Nyquist-Shannonovej vety} o vzorkovaní, aby vzorkovacia frekvencia bola najmenej 
+$[-f_{max}; f_{max}]$ je nevyhnuté podľa \emph{Nyquist-Shannonovej vety} o vzorkovaní, aby vzorkovacia frekvencia bola najmenej
 dvojnásobkom maximálnej frekvencie snímaného signálu.
+\myequations{Nyquist-Shannonova veta o vzorkovaní}
 \begin{ceqn}\begin{align}
    f_s \geq 2 \cdot f_{max}
 \end{align}\end{ceqn}
 
-Každej vzorke je následne v procese kvantovania priradená diskrétna hodnota s konečným počtom $n$ bitov, ktorá je najbližšia možná ku
-skutočnej hladine analógového vstupu. Dochádza pritom k istému zaokrúhľovaniu z dôvodu nepresnosti vyjadrenia spojitej domény amplitúd
-diskrétnym číslom. Tento jav označujeme ako kvantizačný šum, ktorý je najviac polovicou z maximálnej rozlíšiteľnej zmeny signálu a
-trpia nim všetky existujúce A/D prevodníky.
+V procese kvantovania je každej vzorke je následnepriradená diskrétna hodnota s konečným počtom $n$ bitov, ktorá je najbližšia
+možná ku skutočnej hladine analógového vstupu. Dochádza pritom k istému zaokrúhľovaniu z dôvodu nepresnosti vyjadrenia spojitej
+domény amplitúd diskrétnym číslom. Tento jav označujeme ako kvantizačný šum, ktorý je najviac polovicou z maximálnej rozlíšiteľnej
+zmeny signálu a trpia nim všetky existujúce A/D prevodníky.
 
 \begin{figure}[h]
 	\centering
@@ -132,19 +142,17 @@ Prevodníky integrované priamo s inerciálnymi jednotkami sa vyhotovujú v rozl
 akcelerometer rovno na sérové zbernice \emph{SPI} alebo \emph{I2C}. Všeobecne platí, že pri $n$ bitoch je k dispozícii $2^n$ rozličných
 čísel. Kódovaním v dvojkovom doplnku pre zachytenie záporných hodnôt sa uvažuje s intervalom $[-2^\frac{n}{2}; 2^\frac{n}{2} - 1]$.
 
-Napríklad pri 12-bitovom A/D prevodníku s referenčným napätím $3.3V$ je teoreticky najmenšia rozlíšiteľná zmena na najmenej významový
-bit $3.3V / 2^{12} = 0.81 mV$. Ak je rozhranie senzora priamo vybavené analógovým výstupom nič nebráni v použití presnejšieho
-prevodníka, napriek tomu najmenší merateľný dielik je zdola stále ohraničený citlivosťou akcelerometra.
-
 Číslicová hodnota v dvojkovom doplnku získanú konverziou $\hat{x}$ je prepočítaná na
 štandardné fyzikálne jednotky pre zrýchlenie, $a$ v $m/s^2$). $R$ prestavuje nastavený dynamický rozsah v jednotkách $g$ a $n$
 je počet bitov A/D prevodníka.
+\myequations{Konverzia merania na akceleráciu podľa rozlíšenia A/D prevodníka}
 \begin{ceqn}\begin{align}
    a = \hat{x} \cdot ((R \cdot g) / 2^{n / 2})
 \end{align}\end{ceqn}
 
 Na základe už zmieneného ohľadom vlastností MEMS akcelerometrov, presnejší prevod dosiahneme zužitkovaním deklarovanej citlivosti
 senzora pri danom dynamickom rozsahu $S_R$ udávaného v $mg/LSB$.
+\myequations{Prevod A/D prevodníkom u akcelerometra s rozsahom v $mg/LSB$}
 \begin{ceqn}\begin{align}
    a = \hat{x} \cdot (S_R \cdot g) / 1000
 \end{align}\end{ceqn}
@@ -173,7 +181,7 @@ pozorovanie prechodových javov alebo na vyjadrenie miery plynulosti pohybu slú
 Pokiaľ nie sú známe počiatočné podmienky v okamihu začiatku snímania akcelerácie, budú hodnoty veličín relatívne vzhľadom na
 štart záznamu. Kinematika v diskrétnom čase je potom opísaná nasledujúci rovnicami, kde $\Delta$ je operátor diferencie
 $\Delta t = t(i) - t(i-1)$:
-
+\myequations{Kinematické rovnice pre polohu, rýchlosť, zrýchlenie a ryv}
 \begin{ceqn}\begin{align}
    \vec{v} = \frac{\Delta \vec{r}}{\Delta t}; \;\;
    \vec{a} = \frac{\Delta \vec{v}}{\Delta t}; \;\;
@@ -184,20 +192,21 @@ Vyjadrenie neznámych premenných vzhľadom na akceleráciu spočíva v prenáso
 vzťahy pre okamžitú dráhu a okamžitú rýchlosť. Spočítaním čiastkových okamžitých rýchlostí na intervale dostaneme celkovú rýchlosť a
 rovnaký úsudok platí pre polohu. V spojitom čase, keď by vzorkovacia perióda bola nekonečne krátka, dochádza naproti tomu k
 integrovaniu funkcie akcelerácie. Dostávame, že rýchlosť je integrálom zrýchlenia a poloha je dvojným integrálom zrýchlenia:
-
+\myequations{Rýchlosť a poloha cez integrál akcelerácie}
 \begin{ceqn}\begin{align}
    \vec{v}(t) = \vec{a_0} + \int{\vec{a}(t)\,\mathrm{dt}} \\
    \vec{r}(t) = \vec{r_0} + \vec{v_0}t + \iint{\vec{a}(t)\,\mathrm{dt}}
 \end{align}\end{ceqn}
 
+
 \subsection{Numerická kvadratúra}
 Približný výpočet určitého integrálu funkcie akcelerácie je založený na geometrickej interpretácii integrálu ako plochy pod krivkou.
-Hovoríme vtedy o probléme numerickej kvadratúry, ktorý navrhuje nahradiť pôvodný integrand interpolačným polynómom 
-\cite{numerical-mathematics}. Rád polynómu $n$ implicitne stanoví priebeh funkcie medzi ekvidištantnými vzorkami a 
-má dopad na presnosť aproximácie. Najčastejšie sa používajú konštantný ($n = 0$), lineárny ($n = 1$) alebo kvadratický ($n = 2$) 
+Hovoríme vtedy o probléme numerickej kvadratúry, ktorý navrhuje nahradiť pôvodný integrand interpolačným polynómom
+\cite{numerical-mathematics}. Rád polynómu $n$ implicitne stanoví priebeh funkcie medzi ekvidištantnými vzorkami a
+má dopad na presnosť aproximácie. Najčastejšie sa používajú konštantný ($n = 0$), lineárny ($n = 1$) alebo kvadratický ($n = 2$)
 polynóm, podľa toho rozlišujeme obdĺžnikové pravidlo (vzorec \ref{eq:midpoint-rule}),
 lichobežníkové pravidlo (vzorec \ref{eq:trapezodial-rule}) a Simpsonovo pravidlo (vzorec \ref{eq:simpson-rule}).
-
+\myequations{Pravidlá numerickej kvadratúry: obdĺžníkové, lichobežníkové, Simpsonovo}
 \begin{ceqn}
 \begin{align}
    v(t_i) &= T_s \cdot a\left(\frac{t_i + t_{i-1}}{2}\right)  \label{eq:midpoint-rule} \\
@@ -206,11 +215,11 @@ lichobežníkové pravidlo (vzorec \ref{eq:trapezodial-rule}) a Simpsonovo pravi
 \end{align}
 \end{ceqn}
 
-Pri \emph{obdĺžníkovom pravidle} (obr. \ref{fig:midpoint-rule}) nepripúšťame zmenu hodnoty zrýchlenia medzi vzorkami a okamžitú 
-rýchlosť, čiže plochu, odhadneme ako dĺžku intervalu vzorkovania vynásobenú priemerom výšok dvoch následných pozorovaní. Interpolačný 
-polynóm je konštantná funkcia. \emph{Lichobežníkové pravidlo} (obr. \ref{fig:trapezodial-rule}) uvažuje s lineárnou zmenou veličiny 
-medzi meraniami, preto interpoluje priamkou.\emph{Simpsonovo pravidlo} (obr. \ref{fig:simpson-rule}) sa snaží o ešte tesnejší odhad s 
-využitím kvadratickej funkcie. Každé kvadratúrne pravidlo sa síce vyznačuje presne vyčísliteľnou chybovosťou, ale k tomu je nevyhnutné 
+Pri \emph{obdĺžníkovom pravidle} (obr. \ref{fig:midpoint-rule}) nepripúšťame zmenu hodnoty zrýchlenia medzi vzorkami a okamžitú
+rýchlosť, čiže plochu, odhadneme ako dĺžku intervalu vzorkovania vynásobenú priemerom výšok dvoch následných pozorovaní. Interpolačný
+polynóm je konštantná funkcia. \emph{Lichobežníkové pravidlo} (obr. \ref{fig:trapezodial-rule}) uvažuje s lineárnou zmenou veličiny
+medzi meraniami, preto interpoluje priamkou.\emph{Simpsonovo pravidlo} (obr. \ref{fig:simpson-rule}) sa snaží o ešte tesnejší odhad s
+využitím kvadratickej funkcie. Každé kvadratúrne pravidlo sa síce vyznačuje presne vyčísliteľnou chybovosťou, ale k tomu je nevyhnutné
 poznať analytické vyjadrenie vibrácií, čo dáva realistický odhad len pri čisto periodických kmitoch.
 
 \begin{figure}[h]
@@ -252,90 +261,97 @@ ako akcelerácia je aj signál rýchlosti opäť integrovaný a korigovaný obá
 potlačenie prítomnosti jednosmernej zložky v podobe hornej priepuste (pozri \ref{fir-filter}).
 
 \section{Metódy analýzy signálu v časovej doméne}
-Pozorovania veličiny predstavujú udalosti merané sekvenčne v čase, kde je s každou obdržanou hodnotou $x_i$ viazaná unikátna 
-časová značka $t_i$. Postupnosť jednotlivých čítaní je jednorozmerný časový rad znázoriteľný ako usporiadaná množina dvojíc pečiatky 
-rastúcej v čase a nasnímanej úrovne: $T = \{(t_1, x_1),(t_2, x_2), …, (t_n, x_n)\}$. Vzorkovaním v pravidelných intervaloch stačí 
-uvažovať namiesto časových značiek o celočíselných indexoch, ktoré určujú pozíciu prvkov vo vektore pozorovaní: 
-$\mathbf{x} = (x_1, x_2, …, x_n)^T$. Keď sú súčasne zaznamenávané viaceré dátové body hovoríme o matici pozorovaní $X_{n,m}$, či o 
+Pozorovania veličiny predstavujú udalosti merané sekvenčne v čase, kde je s každou obdržanou hodnotou $x_i$ viazaná unikátna
+časová značka $t_i$. Postupnosť jednotlivých čítaní je jednorozmerný časový rad znázoriteľný ako usporiadaná množina dvojíc pečiatky
+rastúcej v čase a nasnímanej úrovne: $T = \{(t_1, x_1),(t_2, x_2), …, (t_n, x_n)\}$. Vzorkovaním v pravidelných intervaloch stačí
+uvažovať namiesto časových značiek o celočíselných indexoch, ktoré určujú pozíciu prvkov vo vektore pozorovaní:
+$\mathbf{x} = (x_1, x_2, …, x_n)^T$. Keď sú súčasne zaznamenávané viaceré dátové body hovoríme o matici pozorovaní $X_{n,m}$, či o
 viacrozmernom časovom rade.
 
 \subsection{Prúdové algoritmy}
-Pri veľkom objeme prichádzajúcich vzoriek produkované senzormi, nie je uskutočniteľné ich úplné uchovanie ani spracovanie celkého 
-dátového toku naraz. Častokrát by stratégia neuváženého odkladania viedla k plýtvaniu zdrojov a zbytočnému archivovaniu údajov s nízkou 
-informačnou hodnotou. Vhodnejšie je agregovanie toku údajov podľa preddefinovaného zmysluplného kritéria, ktoré by umožňovalo zachytiť 
-významné rysy a prompte zodpovedať na vyžadované dopyty. 
+Pri veľkom objeme prichádzajúcich vzoriek produkované senzormi, nie je uskutočniteľné ich úplné uchovanie ani spracovanie celkého
+dátového toku naraz. Častokrát by stratégia neuváženého odkladania viedla k plýtvaniu zdrojov a zbytočnému archivovaniu údajov s nízkou
+informačnou hodnotou. Vhodnejšie je agregovanie toku údajov podľa preddefinovaného zmysluplného kritéria, ktoré by umožňovalo zachytiť
+významné rysy a prompte zodpovedať na vyžadované dopyty.
 
-Priamočiarou realizáciou agregácie je nahliadať na prvky časového radu postupne ako prichádzajú. 
-Prúdové algoritmy pôsobiace v reálnom čase, a teda neschopné vidieť finálny vektor vzoriek vstupu sa vyznačujú vlastnosťou, že 
-vyprodukujú len na základe takého čiastkového vstupu parciálny výsledok platný pre dosiaľ sa vyskytnutú podmnožinu. 
+Priamočiarou realizáciou agregácie je nahliadať na prvky časového radu postupne ako prichádzajú.
+Prúdové algoritmy pôsobiace v reálnom čase, a teda neschopné vidieť finálny vektor vzoriek vstupu sa vyznačujú vlastnosťou, že
+vyprodukujú len na základe takého čiastkového vstupu parciálny výsledok platný pre dosiaľ sa vyskytnutú podmnožinu.
 
-Online algoritmus  spracúvajúci neprestajný potenciálne nekonečne sa rozširujúcu vstupnú sadu sa ideálne vyznačuje sublineárnou alebo 
-polylogaritmickou časovou zložitosťou spracovanie jednotlivých prvkov, celkové spracovanie, a sú žiaduce sublineárne pamäťové nároky 
-\cite{data-streams}. 
+Online algoritmus  spracúvajúci neprestajný potenciálne nekonečne sa rozširujúcu vstupnú sadu sa ideálne vyznačuje sublineárnou alebo
+polylogaritmickou časovou zložitosťou spracovanie jednotlivých prvkov, celkové spracovanie, a sú žiaduce sublineárne pamäťové nároky
+\cite{data-streams}.
 
 Za ideálnych okolností by sa mal online algoritmus učiť kontinuálne bez ukladania predošlých bodov a detekcií.
-V rozhodnutiach algoritmu sú zahrnuté informácie o všetkých predošlých bodoch do terajšieho rozhodnutia. 
-Mal by mať schopnosť sa adaptovať dynamickému prostrediu, v ktorom pôsobí, bez nutnosti manuálnych úprav parametrov modelu. 
-Zároveň je žiaduce minimalizovať falošné pozitíva a negatíva pri detekcii udalostí. V turniketovom modeli sa pri online 
-agregácii bod $x_i$ načítaný v prúde, zaráta do každého relevantného počítadla, a môže byť ihneď zabudnutý \cite{data-streams}.
+V rozhodnutiach algoritmu sú zahrnuté informácie o všetkých predošlých bodoch do terajšieho rozhodnutia.
+Mal by mať schopnosť sa adaptovať dynamickému prostrediu, v ktorom pôsobí, bez nutnosti manuálnych úprav parametrov modelu.
+Zároveň je žiaduce minimalizovať falošné pozitíva a negatíva pri detekcii udalostí. V turniketovom modeli sa pri online
+agregácii načítaný bod $x_i$ zaráta do každého relevantného počítadla a môže byť ihneď zabudnutý \cite{data-streams}.
 
 \subsection{Posuvné a rozširujúce sa okná}
-Časový rad $\left(x_i\right)_{i = 0}^{n}$ s dĺžkou $n$ môže byť pre účely výpočtu sumárnych štatistík rozdelený okennou funkciou 
-$\mathcal{W}_{l, d}$ na podpostupnosti nazývané okná. 
+Časový rad $\left(x_i\right)_{i = 0}^{n}$ s dĺžkou $n$ môže byť pre účely výpočtu sumárnych štatistík rozdelený oknovou funkciou
+$\mathcal{W}_{l, d}$ na podpostupnosti nazývané okná.
 
-\emph{Posuvné okná} (,,rolling window'') majú spravidla konštatnú dĺžku $l$ 
-menšiu ako celkovú veľkosť radu a sú aplikované s krokom odstupu $d$ pozorovaní. Rad pozorovaní pozostáva z $ (n - (l  - 1)) / d$ 
-okien \cite{online-anomaly-detection}. Prirodzene sa posuvné okná objavujú pri manipulácii s vyrovnávacou pamäťou, ktoré sa využívajú 
+\emph{Posuvné okná} (,,rolling window'') majú spravidla konštatnú dĺžku $l$
+menšiu ako celkovú veľkosť radu a sú aplikované s krokom odstupu $d$ pozorovaní. Rad pozorovaní pozostáva z $ (n - (l  - 1)) / d$
+okien \cite{online-anomaly-detection}. Prirodzene sa posuvné okná objavujú pri manipulácii s vyrovnávacou pamäťou, ktoré sa využívajú
 pri blokovom prenose z adaptéra senzora do hlavnej pamäte. Vtedy sa veľkosť bloku sa rovná posunu $l = d$.
 
-\emph{Rozširujúce sa okná} (,,expanding window'') nachádzajú uplatnenie v menej prípadoch, spravidla sa jedná o inkrementálny 
-odhad globálnej štatistiky, ktorá má zmysel prevažne pri sledovaní stabilného javu. \cite{practical-time-series}. Okno začína na 
-stanovenej minimálnej veľkosti a s pribúdajúcim počtom bodov ich zahŕňa, čím sa zväčšuje. Dostavuje sa rovnaký výsledok ako v 
-turniketovom modeli, ale navyše neplatí obmedzenie zahadzovania už započítaných údajov, ale dokážeme teoreticky operovať so všetkými 
-vzorkami vrámci okna.  
+\emph{Rozširujúce sa okná} (,,expanding window'') nachádzajú uplatnenie v menej prípadoch, spravidla sa jedná o inkrementálny
+odhad globálnej štatistiky, ktorá má zmysel prevažne pri sledovaní stabilného javu. \cite{practical-time-series}. Okno začína na
+stanovenej minimálnej veľkosti a s pribúdajúcim počtom bodov ich zahŕňa, čím sa zväčšuje. Dostavuje sa rovnaký výsledok ako v
+turniketovom modeli, ale navyše neplatí obmedzenie zahadzovania už započítaných údajov, ale dokážeme teoreticky operovať so všetkými
+vzorkami vrámci okna.
 
 \subsection{Číselné charakteristiky štatistického rozdelenia}
-Náhodné vibrácie vyskytujúce sa pri skutočných materiáloch sú stochastický proces, ktorý tvorí sekvencia časovo indexovaných 
-náhodných premenných. Časový rad predstavuje realizáciu tohto stochastického procesu $\mathbf{Y} = (X_1, X_2, ..., X_n)^T$, kde $X_t$ 
-je náhodná premenná so svojím rozdelením pravdepodobnosti. Všeobecne sa pri ideálnych stacionárnych otrasoch predpokladá, že premenné 
-pochádzajú z unimodálnej Gaussovej distribúcie: $X_t \sim N(\mu, \sigma^2)$ \cite{vibrations-shock}. 
+Náhodné vibrácie vyskytujúce sa pri skutočných materiáloch sú stochastický proces, ktorý tvorí sekvencia časovo indexovaných
+náhodných premenných. Časový rad predstavuje realizáciu tohto stochastického procesu $\mathbf{Y} = (X_1, X_2, ..., X_n)^T$, kde $X_t$
+je náhodná premenná so svojím rozdelením pravdepodobnosti. Všeobecne sa pri ideálnych stacionárnych otrasoch predpokladá, že premenné
+pochádzajú z unimodálnej Gaussovej distribúcie: $X_t \sim N(\mu, \sigma^2)$ \cite{vibrations-shock}.
 
 Sumárna deskripcia nameraného deja pre extrakciu typických čŕt konkrétnych pozorovaných situácií sa uskutočňuje viacerými štatistikami
-$h(X_1, X_2, ..., X_n)$ zostručňujúcimi opis funkcie hustoty rozdelenie. Na rozmiestnenie hodnôt meraní v priebehu časového úseku 
-sa nazerá z pohľadu polohy, rozptýlenosti a tvaru. Rozsah oboru hodnôt je amplitúda špička-špička (,,peak-to-peak''), 
+$h(X_1, X_2, ..., X_n)$ zostručňujúcimi opis funkcie hustoty rozdelenie. Na rozmiestnenie hodnôt meraní v priebehu časového úseku
+sa nazerá z pohľadu polohy, rozptýlenosti a tvaru. Rozsah oboru hodnôt je amplitúda špička-špička (,,peak-to-peak''),
 ktorá je rozdielom maximálnej a minimálnej úrovne, údaj známy tiež ako variančné rozpätie \cite{zaklady-statistiky}.
+\myequations{Amplitúda špička-špička}
 \begin{ceqn}\begin{align}
 x_{pp} = \max_{t \in \mathcal{W}}\{x_t\} - \min_{t \in \mathcal{W}}\{x_t\}
-\end{align}\end{ceqn} 
+\end{align}\end{ceqn}
+
 Priemernú energiu obsiahnutú v signále predstavuje štvorec efektívnej amplitúdy RMS a určí sa ako kvadratický priemer pozorovaní:
+\myequations{Efektívna amplitúda RMS}
 \begin{ceqn}\begin{align}
 x_{rms} = \sqrt{\frac{1}{n}\sum_{t=1}^{n}{x_t^2}}
 \end{align}\end{ceqn}
+
 Mierami polohy rozdelenia pozorovaní sú stredná hodnota, informujúca
 o centre hodnôt veličiny, a kvantily rozkladajúce usporiadaný vektor pozorovaní na určený počet rovnakých skupín.
 Nevychýleným bodovým odhadom strednej hodnoty je \emph{výberový priemer}, ktorý je zároveň amplitúdou jednosmernej zložky signálu:
+\myequations{Výberový priemer alebo amplitúda jednosmernej zložky}
 \begin{ceqn}\begin{align}
 \bar{x} = \frac{1}{n} \sum_{t = 1}^{n}{x_t}
 \end{align}\end{ceqn}
-Najvýznamnejším kvantilmi sú kvartily $Q_q$ vytvárajúce štyri rovnako veľké časti z pôvodných dát, konkrétne dolný kvartil $Q_1$ 
-oddelí  25\% najmenších údajov, medián $Q_2$ predelí zoradené údaje na polovicu a horný kvartil $Q_3$ zahrnie 75\% nižších hodnôt. 
-Hľadaný kvartil je $k$-ty najmenší prvok v utriedenom zozname meraní, pričom podľa želaného kvartilu $q$ a počtu pozorovaní je 
-$k = \lceil n \cdot (1 / q) \rceil$. 
+
+Najvýznamnejším kvantilmi sú kvartily $Q_q$ vytvárajúce štyri rovnako veľké časti z pôvodných dát, konkrétne dolný kvartil $Q_1$
+oddelí  25\% najmenších údajov, medián $Q_2$ predelí zoradené údaje na polovicu a horný kvartil $Q_3$ zahrnie 75\% nižších hodnôt.
+Hľadaný kvartil je $k$-ty najmenší prvok v utriedenom zozname meraní, pričom podľa želaného kvartilu $q$ a počtu pozorovaní je
+$k = \lceil n \cdot (1 / q) \rceil$.
 
 Zistenie $k$-teho najmenšieho prvku s časovou zložitosťou $\mathcal{O}(n \log n)$ umožňuje ľubovoľný lepší triediaci algoritmus
-napríklad triedenie zlučovaním (merge sort). Algoritmus \emph{Quickselect} dokáže taký prvok objaviť v čase $\mathcal{O}(n)$. 
-V každom kroku vyberie náhodný deliaci bod (pivot) a preskupí k sebe hodnoty menšie ako pivot naľavo a väčšie ako pivot 
+napríklad triedenie zlučovaním (merge sort). Algoritmus \emph{Quickselect} dokáže taký prvok objaviť v čase $\mathcal{O}(n)$.
+V každom kroku vyberie náhodný deliaci bod (pivot) a preskupí k sebe hodnoty menšie ako pivot naľavo a väčšie ako pivot
 napravo. Najmenší prvok následne hľadá v časti, kde zostalo viac ako $k$ prvkov. Pokiaľ došlo k deleniu zoznamu, že pivot
-zaujme presne $k$-tu pozíciu prehľadávanie je ukončené a pivot prehlásený za riešenie. Nesprávnym výberom pivota môže 
+zaujme presne $k$-tu pozíciu prehľadávanie je ukončené a pivot prehlásený za riešenie. Nesprávnym výberom pivota môže
 v najhoršom prípade dôjsť až k zložitosti $\mathcal{O}(n^2)$, čomu sa predchádza výberom pivota cez medián mediánov.
 
 Sústreďovanie realizácie veličiny, respektíve jej rozptýlenosť okolo strednej hodnoty vieme opísať viacerými štatistikami
-ako sú \emph{výberový rozptyl} (\ref{eq:variance}), ktorej odmocninou dostaneme smerodajnú odchýlku, 
+ako sú \emph{výberový rozptyl} (\ref{eq:variance}), ktorej odmocninou dostaneme smerodajnú odchýlku,
 \emph{priemerná absolútna odchýlka} (\ref{eq:aad}), \emph{mediánová absolútna odchýlka} (\ref{eq:mad})
-a \emph{medzikvartilové rozpätie} (\ref{eq:iqr}) \cite{zaklady-statistiky}. Priemerná absolútna odchýlka je 
-upraviteľné o mieru centrálnej tendencie, ktorou okrem priemeru môže byť aj medián alebo modus. Vyvarovanie sa 
+a \emph{medzikvartilové rozpätie} (\ref{eq:iqr}) \cite{zaklady-statistiky}. Priemerná absolútna odchýlka je
+upraviteľné o mieru centrálnej tendencie, ktorou okrem priemeru môže byť aj medián alebo modus. Vyvarovanie sa
 príliš extrémnym a vychýlením hodnotám docielime zapojením práve mediánu do štatistík absolútnej odchýlky, rovnako
 tak to dosiahneme medzikvartilovým rozpätím obmedzením sa na 50\% centrálnych dát.
+\myequations{Výberové miery rozptýlenosti: rozptyl, smerodajná odchýlka, MAD, IQR}
 \begin{ceqn}\begin{align}
 	s^2 &= \frac{1}{n - 1} \sum_{t = 1}^{n}{(x_t - \bar{x})^2} \label{eq:variance} \\
 	d &= \frac{1}{n} \sum_{t = 1}^{n}(|x_t - \bar{x}|) \label{eq:aad} \\
@@ -346,17 +362,19 @@ tak to dosiahneme medzikvartilovým rozpätím obmedzením sa na 50\% centrálny
 Numericky stabilné bežiace štatistiky priemeru a smerodajnej odchýlky sa udržiavajú cez rekurentné rovnice
 \emph{Welfordovho algoritmu} \cite{knuth}. $M_1$ je aktuálna priemerná hodnota údajov v toku a $S_1$ je počítadlo pre
 rozptyl, z ktorého je v ktoromkoľvek okamihu získateľná smerodajná odchýlka súboru $\sigma$:
+\myequations{Welfordov algoritmus na výpočet výberového rozptylu}
 \begin{ceqn}\begin{align}
    M_1 &= x_1;\quad M_k = M_{k-1} + \frac{(x_n - M_{k-1})}{k} \\
    S_1 &= 0; \quad S_k = S_{k-1} + (x_k + M_{k-1})(x_k + M_k)  \\
    \sigma &= \sqrt{S_n / (n - 1)}
 \end{align}\end{ceqn}
 
-Tvar distribúcie náhodnej premennej opisujú centrálne momenty šikmosť a špicatosť. Šikmosť $\gamma_1 = \mu^3 / \sigma^3$ udáva skosenie 
-rozdelenia, pričom platí že záporná šikmosť značí dlhší ľavý chvost a modus funkcie hustoty sa prevažuje napravo. Zatiaľ čo u kladnej 
-šikmosti je to naopak (obr. \ref{fig:skewness}). 
+Tvar distribúcie náhodnej premennej opisujú centrálne momenty šikmosť a špicatosť. Šikmosť $\gamma_1 = \mu^3 / \sigma^3$ udáva skosenie
+rozdelenia, pričom platí že záporná šikmosť značí dlhší ľavý chvost a modus funkcie hustoty sa prevažuje napravo. Zatiaľ čo u kladnej
+šikmosti je to naopak (obr. \ref{fig:skewness}).
 
-Špicatosť $\gamma_2 = \mu^4 / \sigma^4 - 3$ (obr. \ref{fig:kurtosis}) porovnáva rozdelenie pozorovaní so strmosťou krivky normálneho rozdelenia, čiže viacej realizácií leží bližšie alebo ďalej od strednej hodnosti. Kladná špicatosť signalizuje strmejšiu 
+Špicatosť $\gamma_2 = \mu^4 / \sigma^4 - 3$ (obr. \ref{fig:kurtosis}) porovnáva rozdelenie pozorovaní so strmosťou krivky normálneho rozdelenia,
+čiže viacej realizácií leží bližšie alebo ďalej od strednej hodnosti. Kladná špicatosť signalizuje strmejšiu
 a záporná zasa sploštenejšiu distribúciu. Platí, že $\mu_n $ je priemerom hodnôt $(x_t - \bar{x})^n$.
 \begin{figure}[h]
 \centering
@@ -376,14 +394,15 @@ a záporná zasa sploštenejšiu distribúciu. Platí, že $\mu_n $ je priemerom
 \caption{Dopad šikmosti a špicatosti na histogram distribúcie}
 \end{figure}
 
-Závislosť dvojíc veličín sa vyjadruje \emph{kovariancia} $cov(\mathbf{x}, \mathbf{y})$ a \emph{korelácia} 
-$\rho(\mathbf{x}, \mathbf{y})$. U vektora akcelerácie nás bude napríklad zaujímať vzájomná korelácia medzi 
-osami pohybu: $\rho(\vec{x},\vec{y}),\, \rho(\vec{x},\vec{z}),\, \rho(\vec{y},\vec{z})$ upozorňujúca na diagonálny 
+Závislosť dvojíc veličín sa vyjadruje \emph{kovariancia} $cov(\mathbf{x}, \mathbf{y})$ a \emph{korelácia}
+$\rho(\mathbf{x}, \mathbf{y})$. U vektora akcelerácie nás bude napríklad zaujímať vzájomná korelácia medzi
+osami pohybu: $\rho(\vec{x},\vec{y}),\, \rho(\vec{x},\vec{z}),\, \rho(\vec{y},\vec{z})$ upozorňujúca na diagonálny
 pohyb alebo podobné budenie v oboch korelovaných smeroch a tým umožňujúce redukciu údajov z dôvodu redundancie.
-Kovariancia je daná strednou hodnotou súčinu odchýlky od priemeru zodpovedajúcej premennej (vzťah \ref{eq:covariance}). 
+Kovariancia je daná strednou hodnotou súčinu odchýlky od priemeru zodpovedajúcej premennej (vzťah \ref{eq:covariance}).
 Normovaním kovariancie smerodajnými odchýlkami veličín získame \emph{Pearsonov korelačný koeficient}
 (vzťah \ref{eq:correlation}), ktorý je z intervalu $[-1; 1]$.  Hodnota koeficientu $-1$ značí nepriamu lineárnu závislosť
-a $+1$ priamu závislosť. 
+a $+1$ priamu závislosť.
+\myequations{Závislosť dvoch veličín cez kovarianciu a koreláciu}
 \begin{ceqn}\begin{align}
 \mathrm{cov}(\mathbf{x}, \mathbf{y}) &= \frac{1}{n} \sum_{t=1}^{n}{(x_t - \bar{x})(y_t - \bar{y})} \label{eq:covariance} \\
 \rho(\mathbf{x}, \mathbf{y}) &= \frac{\mathrm{cov}(\mathbf{x}, \mathbf{y})}{\sigma_x \sigma_y} \label{eq:correlation}
@@ -393,57 +412,59 @@ a $+1$ priamu závislosť.
 \label{peak-detection}
 Detekcia udalostí a významných zmien signálového priebehu sa spolieha na hodnovernú identifikáciu špičiek amplitúdy.
 Dôležitými indikátormi pre celkovú charakterizáciu javu slúži potom časová pozícia špičky v rámci prúdu, výška prejavujúca
-sa získanou úrovňou, šírka obsahujúca údaj o trvaní, či plocha stvárňujúca energiu. 
+sa získanou úrovňou, šírka obsahujúca údaj o trvaní, či plocha stvárňujúca energiu.
 
-Ekvivalentne sa špičky z matematického hľadiska stotožňujú s lokálnymi extrémami funkcie, čo sú maximá (vrcholy) a minimá (údolia). 
-Podľa definície je lokálne maximum $t_0$ bodom, ktorý má vyššiu funkčnú hodnotu ako všetky ostatné body na intervale 
-$t_0 \in I$ (\ref{equ:local-maxima}), lokálne minimum má na intervale najmenšiu hodnotu (\ref{equ:local-minima}) 
-\cite{survey-peaks-valleys}. 
-
+Ekvivalentne sa špičky z matematického hľadiska stotožňujú s lokálnymi extrémami funkcie, čo sú maximá (vrcholy) a minimá (údolia).
+Podľa definície je lokálne maximum $t_0$ bodom, ktorý má vyššiu funkčnú hodnotu ako všetky ostatné body na intervale
+$t_0 \in I$ (\ref{equ:local-maxima}), lokálne minimum má na intervale najmenšiu hodnotu (\ref{equ:local-minima})
+\cite{survey-peaks-valleys}.
+\myequations{Lokálne extrémy funkcie}
 \begin{ceqn}\begin{align}
 f[t_0] \geq f[t],\, \forall t \in I \label{equ:local-maxima}\\
 f[t_0] \leq f[t],\, \forall t \in I \label{equ:local-minima}
 \end{align}\end{ceqn}
 
-Kľúčové pre spoľahlivé určenie extrémov je práve interpretácia intervalu $I$ v algoritmoch, ktoré zastupujú rozličné 
-potreby korektného vyhodnotenia. Jediné minimum a maximum sa dosiahne zvolením celej dĺžky záznamu za interval, čím sa 
+Kľúčové pre spoľahlivé určenie extrémov je práve interpretácia intervalu $I$ v algoritmoch, ktoré zastupujú rozličné
+potreby korektného vyhodnotenia. Jediné minimum a maximum sa dosiahne zvolením celej dĺžky záznamu za interval, čím sa
 stratia dočasné disturbancie. Na druhej stane prílišným skrátením intervalu sa skoro všetky vzorky budú javiť ako náhle zmeny.
 
-Skutočné signály sa potýkajú so šumom, ktorý sťažuje odlíšenie pravej tendencie od krátkodobých výkyvov. 
+Skutočné signály sa potýkajú so šumom, ktorý sťažuje odlíšenie pravej tendencie od krátkodobých výkyvov.
 Pred samotným procesom hľadania špičiek je preto aplikovaný vyhladzovací filter, v prípade potreby aj opakovane na už
-vyhladení signál. Najčastejšie sa jedná o filter 
-kĺzavého priemeru, Savitzky–Golay alebo Gaussov filter \cite{spectrometry-peak-detection}. Filtrovanie sa realizuje 
-diskrétnou jednorozmernou konvolúciou vstupného signálu a masky filtra $y[n] = x[n] * w[n]$, 
-ktorá býva hardvérovo akcelerovaná inštrukciami 
+vyhladení signál. Najčastejšie sa jedná o filter
+kĺzavého priemeru, Savitzky–Golay alebo Gaussov filter \cite{spectrometry-peak-detection}. Filtrovanie sa realizuje
+diskrétnou jednorozmernou konvolúciou vstupného signálu a masky filtra $y[n] = x[n] * w[n]$,
+ktorá býva hardvérovo akcelerovaná inštrukciami
 ,,fused multiply-add''\footnote{\url{https://developer.arm.com/documentation/102198/0200/Convolution}}.
 
 \subsubsection{Detekcia špičiek prahovou úrovňou}
-Za predpokladu, že priebeh meranej veličiny sa vyznačuje krátkymi impulzmi s viac-menej pravidelnou amplitúdou 
+Za predpokladu, že priebeh meranej veličiny sa vyznačuje krátkymi impulzmi s viac-menej pravidelnou amplitúdou
 je priamočiarou metódou na odlíšenie špičiek od hladín nízkej aktivity určenie prahu $\theta$, ktorý zaregistruje
-všetky väčšie hodnoty. Lokálne extrémy sú potom vzorky signálu spĺňajúce podmienku: 
+všetky väčšie hodnoty. Lokálne extrémy sú potom vzorky signálu spĺňajúce podmienku:
+\myequations{Detekcia špičiek prahovou úrovňou}
 \begin{ceqn}\begin{align}
 |f[t]| \geq \theta
 \end{align}\end{ceqn}
 
-Určenie takejto hraničnej hladiny prebieha zväčša empiricky alebo na základe heuristík, ktoré so sebou nesú 
-domnienku o vlastnostiach priebehu pozorovaní. Uspokojivými odhadom za určitých okolností môžu byť prahy $\theta$: 
+Určenie takejto hraničnej hladiny prebieha zväčša empiricky alebo na základe heuristík, ktoré so sebou nesú
+domnienku o vlastnostiach priebehu pozorovaní. Uspokojivými odhadom za určitých okolností môžu byť prahy $\theta$:
 viac ako priemer s toleranciou, horné $3/4$ celkového nedávneho rozsahu hodnôt, či dokonca viac ako $k$
-smerodajných odchýlok. Odlišné nazeranie na prahovú hodnotu spočíva v jej nastavení pre rozpoznanie 
+smerodajných odchýlok. Odlišné nazeranie na prahovú hodnotu spočíva v jej nastavení pre rozpoznanie
 vzájomnej korelácie signálu a masky zodpovedajúcej tvaru impulzu. Táto úvaha sa opiera o to, že impulz
 musí byť dostatočne pravidelný, aby bol nezameniteľne odlíšiteľný.
 
 \subsubsection{Význačnosť vrchola spomedzi susedov}
-Doplnkom ku rozpoznávaniu špičiek podľa absolútnej prahovej úrovne je porovnávanie bodov na 
+Doplnkom ku rozpoznávaniu špičiek podľa absolútnej prahovej úrovne je porovnávanie bodov na
 obe strany od preskúmavaného vrchola, čím zistíme relatívnu významnosť extrému pre najbližšie susedstvo.
 Aby bola hodnota na danej pozícii $t$ označená za špičku v okolí pozostávajúcom z $k$ priľahlých bodov,
-musí byť v porovnaní so všetkými väčšia. Pre okrajové dátové body $f[0]$ a $f[n]$ dochádza k porovnaniu 
+musí byť v porovnaní so všetkými väčšia. Pre okrajové dátové body $f[0]$ a $f[n]$ dochádza k porovnaniu
 iba z jednej strany \cite{survey-peaks-valleys}.
+\myequations{Význačnosť vrchola spomedzi susedov}
 \begin{ceqn}\begin{align}
 f[t-i] < f[t] > f[t+i],\quad \forall i \in 1, 2, ..., k
 \end{align}\end{ceqn}
 
-Algoritmus č.\ref{algo:neighbours} ,,najvyšší spomedzi susedov'' 
-\footnote{\url{https://terpconnect.umd.edu/~toh/spectrum/PeakFindingandMeasurement.htm}} 
+Algoritmus č.\ref{algo:neighbours} ,,najvyšší spomedzi susedov''
+\footnote{\url{https://terpconnect.umd.edu/~toh/spectrum/PeakFindingandMeasurement.htm}}
 prechádza postupne pozorovania veličiny zo zoznamu $y$ a ku kandidátnej špičke na indexe $i$ preveruje najbližších
 $k$ hodnôt na obe strany, ak existujú.
 \begin{algorithm}[h]
@@ -473,21 +494,21 @@ $k$ hodnôt na obe strany, ak existujú.
 \label{algo:neighbours}
 \end{algorithm}
 Keď po preskúmaní zostáva $y[i]$ najväčšou hodnotou spomedzi susedov
-v rozmedzí $[a; b]$, za tolerancie strmosti stúpania $\varepsilon$ medzi pozorovaniam, a súčasne je relatívna 
+v rozmedzí $[a; b]$, za tolerancie strmosti stúpania $\varepsilon$ medzi pozorovaniam, a súčasne je relatívna
 výška vrcholu väčšia oproti nižšiemu okraju než nastavený parameter $h_{rel}$ potom je kandidátny bod prehlásený
-za skutočnú špičku a pridaný do zoznamu $peaks$. 
+za skutočnú špičku a pridaný do zoznamu $peaks$.
 
-Súčasťou algoritmu je tiež preskočenie hodnôt, ktoré nespĺňajú základný predpoklad pre absolútnu amplitúdu $h$. 
+Súčasťou algoritmu je tiež preskočenie hodnôt, ktoré nespĺňajú základný predpoklad pre absolútnu amplitúdu $h$.
 Časová zložitosť pre rozhodnutie o jednej špičke je lineárna v závislosti od veľkosti posuvného okna uvažovaného
 susedstva $\mathcal{O}(2k)$.
 
 \subsubsection{Algoritmus prechodu nulou do záporu}
 Pomyselné vrcholy a údolia v zosnímaných hodnotách sú miestom, kde sa mení smer úrovní amplitúdy zo stúpania na klesanie alebo
-z klesania na stúpanie, čím na pomedzí týchto opozitných trendov vzniká stacionárny bod, kde je prvá diferencia nulová: 
+z klesania na stúpanie, čím na pomedzí týchto opozitných trendov vzniká stacionárny bod, kde je prvá diferencia nulová:
 $\Delta f[i] = 0$. V lokálnom maxime dochádza súčasne k zmene znamienka prvej diferencie z kladného na záporné. Prudkosť
-kopca vyplýva z absolútnej hodnoty diferencie. 
+kopca vyplýva z absolútnej hodnoty diferencie.
 
-Viacnásobné vyhladenie signálu predom je nesmierne dôležité, 
+Viacnásobné vyhladenie signálu predom je nesmierne dôležité,
 pretože algoritmus č.\ref{algo:zero-crossing} ,,prechodu nulou do záporu'' (Negative Zero-Crossing) je nesmierne citlivý
 na zákmity a nesprávneby ich považoval za špičky. Zvýšenie odolnosti proti takýmto tendenciám sa dosahuje dlhšou sečnicou
 spájajúcou bod $i$ s $k$-tou vzorkou vedľa, ktorá sa použije namiesto diferencie s jednotkovým krokom.
@@ -497,11 +518,11 @@ spájajúcou bod $i$ s $k$-tou vzorkou vedľa, ktorá sa použije namiesto difer
 \Function{Find\_Peaks\_Zero\_Crossing}{$y$, $k$, $\varepsilon$, $slope$}
 	\State $peaks \gets []$
 	\For{$i \gets k$ \textbf{to} $length(y) - k$}
-		\If {($|y[i+k] - y[i-k]| \leq \epsilon$ \textbf{and} 
+		\If {($|y[i+k] - y[i-k]| \leq \epsilon$ \textbf{and}
 		     \State \hskip1.5em $(y[i+k] - y[i]) - (y[i] - y[i-k]) < 0$ \textbf{and}
 		     \State \hskip1.5em $|(y[i+k] - y[i]) - (y[i] - y[i-k])| > slope$)}
 		    \State $peaks \gets peaks + [i]$
-		
+
 		\EndIf
 	\EndFor
 	\State \Return $peaks$
@@ -510,10 +531,10 @@ spájajúcou bod $i$ s $k$-tou vzorkou vedľa, ktorá sa použije namiesto difer
 \label{algo:zero-crossing}
 \end{algorithm}
 
-Označenie kandidátneho bodu za špičku v zozname hodnôt $y$ stojí na teda troch kritériách. Sklon sečnice sa musí v 
-rámci tolerancie $\varepsilon$ blížiť nule, rozdiel prvých diferencií $\Delta y[i+k] - \Delta[i]$ musí byť záporný a veľkosť 
+Označenie kandidátneho bodu za špičku v zozname hodnôt $y$ stojí na teda troch kritériách. Sklon sečnice sa musí v
+rámci tolerancie $\varepsilon$ blížiť nule, rozdiel prvých diferencií $\Delta y[i+k] - \Delta[i]$ musí byť záporný a veľkosť
 rozdielu diferencií prekračuje prahovú strmosť kopca $slope$, kde leží uvažovaný vrchol. Časová zložitosť
-pre jednu špičku je $\mathcal{O}(1)$. 
+pre jednu špičku je $\mathcal{O}(1)$.
 
 \subsubsection{Algoritmus horského turistu}
 Zanesením do grafu pripomína priebeh funkcie kmitajúceho deja členité pohorie. Na problém rozhodovania sa o tom, či danú lokalitu
@@ -522,9 +543,9 @@ ide myšlienkou o jednoduchý stavový automat sledujúci aktuálny stav terénu
 skúsenosti v intenciách rozhodovacích pravidiel.
 
 Algoritmus č.\ref{algo:mountain-hiker} horského turistu na začiatku púte z počiatočných bodov zistí, ktorým z dvoch vertikálnych
-smerov sa krivka uberá. V prípade, že po druhom kroku dôjde k zmene smeru zapíše sa indikácia možného spádu kopca. 
-Výchylka môže byť v dôsledku neprekročenia prahových úrovní v horizontálnej ($hole$) a vertikálnej ($tolerance$) osi 
-ignorovaná, lebo ani na lesnom chodníku sa nepovažuje každá jama alebo vydutie za horu. 
+smerov sa krivka uberá. V prípade, že po druhom kroku dôjde k zmene smeru zapíše sa indikácia možného spádu kopca.
+Výchylka môže byť v dôsledku neprekročenia prahových úrovní v horizontálnej ($hole$) a vertikálnej ($tolerance$) osi
+ignorovaná, lebo ani na lesnom chodníku sa nepovažuje každá jama alebo vydutie za horu.
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\textwidth]{figures/topography.png}
@@ -532,7 +553,7 @@ ignorovaná, lebo ani na lesnom chodníku sa nepovažuje každá jama alebo vydu
     \label{fig:topography}
 \end{figure}
 
-Domnelý vrchol je označený za lokálne maximum, keď spĺňa parametre pre topografické vlastnosti minimálnej akceptovateľnej 
+Domnelý vrchol je označený za lokálne maximum, keď spĺňa parametre pre topografické vlastnosti minimálnej akceptovateľnej
 prominencie a izolácie (obr. \ref{fig:topography}. Prominencia znamená relatívnu výšku oproti predošlej navštívenej doline. Izolácia vyčísľuje vzdialenosť k najbližšiemu skoršiemu vrcholu. Podobný algoritmus už existuje v literatúre \cite{peek-mountaineer-method}, avšak nižšie prezentovaný pseudokód je oproti nemu zjednodušený a doplnený o požadované tolerancie.
 \begin{algorithm}[h]
 \caption{Algoritmus horského turistu}
@@ -543,7 +564,7 @@ prominencie a izolácie (obr. \ref{fig:topography}. Prominencia znamená relatí
 	\State $y\_valley \gets 0$
 	\State $possible\_change \gets false$
 	\State $uphill \gets (y[1] - y[0]) \geq 0$
-	
+
 	\For{$i \gets 1$ \textbf{to} $length(y)$}
 		\State $y\_step \gets y[i] - y[i-1]$
         \State $slope \gets y\_step \geq 0$
@@ -554,7 +575,7 @@ prominencie a izolácie (obr. \ref{fig:topography}. Prominencia znamená relatí
         \ElsIf {$possible\_change = true$ \textbf{and} $uphill = slope$}
         	\State $possible\_change \gets false$  \Comment{Potenciálny extrém bol zachvením}
         \EndIf
-        
+
         \If {($possible\_change = true$
         	\State \hskip1.5em \textbf{and} $uphill \neq slope$
         	\State \hskip1.5em \textbf{and} $|i - i\_change| > hole$
@@ -563,18 +584,18 @@ prominencie a izolácie (obr. \ref{fig:topography}. Prominencia znamená relatí
         	\State $posible\_change \gets False$        \Comment{Významný lokálny extrém potvrdený}
         	\State $prev\_uphill \gets uphill$
         	\State $uphill \gets slope$
-        	
+
         	\If {$prev\_uphill = false$ \textbf{and} $uphill = true$}
 				\State $y\_valley \gets y[i\_change]$   \Comment{Nájdené údolie}
-                
-            \ElsIf {($prev\_uphill = true$ 
+
+            \ElsIf {($prev\_uphill = true$
             		\State \hskip1.5em \textbf{and} $uphill = false$
             		\State \hskip1.5em \textbf{and}  $|y[i - hole] - y\_valley| > prominence$)
             		\State \hskip1.5em \textbf{and}  $|y[i - hole] - y[last(peaks)]| > isolation$)}
 				\State $y\_peak \gets y[i\_change]$    \Comment{Skutočný vrchol identifikovaný}
-				\State $peaks \gets peaks + [i_change]$              
-            \EndIf      	
-        \EndIf       
+				\State $peaks \gets peaks + [i_change]$
+            \EndIf
+        \EndIf
 	\EndFor
 	\State \Return $peaks$
 \EndFunction
@@ -584,24 +605,24 @@ prominencie a izolácie (obr. \ref{fig:topography}. Prominencia znamená relatí
 \afterpage{\clearpage}
 
 \subsection{Metriky pre binárny klasifikátor}
-Uviedli sme tri rozdielne rovnocenné prístupy odhalenia špičiek uplatniteľné v nasadení online na sústavný prúd údajov
-separovaný do blokov posuvným oknom. Rozobrali sme algoritmus opierajúci sa o porovnávanie susedov na obe strany, 
+Uviedli sme tri rozdielne rovnocenné prístupy odhalenia špičiek. Rozobrali sme algoritmus porovnávajúci susedov na obe strany,
 algoritmus využívajúci sklon sečníc vychádzajúc s vlastností prvej derivácie a napokon
-stavový automat odvolávajúci sa na sekvenčne preskúmavanú topografiu krivky grafu. Spoločným rysom zmienených techník 
-je vykonávanie binárne zaradenie pre každú vzorku, či sa sa nachádza alebo nenachádza na aktuálnej pozícií vrchol.
+stavový automat odvolávajúci sa na sekvenčne preskúmavanú topografiu krivky grafu. Spoločným rysom zmienených techník
+je vykonávanie binárne zaradenie pre každú vzorku, či sa sa nachádza alebo nenachádza na aktuálnej pozícii vrchol.
 
-Rozhodnutie môže viesť k správnemu ($P$) alebo nesprávnemu ($N$) riešeniu vzhľadom na objektívnu pravdu 
-sprostredkovanú anotovanými dátami. Keď sa kategorizácia zhoduje s realitou dostávame skupiny 
+Rozhodnutie môže viesť k správnemu ($P$) alebo nesprávnemu ($N$) riešeniu vzhľadom na objektívnu pravdu
+sprostredkovanú anotovanými dátami. Keď sa kategorizácia zhoduje s realitou dostávame skupiny
 skutočne pozitívnych $TP$ a skutočne negatívnych $TN$. V prípade, že sa klasifikátor pomýli vyjde buď chyba
 prvého rádu $FP$, kedy registrujeme neexistujúcu špičku, alebo chyba druhého rádu $FN$, kedy ju prehliadneme.
 Umiestnením počtov charakteru rozhodnutí do tabuľky vzniká matica zámen \cite{binary-classifier}.
 
-Úspešnosť klasifikačných algoritmov pre ich vzájomné porovnanie kvantifikujú viaceré metriky. Na odladenie parametrov 
+Úspešnosť klasifikačných algoritmov pre ich vzájomné porovnanie kvantifikujú viaceré metriky. Na odladenie parametrov
 vplývajúcich na náchylnosť preferovať kladné alebo záporné výsledky sa vzťahuje \emph{prevalencia} výskytu očakávaného
-javu: $P / (P+N)$ v samotných dátach. Snahou rozhodovania je maximalizovať senzitivitu a špecifickosť výsledkov algoritmu. 
-\emph{Senzitivita} (\ref{equ:sensitivity}) udáva koľko bodov, ktoré sú prehlásené za špičky naozaj je špičkami. 
+javu: $P / (P+N)$ v samotných dátach. Snahou rozhodovania je maximalizovať senzitivitu a špecifickosť výsledkov algoritmu.
+\emph{Senzitivita} (\ref{equ:sensitivity}) udáva koľko bodov, ktoré sú prehlásené za špičky naozaj je špičkami.
 \emph{Špecifickosť} (\ref{equ:specifity}) sa zameriava na potvrdenie, aké množstvo pozorovaní nepovažovaných za špičky,
-nie sú nimi aj skutočne. 
+nie sú nimi aj skutočne.
+\myequations{Metriky klasifikátora: senzitivita a špecifickosť}
 \begin{ceqn}\begin{align}
 TPR = \frac{TP}{P} = \frac{TP}{TP + FN} \label{equ:sensitivity} \\
 TNR = \frac{TN}{N} = \frac{TN}{TN + FP} \label{equ:specifity}
@@ -610,62 +631,75 @@ TNR = \frac{TN}{N} = \frac{TN}{TN + FP} \label{equ:specifity}
 Presnosť určenia lokálneho extrému sa skladá z správnosti (\ref{equ:ppv}) a precíznosti (\ref{equ:accuracy}),
 ktoré je rovnako žiaduce dosahovať čo najbližšie sto percentám, pri nízkej chybovosti (\ref{equ:error-rate}), čiže
 nízkeho počtu falošných poplachov.
+\myequations{Metriky klasifikátora: správnosť, precíznosť, chybovosť}
 \begin{ceqn}\begin{align}
 PPV = \frac{TP}{TP + FP} \label{equ:ppv} \\
 ACC = \frac{TP + TN}{P + N}\label{equ:accuracy} \\
 FPR = \frac{FP}{FP + TN} \label{equ:error-rate}
 \end{align}\end{ceqn}
 
-Štandardným nástrojom na vyjadrenie kvality binárneho klasifikátora je \emph{ROC krivka} zakresľujúca 
-senzitivitu $TPR$ vo zvislom smere voči vodorovnej chybovosti $FPR$. ROC vytvoríme postupným posúvaním prahu 
+Štandardným nástrojom na vyjadrenie kvality binárneho klasifikátora je \emph{ROC krivka} zakresľujúca
+senzitivitu $TPR$ vo zvislom smere voči vodorovnej chybovosti $FPR$. ROC vytvoríme postupným posúvaním prahu
 pre klasifikáciu prostredníctvom parametrov algoritmu. Použiteľný algoritmus sa vyznačuje vypuklou krivkou
 smerom k ľavému hornému rohu nad diagonálou, ktorá by sprevádzala počínanie náhodného rozhodovania. Dokonalá
-metóda pri dosahovala stopercentnú senzitivitu za nulovej chyby. Vyjadrením plochy pod 
+metóda pri dosahovala stopercentnú senzitivitu za nulovej chyby. Vyjadrením plochy pod
 ROC krivkou je miera AUC, ktorá umožňuje približné číselné porovnanie rôznych získaných kriviek \cite{roc-analysis}.
 
 \section{Frekvenčná a časovo-frekvenčná analýza signálu}
-Periodické deje v signále sú extrahované zo sekvencie vzoriek v časovej doméne transformovaným do domény frekvenčnej.
+Cyklicky sa opakujúce deje v signále sú extrahované zo sekvencie vzoriek v časovej doméne transformovaným do domény frekvenčnej.
 Premenou dochádza k odhadu sumárnej intenzity jednotlivých rozsahov zložiek spektra, pričom rozlíšenie je
-podmienené vzorkovacou frekvenciou $f_s$ a celkovým počtom meraní $N$ (\ref{equ:freq-resolution}) \cite{understanding-dsp}. 
-
+podmienené vzorkovacou frekvenciou $f_s$ a celkovým počtom meraní $N$ (\ref{equ:freq-resolution}) \cite{understanding-dsp}.
+\myequations{Rozlíšenie vo frekvenčnej domény podľa vzorkovania}
 \begin{ceqn}\begin{align}
 \Delta f = \frac{f_s}{N} \label{equ:freq-resolution}
 \end{align}\end{ceqn}
 
-Kompromis potrebný učiniť pri spektrálnej analýze tkvie vo vyvážení dĺžky úseku pre časovú lokalizáciu frekvenčného obrazu, 
+Kompromis potrebný učiniť pri spektrálnej analýze tkvie vo vyvážení dĺžky úseku pre časovú lokalizáciu frekvenčného obrazu,
 a jeho výslednej detailnosti na strane druhej. Prechod medzi časovou a frekvenčnou doménou postihuje princíp neurčitosti
-znamenajúci, že pri raste rozlíšenia v čase strácame rozlíšenie vo frekvenciách a naopak. O požadovanom množstve pozorovaní 
-pre konkrétnu granularitu spektra taktiež hovorí vzťah (\ref{equ:freq-resolution}). Rozpätie frekvencií spadajúce do
+znamenajúci, že pri raste rozlíšenia v čase strácame rozlíšenie vo frekvenciách a naopak. O požadovanom množstve pozorovaní
+pre konkrétnu rozlíšiteľnosť spektra taktiež hovorí vzťah (\ref{equ:freq-resolution}). Rozpätie frekvencií spadajúcich do
 diskrétneho frekvenčného vedierka $k$ sú počínajúc $k\Delta f$ po $(k+1)\Delta f$.
- 
+
 \subsection{Diskrétna fourierová a kosínusová transformácia}
-Diskrétna fourierová transformácia (DFT) je aparát na učenie harmonického zloženia signálu. Zobrazuje vektor komplexných
-čísel $y$ dĺžky $N$ do vektora $N$ frekvenčných komponentov. Na vypočítanie $k$-teho frekvenčného vedierka sú 
-prvky sekvencie pozorovaní prenásobené zodpovedajúcim exponenciálnym členom tzv. \emph{twiddle factor}. Inverzná transformácia
-sa líši iba opačným znamienkom exponenta a získané hodnoty sa zvyknú normovať podelením $N$.
+Diskrétna Fourierová transformácia (DFT) slúži na učenie harmonického zloženia signálu (\ref{eq:dft}) rozkladom na súčet
+sínusov a kosínusov rôznych frekvencií. Zobrazuje vektor komplexných čísel $y$ dĺžky $N$ do vektora $N$ frekvenčných
+komponentov. Na vypočítanie $k$-teho frekvenčného vedierka sú
+prvky sekvencie pozorovaní prenásobené zodpovedajúcim exponenciálnym členom tzv. \emph{twiddle factor} (\ref{eq:twiddle}). Inverzná
+transformácia sa líši iba opačným znamienkom exponenta a získané hodnoty sa zvyknú normovať podelením $N$.
+\myequations{Diskrétna Fourierová transformácia}
 \begin{ceqn}\begin{align}
-\tag{DFT} Y[k] &= \sum_{n=0}^{N - 1}{x[n] \cdot W_N^{nk}};\quad k = 0, \dots, N - 1 \\
-W_{N}^{nk} &= \exp{\left(-i2\pi nk \, /\, N\right)}
+Y[k] &= \sum_{n=0}^{N - 1}{x[n] \cdot W_N^{nk}};\quad k = 0, \dots, N - 1 \label{eq:dft}\\
+W_{N}^{nk} &= \exp{\left(-i2\pi nk \, /\, N\right)} \label{eq:twiddle}
 \end{align}\end{ceqn}
 
-Alternatívne sa pre praktické aplikácie vyjadruje exponenciálny faktor v goniometrickom tvare:
+Alternatívne exponenciálny faktor vyjadruje v goniometrickom tvare ako kosínusovú reálnu časť a sínusovú imaginárnu časť:
+\myequations{Exponenciálny faktor pre DFT v goniometrickom tvare}
 \begin{ceqn}\begin{align}
 W_{N}^{nk} = \cos(2\pi nk/ N) - i \cdot \sin(2\pi nk/ N)
 \end{align}\end{ceqn}
 
-Spektrálne komponenty opísané vektorom komplexných fourierových koeficientov majú magnitúdy dané veľkosťami komplexných čísel
+Spektrálne komponenty opísané vektorom komplexných Fourierových koeficientov majú magnitúdy dané veľkosťami komplexných čísel
 (\ref{equ:magnitude-spectrum}). Pre reálne čísla je výstup z DFT zrkadlovo symetrický, čo zapríčiňuje nadbytočnosť výsledkov
-nad pozíciou  $N/2$. Rovnako naznačuje reformulácia vety o vzorkovaní, že za vzorkovacej frekvencie $f_s$ sú zapríčinením aliasingu v signále prítomné  frekvencie do maximálne polovice $f_s$. Energia nesená frekvenciou je druhou mocninou magnitúdy, ale častejšie sa 
+nad pozíciou  $N/2$. Rovnako naznačuje reformulácia vety o vzorkovaní, že za vzorkovacej frekvencie $f_s$ sú zapríčinením aliasingu v signále prítomné  frekvencie do maximálne polovice $f_s$. Energia nesená frekvenciou je druhou mocninou magnitúdy, ale častejšie sa
 objavuje reprezentácia relatívneho energetického spektra v decibeloch (\ref{equ:decibel-spectrum}) \cite{understanding-dsp}.
+\myequations{Magnitúdové spektrum absolútne a relatívne v decibeloch}
 \begin{ceqn}\begin{align}
 |Y[k]| = \sqrt{\Re\{Y[k]\}^2 + \Im\{Y[k]\}^2} \label{equ:magnitude-spectrum} \\
 Y_{dB}[k] = 20 \cdot \log_{10}{ \left( \frac{|Y[m]|}{\max\{|Y[m]|\}} \right)} \label{equ:decibel-spectrum}
 \end{align}\end{ceqn}
 
-%TODO
-Kosínusová transfomácia (DCT) (DCT-II, DCT-III (inverzná k II), DCT-IV (sama sebe inverzom)),
+Sekvencia pozorovaní vyjadrená cez súčet kosínusoid namiesto exponenciálneho faktora tvorí rodinu diskrétnych
+kosínusových transformácií (DCT). Vyznačujú sa dobrou dekoreláciu vstupu a energetickou kompresiou, čiže pomerne veľká
+časť celkovej spektrálne energie je sústredená v málo koeficientoch \cite{dct-applications}. Navyše oproti DFT umožňuje redukciu
+výpočtovej náročnosti odstránením súčinov v komplexných číslach.
 
-Koeficienty pre kosínusové transformácie\cite{dct}
+Podľa charakteru obmien kosínusovej bázy rozlišujeme
+štyri typy DCT,  z nich najvýznačnejšie sú transformácie DCT-II, ktorej inverziou je DCT-III, a DCT-IV, ktorá je inverzná
+sama sebe \cite{dct}. Z DCT-IV vychádza MDCT, ktorá navyše spracováva prekrývajúce sa bloky, tak že druhá polovica vzoriek
+pochádza z prvej polovice ďalšieho bloku. Dokopy vytvorí z $2N$ vzoriek $N$ koeficientov. MDCT sa hojne využíva pri stratovej
+kompresii zvuku, pretože sa prelínaním blokom vyvaruje artefaktom na hraniciach blokov
+\cite{mdct}.
+\myequations{Kosínusové transformácie: DCT-II, DCT-III, DCT-IV, MDCT}
 \begin{ceqn}\begin{align}
 \tag{DCT-II} W_{N}^{nk} &= \cos{\left[\left(n + \frac{1}{2}\right) k\frac{\pi}{N}\right]} \\
 \tag{DCT-III} W_{N}^{nk} &= \cos{\left[n \left(k + \frac{1}{2} \right) \frac{\pi}{N}\right]}  \\
@@ -673,46 +707,24 @@ Koeficienty pre kosínusové transformácie\cite{dct}
 \tag{MDCT} W_{N}^{nk} &= \cos{\left[\left(n + \frac{1}{2} + \frac{N}{2} \right) \left(k + \frac{1}{2} \right) \frac{\pi}{N} \right]};\quad n = 0, \dots, 2N - 1
 \end{align}\end{ceqn}
 
-
-
 \subsection{Algoritmus FFT}
-konštantný digitalizačný krok bez prerušení a navyše dĺžka radu musí byť celočíselná mocnina dvoch (s.29)
-motýliky (butterfly)
-prevádza konečnú sekvenciu dát na súčet kosínov oscilujúcich na rôznych frekvenciách
-\cite{fft-blackbox} \cite{fast-dct} \cite{dit-dif-fft} \cite{computer-vision-fft}
+Priamočiarou implementáciou vzťahom na výpočet Fourierovej a kosínusovej transformácie dosiahneme časovú zložitosť
+rádu $\mathcal{O}(N^2)$. Aplikáciam v reálnom čase na prúdoch dát takáto výpočtová náročnosť zďaleka nepostačuje.
+Algoritmus rýchlej fourierovej transformácie (FFT) uplatňujúci prístup rozdeľuj a panuj zvládne zrealizovať DFT
+v čase $\mathcal{O}(N \log N)$.
 
+Celkovo pozostáva z $N$ sčítaní a $N/2$ násobení v komplexných číslach. Najbežnejšia
+varianta algoritmu FFT radix-2 vyžaduje, aby veľkosť vstupu bol mocninou dvojky: $N = 2^k$ .
+Značná výpočtová úspora sa nadobúda uvažovaním s periodicitou goniometrických funkcií pri twiddle faktoroch $W_N$ a z
+toho vyplývajúcich symetrií Fourierovej matice, keďže len $N$ z $N^2$ prvkov matice je odlišných \cite{fft-blackbox}.
 
-The computational complexity of DFT is substantially reduced by using the following
-kntrigonometric symmetry and periodicity of the twiddle factor 
-
-N koplexných sčítaní, N/2 komplexných násobení
-
-Decimácia v čase vs. Decimácia vo frekvencii. 
-Motýlikový diagram Cooley-Tukey vs. Gentleman-Sande
-twiddle factor a ich uloženie v pamäti + predvypočítavanie
-Opis DIT radix-2 FFT algoritmus
-
-Real DFT
-
-FCT
-
-\begin{figure}[h]
-\centering
-\begin{subfigure}[b]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figures/dit-butterfly.png}
-    \caption{Decimácia v čase}
-    \label{fig:dit-butterfly}
-\end{subfigure}
-\hfill
-\begin{subfigure}[b]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figures/dit-butterfly.png}
-    \caption{Decimácia vo frekvencii}
-    \label{fig:dif-butterfly}
-\end{subfigure}
-\caption{Motýlikové diagramy algoritmu FFT}
-\end{figure}
+Podľa spôsobu dekompozície vstupného vektora sú známe dve verzie Radix-2 FFT nazvané decimácia v čase (DIT)
+a decimácia vo frekvencii (DIF). Decimácia v čase (obr. \ref{fig:dit-fft}) rekurzívne delí hodnoty na párne a
+nepárne pozície v čase, zatiaľ  čo decimácia vo frekvencii (obr. \ref{fig:dif-fft}) rozdeľuje na tieto na párne a
+nepárne frekvenčné vedierka \cite{dit-dif-fft}. Výpočet prebieha v $\log_2(n)$ deliacich fázach. Poradie prvkov
+vo výstupnom vektore je vždy bitovo invertované, čiže poradové číslo zapísané ako bitový reťazec má obrátené
+poradie. Na dosiahnutie výstupu poradí rastúcich pozícií musí byť pred spustením FFT vstup preusporiadaný
+\cite{computer-vision-fft}.
 
 \begin{figure}[h]
 \centering
@@ -729,18 +741,59 @@ FCT
     \caption{Decimácia vo frekvencii}
     \label{fig:dif-fft}
 \end{subfigure}
-\caption{FFT s radixom 2 na štyroch bodoch \cite{dit-dif-fft}}
+\caption{Radix-2 FFT na štyroch bodoch \cite{dit-dif-fft}}
 \end{figure}
 
+Základným prvkom schémy výpočtu je motýlikový diagram (,,butterfly''), ktorý je odlišný pre DIT (obr. \ref{fig:dit-butterfly})
+a pre DIF verziu (obr. \ref{fig:dif-butterfly}). Motýlik obsahuje vynásobenie
+jedného z príchodzích operandov s vopred vypočítaným exponenciálnym členom $W_N^j$ pre $j = 0, ..., N/2 - 1$
+\cite{fft-blackbox}, a následné prirátanie a tiež odpočítanie od druhého operandu.
 
-\subsection{Okenné funkcie}
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/dit-butterfly.png}
+    \caption{Decimácia v čase}
+    \label{fig:dit-butterfly}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/dif-butterfly.png}
+    \caption{Decimácia vo frekvencii}
+    \label{fig:dif-butterfly}
+\end{subfigure}
+\caption{Motýlikové diagramy algoritmu FFT}
+\end{figure}
+
+Efektívnejšie na celkový počet aritmetický počet operácií oproti FFT s radixom 2 je \emph{split-radix}, ktorý
+kombinuje výhody vyplývajúce z radix-4 pre nepárne členy DFT a radix-2 pre párne členy. Veľkosť vstupného
+vektora musí byť násobkom štyroch. Dosahuje okolo 30\% zníženie počtu násobení a 10\% pokles počtu sčítaní
+oproti radix-2 \cite{split-radix}.
+
+Algoritmus FFT je aplikovateľný taktiež na výpočet DCT vhodným zoradením vstupného vektora. DCT-II $N$-bodovej
+reálnej postupnosti $\mathbf{x}$ sa odvodzuje uskutočnením jej $2N$-bodového párneho rozšírenia a vynásobenie výsledku
+twiddle faktorom $2W_{2N}^{k}$ a ponechaní reálnej časti. Na ilustráciu uvádzame prípad
+DCT 4-bodovej sekvencie $(x_1, x_2, x_3, x_4)$, ktorej párnym rozšírením $\mathbf{y}$ je $(x_1, x_2, x_3, x_4, x_4, x_3, x_2, x_1)$.
+Rovnako by postačovalo vyplniť pôvodnú postupnosť nulami do dĺžky $2N$, čiže dostávame $(x_1, x_2, x_3, x_4, 0, 0, 0, 0)$.
+Postačuje však realizovať $N$-bodovú FFT sekvencie párnych alebo nepárnych prvkov z $\mathbf{y}$, ktoré sú vzájomným reverzom.
+Na základe predošlého predošlého príkladu dostaneme postupnosť $(x_1, x_3, x_4, x_2)$ \cite{fast-dct}.
+
+Široké použitie FFT pri spracovaní signálov sa prejavuje dostupnosťou implementácií rôznych obmien algoritmu
+v širokej škále programovacích jazykov a optimalizované pre konkrétne hardvérové platformy. V jazyku C stoja
+za zmienku knižnice: FFTW, FFTPACK, GNU Scientific Library, CMSIS DSP a Espressif DSP. Na účely analýzy údajov je FFT
+prítomné pre jazyk Python v balíkoch \emph{numpy} a \emph{scipy}, tiež napr. v jazyku R je súčasťou \emph{stats} modulu.
+
+\subsection{Oknové funkcie}
+%TODO
 Oknové funkcie ováhujú vstupný vektor.Krátkodobá FT
 DFT implicitne predpokladá periodickosť, že časový rad dĺžky N sa opakuje cyklicky do nekonečna. Ak frekvencia
-sínusového vstupu nie je presným násobkom frekvenčného rozlíšenia, čiže nespadá presne do centra frekvenčného 
+sínusového vstupu nie je presným násobkom frekvenčného rozlíšenia, čiže nespadá presne do centra frekvenčného
 vedierka (bin), tento predpoklad nie je naplnený a DFT sa bude chovať akoby v prítomnosti nespojitosti
-medzi poslednou a prvou vzorkou, z dôvodu cyklického opakovania. Diskontinuita sa rozšíri naprieč spektrom prejavom 
-Gibbsovho javu. 
- 
+medzi poslednou a prvou vzorkou, z dôvodu cyklického opakovania. Diskontinuita sa rozšíri naprieč spektrom prejavom
+Gibbsovho javu.
+
 Oknové funkcie vyžadujú kompromis medzi šírkou výsledných špičiek v frekvenčnej doméne, presnosti v amplitúde
 a miera poklesu úniku spektra (spectral leakage) do ostatných frekvenčných vedierok. \cite{spectral-density-estimation}
 
@@ -751,11 +804,11 @@ pásma, ale pri FT dostávame sinc.
 Prehľad okien - symetrické okolo stredu \cite{understanding-dsp}
 \begin{ceqn}\begin{align}
 \tag{Obdĺžníkové} w(n) &= 1,\, n = 0, 1, ..., N - 1 \\
-\tag{Trojuholníkové} 
-	w(n) &= 
-	\begin{cases} 
+\tag{Trojuholníkové}
+	w(n) &=
+	\begin{cases}
 		\frac{n}{N / 2}; n = 0, \dots, N / 2 \\
-	 	2 - \frac{n}{N / 2}; n = N/2+1, \dots, N - 1  
+	 	2 - \frac{n}{N / 2}; n = N/2+1, \dots, N - 1
 	\end{cases} \\
 \tag{Welch} w(n) &= 1 - ((2n / N) - 1)^2 \\
 \tag{Hann} w(n) &= \cos^2((2\pi n / N - \pi) / N)  \\
@@ -772,19 +825,14 @@ Priemerovanie a prekryv:
 Welchova metóda na zníženie šumu, spriemerovanie spektier z po sebe idúcich úsekov na zníženie rozpylu pri spektre stochastického
 javu.
 
-Sumarizácia:
-Proces FT - Preprocessing: DC and trend removal: 
-Oknovanie (predpočítané koeficienty okna pre N) a 
-FFT motýliky (predpočítané twiddle factors pre N)
-
 \subsection{Filtre s konečnou impulznou odozvou}
 \label{fir-filter}
-Roziel medzi FIR a IIR, Dolná pripusť, pásmová priepusť, horná pripusť, pre ideálny filter 
+Roziel medzi FIR a IIR, Dolná pripusť, pásmová priepusť, horná pripusť, pre ideálny filter
  Konvolúcia a konvolučné jadro, konvolučná veta, účel: identifikácia prítomnosti známej frekvencie v signále akcelerácie
 \begin{ceqn}\begin{align}
 y[k] = \sum_{k=0}^{N - 1}{x[k] \cdot h(n - k)} = x[n] * h[n]
-\end{align}\end{ceqn} 
- 
+\end{align}\end{ceqn}
+
 Prenosová funkcia - koeficienty filtra
 \cite{signal-processing} s.125 + popísať, že je možné aplikovať FFT pri výpočte konvolúcie Konvolučná veta
 Frekvenčná odozva filtra je daná fourierovu transformáciu sinc, keď chceme fitrovať nejakú frekv. musíme
@@ -801,11 +849,11 @@ $h(n) = 2f_2 \cdot \mathrm{sinc}(2 f_2 n) - 2f_1 \cdot \mathrm{sinc}(2 f_1 n)$
 - amplifikácia faktorom 2 (zostane iba horná polovica)
 - decimácia 1.5 (podvzorkovanie)
 - dolná priepusť FIR
-- druhá odmocnina pre odstránenie skreslenia spôsobeného úvodným umocnením 
+- druhá odmocnina pre odstránenie skreslenia spôsobeného úvodným umocnením
 
 
 \section{Senzorová sieť}
-Nízko-energetické zariadenia komunikujúce cez odľahčené sieťové protokoly so snahou spracovania v reálnom čase a ponechaním najdôležitejších informácii dolovaním z veľkého množstva zdrojových dát. Cloud / Hmlové počítanie. 
+Nízko-energetické zariadenia komunikujúce cez odľahčené sieťové protokoly so snahou spracovania v reálnom čase a ponechaním najdôležitejších informácii dolovaním z veľkého množstva zdrojových dát. Cloud / Hmlové počítanie.
 Edge computing okrajový a sink (zoskupujúci) uzol \cite{edge-computing-survey} \cite{edge-vision} \cite{edge-overview}
 
 Vlastnosti senzorovej siete
@@ -858,7 +906,7 @@ Like the edge, fog computing moves the workload closer to the network edge, redu
 
 Bluetooth, BLE -  IEEE 802.15.1 bezdrôtová technológia s krátkym dosahom spravidla do 10 m (0,5mW pri 0.5m, 1mW pri 1m, 2.5mW pre 10m, 10mW pre 20m) na ultra krátkych vlnách 2.402 GHz - 2.48 GHz.
 SDP, RFCOMM náhradou za sériové porty + L2CAP. (symetrická komunikácia) \url{https://www.bluetooth.com/specifications/specs/rfcomm-1-2/}
-Wifi - 802.11 (klient-server cez prístupový bod) - TCP/IP sieťový zásobník, CoAP, MQTT na 6LoWPAN 
+Wifi - 802.11 (klient-server cez prístupový bod) - TCP/IP sieťový zásobník, CoAP, MQTT na 6LoWPAN
 LoRa 863-870Hz
 IEEE802.15.4e (Smart Mesh IP)  Time Synchronized Mesh Protocol (TSMP) The TSMP includes a Time Slotted Channel Hopping (TSCH) media access layer (MAC). TSCH works by dividing time into ‘slots’, and providing a mechanism to map time slots to channels with a pre-assigned hopping sequence.
 Zigbee
