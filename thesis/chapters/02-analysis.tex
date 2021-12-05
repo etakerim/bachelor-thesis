@@ -253,40 +253,32 @@ trend vo výstupných dátach. Očakávané oscilujúce správanie vychýlenia u
 výpočte zaniká. Na zlepšenie stability integrátora sa uplatňuje korekcia cez obálky \cite{integration-acceleration-envelopes}.
 
 Najprv je na vstupnom signále vykonaná zvoleným pravidlom numerická kvadratúra, ktorá môže byť realizovaná na krátkych
-úsekoch funkcie, aby sa predišlo pretečeniu pri výraznej akumulácií odklonu. Prichádza k identifikácií lokálnych extrémov, či už maxím,
-respektíve miním (pozri \ref{peak-detection}) a ich interpoláciou s kubickou B-spline sa sformuje horná $e_u(t)$, respektíve dolná
-obálka signálu $e_d(t)$. Obálky sú spriemerované $\bar{e}(t)$, čím vznikne odhad trendovej krivky, ktorá je od už integrovaného
+úsekoch funkcie, aby sa predišlo pretečeniu pri výraznej akumulácií odklonu. Prichádza k identifikácií lokálnych extrémov a ich interpoláciou s kubickou B-spline sa sformuje horná $e_u(t)$, respektíve dolná
+obálka signálu $e_d(t)$. Obálky sú spriemerované $\bar{e}(t)$ za vzniku odhadu trendovej krivky, ktorá je od už integrovaného
 signálu odčítaná $g(t) = f(t) - \bar{e}(t)$. V prípade výpočtu polohy je možné aplikovať uvedený postup kaskádovito, čiže rovnako
-ako akcelerácia je aj signál rýchlosti opäť integrovaný a korigovaný obálkami. Trend je rovnako tak odstrániteľný filtrom na
-potlačenie prítomnosti jednosmernej zložky v podobe hornej priepuste (pozri \ref{fir-filter}).
+ako akcelerácia je aj signál rýchlosti opäť integrovaný a korigovaný obálkami.
 
 \section{Metódy analýzy signálu v časovej doméne}
 Pozorovania veličiny predstavujú udalosti merané sekvenčne v čase, kde je s každou obdržanou hodnotou $x_i$ viazaná unikátna
 časová značka $t_i$. Postupnosť jednotlivých čítaní je jednorozmerný časový rad znázoriteľný ako usporiadaná množina dvojíc pečiatky
 rastúcej v čase a nasnímanej úrovne: $T = \{(t_1, x_1),(t_2, x_2), …, (t_n, x_n)\}$. Vzorkovaním v pravidelných intervaloch stačí
 uvažovať namiesto časových značiek o celočíselných indexoch, ktoré určujú pozíciu prvkov vo vektore pozorovaní:
-$\mathbf{x} = (x_1, x_2, …, x_n)^T$. Keď sú súčasne zaznamenávané viaceré dátové body hovoríme o matici pozorovaní $X_{n,m}$, či o
-viacrozmernom časovom rade.
+$\mathbf{x} = (x_1, x_2, …, x_n)^T$.
 
 \subsection{Prúdové algoritmy}
 Pri veľkom objeme prichádzajúcich vzoriek produkované senzormi, nie je uskutočniteľné ich úplné uchovanie ani spracovanie celkého
 dátového toku naraz. Častokrát by stratégia neuváženého odkladania viedla k plýtvaniu zdrojov a zbytočnému archivovaniu údajov s nízkou
-informačnou hodnotou. Vhodnejšie je agregovanie toku údajov podľa preddefinovaného zmysluplného kritéria, ktoré by umožňovalo zachytiť
+informačnou hodnotou. Vhodnejšie je agregovanie toku údajov podľa preddefinovaného zmysluplného kritéria, ktoré zachytáva
 významné rysy a prompte zodpovedať na vyžadované dopyty.
 
 Priamočiarou realizáciou agregácie je nahliadať na prvky časového radu postupne ako prichádzajú.
 Prúdové algoritmy pôsobiace v reálnom čase, a teda neschopné vidieť finálny vektor vzoriek vstupu sa vyznačujú vlastnosťou, že
 vyprodukujú len na základe takého čiastkového vstupu parciálny výsledok platný pre dosiaľ sa vyskytnutú podmnožinu.
 
-Online algoritmus  spracúvajúci neprestajný potenciálne nekonečne sa rozširujúcu vstupnú sadu sa ideálne vyznačuje sublineárnou alebo
-polylogaritmickou časovou zložitosťou spracovanie jednotlivých prvkov, celkové spracovanie, a sú žiaduce sublineárne pamäťové nároky
-\cite{data-streams}.
-
 Za ideálnych okolností by sa mal online algoritmus učiť kontinuálne bez ukladania predošlých bodov a detekcií.
 V rozhodnutiach algoritmu sú zahrnuté informácie o všetkých predošlých bodoch do terajšieho rozhodnutia.
 Mal by mať schopnosť sa adaptovať dynamickému prostrediu, v ktorom pôsobí, bez nutnosti manuálnych úprav parametrov modelu.
-Zároveň je žiaduce minimalizovať falošné pozitíva a negatíva pri detekcii udalostí. V turniketovom modeli sa pri online
-agregácii načítaný bod $x_i$ zaráta do každého relevantného počítadla a môže byť ihneď zabudnutý \cite{data-streams}.
+Zároveň je žiaduce minimalizovať falošné pozitíva a negatíva pri detekcii udalostí. \cite{data-streams}.
 
 \subsection{Posuvné a rozširujúce sa okná}
 Časový rad $\left(x_i\right)_{i = 0}^{n}$ s dĺžkou $n$ môže byť pre účely výpočtu sumárnych štatistík rozdelený oknovou funkciou
@@ -299,9 +291,7 @@ pri blokovom prenose z adaptéra senzora do hlavnej pamäte. Vtedy sa veľkosť 
 
 \emph{Rozširujúce sa okná} (,,expanding window'') nachádzajú uplatnenie v menej prípadoch, spravidla sa jedná o inkrementálny
 odhad globálnej štatistiky, ktorá má zmysel prevažne pri sledovaní stabilného javu. \cite{practical-time-series}. Okno začína na
-stanovenej minimálnej veľkosti a s pribúdajúcim počtom bodov ich zahŕňa, čím sa zväčšuje. Dostavuje sa rovnaký výsledok ako v
-turniketovom modeli, ale navyše neplatí obmedzenie zahadzovania už započítaných údajov, ale dokážeme teoreticky operovať so všetkými
-vzorkami vrámci okna.
+stanovenej minimálnej veľkosti a s pribúdajúcim počtom bodov ich zahŕňa, čím sa zväčšuje.
 
 \subsection{Číselné charakteristiky štatistického rozdelenia}
 Náhodné vibrácie vyskytujúce sa pri skutočných materiáloch sú stochastický proces, ktorý tvorí sekvencia časovo indexovaných
@@ -656,9 +646,9 @@ podmienené vzorkovacou frekvenciou $f_s$ a celkovým počtom meraní $N$ (\ref{
 
 Kompromis potrebný učiniť pri spektrálnej analýze tkvie vo vyvážení dĺžky úseku pre časovú lokalizáciu frekvenčného obrazu,
 a jeho výslednej detailnosti na strane druhej. Prechod medzi časovou a frekvenčnou doménou postihuje princíp neurčitosti
-znamenajúci, že pri raste rozlíšenia v čase strácame rozlíšenie vo frekvenciách a naopak. O požadovanom množstve pozorovaní
-pre konkrétnu rozlíšiteľnosť spektra taktiež hovorí vzťah (\ref{equ:freq-resolution}). Rozpätie frekvencií spadajúcich do
-diskrétneho frekvenčného vedierka $k$ sú počínajúc $k\Delta f$ po $(k+1)\Delta f$.
+znamenajúci, že pri raste rozlíšenia v čase strácame rozlíšenie vo frekvenciách a naopak \cite{signal-processing}.
+O požadovanom množstve pozorovaní pre konkrétnu rozlíšiteľnosť spektra taktiež hovorí vzťah (\ref{equ:freq-resolution}).
+Rozpätie frekvencií spadajúcich do diskrétneho frekvenčného vedierka $k$ sú počínajúc $k\Delta f$ po $(k+1)\Delta f$.
 
 \subsection{Diskrétna fourierová a kosínusová transformácia}
 Diskrétna Fourierová transformácia (DFT) slúži na učenie harmonického zloženia signálu (\ref{eq:dft}) rozkladom na súčet
@@ -679,8 +669,9 @@ W_{N}^{nk} = \cos(2\pi nk/ N) - i \cdot \sin(2\pi nk/ N)
 \end{align}\end{ceqn}
 
 Spektrálne komponenty opísané vektorom komplexných Fourierových koeficientov majú magnitúdy dané veľkosťami komplexných čísel
-(\ref{equ:magnitude-spectrum}). Pre reálne čísla je výstup z DFT zrkadlovo symetrický, čo zapríčiňuje nadbytočnosť výsledkov
-nad pozíciou  $N/2$. Rovnako naznačuje reformulácia vety o vzorkovaní, že za vzorkovacej frekvencie $f_s$ sú zapríčinením aliasingu v signále prítomné  frekvencie do maximálne polovice $f_s$. Energia nesená frekvenciou je druhou mocninou magnitúdy, ale častejšie sa
+(\ref{equ:magnitude-spectrum}). Pre vstupy $x \in \mathcal{R}$ je výstup z DFT zrkadlovo symetrický, čiže druhá polovica
+výstupu je komplexne združená k prvej $x[m] = x^{*}[N - m]$. Symetrickosť zapríčiňuje nadbytočnosť výsledkov
+nad pozíciou  $N/2$. Rovnako naznačuje reformulácia vety o vzorkovaní, že za vzorkovacej frekvencie $f_s$ sú zapríčinením aliasingu v signále prítomné frekvencie do maximálne polovice $f_s$. Energia vo frekvenčnom vedierku je druhou mocninou magnitúdy, ale častejšie sa
 objavuje reprezentácia relatívneho energetického spektra v decibeloch (\ref{equ:decibel-spectrum}) \cite{understanding-dsp}.
 \myequations{Magnitúdové spektrum absolútne a relatívne v decibeloch}
 \begin{ceqn}\begin{align}
@@ -786,72 +777,113 @@ za zmienku knižnice: FFTW, FFTPACK, GNU Scientific Library, CMSIS DSP a Espress
 prítomné pre jazyk Python v balíkoch \emph{numpy} a \emph{scipy}, tiež napr. v jazyku R je súčasťou \emph{stats} modulu.
 
 \subsection{Oknové funkcie}
-%TODO
-Oknové funkcie ováhujú vstupný vektor.Krátkodobá FT
-DFT implicitne predpokladá periodickosť, že časový rad dĺžky N sa opakuje cyklicky do nekonečna. Ak frekvencia
-sínusového vstupu nie je presným násobkom frekvenčného rozlíšenia, čiže nespadá presne do centra frekvenčného
-vedierka (bin), tento predpoklad nie je naplnený a DFT sa bude chovať akoby v prítomnosti nespojitosti
-medzi poslednou a prvou vzorkou, z dôvodu cyklického opakovania. Diskontinuita sa rozšíri naprieč spektrom prejavom
-Gibbsovho javu.
+U stochastického signálu má zmysel delenie na rovnako dlhé úseky, pretože sa s časom mení jeho spektrálny obsah, ktorý
+je žiaduce zachytiť čo najpresnejšie. Krátkodobá Fourierová transformácia zahŕňa preto ováhovanie meraní
+v časovej doméne koeficientmi posuvnej oknovej funkcie. Mimo intervalu pôsobnosti okna sú vzorky vynulované.
 
-Oknové funkcie vyžadujú kompromis medzi šírkou výsledných špičiek v frekvenčnej doméne, presnosti v amplitúde
-a miera poklesu úniku spektra (spectral leakage) do ostatných frekvenčných vedierok. \cite{spectral-density-estimation}
+DFT predpokladá periodicitu časového radu do nekonečna, preto ak frekvencia sínusového vstupu nie je presným násobkom
+frekvenčného rozlíšenia, čiže priebeh exaktne nepripadá frekvenčnému vedierku, dochádza k úniku spektra (spectral leakage).
+Prejavom je hraničný efekt pre odlišnosť poslednej a prvej vzorky, ktorá je považovaná za nespojitosť a prejavuje
+sa zvlnením v okolí diskontinuity podľa Gibsovho javu \cite{understanding-dsp}.
 
-Dochádza k vynásobenie zdrojového signálu koeficientmi okna pre odstránenie hraničných efektov, ktoré spôsobujú/vnášajú
-neexistujúce periodické komponenty, na okraji okna preto znižuje úroveň na nulu. Snahou je dokonalé izolovanie frekvenčného
-pásma, ale pri FT dostávame sinc.
+Existuje množstvo oknových funkcií líšiacich sa mierou kompromisu medzi šírkou výsledných špičiek vo frekvenčnej doméne,
+presnosti v amplitúde a spôsobu poklesu úniku spektra do ostatných vedierok. Medzi najpoužívanejšie sa zaraďujú: obdĺžníkové
+(\ref{equ:window-rectangular}), Bartlettovo (\ref{equ:window-bartlett}), Hannovo (\ref{equ:window-hann}), Hammingovo
+(\ref{equ:window-hamming}) a Blackmannovo okno \ref{equ:window-blackmann}. Uvedené okná sú stredovo súmerné.
+Plochejšie okná, napríklad obdĺžníkové, sa vyznačujú ponechaním ostrejších špičiek s neskreslenou amplitúdou za
+cenu väčšieho spektrálneho úniku, čím sa znižuje odstup od šumu. Predchádzanie hraničným javom sa dosahuje plynulým
+znižovaním hodnôt k okrajom okna až na nulu, čím špičky strácajú na amplitúde (scalloping loss) \cite{spectral-density-estimation}.
 
-Prehľad okien - symetrické okolo stredu \cite{understanding-dsp}
+\myequations{Oknové funkcie: obdĺžník, Bartlett, Hann, Hamming, Blackman}
 \begin{ceqn}\begin{align}
-\tag{Obdĺžníkové} w(n) &= 1,\, n = 0, 1, ..., N - 1 \\
-\tag{Trojuholníkové}
-	w(n) &=
-	\begin{cases}
-		\frac{n}{N / 2}; n = 0, \dots, N / 2 \\
-	 	2 - \frac{n}{N / 2}; n = N/2+1, \dots, N - 1
-	\end{cases} \\
-\tag{Welch} w(n) &= 1 - ((2n / N) - 1)^2 \\
-\tag{Hann} w(n) &= \cos^2((2\pi n / N - \pi) / N)  \\
-\tag{Hamming} w(n) &= 0.54 - 0.46\cos(2\pi n / N)
+w(n) &= 1,\, n = 0, 1, ..., N - 1 \label{equ:window-rectangular} \\
+w(n) &= \frac{2}{N - 1}\left(\frac{N - 1}{2} - \left|n - \frac{N - 1}{2} \right|\right) \label{equ:window-bartlett}  \\
+w(n) &= \cos^2((2\pi n / N - \pi) / N)  \label{equ:window-hann} \\
+w(n) &= 0.54 - 0.46\cos(2\pi n / N) \label{equ:window-hamming} \\
+w(n) &= 0.42 - 0.5\cos(2\pi n / N) + 0.08\cos(4\pi n / N)\label{equ:window-blackmann}
 \end{align}\end{ceqn}
 
-výhodné percentá prekryvu FT, čím užšie okno tým vyžadujú väčší prekryv
-Priemerovanie a prekryv:
-- Amplitude Flatness (AF)
-- Power Flatness (PF)
-- Overlap Correlation (OC)
+Fourierou transformáciou okna dostávame frekvenčnú odozvu, ktorá má tvar funkcie $\mathrm{sinc}(x) = \sin(x) / x$.
+Priebeh odozvy sa vyznačuje hlavným a vedľajšími vrcholmi (mainlobe a sidelobes). Hlavný vrchol sa snažia
+rôzne oknové funkcie udržať čo najužší, lebo zodpovedá za šírku spektrálneho úniku do okolitých vedierok.
+Vedľajšie vrcholy sú nežiaduce a podmieňujú najmä úroveň odstupu od šumu.
 
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/window-time.png}
+    \caption{Časový priebeh}
+    \label{fig:dit-butterfly}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/window-freq.png}
+    \caption{Frekvenčná odozva}
+    \label{fig:dif-butterfly}
+\end{subfigure}
+\caption{Tvar oknových funkcií s dĺžkou $N = 64$}
+\end{figure}
 
-Welchova metóda na zníženie šumu, spriemerovanie spektier z po sebe idúcich úsekov na zníženie rozpylu pri spektre stochastického
-javu.
+Vzhľadom na skutočnosť, že oknové funkcie sa typicky blížia nule smerom k okrajom, bola by veľká časť pozorovaní
+časového radu ignorovaná. Prekrývaním okien vo vhodnom pomere je umožnený rovnomerný vplyv
+hodnôt, ktoré pripadnú na okraj niektorého okna. Pomer sa stanovuje štandardne
+na 50\%, aj s ohľadom na rastúcu výpočtovú záťaž s väčším prekrývaním. Výnimkou je obdĺžníkové okno kde to nemá
+zmysel. Platí, že pri iných užších oknách je potrebné rátať s väčším presahovaním ako pri širších. Vyhodnotenie veľkosti
+prekrývania sa zakladá na korelácii spektrogramov a plochosti amplitúdy, čiže pomeru minimálnej váhy na pozorovanie
+vo všetkých oknách ku maximálnej dosiahnutej amplitúde ideálne rovnajúce sa jednotke \cite{spectral-density-estimation}.
+
+Jediný odhad frekvenčných zložiek postupnosti vzoriek vedie k vysokej neurčitosti odhadov pre frekvenčné vedierka,
+keďže smerodajná odchýlka odhadu je totožná s odhadom samotným \cite{spectral-density-estimation}. Welchova metóda
+spriemerovania upravených periodogramov spresní úrovne frekvencií cez priemer viacerých prekrývajúcich
+sa energetických spektier \cite{welch-method}.
 
 \subsection{Filtre s konečnou impulznou odozvou}
-\label{fir-filter}
-Roziel medzi FIR a IIR, Dolná pripusť, pásmová priepusť, horná pripusť, pre ideálny filter
- Konvolúcia a konvolučné jadro, konvolučná veta, účel: identifikácia prítomnosti známej frekvencie v signále akcelerácie
+Predspracovanie signálu do podoby vhodnejšej na analýzu, extrakciu čŕt a detekciu udalostí sa vykonáva filtrovaním.
+Častými činnosťami býva odstránenie posunu alebo jednosmernej zložky, eliminovanie šumu rozptýleného medzi
+vysokofrekvenčné komponenty, a oddelenie známeho frekvenčného pásma od zvyšku spektra. Dolná priepusť prepustí
+nízke frekvencie až po medznú frekvencie, od ktorej nahor frekvencie utlmuje. Horná priepusť sa správa opačne
+a potláča nižšie frekvencie. Pásmová priepusť ponechá frekvencie v obmedzenom rozsahu z oboch strán.
+
+Ideálne filtre majú okamžitý útlm dovoľujúci prechod striktne vymedzeným zložkám signálu. Vo frekvenčnej doméne
+oblasti nadobúdajú preto tvar obdĺžníkového okna. Transformáciou do časovej domény sa obdĺžník zmení
+na konvolučnú masku, resp. impulznú odozvu $h[k]$, s priebehom $\mathrm{sinc}$ funkcie, ktorá nie je vyjadriteľná nekonečne
+presne, čím vznikajú prechodové javy vo frekvenčnej odozve filtra.
+
+Konečná impulzná odozva v názve FIR filtra znamená, že pri vyjadrení filtra sa obmedzíme na konečný počet
+koeficientov orezaním impulznej odozvy rovného rádu filtra $k$. Výpočet upravenej hodnoty sa v časovej doméne počíta
+ako diskrétna konvolúcia s časovou zložitosťou $\mathcal{O}(nk)$, pre časový rad dĺžky $n$. Diagram výpočtu je zachytený
+na obr. \ref{fig:fir-filter}.
+\myequations{Výpočet FIR filtra cez konvolúciu}
 \begin{ceqn}\begin{align}
-y[k] = \sum_{k=0}^{N - 1}{x[k] \cdot h(n - k)} = x[n] * h[n]
+y[n] = x[n] * h[n] = \sum_{i=0}^{K}{h[i] \cdot x[n - i]}
 \end{align}\end{ceqn}
 
-Prenosová funkcia - koeficienty filtra
-\cite{signal-processing} s.125 + popísať, že je možné aplikovať FFT pri výpočte konvolúcie Konvolučná veta
-Frekvenčná odozva filtra je daná fourierovu transformáciu sinc, keď chceme fitrovať nejakú frekv. musíme
-aplikovať sinc kernel (maska)
+Masky dolnej (\ref{equ:low-pass}), hornej (\ref{equ:high-pass}) a pásmovej priepuste (\ref{equ:band-pass}) popisujú
+uvedené vzťahy pre medzné frekvencie $f$, $f_1$, $f_2$ a $i = -k/2+1, \dots, 0, \dots, k/2$. Zvlnenie v prechodovom pásme
+medzi rozsahmi so ziskom a útlmom je vylepšené návrhom filtra za použitia oknovej funkcie (napr. Blackman) na žiadanú
+frekvenčnú odozvu.
+\begin{ceqn}\begin{align}
+h[i] &= f \cdot \mathrm{sinc}(f i)  \label{equ:low-pass} \\
+h[i] &= (-1)^n \cdot f \cdot \mathrm{sinc}(f i) \label{equ:high-pass} \\
+h[i] &= f_2 \cdot \mathrm{sinc}(f_2 i) -  f_1 \cdot \mathrm{sinc}(f_1 i) \label{equ:band-pass}
+\end{align}\end{ceqn}
+\myequations{Koeficienty FIR filtra pre dolnú, hornú a pásmovú priepusť}
 
-$h(n) = \frac{1}{\pi n} \cdot (\sin(\omega_2 n) - \sin(\omega_1 n)); \; \omega = 2\pi f; \; sinc(x) = \frac{\sin(\pi x)}{\pi x}$
-$h(n) = 2f_2 \cdot \mathrm{sinc}(2 f_2 n) - 2f_1 \cdot \mathrm{sinc}(2 f_1 n)$
+Podľa konvolučnej vety platí, že konvolúcia v čase je násobením vo frekvenciách, umožňujúc urýchlenie filtrovania
+pre veľké masky. Kým vtedy sa blíži zložitosť konvolúcie ku kvadratickej, na násobenie vo frekvenčnej doméne so
+stačí vykonať FFT a IFFT dohromady v rádovo $\mathcal{O}(n \log n)$.
 
-\subsubsection{Detektor obálok}
-\footnote{\url{https://www.mathworks.com/help/dsp/ug/envelope-detection.html}}
-\footnote{\url{https://www.dsprelated.com/showarticle/938.php}}
-- Square-Law / Full-Wave
-- umocnenie dvomi  (alebo absolútna hodnota)
-- amplifikácia faktorom 2 (zostane iba horná polovica)
-- decimácia 1.5 (podvzorkovanie)
-- dolná priepusť FIR
-- druhá odmocnina pre odstránenie skreslenia spôsobeného úvodným umocnením
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{figures/fir-filter.png}
+	\caption{Bloková schéma FIR filtra rádu $k$}
+	\label{fig:fir-filter}
+\end{figure}
 
 
+%TODO
 \section{Senzorová sieť}
 Nízko-energetické zariadenia komunikujúce cez odľahčené sieťové protokoly so snahou spracovania v reálnom čase a ponechaním najdôležitejších informácii dolovaním z veľkého množstva zdrojových dát. Cloud / Hmlové počítanie.
 Edge computing okrajový a sink (zoskupujúci) uzol \cite{edge-computing-survey} \cite{edge-vision} \cite{edge-overview}
