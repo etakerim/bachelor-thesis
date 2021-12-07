@@ -1,4 +1,35 @@
 \chapter{Úvod}
+Inteligentné senzorové systémy zariadení Internetu vecí (IoT) zaznamenávajú obrovskú kvantitu údajov z prostredia, kde
+pôsobia. Prúdy vzoriek meraných veličín majú sami o sebe nízku informačnú hodnotu a zbytočne zaťažujú
+prenosové pásmo komunikačných kanálov a kapacitu úložísk. Monitorovanie širokého rozsahu kladie požiadavky
+na čo najmenšie výrobné náklady senzorových jednotiek a dlhodobú výdrž pri napájaní z batérií za minimálnej údržby.
+Existuje preto potreba získané dáta spracovať do istej miery už v blízkosti ich zdroja, aby došlo k efektívnemu
+využitiu dostupných prostriedkov.
 
+Zameriame sa na sledovanie vibrácií a dolovanie čŕt záujmu z nich. Význam a dôležitosť sledovania vibrácií spočíva v ich v
+výskyte u každého mechanického zariadenia pohybom jednotlivých súčiastok a trením v ložiskách. Ich nadmerná prítomnosť
+býva spôsobená opotrebením dielov stroja a dôsledkom technických defektov. Ďalšou oblasťou hojnej prítomnosti vibrácií
+je preprava osôb alebo tovaru, kde ich zapríčiňujú nerovnosti povrchu vozovky alebo koľaje v bode styku s kolesami, aparát
+uvádzajúci vozidlo do pohybu, teda motor, alebo zastavuje, čiže brzdový systém.
 
-\emptypage 
+Detekciou nežiaducich vibrácií v preprave sa dokáže zabezpečiť bezpečnosť pasažierov včasnou výmenou súčiastky,
+ktorá by ovplyvnila prevádzkyschopnosť v kritických momentoch, a predísť nenávratnému poškodeniu krehkých materiálov,
+znehodnoteniu reaktívnych substancií, či ich aktivácii v prípade výbušnín a pyrotechniky. Vibrácie
+sú súčasťou nebezpečných prírodných úkazov a ich správna identifikácia má za následok varovania
+pre evakuáciu obyvateľstva v oblasti zasahované zemetrasením, či erupciou sopky, vedúcimi
+k ohrozenia zdravia osôb a poškodenia majetku.
+
+V analýze problematiky sa zapodievame fyzikálnym modelom opisom vibrácií, od čoho sa odvíja metodika ich snímania
+akcelerometrami typu MEMS a prevod do číslicovej podoby analógovo-digitálnym prevodníkom. Na spracovanie priebehu
+signálu zrýchlenia sa pozrieme z troch hlavných hľadísk.
+
+Integračné metódy umožňujú nadobudnúť odhad o relatívnej rýchlosti a polohe z akcelerácie. Na postupnosti pozorovaní
+je možné nahliadať tiež v časovej doméne zužitkovaním základných agregačných a korelačných štatistík na odhalenie
+náhlych zmien. Významne vyčlenené úrovne sú detegované
+algoritmami na detekciu špičiek za rozličnej úspešnosti. Metódami transformácie do frekvenčnej oblasti sa
+objavujú periodicky prítomné zložky, kde je opäť žiaduce upozorniť na momentálne prevládajúci spektrálny obsah.
+Modely operujúce s vibračnými dátami by mali nasadené na IoT zariadenie kladúce svoje špecifické nároky a
+obmedzenia.
+
+Navrhneme kroky postupov na generovanie významných udalostí z nameranej akcelerácie. Po vyhodnotení úspešnosti
+modelov v vlastných dátových sadách bude zámerom implementácia konfigurovateľnej senzorovej IoT jednotky.

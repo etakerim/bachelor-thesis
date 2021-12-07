@@ -7,29 +7,6 @@ pohybu s časom  a pohybová energia sa uvoľňuje v podobe tepelnej alebo akust
 harmonické kmity sú pozorované náhodné vibrácie, ktorých vývoj nevieme dopredu predvídať. Naproti tomu šok, alebo aj prechodový jav, je
 náhle uvoľnenie kinetickej energie krátkeho trvania oproti prirodzenej oscilácii systému.
 
-Význam a dôležitosť sledovania vibrácií spočíva v ich výskyte u každého mechanického zariadenia a je zapríčinená pohybom jednotlivých
-súčiastok a trením v ložiskách. Ich nadmerná prítomnosť býva spôsobená opotrebením dielov stroja alebo nevyvážením rotačných častí,
-zakliesňovaním ozubených kolies, ako dôsledkoch iných technických defektov. V prevažnej väčšine prípadov ide o nežiaduci jav nakoľko
-zakladá zníženiu účinnosti so zvýšením hlučnosti ako vedľajšiemu produktu.
-
-Ďalšou oblasťou hojnej prítomnosti vibrácií je preprava osôb alebo tovaru cestnými a železničnými dopravnými prostriedkami, kde sú
-zapríčinené nerovnosťami povrchu vozovky alebo koľaje v bode styku s kolesami vozidla. Na zvýšenie ovládateľnosti vozidla a komfortu
-pasažierov sú kabíny odpružené od kolies tlmičmi. Lietadlá sú zasa pod vplyvom trenia vzduchu s trupom a krídlami konštrukcie, ktoré je
-ďalej zosilnené vzdušnými prúdmi a turbulenciami.
-
-Druhým významným faktorom podieľajúci sa na tvorbe vibrácii je aparát, ktorý uvádza vozidlo do pohybu alebo zastavuje, čiže hnací
-najčastejšie spaľovací, dieselový alebo elektrický motor a brzdový systém. Jedná sa najmä o vplyv pohybu piestov, alebo rotora u
-elektrických vozidiel, a prenosu otáčavého pohybu motora cez oje hriadeľa na nápravy. ABS brzdový systém prítomný pri väčšine
-automobilov zabraňujú šmyku striedavým zomknutím a uvoľňovaním brzdových kotúčov, čo má tiež vplyv na podmienky počas jazdy.
-
-Detekciou nežiaducich vibrácií v preprave sa dokáže zabezpečiť aj bezpečnosť pasažierov včasnou výmenou súčiastky, ktorá by ovplyvnila
-prevádzkyschopnosť v kritických momentoch. Ich eliminácia dokáže predísť nenávratnému poškodeniu krehkých materiálov alebo
-znehodnoteniu reaktívnych substancií, či dokonca ich aktivácii v prípade výbušnín a pyrotechniky.
-
-V neposlednom rade sú vibrácie súčasťou potenciálne nebezpečných prírodných úkazov a ich správna identifikácia má za následok varovania
-pre preventívnu evakuáciu obyvateľstva v oblasti, ktoré bude zasiahnutá zemetrasením, či erupciou sopky vedúcimi k ohrozenia zdravia
-osôb a poškodenia majetku.
-
 \subsection{Meranie fyzikálnej veličiny akcelerácie}
 Pohyb mechanického systému vystaveného vonkajším silám sa nazýva odozva, ktorej správanie opisuje zjednodušený model s jedným stupňom
 voľnosti (1DOF) kmitajúceho telesa s pružinou a tlmičom \cite{vibrations-shock}.
@@ -112,7 +89,7 @@ citlivosť od referenčnej pre zodpovedajúcu frekvenciu vibrácii.
 
 Na meranie zrýchlenia má nevyhnutný vplyv šum zapríčinený Brownovým  pohybom a nedokonalosťou skutočných materiálov v štruktúre
 akcelerometra. Intenzita šumu rastie inverznou odmocninou so šírkou pásma, čiže s častejším meraním získavame menšiu presnosť. Pri
-dostatočnom odstupe signálu od šumu, $SNR = P_{signal} / P_{šum}$, umožňuje hardvér akcelerometra vzorkovať amplitúdy až nad stanovený
+dostatočnom odstupe signálu od šumu, $SNR = P_{signal} / P_{noise}$, umožňuje hardvér akcelerometra vzorkovať amplitúdy až nad stanovený
 prah generovaním prerušenia, čím sa dokáže efektívne zbaviť nevýznamných fluktuácií.
 
 \subsection{Analógovo-digitálny prevodník}
@@ -945,12 +922,12 @@ Time-driven systém pravidelne odosiela zozbierané údaje do siete podľa nasta
 IoT zariadenia na okrajoch siete vytvárajú veľký objem dát, ktorý sa tradične posiela na zhromaždenie, spracovanie
 a analýzu na centrálny server alebo do cloudu. Posunom paradigmy s cieľom vyhodnotenia dát, čo najbližšie
 ku zdroju dát za zníženia latencie pri spracovaní, sieťovej premávky a záťaže na cloudové riešenie, a zvýšením
-bezpečnosti sa rozširuje edge computing (,,počítanie na okraji'').
+bezpečnosti sa rozširuje edge computing (,,počítanie na okraji'') (obr. \ref{fig:edge-computing}).
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.9\textwidth]{figures/edge-computing.png}
 	\caption{Prvky architektúry Edge computing \cite{ibm-edge-architecture}}
-	\label{fig:fir-filter}
+	\label{fig:edge-computing}
 \end{figure}
 
 Edge computing je viacvrstvová distribuovaná architektúra vyvažujúca zodpovednosti a záťaž medzi
