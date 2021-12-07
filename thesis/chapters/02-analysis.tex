@@ -582,8 +582,8 @@ prominencie a izolácie (obr. \ref{fig:topography}. Prominencia znamená relatí
             		\State \hskip1.5em \textbf{and} $uphill = false$
             		\State \hskip1.5em \textbf{and}  $|y[i - hole] - y\_valley| > prominence$)
             		\State \hskip1.5em \textbf{and}  $|y[i - hole] - y[last(peaks)]| > isolation$)}
-				\State $y\_peak \gets y[i\_change]$    \Comment{Skutočný vrchol identifikovaný}
-				\State $peaks \gets peaks + [i_change]$
+				\State $y\_peak \gets y[i\_{change}]$    \Comment{Skutočný vrchol identifikovaný}
+				\State $peaks \gets peaks + [i_{change}]$
             \EndIf
         \EndIf
 	\EndFor
@@ -789,11 +789,10 @@ sa zvlnením v okolí diskontinuity podľa Gibsovho javu \cite{understanding-dsp
 Existuje množstvo oknových funkcií líšiacich sa mierou kompromisu medzi šírkou výsledných špičiek vo frekvenčnej doméne,
 presnosti v amplitúde a spôsobu poklesu úniku spektra do ostatných vedierok. Medzi najpoužívanejšie sa zaraďujú: obdĺžníkové
 (\ref{equ:window-rectangular}), Bartlettovo (\ref{equ:window-bartlett}), Hannovo (\ref{equ:window-hann}), Hammingovo
-(\ref{equ:window-hamming}) a Blackmannovo okno \ref{equ:window-blackmann}. Uvedené okná sú stredovo súmerné.
+(\ref{equ:window-hamming}) a Blackmannovo okno \ref{equ:window-blackmann}. Uvedené okná sú stredovo súmerné (obr. \ref{fig:window-time})
 Plochejšie okná, napríklad obdĺžníkové, sa vyznačujú ponechaním ostrejších špičiek s neskreslenou amplitúdou za
 cenu väčšieho spektrálneho úniku, čím sa znižuje odstup od šumu. Predchádzanie hraničným javom sa dosahuje plynulým
 znižovaním hodnôt k okrajom okna až na nulu, čím špičky strácajú na amplitúde (scalloping loss) \cite{spectral-density-estimation}.
-
 \myequations{Oknové funkcie: obdĺžník, Bartlett, Hann, Hamming, Blackman}
 \begin{ceqn}\begin{align}
 w(n) &= 1,\, n = 0, 1, ..., N - 1 \label{equ:window-rectangular} \\
@@ -803,8 +802,9 @@ w(n) &= 0.54 - 0.46\cos(2\pi n / N) \label{equ:window-hamming} \\
 w(n) &= 0.42 - 0.5\cos(2\pi n / N) + 0.08\cos(4\pi n / N)\label{equ:window-blackmann}
 \end{align}\end{ceqn}
 
-Fourierou transformáciou okna dostávame frekvenčnú odozvu, ktorá má tvar funkcie $\mathrm{sinc}(x) = \sin(x) / x$.
-Priebeh odozvy sa vyznačuje hlavným a vedľajšími vrcholmi (mainlobe a sidelobes). Hlavný vrchol sa snažia
+Fourierou transformáciou okna dostávame frekvenčnú odozvu, ktorá má tvar funkcie $\mathrm{sinc}(x) = \sin(x) / x$
+(obr. \ref{fig:window-freq}) Priebeh odozvy sa vyznačuje hlavným a vedľajšími vrcholmi (mainlobe a sidelobes).
+Hlavný vrchol sa snažia
 rôzne oknové funkcie udržať čo najužší, lebo zodpovedá za šírku spektrálneho úniku do okolitých vedierok.
 Vedľajšie vrcholy sú nežiaduce a podmieňujú najmä úroveň odstupu od šumu.
 
@@ -814,16 +814,16 @@ Vedľajšie vrcholy sú nežiaduce a podmieňujú najmä úroveň odstupu od šu
     \centering
     \includegraphics[width=\textwidth]{figures/window-time.png}
     \caption{Časový priebeh}
-    \label{fig:dit-butterfly}
+    \label{fig:window-time}
 \end{subfigure}
 \hfill
 \begin{subfigure}[b]{0.48\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figures/window-freq.png}
     \caption{Frekvenčná odozva}
-    \label{fig:dif-butterfly}
+    \label{fig:window-freq}
 \end{subfigure}
-\caption{Tvar oknových funkcií s dĺžkou $N = 64$}
+\caption{Tvar oknových funkcií s dĺžkou $N = 31$}
 \end{figure}
 
 Vzhľadom na skutočnosť, že oknové funkcie sa typicky blížia nule smerom k okrajom, bola by veľká časť pozorovaní
@@ -849,7 +849,7 @@ a potláča nižšie frekvencie. Pásmová priepusť ponechá frekvencie v obmed
 Ideálne filtre majú okamžitý útlm dovoľujúci prechod striktne vymedzeným zložkám signálu. Vo frekvenčnej doméne
 oblasti nadobúdajú preto tvar obdĺžníkového okna. Transformáciou do časovej domény sa obdĺžník zmení
 na konvolučnú masku, resp. impulznú odozvu $h[k]$, s priebehom $\mathrm{sinc}$ funkcie, ktorá nie je vyjadriteľná nekonečne
-presne, čím vznikajú prechodové javy vo frekvenčnej odozve filtra.
+presne, čím vznikajú prechodové javy vo frekvenčnej odozve filtra a menšia strmosť útlmu s kratším filtrom.
 
 Konečná impulzná odozva v názve FIR filtra znamená, že pri vyjadrení filtra sa obmedzíme na konečný počet
 koeficientov orezaním impulznej odozvy rovného rádu filtra $k$. Výpočet upravenej hodnoty sa v časovej doméne počíta
@@ -861,15 +861,15 @@ y[n] = x[n] * h[n] = \sum_{i=0}^{K}{h[i] \cdot x[n - i]}
 \end{align}\end{ceqn}
 
 Masky dolnej (\ref{equ:low-pass}), hornej (\ref{equ:high-pass}) a pásmovej priepuste (\ref{equ:band-pass}) popisujú
-uvedené vzťahy pre medzné frekvencie $f$, $f_1$, $f_2$ a $i = -k/2+1, \dots, 0, \dots, k/2$. Zvlnenie v prechodovom pásme
+uvedené vzťahy pre medznú normalizovanú frekvenciu $f_c = f / f_s$ a $n = -k/2, \dots, 0, \dots, k/2$. Zvlnenie v prechodovom pásme
 medzi rozsahmi so ziskom a útlmom je vylepšené návrhom filtra za použitia oknovej funkcie (napr. Blackman) na žiadanú
 frekvenčnú odozvu.
-\begin{ceqn}\begin{align}
-h[i] &= f \cdot \mathrm{sinc}(f i)  \label{equ:low-pass} \\
-h[i] &= (-1)^n \cdot f \cdot \mathrm{sinc}(f i) \label{equ:high-pass} \\
-h[i] &= f_2 \cdot \mathrm{sinc}(f_2 i) -  f_1 \cdot \mathrm{sinc}(f_1 i) \label{equ:band-pass}
-\end{align}\end{ceqn}
 \myequations{Koeficienty FIR filtra pre dolnú, hornú a pásmovú priepusť}
+\begin{ceqn}\begin{align}
+h_{LPF}[n] &= \mathrm{sinc}(2 f_c n)  \label{equ:low-pass} \\
+h_{HPF}[n] &= (-1)^n \cdot h_{LPF}[n] \label{equ:high-pass} \\
+h_{BPF}[n] &= \mathrm{sinc}(2 f_{c2} n) -  \mathrm{sinc}(2 f_{c1} n)  \label{equ:band-pass}
+\end{align}\end{ceqn}
 
 Podľa konvolučnej vety platí, že konvolúcia v čase je násobením vo frekvenciách, umožňujúc urýchlenie filtrovania
 pre veľké masky. Kým vtedy sa blíži zložitosť konvolúcie ku kvadratickej, na násobenie vo frekvenčnej doméne so
@@ -882,64 +882,81 @@ stačí vykonať FFT a IFFT dohromady v rádovo $\mathcal{O}(n \log n)$.
 	\label{fig:fir-filter}
 \end{figure}
 
-
-%TODO
 \section{Senzorová sieť}
-Nízko-energetické zariadenia komunikujúce cez odľahčené sieťové protokoly so snahou spracovania v reálnom čase a ponechaním najdôležitejších informácii dolovaním z veľkého množstva zdrojových dát. Cloud / Hmlové počítanie.
-Edge computing okrajový a sink (zoskupujúci) uzol \cite{edge-computing-survey} \cite{edge-vision} \cite{edge-overview}
+Zber údajov meraní z prostredia zabezpečujú samočinné senzorové jednotky schopné dlhodobej prevádzky
+často za vystavenia nepriaznivým okolitým podmienkam. Hlavnou limitáciou prevádzky senzoriky je spotreba energie,
+pretože doba funkčnosti zariadenia ohraničuje kapacita batérií, ktoré sú obtiažne vymeniteľné pri nasadení
+v nedostupných lokalitách alebo pozíciach. Senzor musí byť ideálne schopný autonómnej konfigurácie
+reakciou na zmenu nastatých okolností a s tým súvisí zotavenie z neočakávaných a chybových stavov \cite{wsn-overview}.
 
-Vlastnosti senzorovej siete
-\begin{itemize}
-\itemsep0em
-\item Autokonfigurácia senzora - reakcia na zmeny v sieti a prostredia pôsobenia
-\item Škálovateľnosť - veľké množstvo senzorov so spoločným účelom a schopnosťou vzájomnej kooperácie a interoperability.
-\item Odolnosť voči chybám - v prípade pridania alebo odobratia uzla budú spojenia bez prerušenia.
-\item Energeticky efektívna komunikácia uzlov - s upravenými protokolmi štandardného sieťového zásobníka
-\begin{itemize}
-\itemsep0em
-\item Event-driven - stály zber dát a reakcia na náhle zmeny. posielajú údaje až po prekročený kritického prahu
-\item Query-driven - zbierajú údaje iba po prijatí dopytu od používateľa
-\item Time-driven - pravidelne odosielajú údaje sinku. vzorkovaciu frekvenciu volí sink
-\end{itemize}
-\end{itemize}
-\cite{wsn-overview}
+Výpočtový výkon býva za cenu zníženia elektrického odberu redukovaný
+znížením taktovacej frekvencie a snahou efektívny manažment periférií distribúciou hodín a dostupnými
+úspornými režimami. Menej dostupných cyklov procesora povoľuje realizáciu jednoduchších výpočtov, ktoré zväzuje
+u niektorých aplikácií nutnosť odozvy v reálnom čase. Aby sa zachovala nízka cena zariadení šetrí sa
+na lokálne dostupnom úložisku, ktoré sa počíta v kilobajtoch nanajvýš megabajtoch.
 
-Spracovanie toku informácií (IFP - Information flow processing) - nástroj na včasné spracovanie dát ako tečie z periférií do centra systému. Snahou je ukladanie agregovaných štatistík, napr. detektor požiaru za použitia čidiel teploty a dymu nepotrebuje ukladať jednotlivé merania, lebo sú samo o sebe nepodstatné. Keď nastane varovná situácia, je potrebné aby tá obsahoval všetky údaje na lokalizáciu ohniska.
+Senzorové jednotky si buď získané dáta ukladajú na externú flash pamäť, alebo sa od nich vyžaduje komunikácia
+cez bezdrôtové spojenie. Prepojením na internet sa zaraďujú k zariadeniam Internetu vecí (IoT).
+Na rýchlosť sieťového prenosu má dopad okrem šírky pásma a réžie protokolov
+vzdialenosť od sieťovej brány v prípade hviezdicovej topológie alebo najbližšieho susedného uzla v mesh
+alebo point-to-point rozložení. Vynaloženým výkonom na príjem a vysielanie je postihnutý dosah, ktorý
+ovplyvňujú aj prekážky na trase a iné interferencie. Štandardne používané bezdrôtové technológie
+v pásmach ISM sú uvedené v tabuľke \ref{tab:net-protocols}.
 
-CEP - Complex event processing - spracúva toky udalosti zo zdrojov reálneho sveta na základe aplikovania aktívnych pravidiel stanovených správcami systému a poupraví toky do komplexnejšieho výstupu. Pravidlá sú v tvare Event-Condition-Action (ECA).
-\begin{itemize}
-\itemsep0em
-\item Udalosť - definuje zdroje ako generátory udalostí
-\item Podmienka - uvažuje ktorá časť udalosti bude braná do úvahy pri spracovaní, napr. môže ísť o prekročenie prahu
-\item Akcia - aká sada úloh má byť vykonaná pri detekcii udalosti
-\end{itemize}
-\cite{processing-information-flows}
+\begin{table}[h]
+\centering
+\def\arraystretch{1.2}
+\begin{tabular}{|l|r|rr|r|}
+\hline
+\textbf{\begin{tabular}[c]{@{}l@{}}Bezdrôtový\\ protokol\end{tabular}} & \multicolumn{1}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Frekvenčné\\ pásmo v EÚ\end{tabular}}} & \multicolumn{1}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Prenos\\ max.\\ (Mbit/s)\end{tabular}}} & \multicolumn{1}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Prenos\\ typ.\\ (Mbit/s)\end{tabular}}} & \multicolumn{1}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Dosah\\ cca\\ (m)\end{tabular}}} \\ \hline
+Bluetooth LE 4                                                                   & 2,4 GHz                                                                                       & \multicolumn{1}{r|}{1}                                                                         & 0,3                                                                                            & 10 - 30                                                                                 \\ \hline
+Bluetooth LE 5                                                                   & 2,4 GHz                                                                                       & \multicolumn{1}{r|}{2}                                                                         & 1,3                                                                                            & 30 - 50                                                                                 \\ \hline
+Wifi: 803.11 b                                                                   & 2,4 GHz                                                                                       & \multicolumn{1}{r|}{11}                                                                        & 5                                                                                              & 35 - 140                                                                                \\ \hline
+Wifi: 803.11 n                                                                   & 2,4 GHz                                                                                       & \multicolumn{1}{r|}{54}                                                                        & 25                                                                                             & 35 - 140                                                                                \\ \hline
+Wifi: 803.11 g                                                                  & 2,4 / 5 GHz                                                                                   & \multicolumn{1}{r|}{300 / 600}                                                                 & 150                                                                                            & 70 - 250                                                                                \\ \hline
+ZigBee: 802.15.4                                                                 & \begin{tabular}[c]{@{}r@{}}868 MHz\\ 2,4 GHz\end{tabular}                                     & \multicolumn{2}{r|}{\begin{tabular}[c]{@{}r@{}}20 kbit/s\\ 250 kbit/s\end{tabular}}                                                                                                             & 10 - 100                                                                                \\ \hline
+Z-Wave                                                                           & 868 MHz                                                                                       & \multicolumn{2}{r|}{40 - 100 kbit/s}                                                                                                                                                            & 30 - 100                                                                                \\ \hline
+LoRaWAN                                                                          & 863 MHz                                                                                       & \multicolumn{2}{r|}{0,3 - 50 kbit/s}                                                                                                                                                            & 5 - 20 km                                                                               \\ \hline
+Narrowband IoT                                                                   & \multicolumn{1}{l|}{Operátor}                                                                 & \multicolumn{2}{r|}{250 kbit/s}                                                                                                                                                                 & \multicolumn{1}{l|}{1 - 10 km}                                                          \\ \hline
+\end{tabular}
+\caption{Prehľad najpoužívanejších typov sietí pri IoT komunikácii}
+\label{tab:net-protocols}
+\end{table}
 
-Súčasti senzorovej jednotky: Zberná jednotka, Výpočtová jednotka, Komunikačná jednotka, Napájacia jednotka
+Na harmonizáciu využívania rádiového frekvenčného spektra pre zariadenia s krátkym dosahom sa v
+Slovenskej republike vzťahuje vykonávacie rozhodnutie Komisie Európskej únie 2019/1345. Definujú sa
+tam voľné frekvenčné pásma s povoľovaním príslušného maximálneho legálneho vysielacieho výkonu
+zariadení \cite{eu-frequencies}.
 
-Obmedzenia na senzorové uzly
-\begin{itemize}
-\item Spotreba energie - energetická autonómia uzlov vo WSN umožňuje nasadzovanie zariadení do odľahlých miest pre využitie v inteligentných mestách alebo na účely ochrany prírody. životnosť senzorovej jednotky je ohraničená kapacitou batérie.
-\item Dosah komunikácie - Senzory disponujú obmedzenou energiou na vysielanie a dosah je negatívne ovplyvnený silou signálu na anténe. Z toho vyplývajú aj nižšie prenosové rýchlosti.
-\item Výpočtový výkon a úložisko - Nízka taktovacia frekvencia procesora v megaherzoch a veľkosti pracovných pamätí v stovkách kilobajoch alebo megabajtoch.
-\end{itemize}
-\cite{big-data-collection-wsn}
+V Sub-1 GHz oblasti je k dispozícii rozsah 863 - 870 MHz využívaný LPWAN (Low-Power Wide Area Network) obmedzený
+časom vysielania na 0.1\%, 1\%, alebo 10\% z hodiny a výkonom do 25 mW. Wifi (IEEE 803.11) a Bluetooth zaberajú
+rozsah 2400 - 2 483,5 MHz s povoleným výkonom do 100 mW na 100 KHz. Protokoly
+ako Bluetooth sa navyše označujú triedami podľa ponúkaného dosahu. Trieda 1 deklaruje dosah do 100 metrov za výkonu
+do 100 mW, trieda 2 je približne do 10 metrov a do 2,5 mW a trieda 3 je na 1 meter a 1 mW \cite{bluetooth}.
+IoT tiež využíva na komunikáciu mobilné siete poskytované operátormi (napr. NB-IoT, GPRS, 3G, 4G/LTE a 5G),
+tam sú frekvencie licencované.
 
-Edge computing is a form of distributed computing
+Operácia uzlov sa rozdeľuje podľa podnecujúceho činiteľa ako založené na udalostiach (event-driven),
+dopytoch (query-driven) alebo čase (time-driven) \cite{big-data-collection-wsn}. Event-driven
+nepretržite vyhodnocuje vstupy ale upozorní až po zachytení náhlej zmeny alebo prekročení prahovej úrovne.
+Query-driven systém reaguje na aktuálne požiadavky od používateľa a odpovie so sadou dát zodpovedajúcej požiadavke.
+Time-driven systém pravidelne odosiela zozbierané údaje do siete podľa nastavení od riadiaceho uzla.
 
-distributed computing divides a single task between multiple computers to achieve a common goal
+IoT zariadenia na okrajoch siete vytvárajú veľký objem dát, ktorý sa tradične posiela na zhromaždenie, spracovanie
+a analýzu na centrálny server alebo do cloudu. Posunom paradigmy s cieľom vyhodnotenia dát, čo najbližšie
+ku zdroju dát za zníženia latencie pri spracovaní, sieťovej premávky a záťaže na cloudové riešenie, a zvýšením
+bezpečnosti sa rozširuje edge computing (,,počítanie na okraji'').
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/edge-computing.png}
+	\caption{Prvky architektúry Edge computing \cite{ibm-edge-architecture}}
+	\label{fig:fir-filter}
+\end{figure}
 
-address the same problem: proximity. Moving the computer workload closer to the consumer reduces latency, bandwidth and overhead for the centralized data center, komunikujú a koorinujú svoje aktivity výmenou / zasielaním (predávaním) správ medzi komponentami,
-pamäť je oddelená
-
-Improved response time, Offline availability, Offline availability
-
-Like the edge, fog computing moves the workload closer to the network edge, reducing data travel, latency and bandwidth. Whereas edge computing moves the process to devices, though, fog computing happens across one or more nodes in a network.
-
-Bluetooth, BLE -  IEEE 802.15.1 bezdrôtová technológia s krátkym dosahom spravidla do 10 m (0,5mW pri 0.5m, 1mW pri 1m, 2.5mW pre 10m, 10mW pre 20m) na ultra krátkych vlnách 2.402 GHz - 2.48 GHz.
-SDP, RFCOMM náhradou za sériové porty + L2CAP. (symetrická komunikácia) \url{https://www.bluetooth.com/specifications/specs/rfcomm-1-2/}
-Wifi - 802.11 (klient-server cez prístupový bod) - TCP/IP sieťový zásobník, CoAP, MQTT na 6LoWPAN
-LoRa 863-870Hz
-IEEE802.15.4e (Smart Mesh IP)  Time Synchronized Mesh Protocol (TSMP) The TSMP includes a Time Slotted Channel Hopping (TSCH) media access layer (MAC). TSCH works by dividing time into ‘slots’, and providing a mechanism to map time slots to channels with a pre-assigned hopping sequence.
-Zigbee
+Edge computing je viacvrstvová distribuovaná architektúra vyvažujúca zodpovednosti a záťaž medzi
+tri vzájomne sa dopĺňajúce úrovne: Device edge, Local edge a Cloud \cite{edge-computing-survey}. Na okraji sieti
+vrámci device edge pôsobia  samotné IoT zariadenia získavajúce dáta z fyzických veličín prostredia a posielajú ich
+sieťovým edge bránam. Local Edge zahŕňa aktívne sieťové prvky a aplikácie s úlohami, ktoré nie je možné realizovať
+okrajovými zariadeniami. V cloude sa zhromažďujú dáta do dlhodobého úložiska pre komplexnú a celistvú analytiku.
+Zároveň cloud obsahuje softvér na spravovanie a monitorovanie zdrojov.
 
