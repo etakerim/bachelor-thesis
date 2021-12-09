@@ -6,55 +6,59 @@
 
 \setcounter{figure}{0}
 %\setcounter{listing}{0}
-\chapter{Technická dokumentácia}
-\pagenumbering{arabic}
-\renewcommand*{\thepage}{A-\arabic{page}}
-
-Prílohy dopĺňajú hlavnú časť práce. Obsahujú napríklad podrobné informácie k jednotlivým
-etapám riešenia projektu. Typicky sa tu uvádza aj podstatná časť technickej dokumentácie.
-Pozor, prílohy nesmú obsahovať také informácie, ktoré sú pre pochopenie práce kľúčové. Tie
-musí obsahovať hlavná časť práce, ktorá musí byť úplná, celistvá.
-
-Súčasťou príloh nie je len textový obsah, ale aj ďalšie artefakty, ktoré sú výsledkom projektu,
-napr. počítačový kód, dátové vzorky, vedecký článok či plagát. Zvláštnu pozornosť venujte tým
-artefaktom, ktoré sú potrebné pre replikovateľnosť postupov opisovaných v práci (napr. aby
-mohol oponent pri vyhodnocovaní práce zopakovať uvádzané postupy a prísť k rovnakým
-záverom). 
-
-Digitálne artefakty sa prikladajú na elektronickom médiu. K akémukoľvek
-digitálnemu obsahu treba uviesť v dokumente priebežnej či záverečnej správy
-bakalárskej/diplomovej práce primeraný textový opis, preto nezabudnite digitálne médium
-zdokumentovať. Prinajmenšom medzi prílohy zaraďte kapitolu "Obsah elektronického média".
-Na prílohy sa nezabudnite z hlavnej časti práce primerane odkazovať.
-
-Obsah technickej dokumentácie závisí od povahy riešeného problému. Uvádza sa technická dokumentácia k systému (počítačový, softvérový), ktorý bol vytvorený v rámci riešenia projektu (ak sa toto v zadaní požadovalo). Samotný obsah a rozsah závisí aj od účelu vytvoreného systému (produkt, experimentovanie a pod.)
-V prípade softvérového systému technická dokumentácia spravidla obsahuje časti v náväznosti na etapy tvorby softvérového systému:
-\begin{itemize}
-	\item dokumentáciu k etape špecifikácie požiadaviek
-    \item dokumentáciu k etape návrhu projektu
-    \item dokumentáciu k implementácii
-    \item v prípade, že súčasťou riešenia sú programy, dokumentáciu k implementácii tvoria zdrojové texty programov
-    \item v prípade, že súčasťou riešenia je návrh zariadenia, dokumentáciu k implementácii tvorí technická dokumentácia (schémy zapojenia, návrh dosiek plošných spojov, schémy rozmiestnenia súčiastok, zoznam použitých súčiastok, opis konektorov atď.)
-    \item dokumentáciu k overeniu riešenia
-    \item dokumentáciu k používaniu a údržbe (návody na použitie a údržbu projektu)
-\end{itemize}
+%\chapter{Technická dokumentácia}
+%\pagenumbering{arabic}
+%\renewcommand*{\thepage}{A-\arabic{page}}
 
 % Harmonogram práce
 \thispagestyle{empty}
 \chapter{Harmonogram práce}
 \pagenumbering{arabic}
-\renewcommand*{\thepage}{B-\arabic{page}}
+\renewcommand*{\thepage}{A-\arabic{page}}
 \section{Zimný semester}
+\begin{table}[h!]
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Obdobie} & \textbf{Náplň práce}                                                                                                                                                                                                                         \\ \hline
+1.týždeň         & Základný prehľad relevantnej literatúry.                                                                                                                                                                                                      \\ \hline
+2.týždeň         & \begin{tabular}[c]{@{}l@{}}Štúdium literatúry ohľadom montorovania vibrácií. Pokusný zber dát \\ akcelerácie z MHD pomocou akcelerometra na smarftóne \\ a ich prieskumná analýza.\end{tabular}                                              \\ \hline
+3.týždeň         & \begin{tabular}[c]{@{}l@{}}Štúdium článkov o frekvenčnej analýze a rešerš algoritmov \\ na hľadanie špičiek. Implementácia objavených prístupov hľadania \\ špičiek a aplikovania na merania vibrácií z električiek a autobusu.\end{tabular} \\ \hline
+4.týždeň         & Flashovanie firmvéru na vývojový kit iCOMOX.                                                                                                                                                                                                  \\ \hline
+5.týždeň         & Osnova práce s referenciami na nájdenú literatúru.                                                                                                                                                                                            \\ \hline
+6.týždeň         & \begin{tabular}[c]{@{}l@{}}Firmvér pre dosku na platforme ESP32 pre zaznám akceleračných \\ dát na SD kartu cez OpenLog\end{tabular}                                                                                                         \\ \hline
+7.týždeň         & \begin{tabular}[c]{@{}l@{}}Merania vibrácií v MHD a analýza získaných záznamov v jupyter\\ notebooku. Doplnenie zdrojov pre časti osnovy s málo referenciami.\end{tabular}                                                                   \\ \hline
+8.týždeň         & Sekcia 2.1. práce o monitorovaní vibrácií a šoku.                                                                                                                                                                                             \\ \hline
+9.týždeň         & \begin{tabular}[c]{@{}l@{}}Doplnenie typov akcelerometov a časti o numerickej kvadratúre \\ k sekcii 2.1. Úvod do sekcie 2.2. o analýze v časovej doméne.\end{tabular}                                                                       \\ \hline
+10.týždeň        & Deskriptívne štatistiky a algoritmy na identifikáciu špičiek.                                                                                                                                                                                 \\ \hline
+11.týždeň        & Sekcia 2.2. o frekvenčnej a časovo-frekvenčnej analýze signálu.                                                                                                                                                                               \\ \hline
+12.týždeň        & \begin{tabular}[c]{@{}l@{}}Sekcia 2.3 o architektúre senzorových sietí a ich obmedzeniach. \\ Návrh riešenia a úvod k priebežnej správe BP1\end{tabular}                                                                                     \\ \hline
+13.týždeň        & Zapracované pripomienky k prezentovanému návrhu.                                                                                                                                                                             \\ \hline
+\end{tabular}
+\end{table}
+\clearpage
+\newpage
 \section{Letný semester}
+\begin{table}[h!]
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Obdobie} & \textbf{Orientačný plán práce}                                                                                                                                                       \\ \hline
+1. -- 3. týždeň  & \begin{tabular}[c]{@{}l@{}}Odlaďovanie modelov na monitorovanie vibrácií na základe\\ analyzovaných algoritmov. Meranie úspešnosti na synteticky\\ generovaných dátach.\end{tabular} \\ \hline
+4. -- 6. týždeň  & \begin{tabular}[c]{@{}l@{}}Návrh a prvotná implementácia firmvéru pre senzorovú jednotku\\ s loggovaním výstupných udalostí na pamäťovú kartu.\end{tabular}                          \\ \hline
+7. -- 9. týždeň  & \begin{tabular}[c]{@{}l@{}}Optimalizácia posielaných dát cez zvolený bezdrôtový sieťový\\ protokol. Vzdialená konfigurácia zariadenia.\end{tabular}                                  \\ \hline
+10 -- 13.týždeň  & \begin{tabular}[c]{@{}l@{}}Experimenty so senzorovou jednotkou v kontrolovanom\\ a reálnom prostredí. Vyhodnotenie výskumných otázok.\end{tabular}                                    \\ \hline
+\end{tabular}
+\end{table}
 
 % Digitálne médium
-\thispagestyle{empty}
+%\thispagestyle{empty}
 
-\chapter{Obsah digitálneho média}
-\pagenumbering{arabic}
-\renewcommand*{\thepage}{C-\arabic{page}}
-\par Evidenčné číslo práce v informačnom systéme: \RegNo
-\par Obsah digitálnej časti práce (archív ZIP):
-\par Názov odovzdaného archívu: ...zip
+%\chapter{Obsah digitálneho média}
+%\pagenumbering{arabic}
+%\renewcommand*{\thepage}{C-\arabic{page}}
+%\par Evidenčné číslo práce v informačnom systéme: \RegNo
+%\par Obsah digitálnej časti práce (archív ZIP):
+%\par Názov odovzdaného archívu: ...zip
 
  
