@@ -13,7 +13,21 @@
 &\text{Pedagogický vedúci:} && \text{\PedagogicalSupervisor} \\
 &\text{\Date}
 \end{align*}}
-Stručná charakteristika zadania bakalárskeho projektu ale predovšetkým výsledkov bakalárskeho projektu v slovenskom a anglickom jazyku každá v rozsahu max. 1 strany A4 (hlavička + cca 150-200 slov).
+V bakalárskej práci sa zameriavame na spôsoby spracovania signálov z vibrácií pri preprave, zachytených
+senzormi akcelerácie. Zámerom je extrakcia čŕt záujmu z prúdu vzoriek do udalostí, čím sa redukujú vymieňané
+dáta v senzorovej sieti. Analytická časť sa venuje fyzikálnemu opisu a číslicovému meraniu zrýchlenia s MEMS akcelerometrom,
+z ktorého je možné získať ostatné kinematické veličiny. 
+
+V časovej doméne nahliadame na sledovaný dej ako stochastický
+proces vyjadriteľný metrikami deskriptívnej štatistiky. Významné okamihy sa prejavujú náhlou zmenou oproti predošlému správaniu
+alebo nadprahovou úrovňou, čo sa zachytáva algoritmami na detekciu špičiek, ktoré predstavujú formu binárneho klasifikátora.
+Vibrácie obsahujú rôzne frekvenčné zložky separovateľné Fourierovou a kosínusovou transformáciou algoritmom rýchlej Fourierovej
+transformácie vo viacerých obmenách za aplikovania oknových funkcií. 
+
+Spomenuté sú tiež filtre s konečnou impulznou odozvou
+zohrávajúce úlohu pri úprave zdrojového signálu pred ďalšími stupňami spracovania. Prihliadame na obmedzenia vyplývajúce
+s nasadenia riešenia na zariadenia Internetu vecí v kontexte Edge computing architektúry.
+
 \emptypage
 
 %Anotácia EN
@@ -31,5 +45,19 @@ Stručná charakteristika zadania bakalárskeho projektu ale predovšetkým výs
 &\text{Departmental advisor:} && \text{\PedagogicalSupervisorEN} \\
 &\text{\DateEN}
 \end{align*}}
-Annotation text in English, 150-200 words.
+In the bachelor thesis we focus on signal processing of vibrations during transport, captured
+using acceleration sensors. The intention is to extract features of interest from the stream of samples into events, 
+thereby reducing data exchange in the sensor network. The analytical part deals with the physical description of acceleration
+and its digital measurement with the MEMS accelerometer, from which it is possible to obtain other kinematic quantities.
+
+In the time domain, we look at the observed phenomenon as a stochastic process expressed by various descriptive statistics. 
+Significant moments are manifested by a sudden change from the previous behavior or levels above the threshold
+noticed by peak detection algorithms, which are a form of binary classifier. The vibrations contain different frequency 
+components separable by Fourier and cosine transform by the Fast Fourier transform algorithm in several variants with the
+application of window functions.
+
+Finite impulse response filters are also mentioned as playing a role in adjusting the source signal before the next stages of 
+the pipeline. We take into account the limitations of deployment on the Internet of Things devices in the context of the Edge 
+computing architecture.
+
 \emptypage 

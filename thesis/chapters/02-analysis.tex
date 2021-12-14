@@ -22,7 +22,7 @@ Uvedená sila je charakterizovaná druhým Newtonovým zákonom v tvare $F = ma$
 V protismere pôsobí sila vyvolaná pružinou $F_s = -kx$ a tlmiacim členom $F_d = -cv$, kde $k$ je tuhosť pružiny ovplynená jej konštrukciou,
 $c$ je tlmiaci koeficient, $x$ je vychýlenie z rovnovážneho stavu, a $v$ rýchlosť vychýlenia.
 
-Fyzickým obmedzením  telesa, ktorým je viazaný na pevnú podložku dochádza pri zanedbaní deformácie k takmer zaručenému návratu do rovnovážnej
+Obmedzením telesa viazaním na pevnú podložku dochádza pri zanedbaní deformácie k takmer zaručenému návratu do rovnovážnej
 polohy a to nám umožňuje merať intenzitu vibrácií cez zrýchlenie ťažidla. Výslednú silu v jednom smere získame sčítaním síl podieľajúcich sa na dynamike telesa.
 \myequations{Fyzikálny model oscilujúceho systému s pružinou a tlmičom}
 \begin{ceqn}\begin{align}
@@ -57,8 +57,7 @@ na pevné elektródy, ktoré môžu byť usporiadané jednostranne alebo ako dif
 
 Pri diferenčnom páre spôsobí pohyb doštičky ťažidla medzi elektródami zmenu kapacít a ich rozdielom je možné zistiť aplikovanú silu a
 cez uvedený vzťah zrýchlenie. Na zvýšenie celkovej kapacity sa používa viacero párov elektród zapojených paralelne. Pred prevodom na
-číslicový signál musí napäťová úroveň zo senzora prejsť úpravou zahŕňajúcou nábojovocitlivý predzosilňovač, osovú demoduláciu a anti-
-aliasingové filtrovanie.
+číslicový signál musí napäťová úroveň zo senzora prejsť úpravou zahŕňajúcou nábojovocitlivý predzosilňovač, osovú demoduláciu a anti\-aliasingové filtrovanie.
 
 Viacosové akcelerometre vyžadujú viaceré opísané štruktúry orientované kolmo na seba, podľa obr. \ref{fig:mems}, s ohľadom na počet
 vyžadovaných stupňov voľnosti, pričom v skutočných senzoroch vždy existuje aspoň minimálna závislosť medzi osami rádovo najviac v
@@ -68,81 +67,75 @@ Akcelerometre sa odlišujú v niekoľkých dôležitých vlastnostiach, ktoré z
 prípustných hodnôt s príslušnými toleranciami \cite{accelerometer-mechanics}.
 
 \emph{Citlivosť} stanovuje najmenšiu rozlíšiteľnú zmenu v odčítanom napätí ku zmene externého pohybu respektíve zrýchlenia.
-Uvádza sa v jednotkách \emph{mV/g} (milivolt na tiažové zrýchlenie) pri analógovom výstupe, alebo \emph{mg/LSB} (mili-g
-na najmenej významový bit). pri senzoroch so vstavaným analógovo-digitálnym prevodníkom. Jednotka \emph{mg/LSB} vyjadruje
+Uvádza sa v jednotkách mV/g (milivolt na tiažové zrýchlenie) pri analógovom výstupe, alebo mg/LSB (mili-g
+na najmenej významový bit) pri senzoroch so vstavaným analógovo-digitálnym prevodníkom. Jednotka mg/LSB vyjadruje
 o koľko sa zmení zrýchlenie keď zvýšime alebo ponížime binárne číslo na výstupe o jedna. Niekedy sa namiesto
-citlivosti uvádza mierka pre presnosť ako prevrátená hodnota citlivosti v \emph{LSB/g}. Tiažové zrýchlenie $g$ sa mierne líši podľa
-zemepisnej šírke, ale stanovený prepočet na jednotky SI je $1 g = 9.80665\,m/s^2$
-\footnote{\url{https://physics.nist.gov/cgi-bin/cuu/Value?gn|search_for=acceleration}}.
+citlivosti uvádza mierka pre presnosť ako prevrátená hodnota citlivosti v LSB/g. Tiažové zrýchlenie $g$ sa mierne líši podľa
+zemepisnej šírke, ale prepočet na jednotky SI platí: $1$ g = $9.80665\,m/s^2$.
 
 \emph{Dynamický rozsah} sa uvádza v tiažovom  zrýchlení $g$. Hovorí o najmenšej a najväčšej rozlíšiteľnej hodnote zrýchlenia nad
-úrovňou ktorej už dochádza k skresleniu signálu orezaním špičiek. S nevyhnutnými drobnými nepresnosťami výroby mikromechaniky je tzv.
+úrovňou ktorej už dochádza k skresleniu signálu orezaním špičiek. Nevyhnutnými drobnými nepresnosťami výroby mikromechaniky vzniká
 \emph{zero-g napätie} popisujúce odchýlku skutočného od ideálneho výstupu, keď na sústavu nepôsobí žiadne zrýchlenie. Za ideálnych
 okolností bez pohybu na vodorovnom povrchu namerajú osi $x$ a $y$ zrýchlenie $0g$, zatiaľčo na $z$ pôsobí $1g$. Očakávaním je nulová
 hodnota výstupného napätia a tým aj výstupného registra.
 
-\emph{Šírka pásma} senzora v \emph{Hz} predurčuje rozsah frekvencie vibrácií, ktoré je možné zachytiť. Podmienená je zvolenou
+\emph{Šírka pásma} senzora v Hz predurčuje rozsah frekvencie vibrácií, ktoré je možné zachytiť. Podmienená je zvolenou
 početnosťou  čítania akcelerácie za sekundu, čiže vzorkovacou frekvenciou. Stanovuje sa tiež nastaviteľným parameterom \emph{ODR}
-(Output Data Rate) - výstupný dátový tok, pričom šírka pásma je spravidla polovicou ODR. Menej uvádzanou vlastnosťou býva
-\emph{frekvenčná odozva} senzora, ktorá určuje o koľko sa v rámci tolerancie odlišuje skutočná
-citlivosť od referenčnej pre zodpovedajúcu frekvenciu vibrácii.
+(Output Data Rate) - výstupný dátový tok, pričom šírka pásma je spravidla polovicou ODR. \emph{Frekvenčná odozva} senzora potom 
+hovorí o koľko sa v rámci tolerancie odlišuje skutočná citlivosť od referenčnej pre zodpovedajúcu frekvenciu vibrácií.
 
-Na meranie zrýchlenia má nevyhnutný vplyv šum zapríčinený Brownovým  pohybom a nedokonalosťou skutočných materiálov v štruktúre
-akcelerometra. Intenzita šumu rastie inverznou odmocninou so šírkou pásma, čiže s častejším meraním získavame menšiu presnosť. Pri
-dostatočnom odstupe signálu od šumu, $SNR = P_{signal} / P_{noise}$, umožňuje hardvér akcelerometra vzorkovať amplitúdy až nad stanovený
-prah generovaním prerušenia, čím sa dokáže efektívne zbaviť nevýznamných fluktuácií.
+Na meranie zrýchlenia má vplyv šum zapríčinený Brownovým pohybom a nedokonalosťou skutočných materiálov v štruktúre
+akcelerometra. Intenzita šumu rastie inverznou odmocninou so šírkou pásma, čiže s častejším meraním získavame menšiu presnosť. 
+Hardvér akcelerometra umožňuje vzorkovať amplitúdy až nad stanovený prah generovaním prerušenia, čím sa efektívne odstránia 
+nevýznamné fluktuácie, za predpokladu dostatočného odstupe signálu od šumu ($SNR = P_{signal} / P_{noise}$).
 
 \subsection{Analógovo-digitálny prevodník}
-Spojitá napäťová úroveň transformuje analógovo-digitálny (A/D) prevodník pre spracovanie digitálnym systémom do množiny diskrétnych
+Spojitú napäťovú úroveň transformuje analógovo-digitálny (A/D) prevodník pre spracovanie digitálnym systémom do množiny diskrétnych
 hodnôt. Vstupný signál najprv prechádza fázou vzorkovania, kedy sa vzorky zaznamenávajú v pravidelných intervaloch. Počet vzoriek
-odčítaných za sekundu je vyjadrený vzorkovacou frekvenciou $f_s$ v $Hz$. Časový rozdiel medzi vzorkami, nazývaný perióda vzorkovania,
-je prevrátenou hodnotou vzorkovacej frekvencie $T_s = \frac{1}{f_s}$. Pre presnú rekonštrukciu pásmovo obmedzeného signálu v hraniciach
+odčítaných za sekundu je vyjadrený vzorkovacou frekvenciou $f_s$ v Hz. Časový rozdiel medzi vzorkami, nazývaný perióda vzorkovania,
+je prevrátenou hodnotou vzorkovacej frekvencie $T_s = 1 / f_s$. Pre presnú rekonštrukciu pásmovo obmedzeného signálu v hraniciach
 $[-f_{max}; f_{max}]$ je nevyhnuté podľa \emph{Nyquist-Shannonovej vety} o vzorkovaní, aby vzorkovacia frekvencia bola najmenej
-dvojnásobkom maximálnej frekvencie snímaného signálu.
+dvojnásobkom maximálnej frekvencie snímaného signálu:
 \myequations{Nyquist-Shannonova veta o vzorkovaní}
 \begin{ceqn}\begin{align}
    f_s \geq 2 \cdot f_{max}
 \end{align}\end{ceqn}
 
-V procese kvantovania je každej vzorke je následnepriradená diskrétna hodnota s konečným počtom $n$ bitov, ktorá je najbližšia
+V procese kvantovania je každej vzorke je následne priradená diskrétna hodnota s konečným počtom bitov, ktorá je najbližšia
 možná ku skutočnej hladine analógového vstupu. Dochádza pritom k istému zaokrúhľovaniu z dôvodu nepresnosti vyjadrenia spojitej
-domény amplitúd diskrétnym číslom. Tento jav označujeme ako kvantizačný šum, ktorý je najviac polovicou z maximálnej rozlíšiteľnej
-zmeny signálu a trpia nim všetky existujúce A/D prevodníky.
+domény amplitúd diskrétnym číslom, čo zapričiňuje kvantizačný šum. Ten predstavuje najviac polovicu z maximálnej rozlíšiteľnej
+zmeny signálu.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth]{figures/analog-to-digital-conversion.png}
 	\caption{Digitalizácia signálu v analógovo-digitálnom prevodníku \cite{music-processing}}
 \end{figure}
-
-Prevodníky integrované priamo s inerciálnymi jednotkami sa vyhotovujú v rozlíšeniach 12, 16 alebo 20 bitov. Umožňujú tak pripojiť
-akcelerometer rovno na sérové zbernice \emph{SPI} alebo \emph{I2C}. Všeobecne platí, že pri $n$ bitoch je k dispozícii $2^n$ rozličných
-čísel. Kódovaním v dvojkovom doplnku pre zachytenie záporných hodnôt sa uvažuje s intervalom $[-2^\frac{n}{2}; 2^\frac{n}{2} - 1]$.
-
-Číslicová hodnota v dvojkovom doplnku získanú konverziou $\hat{x}$ je prepočítaná na
-štandardné fyzikálne jednotky pre zrýchlenie, $a$ v $m/s^2$). $R$ prestavuje nastavený dynamický rozsah v jednotkách $g$ a $n$
-je počet bitov A/D prevodníka.
+Pri $n$ bitoch je k dispozícii $2^n$ rozličných čísel. Kódovaním v dvojkovom doplnku pre zachytenie záporných hodnôt 
+sa uvažuje s intervalom $[-2^\frac{n}{2}; 2^\frac{n}{2} - 1]$. Digitálna hodnota v dvojkovom doplnku získanú konverziou 
+$\hat{x}$ je prepočítaná na štandardné fyzikálne jednotky pre zrýchlenie, $a$ v $m/s^2$. $R$ prestavuje nastavený 
+dynamický rozsah v jednotkách $g$ a $n$ je počet bitov A/D prevodníka:
 \myequations{Konverzia merania na akceleráciu podľa rozlíšenia A/D prevodníka}
 \begin{ceqn}\begin{align}
-   a = \hat{x} \cdot ((R \cdot g) / 2^{n / 2})
+   a = \hat{x} \cdot ((R \cdot g)\;/\;2^{n\;/\;2})
 \end{align}\end{ceqn}
 
-Na základe už zmieneného ohľadom vlastností MEMS akcelerometrov, presnejší prevod dosiahneme zužitkovaním deklarovanej citlivosti
-senzora pri danom dynamickom rozsahu $S_R$ udávaného v $mg/LSB$.
+Presnejší prevod dosiahneme zužitkovaním deklarovanej citlivosti senzora pri danom dynamickom rozsahu $S_R$ udávaného v $mg/LSB$.
 \myequations{Prevod A/D prevodníkom u akcelerometra s rozsahom v $mg/LSB$}
 \begin{ceqn}\begin{align}
-   a = \hat{x} \cdot (S_R \cdot g) / 1000
+   a = \hat{x} \cdot (S_R \cdot g)\;/\;1000
 \end{align}\end{ceqn}
 
 \subsection{Vlastnosti bežných akcelerometrov}
 Na ilustráciu uvádzame parametre zvolených najrozšírenejších typov akcelerometrov. Akcelerometer LSM9DS1 \cite{lsm9ds1} umožňuje cez
-zbernicu SPI alebo I2C zvoliť zo štyroch dynamických rozsahov, pričom každé rozpätie sa vyznačuje svojou citlivosťou. Zvolením menšieho
+zbernicu SPI alebo I$^\mathrm{2}$C zvoliť zo štyroch dynamických rozsahov, pričom každé rozpätie sa vyznačuje svojou 
+citlivosťou. Zvolením menšieho
 dynamického rozsahu zvýšime citlivosť. LSM9DS1 funguje pri rozsahoch $\pm2$g, $\pm4$g a $\pm8$g a $\pm16$g, postupne s citlivosťami
 $0.061$ mg/LSB, $0.122$ mg/LSB, $0.244$ mg/LSB, $0.732$ mg/LSB. Výstupný dátový tok (ODR) je možné nastaviť na $10$Hz, $50$Hz,
 $119$Hz, $238$Hz, $476$Hz a najvyššie na $952$ Hz. Navzorkované hodnoty sú ukladané do 16-bitového výstupného registra v
 dvojkovom doplnku.
 
-Nízkoenergetický 3DOF MEMS akcelerometer ADXL362 \cite{adxl362} so spotrebou $2\,\mu A$ pri $100$Hz disponuje
+Nízkoenergetický 3DOF MEMS akcelerometer ADXL362 \cite{adxl362} so spotrebou $2\,\mathrm{\mu A}$ pri $100$Hz disponuje
 rozsahmi $\pm2$g, $\pm4$g a $\pm8$g s citlivosťami $1$, $2$ a $4$ mg/LSB. Dostupné vzorkovacie frekvencie 12-bitového A/D prevodníka sú
 $12.5 - 400$Hz v 8 krokoch vždy po násobkoch predošlého kroku. Pre rýchlejšie čítanie pri nižšom rozlíšení dokáže senzor zakódovať dáta
 do 8-bitového registra.
@@ -152,8 +145,8 @@ Vyrábajú sa tiež akcelerometre s väčšími dynamickými rozsahmi a nízkym 
 ODR $4 - 4000$Hz. ADXL357 ponúka priamo analógové výstupy s citlivosťou $20 - 80$ mV/g pri napájaní $3.3$ V.
 
 \subsection{Odvodzovanie rýchlosti a dráhy zo zrýchlenia}
-Meranie akcelerácie umožňuje zároveň nepriamo získať ďalšie údaje o pohybe celkovom v priestore ako aj spôsobenom vibráciami.
-Zrýchlenie $\vec{a}$ je definované ako časová zmena rýchlosti $\vec{v}$, zatiaľčo rýchlosť je časovou zmenou polohy $\vec{r}$. Na
+Meranie akcelerácie umožňuje zároveň nepriamo získať ďalšie údaje o celkovom pohybe v priestore ako aj spôsobenom vibráciami.
+Zrýchlenie $\vec{a}$ je definované ako časová zmena rýchlosti $\vec{v}$, zatiaľ čo rýchlosť je časovou zmenou polohy $\vec{r}$. Na
 pozorovanie prechodových javov alebo na vyjadrenie miery plynulosti pohybu slúži ryv $\vec{j}$, ktorý je časovou zmenou akcelerácie.
 Pokiaľ nie sú známe počiatočné podmienky v okamihu začiatku snímania akcelerácie, budú hodnoty veličín relatívne vzhľadom na
 štart záznamu. Kinematika v diskrétnom čase je potom opísaná nasledujúci rovnicami, kde $\Delta$ je operátor diferencie
@@ -178,7 +171,7 @@ integrovaniu funkcie akcelerácie. Dostávame, že rýchlosť je integrálom zr�
 
 \subsection{Numerická kvadratúra}
 Približný výpočet určitého integrálu funkcie akcelerácie je založený na geometrickej interpretácii integrálu ako plochy pod krivkou.
-Hovoríme vtedy o probléme numerickej kvadratúry, ktorý navrhuje nahradiť pôvodný integrand interpolačným polynómom
+Vtedy sa jedná o problém numerickej kvadratúry navrhujúci nahradenie pôvodného integrandu interpolačným polynómom
 \cite{numerical-mathematics}. Rád polynómu $n$ implicitne stanoví priebeh funkcie medzi ekvidištantnými vzorkami a
 má dopad na presnosť aproximácie. Najčastejšie sa používajú konštantný ($n = 0$), lineárny ($n = 1$) alebo kvadratický ($n = 2$)
 polynóm, podľa toho rozlišujeme obdĺžnikové pravidlo (vzorec \ref{eq:midpoint-rule}),
@@ -192,10 +185,10 @@ lichobežníkové pravidlo (vzorec \ref{eq:trapezodial-rule}) a Simpsonovo pravi
 \end{align}
 \end{ceqn}
 
-Pri \emph{obdĺžníkovom pravidle} (obr. \ref{fig:midpoint-rule}) nepripúšťame zmenu hodnoty zrýchlenia medzi vzorkami a okamžitú
+Pri obdĺžníkovom pravidle (obr. \ref{fig:midpoint-rule}) nepripúšťame zmenu hodnoty zrýchlenia medzi vzorkami a okamžitú
 rýchlosť, čiže plochu, odhadneme ako dĺžku intervalu vzorkovania vynásobenú priemerom výšok dvoch následných pozorovaní. Interpolačný
-polynóm je konštantná funkcia. \emph{Lichobežníkové pravidlo} (obr. \ref{fig:trapezodial-rule}) uvažuje s lineárnou zmenou veličiny
-medzi meraniami, preto interpoluje priamkou.\emph{Simpsonovo pravidlo} (obr. \ref{fig:simpson-rule}) sa snaží o ešte tesnejší odhad s
+polynóm je konštantná funkcia. Lichobežníkové pravidlo (obr. \ref{fig:trapezodial-rule}) uvažuje s lineárnou zmenou veličiny
+medzi meraniami, preto interpoluje priamkou. Simpsonovo pravidlo (obr. \ref{fig:simpson-rule}) sa snaží o ešte tesnejší odhad s
 využitím kvadratickej funkcie. Každé kvadratúrne pravidlo sa síce vyznačuje presne vyčísliteľnou chybovosťou, ale k tomu je nevyhnutné
 poznať analytické vyjadrenie vibrácií, čo dáva realistický odhad len pri čisto periodických kmitoch.
 
@@ -225,12 +218,13 @@ poznať analytické vyjadrenie vibrácií, čo dáva realistický odhad len pri 
 \end{figure}
 
 Priama integrácia zašumeného signálu zrýchlenia vedie k neskutočnému driftu, ktorý je ešte zvýraznený dvojitou integráciou pri
-odvodzovaní relatívneho posunutia. Dochádza k zosilneniu nízkych a potlačeniu vyšších frekvencií, čím sa začne dominovať neexistujúci
+odvodzovaní relatívneho posunutia. Dochádza k zosilneniu nízkych a potlačeniu vyšších frekvencií, čím začne dominovať neexistujúci
 trend vo výstupných dátach. Očakávané oscilujúce správanie vychýlenia u vibrácií so zväčšujúcim sa počtom sčítancov pri rekurentnom
 výpočte zaniká. Na zlepšenie stability integrátora sa uplatňuje korekcia cez obálky \cite{integration-acceleration-envelopes}.
 
 Najprv je na vstupnom signále vykonaná zvoleným pravidlom numerická kvadratúra, ktorá môže byť realizovaná na krátkych
-úsekoch funkcie, aby sa predišlo pretečeniu pri výraznej akumulácií odklonu. Prichádza k identifikácií lokálnych extrémov a ich interpoláciou s kubickou B-spline sa sformuje horná $e_u(t)$, respektíve dolná
+úsekoch funkcie, aby sa predišlo pretečeniu pri výraznej akumulácií odklonu. Prichádza k identifikácií lokálnych extrémov a ich 
+interpoláciou s kubickou B-spline sa sformuje horná $e_u(t)$, respektíve dolná
 obálka signálu $e_d(t)$. Obálky sú spriemerované $\bar{e}(t)$ za vzniku odhadu trendovej krivky, ktorá je od už integrovaného
 signálu odčítaná $g(t) = f(t) - \bar{e}(t)$. V prípade výpočtu polohy je možné aplikovať uvedený postup kaskádovito, čiže rovnako
 ako akcelerácia je aj signál rýchlosti opäť integrovaný a korigovaný obálkami.
@@ -243,18 +237,18 @@ uvažovať namiesto časových značiek o celočíselných indexoch, ktoré urč
 $\mathbf{x} = (x_1, x_2, …, x_n)^T$.
 
 \subsection{Prúdové algoritmy}
-Pri veľkom objeme prichádzajúcich vzoriek produkované senzormi, nie je uskutočniteľné ich úplné uchovanie ani spracovanie celkého
-dátového toku naraz. Častokrát by stratégia neuváženého odkladania viedla k plýtvaniu zdrojov a zbytočnému archivovaniu údajov s nízkou
-informačnou hodnotou. Vhodnejšie je agregovanie toku údajov podľa preddefinovaného zmysluplného kritéria, ktoré zachytáva
-významné rysy a prompte zodpovedať na vyžadované dopyty.
+Pri veľkom objeme prichádzajúcich vzoriek produkovaných senzormi nie je uskutočniteľné ich úplné uchovanie ani spracovanie celkého
+dátového toku naraz. Častokrát by stratégia neuváženého odkladania viedla k plytvaniu zdrojov a zbytočnému archivovaniu
+údajov s nízkou informačnou hodnotou. Vhodnejšie je agregovanie toku údajov podľa preddefinovaného zmysluplného kritéria, 
+ktoré zachytáva významné rysy a umožňuje prompte zodpovedať na vyžadované dopyty.
 
 Priamočiarou realizáciou agregácie je nahliadať na prvky časového radu postupne ako prichádzajú.
-Prúdové algoritmy pôsobiace v reálnom čase, a teda neschopné vidieť finálny vektor vzoriek vstupu sa vyznačujú vlastnosťou, že
-vyprodukujú len na základe takého čiastkového vstupu parciálny výsledok platný pre dosiaľ sa vyskytnutú podmnožinu.
+Prúdové algoritmy pôsobiace v reálnom čase, a teda neschopné vidieť finálny vektor vzoriek vstupu sa vyznačujú vlastnosťou, 
+že vyprodukujú parciálny výsledok platný pre dosiaľ sa vyskytnutú podmnožinu len na základe čiastkového vstupu.
 
 Za ideálnych okolností by sa mal online algoritmus učiť kontinuálne bez ukladania predošlých bodov a detekcií.
-V rozhodnutiach algoritmu sú zahrnuté informácie o všetkých predošlých bodoch do terajšieho rozhodnutia.
-Mal by mať schopnosť sa adaptovať dynamickému prostrediu, v ktorom pôsobí, bez nutnosti manuálnych úprav parametrov modelu.
+V rozhodnutiach algoritmu budú v takom prípade zahrnuté informácie o všetkých predošlých bodoch do terajšieho rozhodnutia.
+Mal by mať schopnosť adaptovať sa dynamickému prostrediu, v ktorom pôsobí, bez nutnosti manuálnych úprav parametrov modelu.
 Zároveň je žiaduce minimalizovať falošné pozitíva a negatíva pri detekcii udalostí. \cite{data-streams}.
 
 \subsection{Posuvné a rozširujúce sa okná}
@@ -277,7 +271,7 @@ je náhodná premenná so svojím rozdelením pravdepodobnosti. Všeobecne sa pr
 pochádzajú z unimodálnej Gaussovej distribúcie: $X_t \sim N(\mu, \sigma^2)$ \cite{vibrations-shock}.
 
 Sumárna deskripcia nameraného deja pre extrakciu typických čŕt konkrétnych pozorovaných situácií sa uskutočňuje viacerými štatistikami
-$h(X_1, X_2, ..., X_n)$ zostručňujúcimi opis funkcie hustoty rozdelenie. Na rozmiestnenie hodnôt meraní v priebehu časového úseku
+$h(X_1, X_2, ..., X_n)$ zostručňujúcimi opis funkcie hustoty rozdelenia. Na rozmiestnenie hodnôt meraní v priebehu časového úseku
 sa nazerá z pohľadu polohy, rozptýlenosti a tvaru. Rozsah oboru hodnôt je amplitúda špička-špička (,,peak-to-peak''),
 ktorá je rozdielom maximálnej a minimálnej úrovne, údaj známy tiež ako variančné rozpätie \cite{zaklady-statistiky}.
 \myequations{Amplitúda špička-špička}
@@ -305,16 +299,16 @@ Hľadaný kvartil je $k$-ty najmenší prvok v utriedenom zozname meraní, prič
 $k = \lceil n \cdot (1 / q) \rceil$.
 
 Zistenie $k$-teho najmenšieho prvku s časovou zložitosťou $\mathcal{O}(n \log n)$ umožňuje ľubovoľný lepší triediaci algoritmus
-napríklad triedenie zlučovaním (merge sort). Algoritmus \emph{Quickselect} dokáže taký prvok objaviť v čase $\mathcal{O}(n)$.
+napríklad triedenie zlučovaním (merge sort). Algoritmus Quickselect dokáže taký prvok objaviť v čase $\mathcal{O}(n)$.
 V každom kroku vyberie náhodný deliaci bod (pivot) a preskupí k sebe hodnoty menšie ako pivot naľavo a väčšie ako pivot
 napravo. Najmenší prvok následne hľadá v časti, kde zostalo viac ako $k$ prvkov. Pokiaľ došlo k deleniu zoznamu, že pivot
-zaujme presne $k$-tu pozíciu prehľadávanie je ukončené a pivot prehlásený za riešenie. Nesprávnym výberom pivota môže
-v najhoršom prípade dôjsť až k zložitosti $\mathcal{O}(n^2)$, čomu sa predchádza výberom pivota cez medián mediánov.
+zaujme presne $k$-tu pozíciu, prehľadávanie je ukončené a pivot prehlásený za riešenie. Nesprávnym výberom pivota môže
+v najhoršom prípade dôjsť až k zložitosti $\mathcal{O}(n^2)$, čomu sa predchádza výberom pivota stratégiou medián mediánov.
 
 Sústreďovanie realizácie veličiny, respektíve jej rozptýlenosť okolo strednej hodnoty vieme opísať viacerými štatistikami
-ako sú \emph{výberový rozptyl} (\ref{eq:variance}), ktorej odmocninou dostaneme smerodajnú odchýlku,
-\emph{priemerná absolútna odchýlka} (\ref{eq:aad}), \emph{mediánová absolútna odchýlka} (\ref{eq:mad})
-a \emph{medzikvartilové rozpätie} (\ref{eq:iqr}) \cite{zaklady-statistiky}. Priemerná absolútna odchýlka je
+ako sú výberový rozptyl (\ref{eq:variance}), jej odmocninou smerodajnou odchýlkou,
+priemerná absolútna odchýlka (\ref{eq:aad}), mediánová absolútna odchýlka (\ref{eq:mad})
+a medzikvartilové rozpätie (\ref{eq:iqr}) \cite{zaklady-statistiky}. Priemerná absolútna odchýlka je
 upraviteľné o mieru centrálnej tendencie, ktorou okrem priemeru môže byť aj medián alebo modus. Vyvarovanie sa
 príliš extrémnym a vychýlením hodnotám docielime zapojením práve mediánu do štatistík absolútnej odchýlky, rovnako
 tak to dosiahneme medzikvartilovým rozpätím obmedzením sa na 50\% centrálnych dát.
@@ -361,12 +355,12 @@ a záporná zasa sploštenejšiu distribúciu. Platí, že $\mu_n $ je priemerom
 \caption{Dopad šikmosti a špicatosti na histogram distribúcie}
 \end{figure}
 
-Závislosť dvojíc veličín sa vyjadruje \emph{kovariancia} $cov(\mathbf{x}, \mathbf{y})$ a \emph{korelácia}
+Závislosť dvojíc veličín sa vyjadruje kovariancia $cov(\mathbf{x}, \mathbf{y})$ a korelácia
 $\rho(\mathbf{x}, \mathbf{y})$. U vektora akcelerácie nás bude napríklad zaujímať vzájomná korelácia medzi
 osami pohybu: $\rho(\vec{x},\vec{y}),\, \rho(\vec{x},\vec{z}),\, \rho(\vec{y},\vec{z})$ upozorňujúca na diagonálny
 pohyb alebo podobné budenie v oboch korelovaných smeroch a tým umožňujúce redukciu údajov z dôvodu redundancie.
 Kovariancia je daná strednou hodnotou súčinu odchýlky od priemeru zodpovedajúcej premennej (vzťah \ref{eq:covariance}).
-Normovaním kovariancie smerodajnými odchýlkami veličín získame \emph{Pearsonov korelačný koeficient}
+Normovaním kovariancie smerodajnými odchýlkami veličín získame Pearsonov korelačný koeficient
 (vzťah \ref{eq:correlation}), ktorý je z intervalu $[-1; 1]$.  Hodnota koeficientu $-1$ značí nepriamu lineárnu závislosť
 a $+1$ priamu závislosť.
 \myequations{Závislosť dvoch veličín cez kovarianciu a koreláciu}
@@ -379,7 +373,7 @@ a $+1$ priamu závislosť.
 \label{peak-detection}
 Detekcia udalostí a významných zmien signálového priebehu sa spolieha na hodnovernú identifikáciu špičiek amplitúdy.
 Dôležitými indikátormi pre celkovú charakterizáciu javu slúži potom časová pozícia špičky v rámci prúdu, výška prejavujúca
-sa získanou úrovňou, šírka obsahujúca údaj o trvaní, či plocha stvárňujúca energiu.
+sa nadobudnutou úrovňou, šírka obsahujúca údaj o trvaní, či plocha stvárňujúca energiu.
 
 Ekvivalentne sa špičky z matematického hľadiska stotožňujú s lokálnymi extrémami funkcie, čo sú maximá (vrcholy) a minimá (údolia).
 Podľa definície je lokálne maximum $t_0$ bodom, ktorý má vyššiu funkčnú hodnotu ako všetky ostatné body na intervale
@@ -399,9 +393,9 @@ Skutočné signály sa potýkajú so šumom, ktorý sťažuje odlíšenie pravej
 Pred samotným procesom hľadania špičiek je preto aplikovaný vyhladzovací filter, v prípade potreby aj opakovane na už
 vyhladení signál. Najčastejšie sa jedná o filter
 kĺzavého priemeru, Savitzky–Golay alebo Gaussov filter \cite{spectrometry-peak-detection}. Filtrovanie sa realizuje
-diskrétnou jednorozmernou konvolúciou vstupného signálu a masky filtra $y[n] = x[n] * w[n]$,
-ktorá býva hardvérovo akcelerovaná inštrukciami
-,,fused multiply-add''\footnote{\url{https://developer.arm.com/documentation/102198/0200/Convolution}}.
+diskrétnou jednorozmernou konvolúciou vstupného signálu a masky filtra $y[n] = x[n] * h[n]$,
+ktorá býva hardvérovo akcelerovaná inštrukciami vynásob a sčítaj (,,multiply-accumulate'') za zvýšenia
+presnosti.
 
 \subsubsection{Detekcia špičiek prahovou úrovňou}
 Za predpokladu, že priebeh meranej veličiny sa vyznačuje krátkymi impulzmi s viac-menej pravidelnou amplitúdou
@@ -424,7 +418,7 @@ Doplnkom ku rozpoznávaniu špičiek podľa absolútnej prahovej úrovne je poro
 obe strany od preskúmavaného vrchola, čím zistíme relatívnu významnosť extrému pre najbližšie susedstvo.
 Aby bola hodnota na danej pozícii $t$ označená za špičku v okolí pozostávajúcom z $k$ priľahlých bodov,
 musí byť v porovnaní so všetkými väčšia. Pre okrajové dátové body $f[0]$ a $f[n]$ dochádza k porovnaniu
-iba z jednej strany \cite{survey-peaks-valleys}.
+iba z jednej strany \cite{survey-peaks-valleys}:
 \myequations{Význačnosť vrchola spomedzi susedov}
 \begin{ceqn}\begin{align}
 f[t-i] < f[t] > f[t+i],\quad \forall i \in 1, 2, ..., k
@@ -477,7 +471,7 @@ kopca vyplýva z absolútnej hodnoty diferencie.
 
 Viacnásobné vyhladenie signálu predom je nesmierne dôležité,
 pretože algoritmus č.\ref{algo:zero-crossing} ,,prechodu nulou do záporu'' (Negative Zero-Crossing) je nesmierne citlivý
-na zákmity a nesprávneby ich považoval za špičky. Zvýšenie odolnosti proti takýmto tendenciám sa dosahuje dlhšou sečnicou
+na zákmity a nesprávne by ich považoval za špičky. Zvýšenie odolnosti proti takýmto tendenciám sa dosahuje dlhšou sečnicou
 spájajúcou bod $i$ s $k$-tou vzorkou vedľa, ktorá sa použije namiesto diferencie s jednotkovým krokom.
 \begin{algorithm}[h]
 \caption{Prechod prvej derivácie nulou do záporu}
@@ -503,25 +497,18 @@ rámci tolerancie $\varepsilon$ blížiť nule, rozdiel prvých diferencií $\De
 rozdielu diferencií prekračuje prahovú strmosť kopca $slope$, kde leží uvažovaný vrchol. Časová zložitosť
 pre jednu špičku je $\mathcal{O}(1)$.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/topography.png}
+    \caption{Topografia priebehu signálu}
+    \label{fig:topography}
+\end{figure}
+
 \subsubsection{Algoritmus horského turistu}
 Zanesením do grafu pripomína priebeh funkcie kmitajúceho deja členité pohorie. Na problém rozhodovania sa o tom, či danú lokalitu
 považovať za vrchol možno nahliadať z pohľadu chodca cestujúceho po krivke z lineárne interpolovaných vzoriek. V princípe
 ide myšlienkou o jednoduchý stavový automat sledujúci aktuálny stav terénu a konajúci rozhodnutia na základe predošlej
 skúsenosti v intenciách rozhodovacích pravidiel.
-
-Algoritmus č.\ref{algo:mountain-hiker} horského turistu na začiatku púte z počiatočných bodov zistí, ktorým z dvoch vertikálnych
-smerov sa krivka uberá. V prípade, že po druhom kroku dôjde k zmene smeru zapíše sa indikácia možného spádu kopca.
-Výchylka môže byť v dôsledku neprekročenia prahových úrovní v horizontálnej ($hole$) a vertikálnej ($tolerance$) osi
-ignorovaná, lebo ani na lesnom chodníku sa nepovažuje každá jama alebo vydutie za horu.
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.9\textwidth]{figures/topography.png}
-    \caption{Topografia priebehu signálu}
-    \label{fig:topography}
-\end{figure}
-
-Domnelý vrchol je označený za lokálne maximum, keď spĺňa parametre pre topografické vlastnosti minimálnej akceptovateľnej
-prominencie a izolácie (obr. \ref{fig:topography}. Prominencia znamená relatívnu výšku oproti predošlej navštívenej doline. Izolácia vyčísľuje vzdialenosť k najbližšiemu skoršiemu vrcholu. Podobný algoritmus už existuje v literatúre \cite{peek-mountaineer-method}, avšak nižšie prezentovaný pseudokód je oproti nemu zjednodušený a doplnený o požadované tolerancie.
 \begin{algorithm}[h]
 \caption{Algoritmus horského turistu}
 \begin{algorithmic}[1]
@@ -569,6 +556,14 @@ prominencie a izolácie (obr. \ref{fig:topography}. Prominencia znamená relatí
 \end{algorithmic}
 \label{algo:mountain-hiker}
 \end{algorithm}
+
+Algoritmus č.\ref{algo:mountain-hiker} horského turistu na začiatku púte z počiatočných bodov zistí, ktorým z dvoch vertikálnych
+smerov sa krivka uberá. V prípade, že po druhom kroku dôjde k zmene smeru zapíše sa indikácia možného spádu kopca.
+Výchylka môže byť v dôsledku neprekročenia prahových úrovní v horizontálnej ($hole$) a vertikálnej ($tolerance$) osi
+ignorovaná, lebo ani na lesnom chodníku sa nepovažuje každá jama alebo vydutie za horu.
+
+Domnelý vrchol je označený za lokálne maximum, keď spĺňa parametre pre topografické vlastnosti minimálnej akceptovateľnej
+prominencie a izolácie (obr. \ref{fig:topography}). Prominencia znamená relatívnu výšku oproti predošlej navštívenej doline. Izolácia vyčísľuje vzdialenosť k najbližšiemu skoršiemu vrcholu. Podobný algoritmus už existuje v literatúre \cite{peek-mountaineer-method}, avšak prezentovaný pseudokód je oproti nemu zjednodušený a doplnený o požadované tolerancie.
 \afterpage{\clearpage}
 
 \subsection{Metriky pre binárny klasifikátor}
@@ -639,7 +634,7 @@ Y[k] &= \sum_{n=0}^{N - 1}{x[n] \cdot W_N^{nk}};\quad k = 0, \dots, N - 1 \label
 W_{N}^{nk} &= \exp{\left(-i2\pi nk \, /\, N\right)} \label{eq:twiddle}
 \end{align}\end{ceqn}
 
-Alternatívne exponenciálny faktor vyjadruje v goniometrickom tvare ako kosínusovú reálnu časť a sínusovú imaginárnu časť:
+Alternatívne sa exponenciálny faktor vyjadruje v goniometrickom tvare ako kosínusovú reálnu časť a sínusovú imaginárnu časť:
 \myequations{Exponenciálny faktor pre DFT v goniometrickom tvare}
 \begin{ceqn}\begin{align}
 W_{N}^{nk} = \cos(2\pi nk/ N) - i \cdot \sin(2\pi nk/ N)
@@ -741,15 +736,16 @@ vektora musí byť násobkom štyroch. Dosahuje okolo 30\% zníženie počtu ná
 oproti radix-2 \cite{split-radix}.
 
 Algoritmus FFT je aplikovateľný taktiež na výpočet DCT vhodným zoradením vstupného vektora. DCT-II $N$-bodovej
-reálnej postupnosti $\mathbf{x}$ sa odvodzuje uskutočnením jej $2N$-bodového párneho rozšírenia a vynásobenie výsledku
-twiddle faktorom $2W_{2N}^{k}$ a ponechaní reálnej časti. Na ilustráciu uvádzame prípad
-DCT 4-bodovej sekvencie $(x_1, x_2, x_3, x_4)$, ktorej párnym rozšírením $\mathbf{y}$ je $(x_1, x_2, x_3, x_4, x_4, x_3, x_2, x_1)$.
+reálnej postupnosti $\mathbf{x}$ sa odvodzuje uskutočnením jej $2N$-bodového párneho rozšírenia a vynásobením výsledku
+twiddle faktorom $2W_{2N}^{k}$ a ponechaním reálnej časti. Ďalej uvádzame prípad
+DCT 4-bodovej sekvencie $(x_1, x_2, x_3, x_4)$, ktorej párnym rozšírením $\mathbf{y}$ je 
+$(x_1, x_2, x_3, x_4, x_4, x_3, x_2, x_1)$.
 Rovnako by postačovalo vyplniť pôvodnú postupnosť nulami do dĺžky $2N$, čiže dostávame $(x_1, x_2, x_3, x_4, 0, 0, 0, 0)$.
 Postačuje však realizovať $N$-bodovú FFT sekvencie párnych alebo nepárnych prvkov z $\mathbf{y}$, ktoré sú vzájomným reverzom.
 Na základe predošlého predošlého príkladu dostaneme postupnosť $(x_1, x_3, x_4, x_2)$ \cite{fast-dct}.
 
 Široké použitie FFT pri spracovaní signálov sa prejavuje dostupnosťou implementácií rôznych obmien algoritmu
-v širokej škále programovacích jazykov a optimalizované pre konkrétne hardvérové platformy. V jazyku C stoja
+v širokej škále programovacích jazykov a optimalizovaných pre konkrétne hardvérové platformy. V jazyku C stoja
 za zmienku knižnice: FFTW, FFTPACK, GNU Scientific Library, CMSIS DSP a Espressif DSP. Na účely analýzy údajov je FFT
 prítomné pre jazyk Python v balíkoch \emph{numpy} a \emph{scipy}, tiež napr. v jazyku R je súčasťou \emph{stats} modulu.
 
@@ -766,8 +762,9 @@ sa zvlnením v okolí diskontinuity podľa Gibsovho javu \cite{understanding-dsp
 Existuje množstvo oknových funkcií líšiacich sa mierou kompromisu medzi šírkou výsledných špičiek vo frekvenčnej doméne,
 presnosti v amplitúde a spôsobu poklesu úniku spektra do ostatných vedierok. Medzi najpoužívanejšie sa zaraďujú: obdĺžníkové
 (\ref{equ:window-rectangular}), Bartlettovo (\ref{equ:window-bartlett}), Hannovo (\ref{equ:window-hann}), Hammingovo
-(\ref{equ:window-hamming}) a Blackmannovo okno \ref{equ:window-blackmann}. Uvedené okná sú stredovo súmerné (obr. \ref{fig:window-time})
-Plochejšie okná, napríklad obdĺžníkové, sa vyznačujú ponechaním ostrejších špičiek s neskreslenou amplitúdou za
+(\ref{equ:window-hamming}) a Blackmannovo okno \ref{equ:window-blackmann}. Uvedené okná sú stredovo súmerné 
+(obr. \ref{fig:window-time}). Plochejšie okná, napríklad obdĺžníkové, sa vyznačujú ponechaním ostrejších špičiek 
+s neskreslenou amplitúdou za
 cenu väčšieho spektrálneho úniku, čím sa znižuje odstup od šumu. Predchádzanie hraničným javom sa dosahuje plynulým
 znižovaním hodnôt k okrajom okna až na nulu, čím špičky strácajú na amplitúde (scalloping loss) \cite{spectral-density-estimation}.
 \myequations{Oknové funkcie: obdĺžník, Bartlett, Hann, Hamming, Blackman}
