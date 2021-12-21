@@ -424,15 +424,14 @@ iba z jednej strany \cite{survey-peaks-valleys}:
 f[t-i] < f[t] > f[t+i],\quad \forall i \in 1, 2, ..., k
 \end{align}\end{ceqn}
 
-Algoritmus č.\ref{algo:neighbours} ,,najvyšší spomedzi susedov''
-\footnote{\url{https://terpconnect.umd.edu/~toh/spectrum/PeakFindingandMeasurement.htm}}
+Algoritmus č.\ref{algo:neighbours} ,,najvyšší spomedzi susedov'' \cite{peak-finding}
 prechádza postupne pozorovania veličiny zo zoznamu $y$ a ku kandidátnej špičke na indexe $i$ preveruje najbližších
 $k$ hodnôt na obe strany, ak existujú.
 \begin{algorithm}[h]
 \caption{Najvyšší spomedzi susedov}
 \begin{algorithmic}[1]
 \Function{Find\_Peaks\_Neighbours}{$y$, $k$, $\varepsilon$, $h_{rel}$, $h$}
-	\State $peaks \gets []$ 	\Comment{Zoznam indexov nájdených špičiek v signále $y$}
+	\State $peaks \gets \left[\; \right]$ 	\Comment{Zoznam indexov nájdených špičiek v signále $y$}
 	\For{$i \gets 0$ \textbf{to} $length(y)$}
 		\If {$h \neq null$ \textbf{and} $|y[i]| < h$}  \Comment{Preskoč príliš nízke magnitúdy}
 			\State \textbf{continue}
@@ -477,7 +476,7 @@ spájajúcou bod $i$ s $k$-tou vzorkou vedľa, ktorá sa použije namiesto difer
 \caption{Prechod prvej derivácie nulou do záporu}
 \begin{algorithmic}[1]
 \Function{Find\_Peaks\_Zero\_Crossing}{$y$, $k$, $\varepsilon$, $slope$}
-	\State $peaks \gets []$
+	\State $peaks \gets \left[\; \right]$
 	\For{$i \gets k$ \textbf{to} $length(y) - k$}
 		\If {($|y[i+k] - y[i-k]| \leq \epsilon$ \textbf{and}
 		     \State \hskip1.5em $(y[i+k] - y[i]) - (y[i] - y[i-k]) < 0$ \textbf{and}
@@ -513,7 +512,7 @@ skúsenosti v intenciách rozhodovacích pravidiel.
 \caption{Algoritmus horského turistu}
 \begin{algorithmic}[1]
 \Function{Find\_Peaks\_Hill\_Walker}{$y$, $tolerance$, $hole$, $prominence$, $isolation$}
-	\State $peaks \gets []$
+	\State $peaks \gets \left[\; \right]$
 	\State $i\_change \gets 0$
 	\State $y\_valley \gets 0$
 	\State $possible\_change \gets false$
@@ -641,7 +640,7 @@ W_{N}^{nk} = \cos(2\pi nk/ N) - i \cdot \sin(2\pi nk/ N)
 \end{align}\end{ceqn}
 
 Spektrálne komponenty opísané vektorom komplexných Fourierových koeficientov majú magnitúdy dané veľkosťami komplexných čísel
-(\ref{equ:magnitude-spectrum}). Pre vstupy $x \in \mathcal{R}$ je výstup z DFT zrkadlovo symetrický, čiže druhá polovica
+(\ref{equ:magnitude-spectrum}). Pre vstupy $x \in \mathbb{R}$ je výstup z DFT zrkadlovo symetrický, čiže druhá polovica
 výstupu je komplexne združená k prvej $x[m] = x^{*}[N - m]$. Symetrickosť zapríčiňuje nadbytočnosť výsledkov
 nad pozíciou  $N/2$. Rovnako naznačuje reformulácia vety o vzorkovaní, že za vzorkovacej frekvencie $f_s$ sú zapríčinením aliasingu v signále prítomné frekvencie do maximálne polovice $f_s$. Energia vo frekvenčnom vedierku je druhou mocninou magnitúdy, ale častejšie sa
 objavuje reprezentácia relatívneho energetického spektra v decibeloch (\ref{equ:decibel-spectrum}) \cite{understanding-dsp}.
@@ -687,7 +686,7 @@ nepárne pozície v čase, zatiaľ  čo decimácia vo frekvencii (obr. \ref{fig:
 nepárne frekvenčné vedierka \cite{dit-dif-fft}. Výpočet prebieha v $\log_2(n)$ deliacich fázach. Poradie prvkov
 vo výstupnom vektore je vždy bitovo invertované, čiže poradové číslo zapísané ako bitový reťazec má obrátené
 poradie. Na dosiahnutie výstupu poradí rastúcich pozícií musí byť pred spustením FFT vstup preusporiadaný
-\cite{computer-vision-fft}.
+\cite{fft-blackbox}.
 
 \begin{figure}[h]
 \centering
@@ -891,7 +890,7 @@ Wifi: 803.11 g                                                                  
 ZigBee: 802.15.4                                                                 & \begin{tabular}[c]{@{}r@{}}868 MHz\\ 2,4 GHz\end{tabular}                                     & \multicolumn{2}{r|}{\begin{tabular}[c]{@{}r@{}}20 kbit/s\\ 250 kbit/s\end{tabular}}                                                                                                             & 10 - 100                                                                                \\ \hline
 Z-Wave                                                                           & 868 MHz                                                                                       & \multicolumn{2}{r|}{40 - 100 kbit/s}                                                                                                                                                            & 30 - 100                                                                                \\ \hline
 LoRaWAN                                                                          & 863 MHz                                                                                       & \multicolumn{2}{r|}{0,3 - 50 kbit/s}                                                                                                                                                            & 5 - 20 km                                                                               \\ \hline
-Narrowband IoT                                                                   & \multicolumn{1}{l|}{Operátor}                                                                 & \multicolumn{2}{r|}{250 kbit/s}                                                                                                                                                                 & \multicolumn{1}{l|}{1 - 10 km}                                                          \\ \hline
+Narrowband IoT                                                                   & \multicolumn{1}{l|}{mobilná sieť}                                                                 & \multicolumn{2}{r|}{250 kbit/s}                                                                                                                                                                 & \multicolumn{1}{l|}{1 - 10 km}                                                          \\ \hline
 \end{tabular}
 \caption{Prehľad najpoužívanejších typov sietí pri IoT komunikácii}
 \label{tab:net-protocols}
