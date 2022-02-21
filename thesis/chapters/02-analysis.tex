@@ -433,19 +433,25 @@ $k$ hodnôt na obe strany, ak existujú.
 \Function{Find\_Peaks\_Neighbours}{$y$, $k$, $\varepsilon$, $h_{rel}$, $h$}
 	\State $peaks \gets \left[\; \right]$ 	\Comment{Zoznam indexov nájdených špičiek v signále $y$}
 	\For{$i \gets 0$ \textbf{to} $length(y)$}
-		\If {$h \neq null$ \textbf{and} $|y[i]| < h$}  \Comment{Preskoč príliš nízke magnitúdy}
-			\State \textbf{continue}
-		\EndIf
-		\State $possible\_peak \gets true$
-		\State $a \gets max(i - k, 0)$
-		\State $b \gets min(i + k, length(y))$
-		\For{$j \gets a$ \textbf{to} $b$}			\Comment{Porovnaj špičku s bodmi v susedstve}
-			\If {$i \neq j$ \textbf{and} $y[j] - y[i] > \epsilon$}
-				\State $possible\_peak \gets false$     \Comment{Kopec nie je dostatočne strmý}
+		\If {$|y[i]| \geq h$}  						\Comment{Preskoč príliš nízke magnitúdy}
+			\State $possible\_peak \gets true$
+			\State $a \gets max(i - k, 0)$
+			\State $b \gets min(i + k, length(y))$
+			\State $valley \gets y[a]$
+
+			\For{$j \gets a$ \textbf{to} $b$}		\Comment{Porovnanie špičky s bodmi v susedstve}
+				\If {$i \neq j$}
+					\If {$y[j] - y[i] > \epsilon$}	\Comment{Tolerancia pre vyšší bod v susedstve}
+						\State $possible\_peak \gets false$
+					\EndIf
+					\If {$y[j] < valley$}			\Comment{Údolie v susedstve na relatívnu výšku}
+						\State $valley \gets y[j]$
+					\EndIf
+				\EndIf
+			\EndFor
+			\If {$possible\_peak = true$ \textbf{and} $y[i] - valley \geq h_{rel}$}
+				\State $peaks \gets peaks + [i]$    \Comment{Kandidát je prehlásený za špičku}
 			\EndIf
-		\EndFor
-		\If {$possible\_peak = true$ \textbf{and} $y[i] - \min(y[a], y[b]) > h_{rel}$}
-			\State $peaks \gets peaks + [j]$    \Comment{Kandidát je prehlásený za špičku}
 		\EndIf
 	\EndFor
 	\State \Return $peaks$
@@ -454,8 +460,8 @@ $k$ hodnôt na obe strany, ak existujú.
 \label{algo:neighbours}
 \end{algorithm}
 Keď po preskúmaní zostáva $y[i]$ najväčšou hodnotou spomedzi susedov
-v rozmedzí $[a; b]$, za tolerancie strmosti stúpania $\varepsilon$ medzi pozorovaniam, a súčasne je relatívna
-výška vrcholu väčšia oproti nižšiemu okraju než nastavený parameter $h_{rel}$ potom je kandidátny bod prehlásený
+v rozmedzí $[a; b]$, za tolerancie bodu s vyššou amplitúdou $\varepsilon$ v susedstve, a súčasne je relatívna
+výška vrcholu väčšia než parameter $h_{rel}$ potom je kandidátny bod prehlásený
 za skutočnú špičku a pridaný do zoznamu $peaks$.
 
 Súčasťou algoritmu je tiež preskočenie hodnôt, ktoré nespĺňajú základný predpoklad pre absolútnu amplitúdu $h$.
@@ -621,7 +627,7 @@ znamenajúci, že pri raste rozlíšenia v čase strácame rozlíšenie vo frekv
 O požadovanom množstve pozorovaní pre konkrétnu rozlíšiteľnosť spektra taktiež hovorí vzťah (\ref{equ:freq-resolution}).
 Rozpätie frekvencií spadajúcich do diskrétneho frekvenčného vedierka $k$ sú počínajúc $k\Delta f$ po $(k+1)\Delta f$.
 
-\subsection{Diskrétna fourierová a kosínusová transformácia}
+\subsection{Diskrétna Fourierová a kosínusová transformácia}
 Diskrétna Fourierová transformácia (DFT) slúži na učenie harmonického zloženia signálu (\ref{eq:dft}) rozkladom na súčet
 sínusov a kosínusov rôznych frekvencií. Zobrazuje vektor komplexných čísel $y$ dĺžky $N$ do vektora $N$ frekvenčných
 komponentov. Na vypočítanie $k$-teho frekvenčného vedierka sú
@@ -672,7 +678,7 @@ kompresii zvuku, pretože sa prelínaním blokom vyvaruje artefaktom na hranicia
 \subsection{Algoritmus FFT}
 Priamočiarou implementáciou vzťahom na výpočet Fourierovej a kosínusovej transformácie dosiahneme časovú zložitosť
 rádu $\mathcal{O}(N^2)$. Aplikáciam v reálnom čase na prúdoch dát takáto výpočtová náročnosť zďaleka nepostačuje.
-Algoritmus rýchlej fourierovej transformácie (FFT) uplatňujúci prístup rozdeľuj a panuj zvládne zrealizovať DFT
+Algoritmus rýchlej Fourierovej transformácie (FFT) uplatňujúci prístup rozdeľuj a panuj zvládne zrealizovať DFT
 v čase $\mathcal{O}(N \log N)$.
 
 Celkovo pozostáva z $N$ sčítaní a $N/2$ násobení v komplexných číslach. Najbežnejšia
