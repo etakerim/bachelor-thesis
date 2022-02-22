@@ -478,17 +478,16 @@ Viacnásobné vyhladenie signálu predom je nesmierne dôležité,
 pretože algoritmus č.\ref{algo:zero-crossing} ,,prechodu nulou do záporu'' (Negative Zero-Crossing) je nesmierne citlivý
 na zákmity a nesprávne by ich považoval za špičky. Zvýšenie odolnosti proti takýmto tendenciám sa dosahuje dlhšou sečnicou
 spájajúcou bod $i$ s $k$-tou vzorkou vedľa, ktorá sa použije namiesto diferencie s jednotkovým krokom.
+
 \begin{algorithm}[h]
 \caption{Prechod prvej derivácie nulou do záporu}
 \begin{algorithmic}[1]
-\Function{Find\_Peaks\_Zero\_Crossing}{$y$, $k$, $\varepsilon$, $slope$}
+\Function{Find\_Peaks\_Zero\_Crossing}{$y$, $k$, $slope$}
 	\State $peaks \gets \left[\; \right]$
 	\For{$i \gets k$ \textbf{to} $length(y) - k$}
-		\If {($|y[i+k] - y[i-k]| \leq \epsilon$ \textbf{and}
-		     \State \hskip1.5em $(y[i+k] - y[i]) - (y[i] - y[i-k]) < 0$ \textbf{and}
-		     \State \hskip1.5em $|(y[i+k] - y[i]) - (y[i] - y[i-k])| > slope$)}
+		\If {($y[i + k] - y[i]) < 0$ \textbf{and} $(y[i] - y[i - k]) > 0$
+		     \State \hskip1.5em $|y[i + k] - y[i]| \geq slope$ \textbf{and} $|y[i] - y[i - k]| \geq slope$)}
 		    \State $peaks \gets peaks + [i]$
-
 		\EndIf
 	\EndFor
 	\State \Return $peaks$
@@ -497,10 +496,10 @@ spájajúcou bod $i$ s $k$-tou vzorkou vedľa, ktorá sa použije namiesto difer
 \label{algo:zero-crossing}
 \end{algorithm}
 
-Označenie kandidátneho bodu za špičku v zozname hodnôt $y$ stojí na teda troch kritériách. Sklon sečnice sa musí v
-rámci tolerancie $\varepsilon$ blížiť nule, rozdiel prvých diferencií $\Delta y[i+k] - \Delta y[i]$ musí byť záporný a veľkosť
-rozdielu diferencií prekračuje prahovú strmosť kopca $slope$, kde leží uvažovaný vrchol. Časová zložitosť
-pre jednu špičku je $\mathcal{O}(1)$.
+Označenie kandidátneho bodu za špičku v zozname hodnôt $y$ stojí na teda dvoch kritériách. Sečnice na oboch stranách od uvažovaného 
+vrchola sa musia líšiť znamienkom a ich dĺžka má prekračovať prahovú strmosť kopca $slope$. Časová zložitosť pre jednu špičku je 
+$\mathcal{O}(1)$.
+
 
 \begin{figure}[h]
     \centering
