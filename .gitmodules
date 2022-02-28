@@ -1,0 +1,6 @@
+[submodule "esp/esp-idf"]
+	path = esp/esp-idf
+	url = https://github.com/espressif/esp-idf.git
+[submodule "esp/esp-dsp"]
+	path = esp/esp-dsp
+	url = https://github.com/espressif/esp-dsp.git

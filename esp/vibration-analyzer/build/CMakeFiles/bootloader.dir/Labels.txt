@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/home/miroslav/fiit-stu/BP/bachelor-thesis/esp/vibration-analyzer/build/CMakeFiles/bootloader
+/home/miroslav/fiit-stu/BP/bachelor-thesis/esp/vibration-analyzer/build/CMakeFiles/bootloader.rule
+/home/miroslav/fiit-stu/BP/bachelor-thesis/esp/vibration-analyzer/build/CMakeFiles/bootloader-complete.rule
+/home/miroslav/fiit-stu/BP/bachelor-thesis/esp/vibration-analyzer/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/home/miroslav/fiit-stu/BP/bachelor-thesis/esp/vibration-analyzer/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/miroslav/fiit-stu/BP/bachelor-thesis/esp/vibration-analyzer/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/miroslav/fiit-stu/BP/bachelor-thesis/esp/vibration-analyzer/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/miroslav/fiit-stu/BP/bachelor-thesis/esp/vibration-analyzer/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/miroslav/fiit-stu/BP/bachelor-thesis/esp/vibration-analyzer/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/miroslav/fiit-stu/BP/bachelor-thesis/esp/vibration-analyzer/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
