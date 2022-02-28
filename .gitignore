@@ -5,4 +5,5 @@ thesis/*/build
 *.o
 */.ipynb_checkpoints/*
 measurements/datasets/r-das
-/esp32-steval/.pio/build/
+measurements/esp32-demo/.pio/build/
+esp/*/build/*
