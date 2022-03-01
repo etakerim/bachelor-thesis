@@ -3,7 +3,7 @@
 # project subdirectory.
 #
 
-PROJECT_NAME := fft2r
+PROJECT_NAME := vibrations
 
 # This line has to be included into the make file
 # to include components that are located somewhere 
