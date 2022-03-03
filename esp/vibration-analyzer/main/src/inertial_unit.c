@@ -3,7 +3,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "esp_system.h"
-#include "intertial_unit.h"
+#include "inertial_unit.h"
 
 
 typedef enum IMURegister {
@@ -58,8 +58,19 @@ typedef enum IMURegister {
 // 0x3D
 #define IMU_ACCELRANGE_MASK     IMU_ACCELRANGE_8G
 #define IMU_ODR_MASK            IMU_ODR_952HZ
+
+// Accelerometer interrupt generator (INT1/2_A/G)
+#define IMU_INT_IG_XL           (1 << 6)
+// Accelerometer data ready on (INT1/2_A/G)
+#define IMU_INT_DRDY_XL         (1 << 0)
+#define IMU_REG9_DRDY_mask      (1 << 3)
+
+#define IMU_REG5_Zen_XL         (1 << 5)
+#define IMU_REG5_Yen_XL         (1 << 4)
+#define IMU_REG5_Xen_XL         (1 << 3)
 #define IMU_REG8_IF_ADD_INC     4
 #define IMU_REG8_SW_RESET       1
+
 
 
 static void spi_send(spi_device_handle_t spi, uint8_t reg, uint8_t value)
@@ -95,23 +106,36 @@ static uint8_t spi_recv(spi_device_handle_t spi, uint8_t reg)
     return buffer[0];
 }
 
-bool imu_setup(InertialUnit *imu)
+static void imu_isr_install(InertialUnit *imu)
 {
-    /*
-    gpio_config_t int1_config = {
-        .intr_type = GPIO_INTR_NEGEDGE,
+    gpio_config_t interrupt_pin = {
+        .intr_type = GPIO_INTR_POSEDGE,
         .mode = GPIO_MODE_INPUT,
         .pin_bit_mask = (1 << imu->int1),
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
         .pull_up_en = GPIO_PULLUP_ENABLE
     };
-    gpio_config(&int1_config);
+
     gpio_install_isr_service(0);
-    gpio_isr_handler_add(imu->int1, int1_ready, NULL);
+    if (imu->isr_int1 != NULL) {
+        spi_send(imu->dev, IMU_INT1_CTRL, IMU_INT_DRDY_XL);
+        spi_send(imu->dev, IMU_CTRL_REG9, IMU_REG9_DRDY_mask);
 
-    Nastav prerušenie na data ready a threshold
-    */
+        gpio_config(&interrupt_pin);
+        gpio_isr_handler_add(imu->int1, imu->isr_int1, NULL);
+    }
+    if (imu->isr_int2 != NULL) {
+        spi_send(imu->dev, IMU_INT2_CTRL, IMU_INT_IG_XL);
 
+        interrupt_pin.pin_bit_mask = (1 << imu->int2);
+        gpio_config(&interrupt_pin);
+        gpio_isr_handler_add(imu->int2, imu->isr_int2, NULL);
+
+    }
+}
+
+bool imu_setup(InertialUnit *imu)
+{
     spi_bus_config_t spi_bus = {
         .miso_io_num = imu->miso,
         .mosi_io_num = imu->mosi,
@@ -132,14 +156,18 @@ bool imu_setup(InertialUnit *imu)
 
     spi_send(imu->dev, IMU_CTRL_REG8, IMU_REG8_IF_ADD_INC | IMU_REG8_SW_RESET);
     vTaskDelay(10 / portTICK_RATE_MS);
-    
+
     uint8_t id = spi_recv(imu->dev, IMU_WHO_AM_I);
     if (id != IMU_XG_ID)
         return false;
 
-    spi_send(imu->dev, IMU_CTRL_REG5_XL, 0x38);  // Enable X,Y,Z axis
+    spi_send(imu->dev, IMU_CTRL_REG5_XL,
+             IMU_REG5_Zen_XL | IMU_REG5_Yen_XL | IMU_REG5_Xen_XL );
     imu_output_data_rate(imu, IMU_ODR_952HZ);
     imu_acceleration_range(imu, IMU_ACCELRANGE_2G);
+
+    // TODO: FIFO configuration
+    // imu_isr_install(imu);
 
     return true;
 }
@@ -157,6 +185,7 @@ void imu_acceleration_range(InertialUnit *imu, AccelerationRange range)
     reg = (reg & ~IMU_ACCELRANGE_MASK) | range;
     spi_send(imu->dev, IMU_CTRL_REG6_XL, reg);
 }
+
 
 void imu_acceleration(InertialUnit *imu, Vector *acceleration)
 {

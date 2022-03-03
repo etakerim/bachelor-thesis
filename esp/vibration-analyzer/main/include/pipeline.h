@@ -15,4 +15,4 @@ int find_peaks_zero_crossing(float *peaks, float *y, int w, int k, float slope);
 int find_peaks_hill_walker(float *peaks, float *y, int w, float tolerance, int hole, float prominence, float isolation);
 
 
-#endif PIPELINE_H
+#endif

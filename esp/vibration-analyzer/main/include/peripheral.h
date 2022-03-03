@@ -27,4 +27,4 @@ int openlog_write(OpenLog *logger, char *str);
 void wifi_connect(void);
 void mqtt_setup(const char *broker_url);
 
-#endif PERIPHERAL_H
+#endif

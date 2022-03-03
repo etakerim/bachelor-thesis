@@ -18,6 +18,8 @@ typedef struct {
     gpio_num_t int1; 
     gpio_num_t int2;
     gpio_num_t en_data;
+    gpio_isr_t isr_int1; 
+    gpio_isr_t isr_int2;
     spi_host_device_t spi_host;
     spi_device_handle_t dev;
 } InertialUnit;
@@ -49,4 +51,4 @@ void imu_output_data_rate(InertialUnit *imu, AccelerationODR odr);
 void imu_acceleration(InertialUnit *imu, Vector *acceleration);
 
 
-#endif INTERTIAL_UNIT_H
+#endif
