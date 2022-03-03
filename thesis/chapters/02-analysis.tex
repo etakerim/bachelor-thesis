@@ -551,7 +551,7 @@ skúsenosti v intenciách rozhodovacích pravidiel.
             		\State \hskip1.5em \textbf{and}  $|y[i - hole] - y\_valley| > prominence$)
             		\State \hskip1.5em \textbf{and}  $|y[i - hole] - y[last(peaks)]| > isolation$)}
 				\State $y\_peak \gets y[i\_{change}]$    \Comment{Skutočný vrchol identifikovaný}
-				\State $peaks \gets peaks + [i_{change}]$
+				\State $peaks \gets peaks + [i\_change]$
             \EndIf
         \EndIf
 	\EndFor
@@ -775,7 +775,7 @@ znižovaním hodnôt k okrajom okna až na nulu, čím špičky strácajú na am
 \begin{ceqn}\begin{align}
 w(n) &= 1,\, n = 0, 1, ..., N - 1 \label{equ:window-rectangular} \\
 w(n) &= \frac{2}{N - 1}\left(\frac{N - 1}{2} - \left|n - \frac{N - 1}{2} \right|\right) \label{equ:window-bartlett}  \\
-w(n) &= \cos^2((2\pi n / N - \pi) / N)  \label{equ:window-hann} \\
+w(n) &= \sin^2(\pi n / N)  \label{equ:window-hann} \\
 w(n) &= 0.54 - 0.46\cos(2\pi n / N) \label{equ:window-hamming} \\
 w(n) &= 0.42 - 0.5\cos(2\pi n / N) + 0.08\cos(4\pi n / N)\label{equ:window-blackmann}
 \end{align}\end{ceqn}
