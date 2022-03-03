@@ -4,6 +4,7 @@ sudo pacman -S --needed gcc git make flex bison gperf python-pip cmake ninja cca
 
 git clone -b v4.4 --recursive https://github.com/espressif/esp-idf.git esp-idf
 git clone https://github.com/espressif/esp-dsp.git
+wget https://github.com/ludocode/mpack/releases/download/v1.1/mpack-amalgamation-1.1.tar.gz
 
 cd ~/esp/esp-idf
 ./install.sh esp32
