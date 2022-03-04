@@ -28,7 +28,6 @@ float kurtosis(float *x, int n, float mean);
 float correlation(float *x, float *y, int n,
                   float x_avg, float y_avg, float x_std, float y_std);
 void welford_algorithm(float x, float *average, float *variance, int k);
-float average_absolute_deviate(float *x, int n, float mean);
 
 float quickselect(float *x, int n, int k);
 float median(float *x, int n);
