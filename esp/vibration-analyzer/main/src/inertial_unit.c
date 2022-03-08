@@ -52,10 +52,7 @@ typedef enum IMURegister {
 } IMURegister;
 
 
-#define SPI_SPEED       4000000
-
-#define IMU_XG_ID               0x68  
-// 0x3D
+#define IMU_XG_ID               0x68
 #define IMU_ACCELRANGE_MASK     IMU_ACCELRANGE_8G
 #define IMU_ODR_MASK            IMU_ODR_952HZ
 
@@ -113,7 +110,7 @@ static void imu_isr_install(InertialUnit *imu)
         .mode = GPIO_MODE_INPUT,
         .pin_bit_mask = (1 << imu->int1),
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
-        .pull_up_en = GPIO_PULLUP_ENABLE
+        .pull_up_en = GPIO_PULLUP_DISABLE
     };
 
     gpio_install_isr_service(0);
@@ -144,15 +141,16 @@ bool imu_setup(InertialUnit *imu)
         .quadhd_io_num = -1,
         .max_transfer_sz = 32
     };
-    spi_bus_initialize(imu->spi_host, &spi_bus, SPI_DMA_DISABLED);
+    spi_bus_initialize(imu->spi, &spi_bus, SPI_DMA_DISABLED);
 
     spi_device_interface_config_t spi_iface = {
-        .clock_speed_hz=SPI_SPEED,
+        .clock_speed_hz=SPI_MASTER_FREQ_8M,   // !Maximum speed is 8 MHz
+        .flags=SPI_DEVICE_HALFDUPLEX,
         .mode=0,
         .spics_io_num=imu->xgcs,
-        .queue_size=10
+        .queue_size=1
     };
-    spi_bus_add_device(SPI2_HOST, &spi_iface, &imu->dev);
+    spi_bus_add_device(imu->spi, &spi_iface, &imu->dev);
 
     spi_send(imu->dev, IMU_CTRL_REG8, IMU_REG8_IF_ADD_INC | IMU_REG8_SW_RESET);
     vTaskDelay(10 / portTICK_RATE_MS);
@@ -166,9 +164,7 @@ bool imu_setup(InertialUnit *imu)
     imu_output_data_rate(imu, IMU_ODR_952HZ);
     imu_acceleration_range(imu, IMU_ACCELRANGE_2G);
 
-    // TODO: FIFO configuration
-    // imu_isr_install(imu);
-
+    imu_isr_install(imu);           // TODO: DEBUG & FIFO configuration
     return true;
 }
 

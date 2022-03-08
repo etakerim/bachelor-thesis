@@ -594,7 +594,8 @@ zmeny priebehu</panel_attributes>
     </coordinates>
     <panel_attributes>- Aktívne?
 - Algoritmus detekcie špičiek
-- Tolerancia počtu zákmytov
+- stálosť v čase: Tolerancia počtu zákmytov
+- región frekvencií považovaný za totožný
 union:
 0. threshold
 1. k, e, h_rel, h

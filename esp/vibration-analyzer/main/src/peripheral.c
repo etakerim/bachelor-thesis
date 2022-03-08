@@ -152,7 +152,6 @@ void openlog_setup(OpenLog *logger)
     };
     gpio_config(&openlog_vcc);
     gpio_set_level(logger->vcc, 1);
-    vTaskDelay(10000 / portTICK_RATE_MS);
 
     uart_config_t uart_config = {
         .baud_rate = logger->baudrate,
@@ -167,10 +166,5 @@ void openlog_setup(OpenLog *logger)
     uart_param_config(logger->uart, &uart_config);
     uart_set_pin(logger->uart, logger->tx, logger->rx, 
                  UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
-}
-
-int openlog_write(OpenLog *logger, char *str)    
-{
-    return uart_write_bytes(logger->uart, str, strlen(str));
 }
 

@@ -9,7 +9,6 @@
 #include "driver/gpio.h"
 
 typedef struct {
-    uint8_t spi;
     gpio_num_t clk;
     gpio_num_t miso;
     gpio_num_t mosi; 
@@ -20,7 +19,7 @@ typedef struct {
     gpio_num_t en_data;
     gpio_isr_t isr_int1; 
     gpio_isr_t isr_int2;
-    spi_host_device_t spi_host;
+    spi_host_device_t spi;
     spi_device_handle_t dev;
 } InertialUnit;
 

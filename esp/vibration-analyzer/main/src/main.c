@@ -15,68 +15,37 @@
 #include "pipeline.h"
 
 
-void app_main(void)
-{
-    //Configuration rules;
+TaskHandle_t sampler;
 
-    InertialUnit imu = {
-        .spi = SPI2_HOST,
-        .clk = 21,
-        .miso = 23,
-        .mosi = 19,
-        .xgcs = 22,
-        .mcs = 14,
-        .int1 = 17,
-        .int2 = 16,
-        .en_data = 18
-        // ,.isr_int1 = imu_isr_sample_ready,
-        //  .isr_int2 = imu_isr_above_threshold
-    };
-    OpenLog logger = {
-        .vcc = 25, // 26, 27
-        .uart = 0, 
-        .rx = 5,
-        .tx = 13,
-        .baudrate = 9600,
-        .buffer = 1024
-    };
-    imu_setup(&imu);
-    openlog_setup(&logger);
-
-    // nvs_load_config();
-    // peripheral_setup();
-    // wifi_connect();
-    // mqtt_setup("mqtt://mqtt.eclipseprojects.io");
-
-    // TODO: setup tasks and pipeline
-    // TODO: load config from nvs and mqtt (msgpack)
-
-    Vector accel;
-    char buffer[50];
-
-    while (1) {
-        imu_acceleration(&imu, &accel);
-        sprintf(buffer, "%d %d %d\n", accel.x, accel.y, accel.z);
-        openlog_write(&logger, buffer);
-        vTaskDelay(1000 / portTICK_RATE_MS);
-    }
-
-    // spi_bus_remove_device(imu.dev);
-}
-
-/*
-TaskHandle_t sampler_task;
-
-void imu_isr_sample_ready(void *args)
+static void imu_isr_sample_ready(void *args)
 {
     BaseType_t higher_priority_woken;
-    vTaskNotifyGiveFromISR(sampler_task, &higher_priority_woken);
-    portEND_SWITCHING_ISR(higher_priority_woken);
+    vTaskNotifyGiveFromISR(sampler, &higher_priority_woken);
+    portYIELD_FROM_ISR(higher_priority_woken);
 }
-void imu_isr_above_threshold(void *args)
-{
 
-}
+static InertialUnit imu = {
+    .spi = SPI2_HOST,
+    .clk = 21,
+    .miso = 23,
+    .mosi = 19,
+    .xgcs = 22,
+    .mcs = 14,
+    .int1 = 17,
+    .int2 = 16,
+    .en_data = 18,
+    .isr_int1 = imu_isr_sample_ready
+    //  .isr_int2 = imu_isr_above_threshold
+};
+static OpenLog logger = {
+    .vcc = 25,
+    .uart = 0, 
+    .rx = 5,
+    .tx = 13,
+    .baudrate = 9600,
+    .buffer = 1024
+};
+
 
 void sampler_task()
 {
@@ -85,14 +54,27 @@ void sampler_task()
     while (1) {
         ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
         imu_acceleration(&imu, &accel);
-        xQueueSendToBack(samples, &accel, WAIT_TICKS);
+        printf("%d %d %d\n", accel.x, accel.y, accel.z);
+        //xQueueSendToBack(samples, &accel, WAIT_TICKS);
+        vTaskDelay(1000 / portTICK_RATE_MS);
     }
 }
 
-samples = xQueueCreate(QUEUE_SIZE, sizeof(uint16_t));
-xTaskCreate(sampler_task, "sampler_task", 1024, NULL, 1, &sampler_task);
 
-*/
+void app_main(void)
+{
+    if (!imu_setup(&imu)) while (1);
+    openlog_setup(&logger);
+
+    // nvs_load_config();
+    // peripheral_setup();
+    // wifi_connect();
+    // mqtt_setup("mqtt://mqtt.eclipseprojects.io");
+    // samples = xQueueCreate(QUEUE_SIZE, sizeof(uint16_t));
+    vTaskDelay(10000 / portTICK_RATE_MS);
+
+    xTaskCreate(sampler_task, "sampler_task", 1024, NULL, 1, &sampler);
+}
 
 /*
 typedef struct {
