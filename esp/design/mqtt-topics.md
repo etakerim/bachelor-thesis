@@ -8,23 +8,114 @@ Formát dát: MessagePack (okrem Syslog, kde bude prenášaný syslog)
 
 
 
-#### imu/<uuid>/status
+- **imu/\<uuid>/syslog**
+- **imu/\<uuid>/config/set**
+- **imu/\<uuid>/config/get**
+- **imu/\<uuid>/event/frequency**
+- **imu/\<uuid>/stream/samples**
+- **imu/\<uuid>/stream/frequency**
+- **imu/\<uuid>/stream/statistics/+**
 
-#### imu/<uuid>/syslog
+#### Konfigurácia JSON  (MessagePack)
 
-#### imu/<uuid>/config/set
-
-#### imu/<uuid>/config/get
-
-#### imu/<uuid>/event/frequency
-
-#### imu/<uuid>/event/statistics/+
-
-#### imu/<uuid>/stream/samples
-
-#### imu/<uuid>/stream/frequency
-
-#### imu/<uuid>/stream/statistics/+
+```
+{
+	"samples": {
+        "freq": uint16,
+        "n": uint16,
+        "range": "2G" / "4G" / "8G" / "16G", (enum)
+        "axis": {
+        	"x": bool,
+        	"y": bool,
+        	"z": bool
+    	},
+        "above": {
+        	"x": float,
+        	"y": float,
+        	"z": float
+    	},
+    	"zerog": bool
+        "unit": "SI" / "G" / "raw"
+    },
+    "smoothT": {
+        "on": bool,
+        "window": "boxcar" / "bartlett" / "hann" / "hamming" / "blackman", (enum)
+        "k": uint16,
+        "repeat":  uint8
+    },
+    "stats": {
+        "n": uint16,
+        "min": bool,
+        "max": bool,
+        "rms": bool,
+        "mean": bool,
+        "var": bool,
+        "std": bool,
+        "skew": bool,
+        "kurt": bool,
+        "corrXY": bool,
+        "corrXZ": bool,
+        "corrYZ": bool,
+        "median": bool,
+        "mad": bool,
+        "aad": bool
+    },
+    "transformF": {
+        "on": bool
+        "window": "boxcar" / "bartlett" / "hann" / "hamming" / "blackman", (enum)
+        "k": uint16,
+        "overlap": float,
+        "conv": "fft" / "dctii", (enum) 
+        "log": "none" / "power" / "dB" (enum)
+    },
+    "smoothF": {
+        "on": bool,
+        "window": "boxcar" / "bartlett" / "hann" / "hamming" / "blackman" (enum)
+        "k": uint16
+        "repeat": uint8 
+    },
+    "welchAvg": {
+        "on": bool,
+        "n": uint8
+    },
+    "eventsF": {
+        "on": bool,
+        "strategy": "threshold" / "neighbours" / "0crossing" / "hillWalker" (enum)
+        "threshold": {
+            "warn": float
+            "alert": float
+        },
+        "neighbours": {
+            "k": uint16,
+            "e": float,
+            "hRel": float,
+            "h": float
+        },
+        "0crossing": {
+            "k": uint16,
+            "slope": float
+        },
+    	"hillWalker": {
+            "tolerance": float,
+            "hole": uint16,
+            "prominence": float,
+            "isolation": uint16
+        }
+    },
+    "logger": {
+        samples: bool,
+        stats: bool,
+        eventsF: bool,
+        transformF: bool
+    },
+    "mqtt": {
+        samples: bool,
+        stats: bool,
+        eventsF: bool,
+        transformF: bool
+    }
+}
+```
 
 
 
