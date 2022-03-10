@@ -5,6 +5,8 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/queue.h"
+#include "soc/soc.h"
 #include "esp_system.h"
 
 #include "esp_dsp.h"
@@ -15,15 +17,6 @@
 #include "pipeline.h"
 
 
-TaskHandle_t sampler;
-
-static void imu_isr_sample_ready(void *args)
-{
-    BaseType_t higher_priority_woken;
-    vTaskNotifyGiveFromISR(sampler, &higher_priority_woken);
-    portYIELD_FROM_ISR(higher_priority_woken);
-}
-
 static InertialUnit imu = {
     .spi = SPI2_HOST,
     .clk = 21,
@@ -33,9 +26,7 @@ static InertialUnit imu = {
     .mcs = 14,
     .int1 = 17,
     .int2 = 16,
-    .en_data = 18,
-    .isr_int1 = imu_isr_sample_ready
-    //  .isr_int2 = imu_isr_above_threshold
+    .en_data = 18
 };
 static OpenLog logger = {
     .vcc = 25,
@@ -47,34 +38,54 @@ static OpenLog logger = {
 };
 
 
+static TaskHandle_t sample_tick;
+static QueueHandle_t samples;
+
+static bool IRAM_ATTR isr_sample(void *args)
+{
+    BaseType_t higher_priority_woken = pdFALSE;
+    vTaskNotifyGiveFromISR(sample_tick, &higher_priority_woken);
+    return higher_priority_woken == pdTRUE;
+}
+
 void sampler_task()
 {
     Vector accel;
 
     while (1) {
-        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-        imu_acceleration(&imu, &accel);
-        printf("%d %d %d\n", accel.x, accel.y, accel.z);
-        //xQueueSendToBack(samples, &accel, WAIT_TICKS);
-        vTaskDelay(1000 / portTICK_RATE_MS);
+        if (ulTaskNotifyTake(pdTRUE, portMAX_DELAY) == pdTRUE) {
+            imu_acceleration(&imu, &accel);
+            xQueueSend(samples, &accel, portMAX_DELAY);
+        }
     }
 }
-
 
 void app_main(void)
 {
     if (!imu_setup(&imu)) while (1);
-    openlog_setup(&logger);
-
     // nvs_load_config();
-    // peripheral_setup();
-    // wifi_connect();
+    // wifi_connect("ssid", "password");
     // mqtt_setup("mqtt://mqtt.eclipseprojects.io");
-    // samples = xQueueCreate(QUEUE_SIZE, sizeof(uint16_t));
-    vTaskDelay(10000 / portTICK_RATE_MS);
+    // openlog_setup(&logger);
+    // vTaskDelay(10000 / portTICK_RATE_MS);
 
-    xTaskCreate(sampler_task, "sampler_task", 1024, NULL, 1, &sampler);
+    samples = xQueueCreate(128, sizeof(Vector));
+    xTaskCreate(sampler_task, "sampler_task", 4096, NULL, 1, &sample_tick);
+    
+    clock_setup(5, isr_sample);
+
+    Vector accel;
+    while (1) {
+        if (xQueueReceive(samples, &accel, portMAX_DELAY) == pdTRUE) {
+
+            // buffer data from queue into predefined windows
+            ESP_LOGI("main", "%d %d %d\n", accel.x, accel.y, accel.z);
+            // printf("%d %d %d\n", accel.x, accel.y, accel.z);
+        }
+    }
 }
+
+
 
 /*
 typedef struct {

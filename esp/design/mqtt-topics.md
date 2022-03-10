@@ -5,19 +5,17 @@ MQTT broker: mosquitto (https://mosquitto.org/), MQTT Broker (https://play.googl
 MQTT klient: MQTT.fx(https://mqttfx.jensd.de/), paho-mqtt python
 
 Formát dát: MessagePack (okrem Syslog, kde bude prenášaný syslog)
+Topics z pohľadu mqtt
 
-
-
-- **imu/\<uuid>/syslog**
-- **imu/\<uuid>/config/set**
-- **imu/\<uuid>/config/get**
-- **imu/\<uuid>/event/frequency**
-- **imu/\<uuid>/stream/samples**
-- **imu/\<uuid>/stream/frequency**
-- **imu/\<uuid>/stream/statistics/+**
+- **PUBLISH imu/\<uuid>/syslog**
+- **SUBSCRIBE imu/\<uuid>/config/set**
+- **PUBLISH imu/\<uuid>/config/get**
+- **PUBLISH imu/\<uuid>/event/frequency**
+- **PUBLISH imu/\<uuid>/stream/samples**
+- **PUBLISH imu/\<uuid>/stream/frequency**
+- **PUBLISH imu/\<uuid>/stream/statistics**
 
 #### Konfigurácia JSON  (MessagePack)
-
 ```
 {
 	"samples": {

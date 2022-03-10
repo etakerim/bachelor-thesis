@@ -4,8 +4,8 @@
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>420</x>
-      <y>7</y>
+      <x>133</x>
+      <y>273</y>
       <w>14</w>
       <h>14</h>
     </coordinates>
@@ -15,8 +15,8 @@
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>385</x>
-      <y>56</y>
+      <x>189</x>
+      <y>259</y>
       <w>84</w>
       <h>42</h>
     </coordinates>
@@ -26,8 +26,8 @@
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>385</x>
-      <y>126</y>
+      <x>336</x>
+      <y>259</y>
       <w>91</w>
       <h>42</h>
     </coordinates>
@@ -38,7 +38,7 @@ v časovej doméne</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>539</x>
+      <x>504</x>
       <y>259</y>
       <w>98</w>
       <h>42</h>
@@ -51,8 +51,8 @@ domény</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>539</x>
-      <y>329</y>
+      <x>651</x>
+      <y>259</y>
       <w>98</w>
       <h>42</h>
     </coordinates>
@@ -64,8 +64,8 @@ spektrogramov
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>490</x>
-      <y>441</y>
+      <x>784</x>
+      <y>259</y>
       <w>98</w>
       <h>42</h>
     </coordinates>
@@ -76,8 +76,8 @@ vo frekvenciach</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>490</x>
-      <y>511</y>
+      <x>910</x>
+      <y>259</y>
       <w>98</w>
       <h>42</h>
     </coordinates>
@@ -88,31 +88,31 @@ udalostí</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>371</x>
-      <y>245</y>
+      <x>427</x>
+      <y>154</y>
       <w>98</w>
       <h>42</h>
     </coordinates>
-    <panel_attributes>Štatistiky
+    <panel_attributes>Odoslanie štatistík
 posuvných okien</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>420</x>
-      <y>14</y>
-      <w>21</w>
-      <h>56</h>
+      <x>140</x>
+      <y>273</y>
+      <w>63</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>259</x>
-      <y>581</y>
+      <x>252</x>
+      <y>154</y>
       <w>98</w>
       <h>42</h>
     </coordinates>
@@ -121,21 +121,10 @@ po decimácii</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>581</x>
-      <y>196</y>
-      <w>21</w>
-      <h>77</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLState</id>
     <coordinates>
-      <x>602</x>
-      <y>581</y>
+      <x>588</x>
+      <y>154</y>
       <w>91</w>
       <h>42</h>
     </coordinates>
@@ -146,8 +135,8 @@ spektra</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>490</x>
-      <y>581</y>
+      <x>973</x>
+      <y>154</y>
       <w>91</w>
       <h>42</h>
     </coordinates>
@@ -158,8 +147,8 @@ zmeny spektra</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>441</x>
-      <y>721</y>
+      <x>1113</x>
+      <y>280</y>
       <w>14</w>
       <h>14</h>
     </coordinates>
@@ -167,245 +156,109 @@ zmeny spektra</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLState</id>
-    <coordinates>
-      <x>378</x>
-      <y>581</y>
-      <w>77</w>
-      <h>42</h>
-    </coordinates>
-    <panel_attributes>Odoslanie
-štatistík</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLSyncBarHorizontal</id>
-    <coordinates>
-      <x>266</x>
-      <y>196</y>
-      <w>385</w>
-      <h>14</h>
-    </coordinates>
-    <panel_attributes>lw=5
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>Relation</id>
     <coordinates>
-      <x>420</x>
-      <y>91</y>
-      <w>21</w>
-      <h>49</h>
+      <x>399</x>
+      <y>168</y>
+      <w>42</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+    <additional_attributes>40.0;10.0;10.0;10.0;10.0;130.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>420</x>
-      <y>161</y>
-      <w>21</w>
-      <h>56</h>
+      <x>343</x>
+      <y>168</y>
+      <w>42</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+    <additional_attributes>40.0;130.0;40.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>413</x>
-      <y>196</y>
-      <w>21</w>
-      <h>63</h>
+      <x>560</x>
+      <y>168</y>
+      <w>42</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+    <additional_attributes>40.0;10.0;10.0;10.0;10.0;130.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>301</x>
-      <y>196</y>
-      <w>21</w>
-      <h>399</h>
+      <x>875</x>
+      <y>273</y>
+      <w>49</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;550.0;10.0;10.0</additional_attributes>
+    <additional_attributes>50.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>301</x>
-      <y>616</y>
-      <w>21</w>
-      <h>77</h>
+      <x>742</x>
+      <y>273</y>
+      <w>56</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>413</x>
-      <y>280</y>
-      <w>21</w>
-      <h>315</h>
+      <x>518</x>
+      <y>168</y>
+      <w>35</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;430.0;10.0;10.0</additional_attributes>
+    <additional_attributes>30.0;130.0;30.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>413</x>
-      <y>616</y>
-      <w>21</w>
-      <h>77</h>
+      <x>945</x>
+      <y>168</y>
+      <w>42</w>
+      <h>105</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>40.0;10.0;10.0;10.0;10.0;130.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>581</x>
+      <x>1057</x>
+      <y>168</y>
+      <w>70</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>80.0;170.0;50.0;170.0;50.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>210</x>
       <y>294</y>
-      <w>21</w>
-      <h>49</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLSyncBarHorizontal</id>
-    <coordinates>
-      <x>511</x>
-      <y>399</y>
-      <w>161</w>
-      <h>14</h>
-    </coordinates>
-    <panel_attributes>lw=5
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>581</x>
-      <y>364</y>
-      <w>21</w>
-      <h>56</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>532</x>
-      <y>476</y>
-      <w>21</w>
-      <h>49</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>532</x>
-      <y>399</y>
-      <w>21</w>
-      <h>56</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>637</x>
-      <y>399</y>
-      <w>21</w>
-      <h>196</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;260.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>637</x>
-      <y>616</y>
-      <w>21</w>
-      <h>77</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>532</x>
-      <y>546</y>
-      <w>21</w>
-      <h>49</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>532</x>
-      <y>616</y>
-      <w>21</w>
-      <h>77</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLSyncBarHorizontal</id>
-    <coordinates>
-      <x>252</x>
-      <y>672</y>
-      <w>448</w>
-      <h>14</h>
-    </coordinates>
-    <panel_attributes>lw=5
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>441</x>
-      <y>672</y>
-      <w>21</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>462</x>
-      <y>42</y>
-      <w>84</w>
-      <h>49</h>
+      <w>42</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;50.0;100.0;10.0</additional_attributes>
+    <additional_attributes>40.0;10.0;10.0;110.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>532</x>
-      <y>21</y>
+      <x>112</x>
+      <y>371</y>
       <w>196</w>
       <h>77</h>
     </coordinates>
@@ -421,19 +274,19 @@ zmeny spektra</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>469</x>
-      <y>126</y>
-      <w>77</w>
-      <h>35</h>
+      <x>364</x>
+      <y>294</y>
+      <w>28</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;30.0;90.0;10.0</additional_attributes>
+    <additional_attributes>20.0;10.0;10.0;110.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>532</x>
-      <y>112</y>
+      <x>315</x>
+      <y>371</y>
       <w>119</w>
       <h>56</h>
     </coordinates>
@@ -446,19 +299,19 @@ zmeny spektra</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>630</x>
-      <y>245</y>
-      <w>84</w>
-      <h>42</h>
+      <x>504</x>
+      <y>294</y>
+      <w>63</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;40.0;100.0;10.0</additional_attributes>
+    <additional_attributes>70.0;10.0;10.0;110.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>700</x>
-      <y>224</y>
+      <x>455</x>
+      <y>371</y>
       <w>140</w>
       <h>77</h>
     </coordinates>
@@ -473,8 +326,8 @@ zmeny spektra</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>700</x>
-      <y>315</y>
+      <x>623</x>
+      <y>371</y>
       <w>140</w>
       <h>35</h>
     </coordinates>
@@ -483,108 +336,101 @@ zmeny spektra</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>630</x>
-      <y>322</y>
-      <w>84</w>
-      <h>42</h>
-    </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;40.0;100.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>581</x>
-      <y>140</y>
-      <w>301</w>
-      <h>336</h>
-    </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;460.0;410.0;460.0;410.0;10.0;100.0;10.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>735</x>
-      <y>476</y>
+      <x>805</x>
+      <y>371</y>
       <w>196</w>
-      <h>154</h>
+      <h>119</h>
     </coordinates>
     <panel_attributes>- Aktívne?
 - Algoritmus detekcie špičiek
 - time proximity (windows)
-- frequency dispersion (bins)
 - minimal duration (windows)
 union:
 0. threshold
 1. k, e, h_rel, h
 2. k, slope
-3. tolerance, hole, prominence, isolation
-
-Pozn.: predvolené hodnoty
-budú odladené na testovacích
-datasetoch vibrácií</panel_attributes>
+3. tolerance, hole, prominence, isolation</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>581</x>
-      <y>490</y>
-      <w>168</w>
-      <h>56</h>
+      <x>924</x>
+      <y>294</y>
+      <w>42</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;60.0;220.0;10.0</additional_attributes>
+    <additional_attributes>40.0;10.0;10.0;110.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>686</x>
-      <y>609</y>
-      <w>70</w>
-      <h>70</h>
+      <x>1015</x>
+      <y>189</y>
+      <w>77</w>
+      <h>196</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;10.0;80.0;80.0</additional_attributes>
+    <additional_attributes>10.0;10.0;90.0;260.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>742</x>
-      <y>644</y>
+      <x>1015</x>
+      <y>371</y>
       <w>119</w>
       <h>56</h>
     </coordinates>
-    <panel_attributes>Pre každé odosielanie:
-- Aktívne?
+    <panel_attributes>- Aktívne?
 - Uložiť na SD kartu?
 - Odoslať cez sieť?</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLNote</id>
+    <id>Relation</id>
     <coordinates>
-      <x>147</x>
-      <y>518</y>
-      <w>119</w>
-      <h>42</h>
+      <x>672</x>
+      <y>294</y>
+      <w>42</w>
+      <h>91</h>
     </coordinates>
-    <panel_attributes>- Decimácia: 
-každých k vzoriek</panel_attributes>
-    <additional_attributes/>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>40.0;10.0;10.0;110.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>259</x>
-      <y>532</y>
-      <w>28</w>
-      <h>63</h>
+      <x>357</x>
+      <y>294</y>
+      <w>469</w>
+      <h>196</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;10.0;20.0;70.0</additional_attributes>
+    <additional_attributes>10.0;190.0;10.0;260.0;590.0;260.0;650.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>224</x>
+      <y>168</y>
+      <w>42</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>40.0;10.0;10.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>672</x>
+      <y>168</y>
+      <w>35</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30.0;130.0;30.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>

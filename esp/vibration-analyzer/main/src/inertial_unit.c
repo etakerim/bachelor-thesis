@@ -52,6 +52,7 @@ typedef enum IMURegister {
 } IMURegister;
 
 
+#define SPI_BUS_FREQUENCY       4000000
 #define IMU_XG_ID               0x68
 #define IMU_ACCELRANGE_MASK     IMU_ACCELRANGE_8G
 #define IMU_ODR_MASK            IMU_ODR_952HZ
@@ -144,7 +145,7 @@ bool imu_setup(InertialUnit *imu)
     spi_bus_initialize(imu->spi, &spi_bus, SPI_DMA_DISABLED);
 
     spi_device_interface_config_t spi_iface = {
-        .clock_speed_hz=SPI_MASTER_FREQ_8M,   // !Maximum speed is 8 MHz
+        .clock_speed_hz=SPI_BUS_FREQUENCY,
         .flags=SPI_DEVICE_HALFDUPLEX,
         .mode=0,
         .spics_io_num=imu->xgcs,
@@ -163,8 +164,8 @@ bool imu_setup(InertialUnit *imu)
              IMU_REG5_Zen_XL | IMU_REG5_Yen_XL | IMU_REG5_Xen_XL );
     imu_output_data_rate(imu, IMU_ODR_952HZ);
     imu_acceleration_range(imu, IMU_ACCELRANGE_2G);
+    // imu_isr_install(imu);   FIFO configuration
 
-    imu_isr_install(imu);           // TODO: DEBUG & FIFO configuration
     return true;
 }
 

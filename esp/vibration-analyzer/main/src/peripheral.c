@@ -168,3 +168,32 @@ void openlog_setup(OpenLog *logger)
                  UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
 }
 
+
+void clock_setup(uint16_t frequency, timer_isr_t action)
+{
+
+    timer_config_t timer_config = {
+        .divider = TIMER_DIVIDER,
+        .alarm_en = TIMER_ALARM_EN,
+        .counter_en = TIMER_PAUSE,
+        .intr_type = TIMER_INTR_LEVEL,
+        .counter_dir = TIMER_COUNT_UP,
+        .auto_reload = TIMER_AUTORELOAD_EN,
+    };
+    timer_init(TIMER_GROUP_0, TIMER_0, &timer_config);
+    timer_set_counter_value(TIMER_GROUP_0, TIMER_0, 0);
+    timer_set_alarm_value(TIMER_GROUP_0, TIMER_0, TIMER_SCALE / frequency);
+
+    timer_enable_intr(TIMER_GROUP_0, TIMER_0);
+    timer_isr_callback_add(TIMER_GROUP_0, TIMER_0, timeout, NULL, 0);
+
+    timer_start(TIMER_GROUP_0, TIMER_0);
+}
+
+void clock_reconfigure(uint16_t frequency)
+{
+    timer_pause(TIMER_GROUP_0, TIMER_0);
+    timer_set_counter_value(TIMER_GROUP_0, TIMER_0, 0);
+    timer_set_alarm_value(TIMER_GROUP_0, TIMER_0, TIMER_SCALE / frequency);
+    timer_start(TIMER_GROUP_0, TIMER_0);
+}
