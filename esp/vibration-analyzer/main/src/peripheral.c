@@ -7,10 +7,6 @@
 #include "nvs_flash.h"
 #include "driver/gpio.h"
 #include "driver/uart.h"
-
-#include "mqtt_client.h"
-#include "esp_wifi.h"
-
 #include "peripheral.h"
 
 
@@ -34,13 +30,12 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
 
 static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
 {
-    // esp_mqtt_event_handle_t event = event_data;
-    // int msg_id;
-    // esp_mqtt_client_handle_t client = event->client;
+    esp_mqtt_event_handle_t event = event_data;
+    esp_mqtt_client_handle_t client = event->client;
+
+    int msg_id;
     // msg_id = esp_mqtt_client_publish(client, "/topic/qos1", "data_3", 0, 1, 0);
     // msg_id = esp_mqtt_client_subscribe(client, "/topic/qos0", 0);
-    // msg_id = esp_mqtt_client_publish(client, "/topic/qos0", "data", 0, 0, 0);
-
     // event->topic_len 
     // event->topic
     // event->data_len
@@ -48,6 +43,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 
     switch ((esp_mqtt_event_id_t)event_id) {
         case MQTT_EVENT_CONNECTED:
+            msg_id = esp_mqtt_client_publish(client, "imu/1/syslog", "esp32 connected", 0, 1, 1);
             break;
         case MQTT_EVENT_DISCONNECTED:
             break;
@@ -72,27 +68,18 @@ void peripheral_setup(void)
     esp_event_loop_create_default();
 }
 
-void wifi_connect(void)
+void wifi_connect(wifi_config_t *wifi_config)
 {
-    wifi_config_t wifi_config = {
-        .sta = {
-            .ssid = WIFI_SSID,
-            .password = WIFI_PASS,
-    	    .threshold.authmode = WIFI_AUTH_WPA2_PSK,
-        },
-    };
-
     s_wifi_event_group = xEventGroupCreate();
     esp_netif_create_default_wifi_sta();
     wifi_init_config_t config = WIFI_INIT_CONFIG_DEFAULT();
-
 
     esp_wifi_init(&config);
     esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, NULL);
     esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler, NULL);
 
     esp_wifi_set_mode(WIFI_MODE_STA);
-    esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config);
+    esp_wifi_set_config(ESP_IF_WIFI_STA, wifi_config);
     esp_wifi_start();
 
     xEventGroupWaitBits(
@@ -106,13 +93,15 @@ void wifi_connect(void)
     vEventGroupDelete(s_wifi_event_group);
 }
 
-void mqtt_setup(const char *broker_url)
+esp_mqtt_client_handle_t mqtt_setup(const char *broker_url)
 {
     esp_mqtt_client_config_t config = {.uri = broker_url};
     esp_mqtt_client_handle_t client = esp_mqtt_client_init(&config);
 
     esp_mqtt_client_register_event(client, ESP_EVENT_ANY_ID, mqtt_event_handler, NULL);
     esp_mqtt_client_start(client);
+
+    return client;
 }
 
 void nvs_load_rules(void)
@@ -185,7 +174,7 @@ void clock_setup(uint16_t frequency, timer_isr_t action)
     timer_set_alarm_value(TIMER_GROUP_0, TIMER_0, TIMER_SCALE / frequency);
 
     timer_enable_intr(TIMER_GROUP_0, TIMER_0);
-    timer_isr_callback_add(TIMER_GROUP_0, TIMER_0, timeout, NULL, 0);
+    timer_isr_callback_add(TIMER_GROUP_0, TIMER_0, action, NULL, 0);
 
     timer_start(TIMER_GROUP_0, TIMER_0);
 }
