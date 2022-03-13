@@ -52,9 +52,17 @@ typedef enum IMURegister {
 } IMURegister;
 
 
+typedef enum IMURangeRegister {
+    IMU_ACCELRANGE_2G_REG = 0x0,
+    IMU_ACCELRANGE_4G_REG = 0x10,
+    IMU_ACCELRANGE_8G_REG = 0x18,
+    IMU_ACCELRANGE_16G_REG = 0x8
+} IMURangeRegister;
+
+
 #define SPI_BUS_FREQUENCY       4000000
 #define IMU_XG_ID               0x68
-#define IMU_ACCELRANGE_MASK     IMU_ACCELRANGE_8G
+#define IMU_ACCELRANGE_MASK     IMU_ACCELRANGE_8G_REG
 #define IMU_ODR_MASK            IMU_ODR_952HZ
 
 // Accelerometer interrupt generator (INT1/2_A/G)
@@ -163,7 +171,7 @@ bool imu_setup(InertialUnit *imu)
     spi_send(imu->dev, IMU_CTRL_REG5_XL,
              IMU_REG5_Zen_XL | IMU_REG5_Yen_XL | IMU_REG5_Xen_XL );
     imu_output_data_rate(imu, IMU_ODR_952HZ);
-    imu_acceleration_range(imu, IMU_ACCELRANGE_2G);
+    imu_acceleration_range(imu, IMU_2G);
     // imu_isr_install(imu);   FIFO configuration
 
     return true;
@@ -179,12 +187,33 @@ void imu_output_data_rate(InertialUnit *imu, AccelerationODR odr)
 void imu_acceleration_range(InertialUnit *imu, AccelerationRange range)
 {
     uint8_t reg = spi_recv(imu->dev, IMU_CTRL_REG6_XL);
-    reg = (reg & ~IMU_ACCELRANGE_MASK) | range;
+    IMURangeRegister regval = IMU_ACCELRANGE_2G_REG;
+
+    switch (range) {
+        case IMU_2G:
+            regval = IMU_ACCELRANGE_2G_REG;
+            imu->precision = IMU_MG_LSB_2G;
+            break;
+        case IMU_4G:
+            regval = IMU_ACCELRANGE_4G_REG;
+            imu->precision = IMU_MG_LSB_4G;
+            break;
+        case IMU_8G:
+            regval = IMU_ACCELRANGE_8G_REG;
+            imu->precision = IMU_MG_LSB_8G;
+            break;
+        case IMU_16G:
+            regval = IMU_ACCELRANGE_16G_REG;
+            imu->precision = IMU_MG_LSB_16G;
+            break;
+    }
+
+    reg = (reg & ~IMU_ACCELRANGE_MASK) | regval;
     spi_send(imu->dev, IMU_CTRL_REG6_XL, reg);
 }
 
 
-void imu_acceleration(InertialUnit *imu, Vector *acceleration)
+void imu_acceleration(InertialUnit *imu, float *x, float *y, float *z)
 {
     uint8_t buffer[6];
     spi_read_buffer(imu->dev, 0x80 | IMU_OUT_X_L_XL, 6, buffer);
@@ -198,7 +227,11 @@ void imu_acceleration(InertialUnit *imu, Vector *acceleration)
     uint8_t zlo = buffer[4];
     int16_t zhi = buffer[5];
 
-    acceleration->x = (xhi << 8) | xlo;
-    acceleration->y = (yhi << 8) | ylo;
-    acceleration->z = (zhi << 8) | zlo;
+    xhi = (xhi << 8) | xlo;
+    yhi = (yhi << 8) | ylo;
+    zhi = (zhi << 8) | zlo;
+
+    if (x != NULL) *x = xhi * imu->precision * G_CONSTANT;
+    if (y != NULL) *y = yhi * imu->precision * G_CONSTANT;
+    if (z != NULL) *z = zhi * imu->precision * G_CONSTANT;
 }
