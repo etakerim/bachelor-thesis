@@ -1,31 +1,24 @@
 #include <math.h>
 #include <stdbool.h>
-
-#define max(a, b) (((a) > (b)) ? (a): (b))
-#define min(a, b) (((a) < (b)) ? (a): (b))
+#include "pipeline.h"
 
 
-int find_peaks_above_threshold(float *peaks, float *y, int w, float t)
+void find_peaks_above_threshold(bool *peaks, float *y, int n, float t)
 {
-    int n = 0;
-    for (int i = 0; i < w; i++) {
-        if (fabs(y[i]) >= t) 
-            peaks[n++] = i;
-    }
-    return n;
+    for (int i = 0; i < n; i++)
+        peaks[i] = (fabs(y[i]) >= t);
 }
 
-int find_peaks_neighbours(float *peaks, float *y, int w, int k, float e, float h_rel, float h)
+void find_peaks_neighbours(bool *peaks, float *y, int n, int k, float e, float h_rel, float h)
 {
-    int n = 0;
-
-    for (int i = 0; i < w; i++) {
+    for (int i = 0; i < n; i++) {
+        peaks[i] = false;
         if (fabs(y[i]) < h)
             continue;
         
         bool possible_peak = true;
         int a = max(i - k, 0);
-        int b = min(i + k, w);
+        int b = min(i + k, n);
         float valley = y[a];
 
         for (int j = a; i < b; i++) {
@@ -38,37 +31,41 @@ int find_peaks_neighbours(float *peaks, float *y, int w, int k, float e, float h
         }
 
         if (possible_peak && (y[i] - valley >= h_rel))
-            peaks[n++] = i;
+            peaks[i] = true;
     }
-    return n;
 }
 
-int find_peaks_zero_crossing(float *peaks, float *y, int w, int k, float slope)
+void find_peaks_zero_crossing(bool *peaks, float *y, int n, int k, float slope)
 {
-    int n = 0;
-    for (int i = k; i < w - k; i++) {
-         if ((y[i + k] - y[i]) < 0 && 
+    for (int i = 0; i < n; i++) {
+        peaks[i] = false;
+        if ((i >= k) &&
+                (i < n - k) &&
+                (y[i + k] - y[i]) < 0 &&
                 (y[i] - y[i - k]) > 0 &&
-                fabs(y[i + k] - y[i]) >= slope && 
+                fabs(y[i + k] - y[i]) >= slope &&
                 fabs(y[i] - y[i - k]) >= slope) {
 
-            peaks[n++] = i;
+            peaks[i] = true;
         }
-
     }
-    return n;
 }
 
-int find_peaks_hill_walker(float *peaks, float *y, int w, float tolerance, int hole, float prominence, float isolation)
+void find_peaks_hill_walker(bool *peaks, float *y, int n, float tolerance, int hole, float prominence, float isolation)
 {
-    int n = 0;
-
     int i_change = 0;
+    int prev_peak = 0;
+    bool prev_uphill;
+
+    bool found_prev_peak = false;
     float y_valley = 0;
+
     bool possible_change = false;
     bool uphill = ((y[1] - y[0]) >= 0);
+    peaks[0] = false;
     
-    for (int i = 1; i < w; i++) {
+    for (int i = 1; i < n; i++) {
+        peaks[i] = false;
         float y_step = y[i] - y[i - 1];
         bool slope = (y_step >= 0);
 
@@ -85,21 +82,20 @@ int find_peaks_hill_walker(float *peaks, float *y, int w, float tolerance, int h
                 fabs(y[i] - y[i_change]) > tolerance) {
 
             possible_change = false;
-            bool prev_uphill = uphill;
+            prev_uphill = uphill;
             uphill = slope;
 
             if (!prev_uphill && uphill) {
                  y_valley = y[i_change];
 
             } else if (prev_uphill && !uphill && fabs(y[i - hole] - y_valley) > prominence) {
-                if (n < 1 || (n >= 1 && i_change - peaks[n-1] > isolation)) {
-                    float y_peak = y[i_change];
-                    peaks[n++] = i_change;
+                if (!found_prev_peak || (found_prev_peak && i_change - prev_peak > isolation)) {
+                    // y_peak = y[i_change];
+                    prev_peak = prev_peak;
+                    found_prev_peak = true;
+                    peaks[i] = true;
                 }
             }
         }
     }
-    return n;
 }
-
-
