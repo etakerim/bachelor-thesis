@@ -9,7 +9,6 @@
 #include "soc/soc.h"
 #include "esp_system.h"
 
-#include "esp_dsp.h"
 #include "mpack.h"
 
 #include "inertial_unit.h"
@@ -42,38 +41,36 @@ static OpenLog logger = {
     .buffer = 1024
 };
 
-// Set default values / / save, load from nvs
-// TODO: ochráň mutexom
 // Nastavenia - pri zmene realokovať všetky polia a uvoľniť
-static const Configuration conf = {
+static Configuration conf = {
     .sensor = {
-        .frequency = 2,   // nastav podľa toho hw (min toľko)
+        .frequency = 8,   // nastav podľa toho hw (min toľko)
+        .range = IMU_2G,
         .n = 16,
-        .range = IMU_2G
+        .overlap = 0.5
     },
     .tsmooth = {
-        .enable = false,
+        .enable = true,
         .n = 4,
         .repeat = 1
     },
     .stats = {
-        .min = 0,
-        .max = 0,
-        .rms = 0,
-        .mean = 0,
-        .variance = 0,
-        .std = 0,
-        .skewness = 0,
-        .kurtosis = 0,
-        .median = 0,
-        .mad = 0,
+        .min = 1,
+        .max = 1,
+        .rms = 1,
+        .mean = 1,
+        .variance = 1,
+        .std = 1,
+        .skewness = 1,
+        .kurtosis = 1,
+        .median = 1,
+        .mad = 1,
         .corr_xy = 0,
         .corr_yz = 0,
         .corr_xz = 0
     },
     .transform = {
         .window = HAMMING_WINDOW,
-        .overlap = 0,   // zapamätaj si (1 - overlap) do ďalšieho kola
         .func = DFT,
         .log = true
     },
@@ -129,13 +126,9 @@ static const Configuration conf = {
 };
 
 static TaskHandle_t sample_tick;
-static struct {
-    QueueHandle_t x;
-    QueueHandle_t y;
-    QueueHandle_t z;
-} samples;
-static QueueHandle_t mailbox;
+static BufferPipeline pipeline;
 static esp_mqtt_client_handle_t mqttclient;
+// static QueueHandle_t mailbox;  MessageBufferHandle_t
 
 
 static bool IRAM_ATTR isr_sample(void *args)
@@ -145,179 +138,144 @@ static bool IRAM_ATTR isr_sample(void *args)
     return higher_priority_woken == pdTRUE;
 }
 
+
 void sampler_task()
 {
-    float *x = malloc(conf.sensor.n * sizeof(*x));
-    float *y = malloc(conf.sensor.n * sizeof(*y));
-    float *z = malloc(conf.sensor.n * sizeof(*z));
     uint16_t idx = 0;
+    uint16_t leftover = conf.sensor.n * (1 - conf.sensor.overlap);
+
+    float *axis[AXIS_COUNT];
+    for (uint8_t i = 0; i < AXIS_COUNT; i++)
+        axis[i] = malloc(conf.sensor.n * sizeof(*axis[i]));
 
     while (1) {
         if (ulTaskNotifyTake(pdTRUE, portMAX_DELAY) == pdTRUE) {
-            imu_acceleration(&imu, &x[idx], &y[idx], &z[idx]);
+            imu_acceleration(&imu, &axis[0][idx], &axis[1][idx], &axis[2][idx]);
+            // Odošli vzorky ako binárny prúd na MQTT / OpenLog
             if (++idx >= conf.sensor.n - 1) {
-                idx = 0;
-                xQueueSend(samples.x, x, portMAX_DELAY);
-                // xQueueSend(samples.y, y, portMAX_DELAY);
-                // xQueueSend(samples.z, z, portMAX_DELAY);
-                // Odošli v texte vzorky na MQTT / OpenLog
+                xQueueSend(pipeline.queue[0], axis[0], portMAX_DELAY);
+                // xQueueSend(pipeline.queue[1], axis[1], portMAX_DELAY);
+                // xQueueSend(pipeline.queue[2], axis[2], portMAX_DELAY);
+
+                buffer_shift_left(axis[0], conf.sensor.n, leftover);
+                // buffer_shift_left(axis[1], conf.sensor.n, leftover);
+                // buffer_shift_left(axis[2], conf.sensor.n, leftover);
+                idx = conf.sensor.n - leftover;
             }
         }
     }
 
-    free(x);
-    free(y);
-    free(z);
+    for (uint8_t i = 0; i < AXIS_COUNT; i++)
+        free(axis[i]);
+}
+
+void stats_serialize(char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c)
+{
+    mpack_writer_t writer;
+    mpack_writer_init(&writer, msg, size); // get length of written data
+
+    mpack_build_map(&writer);
+    if (c->min) {
+        mpack_write_cstr(&writer, "min");
+        mpack_write_float(&writer, stats->min);
+    }
+    if (c->max) {
+        mpack_write_cstr(&writer, "max");
+        mpack_write_float(&writer, stats->max);
+    }
+    if (c->rms) {
+        mpack_write_cstr(&writer, "rms");
+        mpack_write_float(&writer, stats->rms);
+    }
+    if (c->mean) {
+        mpack_write_cstr(&writer, "avg");
+        mpack_write_float(&writer, stats->mean);
+    }
+    if (c->std) {
+        mpack_write_cstr(&writer, "std");
+        mpack_write_float(&writer, stats->std);
+    }
+    if (c->skewness) {
+        mpack_write_cstr(&writer, "skew");
+        mpack_write_float(&writer, stats->skew);
+    }
+    if (c->kurtosis) {
+        mpack_write_cstr(&writer, "kurt");
+        mpack_write_float(&writer, stats->kurtosis);
+    }
+    if (c->median) {
+        mpack_write_cstr(&writer, "med");
+        mpack_write_float(&writer, stats->median);
+    }
+    if (c->mad) {
+        mpack_write_cstr(&writer, "mad");
+        mpack_write_float(&writer, stats->mad);
+    }
+
+    mpack_complete_map(&writer);
+    mpack_writer_destroy(&writer); 
 }
 
 void pipeline_task(void *args)
 {
-    // Process one axis
-    QueueHandle_t *source = (QueueHandle_t *)args;
+    const uint16_t bins = conf.sensor.n / 2;
 
-    // Create object for buffers of each axis to realloc after config change
-    float *axis = malloc(conf.sensor.n * sizeof(*axis));
-
-    uint16_t smooth_length = max(conf.tsmooth.n, conf.fsmooth.n);
-    float *out = malloc((conf.sensor.n + smooth_length - 1) * sizeof(*out));
-
-    float *spectrum = malloc(2 * conf.sensor.n * sizeof(*spectrum));
-    bool *peaks = malloc(conf.sensor.n * sizeof(*peaks));
-    // Events array of length conf.sensor.n
-
-    // Okná vytvor spoločné pre viaceré osi
-    float *t_smooth = malloc(conf.tsmooth.n * sizeof(*t_smooth));
-    mean_kernel(t_smooth, conf.tsmooth.n);
-    float *f_smooth = malloc(conf.fsmooth.n * sizeof(*f_smooth));
-    mean_kernel(f_smooth, conf.tsmooth.n);
-    float *window = malloc(conf.sensor.n * sizeof(*window));
-    switch (conf.transform.window) {
-        case BOXCAR_WINDOW:
-            boxcar_window(window, conf.sensor.n); break;
-        case BARTLETT_WINDOW:
-            bartlett_window(window, conf.sensor.n); break;
-        case HANN_WINDOW:
-            hann_window(window, conf.sensor.n); break;
-        case HAMMING_WINDOW:
-            hamming_window(window, conf.sensor.n); break;
-        case BLACKMAN_WINDOW:
-            blackman_window(window, conf.sensor.n); break;
-    }
+    uint32_t x = (uint32_t)args;
+    QueueHandle_t *source = &pipeline.queue[x];
+    BufferPipelineKernel *k = &pipeline.kernel;
+    BufferPipelineAxis *p = &pipeline.axis[x];
+    Statistics stats;
 
     dsps_fft2r_init_fc32(NULL, CONFIG_DSP_MAX_FFT_SIZE);
+    char msg[128];
 
     while (1) {
-        if (xQueueReceive(*source, axis, portMAX_DELAY) == pdTRUE) {
+        if (xQueueReceive(*source, p->stream, portMAX_DELAY) == pdTRUE) {
             // 0. Odoslať vzorky po decimácii /stream/x binárne dáta IEEE754 float 
-
             for (int i = 0; i < conf.sensor.n; i++)
-                ESP_LOGI("main", " %.3f", axis[i]);
+                ESP_LOGI("main", " %.3f", p->stream[i]);
             ESP_LOGI("main", "\n");
 
-            // 1. Vyhladzovanie v časovej doméne
-            if (conf.tsmooth.enable) {
-                for (uint8_t k = 0; k < conf.tsmooth.repeat; k++) {
-                    dsps_conv_f32_ae32(axis, conf.sensor.n, t_smooth, conf.tsmooth.n, out);
-                    memcpy(axis, out, sizeof(*axis) * conf.sensor.n);
-                }
-            }
+            process_smoothing(p->stream, p->tmp_conv, conf.sensor.n, k->t_smooth, &conf.tsmooth);
+            for (int i = 0; i < conf.sensor.n; i++)
+                ESP_LOGI("main", " %.3f", p->stream[i]);
+            ESP_LOGI("main", "\n");
 
-            // 1A. Štatistiky
+            process_statistics(p->stream, conf.sensor.n, &stats, &conf.stats);
+            ESP_LOGI("main", "MIN: %.4f", stats.min);
+            ESP_LOGI("main", "MAX: %.4f", stats.max);
+            ESP_LOGI("main", "RMS: %.4f", stats.rms);
+            ESP_LOGI("main", "MEAN: %.4f", stats.mean);
+            ESP_LOGI("main", "VAR: %.4f", stats.var);
+            ESP_LOGI("main", "STD: %.4f", stats.std);
+            ESP_LOGI("main", "SKEW: %.4f", stats.skew);
+            ESP_LOGI("main", "KURT: %.4f", stats.kurtosis);
+            ESP_LOGI("main", "MEDIAN: %.4f", stats.median);
+            ESP_LOGI("main", "MAD: %.4f", stats.mad);
+            ESP_LOGI("main", "\n\n");
 
-            // 2. Transformácia do frekvenčnej domény
-            // FFT
-            const size_t n_bins = conf.sensor.n / 2;
-            switch (conf.transform.func) {
-                case DFT:
-                    for (size_t i = 0; i < conf.sensor.n; i++) {
-                        spectrum[2*i] = axis[i] * window[i];
-                        spectrum[2*i+1] = 0;
-                    }
-                    dsps_fft2r_fc32_ae32(spectrum, conf.sensor.n);
-                    dsps_bit_rev2r_fc32(spectrum, conf.sensor.n);
-                    dsps_cplx2reC_fc32(spectrum, conf.sensor.n);
-                    break;
-                case DCT:
-                    for (size_t i = 0; i < n_bins; i++) {
-                        spectrum[i] = axis[i] * window[i];
-                        spectrum[i + conf.sensor.n/2] = 0;
-                    }
-                    dsps_dct_f32(spectrum, n_bins);
-                    break;
-            }
-            for (size_t i = 0; i < n_bins; i++) {
-                spectrum[i] = 10 * log10f((
-                    square(spectrum[i*2]) + square(spectrum[i*2+1])) / conf.sensor.n
-                );
-            }
+            stats_serialize(msg, 128, &stats, &conf.stats);
+            // odošli štatistiky cez mqtt do message queue
 
-            // 4. Vyhlazovanie vo frekvenciach
-            if (conf.fsmooth.enable) {
-                for (uint8_t k = 0; k < conf.fsmooth.repeat; k++) {
-                    dsps_conv_f32_ae32(spectrum, n_bins, f_smooth, conf.tsmooth.n, out);
-                    memcpy(axis, out, sizeof(*axis) * conf.sensor.n);
-                }
-            }
+            /*
+            process_spectrum(p->spectrum, p->stream, k->window, conf.sensor.n, &conf.transform);
+            process_smoothing(p->spectrum, p->tmp_conv, conf.sensor.n / 2, k->f_smooth, &conf.fsmooth);
+            process_peak_finding(p->peaks, p->spectrum, conf.sensor.n / 2, &conf.peak);
+            event_detection(p->events, p->peaks, p->spectrum, conf.sensor.n / 2, conf.peak.min_duration, conf.peak.time_proximity);*/
 
-            // 5. Hľadanie špičiek
-            switch (conf.peak.strategy) {
-                case THRESHOLD:
-                    find_peaks_above_threshold(
-                        peaks, spectrum, n_bins, conf.peak.threshold.t
-                    );
-                    break;
-                case NEIGHBOURS:
-                    find_peaks_neighbours(
-                        peaks, spectrum, n_bins,
-                        conf.peak.neighbours.k, conf.peak.neighbours.e,
-                        conf.peak.neighbours.h_rel, conf.peak.neighbours.h
-                    );
-                    break;
-                case ZERO_CROSSING:
-                    find_peaks_zero_crossing(
-                        peaks, spectrum, n_bins,
-                        conf.peak.zero_crossing.k, conf.peak.zero_crossing.slope
-                    );
-                    break;
-                case HILL_WALKER:
-                    find_peaks_hill_walker(
-                        peaks, spectrum, n_bins,
-                        conf.peak.hill_walker.tolerance, conf.peak.hill_walker.hole,
-                        conf.peak.hill_walker.prominence, conf.peak.hill_walker.isolation
-                    );
-                    break;
-            }
-
-            // 6. Identifikácia udalostí
-            // events_detect();
-
-            // Pipeline:
-            // A: Nastavenie konfigurácie Globálny konfiguračný objekt (štruktúra)
-            // 0. Bežiaci priemer na odstránenie zerog
+            // 0: Nastavenie konfigurácie Globálny konfiguračný objekt z NVS, z MQTT
+            // 1. Bežiaci priemer na odstránenie zerog
             // 3. Priemerovanie spektrogramov (Welch)
-            // 6. Identifikácia udalostí
-            // 7. Odoslanie udalostí
+            // 7. Odoslanie udalostí: ak je iný ako none event (funkcia na serializáciu a pošle cez messagequeue)
 
-            //Doplnkové: Odoslanie vzoriek po decimácii, Odoslanie štatistík, Odoslanie spektra
+            // Doplnkové: Odoslanie vzoriek po decimácii, Odoslanie štatistík, Odoslanie spektra
+            // OpenLog: printf("%d %d %d\n", accel.x, accel.y, accel.z);
 
-            /* Send via MQTT (experimental)
-            for (int i = 0; i < BUFFER_LEN; i++) {
-                snprintf(msg.msg, MSG_MAX_LEN, "%d %d %d", buffer.a[i].x, buffer.a[i].y, buffer.a[i].z);
-                xQueueSend(mailbox, &msg, portMAX_DELAY);
-            }*/
-
-            // ESP_LOGI("main", msg.msg);
-            //OpenLog: printf("%d %d %d\n", accel.x, accel.y, accel.z);
+            // ako dôjde k realokácii pri zmene konfigurácie
+            // odtestovať bloky
         }
     }
-
-    free(axis);
-    free(out);
-    free(t_smooth);
-    free(f_smooth);
-    free(window);
-    free(spectrum);
-    free(peaks);
+    process_release(&pipeline);
 }
 
 /*
@@ -349,14 +307,11 @@ void app_main(void)
     // openlog_setup(&logger);
     // vTaskDelay(10000 / portTICK_RATE_MS);
 
-    samples.x = xQueueCreate(3, sizeof(float) * conf.sensor.n);
-    samples.y = xQueueCreate(3, sizeof(float) * conf.sensor.n);
-    samples.z = xQueueCreate(3, sizeof(float) * conf.sensor.n);
-
+    process_allocate(&pipeline, &conf);
     xTaskCreate(sampler_task, "sampling", 1024, NULL, 1, &sample_tick);
-    xTaskCreate(pipeline_task, "x_pipeline", 1024, &samples.x, 1, NULL);
-    // xTaskCreate(pipeline_task, "y_pipeline", 1024, &samples.y, 1, NULL);
-    // xTaskCreate(pipeline_task, "z_pipeline", 1024, &samples.z, 1, NULL);
+    xTaskCreate(pipeline_task, "x_pipeline", 4096, (void *)0, 1, NULL);
+    // xTaskCreate(pipeline_task, "y_pipeline", 4096, (void *)1, 1, NULL);
+    // xTaskCreate(pipeline_task, "z_pipeline", 4096,(void *)2, 1, NULL);
     // xTaskCreate(mqtt_sender_task, "mqtt_sender", 4096, NULL, 1, NULL);
     clock_setup(conf.sensor.frequency, isr_sample);
 }

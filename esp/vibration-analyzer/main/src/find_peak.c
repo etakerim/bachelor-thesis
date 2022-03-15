@@ -1,5 +1,7 @@
 #include <math.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <string.h>
 #include "pipeline.h"
 
 
@@ -96,6 +98,55 @@ void find_peaks_hill_walker(bool *peaks, float *y, int n, float tolerance, int h
                     peaks[i] = true;
                 }
             }
+        }
+    }
+}
+
+void event_init(SpectrumEvent *events, uint16_t bins, uint16_t fs)
+{
+    float bin_width =  fs / (float)bins;
+
+    for (uint16_t i = 0; i < bins; i++) {
+        events[i].action = SPECTRUM_EVENT_NONE;
+        events[i].start = 0;
+        events[i].frequency = i * bin_width;
+        events[i].tolerance = bin_width;
+        events[i].amplitude = 0;
+    }
+}
+
+void event_detection(SpectrumEvent *events, bool *peaks, float *spectrum,
+                     uint16_t bins, uint16_t min_duration, uint16_t time_proximity)
+{
+    // TODO: system time
+    static uint32_t t = 0;
+    t++;
+
+    for (uint16_t i = 0; i < bins; i++) {
+        events[i].action = SPECTRUM_EVENT_NONE;
+    }
+
+    for (uint16_t i = 0; i < bins; i++) {
+        if (events[i].duration == min_duration) {
+            events[i].action = SPECTRUM_EVENT_START;
+            events[i].start = t - events[i].duration;
+            events[i].amplitude = spectrum[i];
+        }
+
+        if (peaks[i]) {
+           events[i].duration += max(1, events[i].last_seen);
+           events[i].last_seen = 0;
+           events[i].amplitude += (spectrum[i] - events[i].amplitude) / events[i].duration;
+
+        } else {
+            events[i].last_seen++;
+            if (events[i].last_seen >= time_proximity) {
+                if (events[i].duration >= min_duration) {
+                    events[i].action = SPECTRUM_EVENT_FINISH;
+                }
+                events[i].duration = 0;
+            }
+            events[i].amplitude = 0;
         }
     }
 }

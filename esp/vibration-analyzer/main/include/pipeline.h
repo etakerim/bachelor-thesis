@@ -1,8 +1,11 @@
 #ifndef PIPELINE_H
 #define PIPELINE_H
 
+#include "esp_dsp.h"
 #include "inertial_unit.h"
+#include "freertos/queue.h"
 
+#define AXIS_COUNT  3
 
 typedef enum {
     BOXCAR_WINDOW,
@@ -25,8 +28,9 @@ typedef enum {
 
 typedef struct {
     uint16_t frequency;
-    uint16_t n;
     AccelerationRange range;
+    uint16_t n;
+    float overlap;
 } SamplingConfig;
 
 typedef struct {
@@ -53,7 +57,6 @@ typedef struct {
 
 typedef struct {
     WindowTypeConfig window;
-    float overlap;
     FrequencyTransform func;
     bool log;
 } FFTTransformConfig;
@@ -110,6 +113,56 @@ typedef struct {
     SaveFormatConfig mqtt;
 } Configuration;
 
+typedef struct {
+    float min;
+    float max;
+    float rms;
+    float mean;
+    float var;
+    float std;
+    float skew;
+    float kurtosis;
+    float median;
+    float mad;
+} Statistics;
+
+typedef enum {
+    SPECTRUM_EVENT_NONE,
+    SPECTRUM_EVENT_START,
+    SPECTRUM_EVENT_FINISH
+} SpectrumEventAction;
+
+typedef struct {
+    SpectrumEventAction action;
+    uint32_t start;
+    uint32_t duration;
+    uint32_t last_seen;
+    float frequency;
+    float tolerance;
+    float amplitude;
+} SpectrumEvent;
+
+
+typedef struct {
+    float *t_smooth;
+    float *f_smooth;
+    float *window;
+} BufferPipelineKernel;
+
+typedef struct {
+    float *stream;
+    float *tmp_conv;
+    float *spectrum;
+    bool *peaks;
+    SpectrumEvent *events;
+} BufferPipelineAxis;
+
+typedef struct {
+    QueueHandle_t queue[AXIS_COUNT];
+    BufferPipelineKernel kernel;
+    BufferPipelineAxis axis[AXIS_COUNT];
+} BufferPipeline;
+
 
 #define square(x)   ((x) * (x))
 #define min(x, y)   (((x) < (y)) ? (x): (y))
@@ -128,6 +181,9 @@ void find_peaks_above_threshold(bool *peaks, float *y, int n, float t);
 void find_peaks_neighbours(bool *peaks, float *y, int n, int k, float e, float h_rel, float h);
 void find_peaks_zero_crossing(bool *peaks, float *y, int n, int k, float slope);
 void find_peaks_hill_walker(bool *peaks, float *y, int n, float tolerance, int hole, float prominence, float isolation);
+
+void event_init(SpectrumEvent *events, uint16_t bins, uint16_t fs);
+void event_detection(SpectrumEvent *events, bool *peaks, float *spectrum, uint16_t bins, uint16_t min_duration, uint16_t time_proximity);
 
 // statistics.c
 float minimum(float *x, int n);
@@ -148,6 +204,16 @@ float quickselect(float *x, int n, int k);
 float median(float *x, int n);
 float median_abs_deviation(float *x, int n, float med);
 float average_abs_deviation(float *x, int n, float mean);
+
+// pipeline.c
+void buffer_shift_left(float *buffer, uint16_t n, uint16_t k);
+void process_allocate(BufferPipeline *p, Configuration *conf);
+void process_release(BufferPipeline *p);
+
+void process_statistics(float *buffer, uint16_t n, Statistics *stats, const StatisticsConfig *c);
+void process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, const FFTTransformConfig *c);
+void process_smoothing(float *buffer, float *tmp, uint16_t n, float *kernel, const SmoothingConfig *c);
+void process_peak_finding(bool *peaks, float *spectrum, uint16_t bins, const EventDetectionConfig *c);
 
 
 #endif

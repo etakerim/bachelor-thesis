@@ -50,7 +50,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
         case MQTT_EVENT_SUBSCRIBED:
             break;
         case MQTT_EVENT_DATA:
-            break;
+            break; // Receive configuration
         default:
             break;
     }
