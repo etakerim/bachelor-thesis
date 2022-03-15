@@ -6,6 +6,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
+#include "freertos/message_buffer.h"
 #include "soc/soc.h"
 #include "esp_system.h"
 
@@ -50,8 +51,8 @@ static Configuration conf = {
         .overlap = 0.5
     },
     .tsmooth = {
-        .enable = true,
-        .n = 4,
+        .enable = false,
+        .n = 3,
         .repeat = 1
     },
     .stats = {
@@ -88,7 +89,7 @@ static Configuration conf = {
         .time_proximity = 0,
         .strategy = THRESHOLD,
         .threshold = {  // warn, alert
-            .t = -10
+            .t = -15
         },
         .neighbours = {
             .k = 8,
@@ -119,7 +120,7 @@ static Configuration conf = {
         .enable = true,
         .decimation = 1,
         .samples = true,
-        .stats = false,
+        .stats = true,
         .events = false,
         .spectra = false
     }
@@ -128,7 +129,7 @@ static Configuration conf = {
 static TaskHandle_t sample_tick;
 static BufferPipeline pipeline;
 static esp_mqtt_client_handle_t mqttclient;
-// static QueueHandle_t mailbox;  MessageBufferHandle_t
+static MessageBufferHandle_t sender;
 
 
 static bool IRAM_ATTR isr_sample(void *args)
@@ -145,34 +146,35 @@ void sampler_task()
     uint16_t leftover = conf.sensor.n * (1 - conf.sensor.overlap);
 
     float *axis[AXIS_COUNT];
-    for (uint8_t i = 0; i < AXIS_COUNT; i++)
+    for (uint8_t i = 0; i < AXIS_COUNT; i++) {
         axis[i] = malloc(conf.sensor.n * sizeof(*axis[i]));
+    }
 
     while (1) {
         if (ulTaskNotifyTake(pdTRUE, portMAX_DELAY) == pdTRUE) {
             imu_acceleration(&imu, &axis[0][idx], &axis[1][idx], &axis[2][idx]);
-            // Odošli vzorky ako binárny prúd na MQTT / OpenLog
+
             if (++idx >= conf.sensor.n - 1) {
                 xQueueSend(pipeline.queue[0], axis[0], portMAX_DELAY);
-                // xQueueSend(pipeline.queue[1], axis[1], portMAX_DELAY);
-                // xQueueSend(pipeline.queue[2], axis[2], portMAX_DELAY);
-
                 buffer_shift_left(axis[0], conf.sensor.n, leftover);
-                // buffer_shift_left(axis[1], conf.sensor.n, leftover);
-                // buffer_shift_left(axis[2], conf.sensor.n, leftover);
+                /* for (uint8_t i = 0; i < AXIS_COUNT; i++) {
+                    xQueueSend(pipeline.queue[i], axis[i], portMAX_DELAY);
+                    buffer_shift_left(axis[i], conf.sensor.n, leftover);
+                }*/
                 idx = conf.sensor.n - leftover;
             }
         }
     }
 
-    for (uint8_t i = 0; i < AXIS_COUNT; i++)
+    for (uint8_t i = 0; i < AXIS_COUNT; i++) {
         free(axis[i]);
+    }
 }
 
-void stats_serialize(char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c)
+size_t stats_serialize(char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c)
 {
     mpack_writer_t writer;
-    mpack_writer_init(&writer, msg, size); // get length of written data
+    mpack_writer_init(&writer, msg, size);
 
     mpack_build_map(&writer);
     if (c->min) {
@@ -214,12 +216,12 @@ void stats_serialize(char *msg, size_t size, const Statistics *stats, const Stat
 
     mpack_complete_map(&writer);
     mpack_writer_destroy(&writer); 
+
+    return mpack_writer_buffer_used(&writer);
 }
 
 void pipeline_task(void *args)
 {
-    const uint16_t bins = conf.sensor.n / 2;
-
     uint32_t x = (uint32_t)args;
     QueueHandle_t *source = &pipeline.queue[x];
     BufferPipelineKernel *k = &pipeline.kernel;
@@ -231,17 +233,22 @@ void pipeline_task(void *args)
 
     while (1) {
         if (xQueueReceive(*source, p->stream, portMAX_DELAY) == pdTRUE) {
-            // 0. Odoslať vzorky po decimácii /stream/x binárne dáta IEEE754 float 
             for (int i = 0; i < conf.sensor.n; i++)
                 ESP_LOGI("main", " %.3f", p->stream[i]);
             ESP_LOGI("main", "\n");
 
             process_smoothing(p->stream, p->tmp_conv, conf.sensor.n, k->t_smooth, &conf.tsmooth);
+            // TODO: Odoslať vzorky po decimácii
             for (int i = 0; i < conf.sensor.n; i++)
                 ESP_LOGI("main", " %.3f", p->stream[i]);
             ESP_LOGI("main", "\n");
 
             process_statistics(p->stream, conf.sensor.n, &stats, &conf.stats);
+            size_t len = stats_serialize(msg, 128, &stats, &conf.stats);
+            if (conf.mqtt.stats) {
+                xMessageBufferSend(sender, msg, len, portMAX_DELAY);
+            }
+
             ESP_LOGI("main", "MIN: %.4f", stats.min);
             ESP_LOGI("main", "MAX: %.4f", stats.max);
             ESP_LOGI("main", "RMS: %.4f", stats.rms);
@@ -252,42 +259,45 @@ void pipeline_task(void *args)
             ESP_LOGI("main", "KURT: %.4f", stats.kurtosis);
             ESP_LOGI("main", "MEDIAN: %.4f", stats.median);
             ESP_LOGI("main", "MAD: %.4f", stats.mad);
-            ESP_LOGI("main", "\n\n");
+            ESP_LOGI("main", "\n");
 
-            stats_serialize(msg, 128, &stats, &conf.stats);
-            // odošli štatistiky cez mqtt do message queue
+            int bins = process_spectrum(p->spectrum, p->stream, k->window, conf.sensor.n, &conf.transform);
+            // TODO: Odoslať spektrum cez MQTT
+            for (int i = 0; i < bins; i++)
+                ESP_LOGI("main", "%.3f", p->spectrum[i]);
+            ESP_LOGI("main", "\n");
 
-            /*
-            process_spectrum(p->spectrum, p->stream, k->window, conf.sensor.n, &conf.transform);
-            process_smoothing(p->spectrum, p->tmp_conv, conf.sensor.n / 2, k->f_smooth, &conf.fsmooth);
-            process_peak_finding(p->peaks, p->spectrum, conf.sensor.n / 2, &conf.peak);
-            event_detection(p->events, p->peaks, p->spectrum, conf.sensor.n / 2, conf.peak.min_duration, conf.peak.time_proximity);*/
+            process_smoothing(p->spectrum, p->tmp_conv, bins, k->f_smooth, &conf.fsmooth);
+            process_peak_finding(p->peaks, p->spectrum, bins, &conf.peak);
+            for (int i = 0; i < bins; i++)
+                ESP_LOGI("main", "%d", p->peaks[i]);
+            ESP_LOGI("main", "\n");
 
-            // 0: Nastavenie konfigurácie Globálny konfiguračný objekt z NVS, z MQTT
-            // 1. Bežiaci priemer na odstránenie zerog
-            // 3. Priemerovanie spektrogramov (Welch)
-            // 7. Odoslanie udalostí: ak je iný ako none event (funkcia na serializáciu a pošle cez messagequeue)
-
-            // Doplnkové: Odoslanie vzoriek po decimácii, Odoslanie štatistík, Odoslanie spektra
-            // OpenLog: printf("%d %d %d\n", accel.x, accel.y, accel.z);
-
-            // ako dôjde k realokácii pri zmene konfigurácie
-            // odtestovať bloky
+            event_detection(p->events, p->peaks, p->spectrum, bins, conf.peak.min_duration, conf.peak.time_proximity);
+            for (int i = 0; i < bins; i++)
+                ESP_LOGI("main", "[%d t=%d d=%d prev=%d freq=%.3f tol=%.3f amp=%.3f]", 
+                            p->events[i].action, p->events[i].start, p->events[i].duration, 
+                            p->events[i].last_seen, p->events[i].frequency, 
+                            p->events[i].tolerance, p->events[i].amplitude);
+            ESP_LOGI("main", "\n\n---------");
+            // TODO: Odoslať udalosti
         }
     }
     process_release(&pipeline);
 }
 
-/*
+
 void mqtt_sender_task()
 {
-    MessageStream msg;
+    char msg[1024];
+    size_t recv = 0;
     while (1) {
-        if (xQueueReceive(mailbox, &msg, portMAX_DELAY) == pdTRUE) {
-            esp_mqtt_client_publish(mqttclient, "imu/1/stream", msg.msg, 0, 1, 0);
+        recv = xMessageBufferReceive(sender, msg, 1024, portMAX_DELAY);
+        if (recv > 0) {
+            esp_mqtt_client_publish(mqttclient, "imu/1/stats", msg, recv, 1, 0);
         }
     }
-}*/
+}
 
 void app_main(void)
 {
@@ -301,17 +311,22 @@ void app_main(void)
 
     if (!imu_setup(&imu)) while (1);
     peripheral_setup();
-    // nvs_load_config();
-    // wifi_connect(&wifi_login);
-    // mqttclient = mqtt_setup(MQTT_BROKER);
+    
+    nvs_save_config(&conf);  // Factory reset for Debug
+    nvs_load_config(&conf);
+
+    wifi_connect(&wifi_login);
+    mqttclient = mqtt_setup(MQTT_BROKER);
     // openlog_setup(&logger);
     // vTaskDelay(10000 / portTICK_RATE_MS);
 
     process_allocate(&pipeline, &conf);
+    sender = xMessageBufferCreate(2048);
+
     xTaskCreate(sampler_task, "sampling", 1024, NULL, 1, &sample_tick);
     xTaskCreate(pipeline_task, "x_pipeline", 4096, (void *)0, 1, NULL);
     // xTaskCreate(pipeline_task, "y_pipeline", 4096, (void *)1, 1, NULL);
     // xTaskCreate(pipeline_task, "z_pipeline", 4096,(void *)2, 1, NULL);
-    // xTaskCreate(mqtt_sender_task, "mqtt_sender", 4096, NULL, 1, NULL);
+    xTaskCreate(mqtt_sender_task, "mqtt_sender", 4096, NULL, 1, NULL);
     clock_setup(conf.sensor.frequency, isr_sample);
 }

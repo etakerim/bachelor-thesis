@@ -8,14 +8,14 @@
 void find_peaks_above_threshold(bool *peaks, float *y, int n, float t)
 {
     for (int i = 0; i < n; i++)
-        peaks[i] = (fabs(y[i]) >= t);
+        peaks[i] = (y[i] >= t);
 }
 
 void find_peaks_neighbours(bool *peaks, float *y, int n, int k, float e, float h_rel, float h)
 {
     for (int i = 0; i < n; i++) {
         peaks[i] = false;
-        if (fabs(y[i]) < h)
+        if (y[i] < h)
             continue;
         
         bool possible_peak = true;
@@ -105,13 +105,12 @@ void find_peaks_hill_walker(bool *peaks, float *y, int n, float tolerance, int h
 void event_init(SpectrumEvent *events, uint16_t bins, uint16_t fs)
 {
     float bin_width =  fs / (float)bins;
+    memset(events, 0, bins * sizeof(SpectrumEvent));
 
     for (uint16_t i = 0; i < bins; i++) {
         events[i].action = SPECTRUM_EVENT_NONE;
-        events[i].start = 0;
         events[i].frequency = i * bin_width;
         events[i].tolerance = bin_width;
-        events[i].amplitude = 0;
     }
 }
 

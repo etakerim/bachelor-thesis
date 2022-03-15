@@ -45,9 +45,9 @@ void process_allocate(BufferPipeline *p, Configuration *conf)
 
         p->axis[i].stream = malloc(n * sizeof(*p->axis[i].stream));
         p->axis[i].tmp_conv = malloc((n + n_smooth - 1) * sizeof(*p->axis[i].tmp_conv));
-        p->axis[i].spectrum = malloc(n * sizeof(*p->axis[i].spectrum));
+        p->axis[i].spectrum = malloc(2 * n * sizeof(*p->axis[i].spectrum));
         p->axis[i].peaks = malloc(bins * sizeof(*p->axis[i].peaks));
-        p->axis[i].events = malloc(bins* sizeof(*p->axis[i].events));
+        p->axis[i].events = malloc(bins * sizeof(*p->axis[i].events));
         event_init(p->axis[i].events, bins, freq);
     }
 }
@@ -96,13 +96,15 @@ void process_statistics(float *buffer, uint16_t n, Statistics *stats, const Stat
         stats->mad = median_abs_deviation(buffer, n, stats->median);
 }
 
-void process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, const FFTTransformConfig *c)
+int process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, const FFTTransformConfig *c)
 {
+    const uint16_t bins = n / 2;
+
     switch (c->func) {
         case DFT:
             for (uint16_t i = 0; i < n; i++) {
-                spectrum[2*i] = buffer[i] * window[i];
-                spectrum[2*i+1] = 0;
+                spectrum[2*i + 0] = buffer[i] * window[i];
+                spectrum[2*i + 1] = 0;
             }
             dsps_fft2r_fc32_ae32(spectrum, n);
             dsps_bit_rev2r_fc32(spectrum, n);
@@ -110,18 +112,21 @@ void process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n,
             break;
 
         case DCT:
-            for (uint16_t i = 0; i < n / 2; i++) {
+            for (uint16_t i = 0; i < n; i++) {
                 spectrum[i] = buffer[i] * window[i];
-                spectrum[i + n / 2] = 0;
             }
-            dsps_dct_f32(spectrum, n/2);
+            dsps_dct_f32(spectrum, n);
             break;
     }
-    for (uint16_t i = 0; i < n / 2; i++) {
-        spectrum[i] = 10 * log10f((
-            square(spectrum[i*2]) + square(spectrum[i*2+1])) / n
-        );
+
+    if (c->log) {
+        for (uint16_t i = 0; i < bins; i++)
+            spectrum[i] = square(spectrum[i*2]) + square(spectrum[i*2+1]);
+        float ref = maximum(spectrum, bins);
+        for (uint16_t i = 0; i < bins; i++)
+            spectrum[i] = 10 * log10f(spectrum[i] / ref);
     }
+    return bins;
 }
 
 void process_smoothing(float *buffer, float *tmp, uint16_t n, float *kernel, const SmoothingConfig *c)

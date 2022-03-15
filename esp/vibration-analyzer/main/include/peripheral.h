@@ -6,11 +6,12 @@
 #include "driver/timer.h"
 #include "esp_wifi.h"
 #include "mqtt_client.h"
+#include "pipeline.h"
+
 
 // TIMER_SCALE is value of timer at 1 second
 #define TIMER_DIVIDER         16
 #define TIMER_SCALE           (TIMER_BASE_CLK / TIMER_DIVIDER)
-
 
 typedef struct {
     gpio_num_t vcc;
@@ -23,7 +24,8 @@ typedef struct {
 
 
 void peripheral_setup(void);
-void nvs_load_rules(void);
+esp_err_t nvs_load_config(Configuration *conf);
+esp_err_t nvs_save_config(Configuration *conf);
 
 void openlog_setup(OpenLog *logger);
 int openlog_write(OpenLog *logger, char *str);

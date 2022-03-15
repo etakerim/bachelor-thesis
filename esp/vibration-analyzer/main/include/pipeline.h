@@ -113,6 +113,7 @@ typedef struct {
     SaveFormatConfig mqtt;
 } Configuration;
 
+
 typedef struct {
     float min;
     float max;
@@ -211,7 +212,7 @@ void process_allocate(BufferPipeline *p, Configuration *conf);
 void process_release(BufferPipeline *p);
 
 void process_statistics(float *buffer, uint16_t n, Statistics *stats, const StatisticsConfig *c);
-void process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, const FFTTransformConfig *c);
+int process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, const FFTTransformConfig *c);
 void process_smoothing(float *buffer, float *tmp, uint16_t n, float *kernel, const SmoothingConfig *c);
 void process_peak_finding(bool *peaks, float *spectrum, uint16_t bins, const EventDetectionConfig *c);
 

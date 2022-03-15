@@ -104,30 +104,37 @@ esp_mqtt_client_handle_t mqtt_setup(const char *broker_url)
     return client;
 }
 
-void nvs_load_rules(void)
+esp_err_t nvs_load_config(Configuration *conf)
+{
+    nvs_handle_t storage;
+    size_t len = 0;
+    esp_err_t err = nvs_open("storage", NVS_READWRITE, &storage);
+
+    if (err != ESP_OK)
+        return err;
+
+    err = nvs_get_blob(storage, "config", conf, &len);
+    if (len != sizeof(*conf) || err == ESP_ERR_NVS_NOT_FOUND) {
+        err = nvs_set_blob(storage, "config", conf, sizeof(*conf));
+        err = nvs_commit(storage);
+    }
+    nvs_close(storage);
+    return err;
+}
+
+
+esp_err_t nvs_save_config(Configuration *conf)
 {
     nvs_handle_t storage;
     esp_err_t err = nvs_open("storage", NVS_READWRITE, &storage);
 
-    if (err == ESP_OK) {
-        int32_t restart_counter = 0; // value will default to 0, if not set yet in NVS
-        err = nvs_get_i32(storage, "restart_counter", &restart_counter);
-        
-        switch (err) {
-            case ESP_OK:
-                break;   // printf("Restart counter = %d\n", restart_counter);
-            case ESP_ERR_NVS_NOT_FOUND:
-                break;  //  printf("The value is not initialized yet!\n");
-            default:
-                printf("Error (%s) reading!\n", esp_err_to_name(err));
-        }
+    if (err != ESP_OK)
+        return err;
 
-        restart_counter++;
-        err = nvs_set_i32(storage, "restart_counter", restart_counter);
-        err = nvs_commit(storage);
-        nvs_close(storage);
-        // printf((err != ESP_OK) ? "Failed!\n" : "Done\n");
-    }
+    err = nvs_set_blob(storage, "config", conf, sizeof(*conf));
+    err = nvs_commit(storage);
+    nvs_close(storage);
+    return err;
 }
 
 void openlog_setup(OpenLog *logger)
