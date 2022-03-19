@@ -4,6 +4,9 @@
 #include "esp_dsp.h"
 #include "inertial_unit.h"
 #include "freertos/queue.h"
+#include "freertos/message_buffer.h"
+#include "freertos/semphr.h"
+#include "mpack.h"
 
 #define AXIS_COUNT  3
 
@@ -156,6 +159,7 @@ typedef struct {
     float *spectrum;
     bool *peaks;
     SpectrumEvent *events;
+    char *serialize;
 } BufferPipelineAxis;
 
 typedef struct {
@@ -163,6 +167,24 @@ typedef struct {
     BufferPipelineKernel kernel;
     BufferPipelineAxis axis[AXIS_COUNT];
 } BufferPipeline;
+
+
+#define SERIALIZE_BUFFER_LENGTH   2048
+#define TOPIC_LENGTH              64
+#define SUBTOPIC_LENGTH           25
+#define DEVICE_MQTT_TOPIC         "imu/1/"
+#define DEVICE_MQTT_TOPIC_LENGTH   sizeof(DEVICE_MQTT_TOPIC) / sizeof(char)
+
+typedef struct {
+    SemaphoreHandle_t mutex;
+    MessageBufferHandle_t messages;
+} Sender;
+
+typedef struct {
+    char stats[SUBTOPIC_LENGTH];
+    char spectra[SUBTOPIC_LENGTH];
+    char events[SUBTOPIC_LENGTH];
+} MqttAxisTopics;
 
 
 #define square(x)   ((x) * (x))
@@ -184,7 +206,7 @@ void find_peaks_zero_crossing(bool *peaks, float *y, int n, int k, float slope);
 void find_peaks_hill_walker(bool *peaks, float *y, int n, float tolerance, int hole, float prominence, float isolation);
 
 void event_init(SpectrumEvent *events, uint16_t bins, uint16_t fs);
-void event_detection(SpectrumEvent *events, bool *peaks, float *spectrum, uint16_t bins, uint16_t min_duration, uint16_t time_proximity);
+size_t event_detection(SpectrumEvent *events, bool *peaks, float *spectrum, uint16_t bins, uint16_t min_duration, uint16_t time_proximity);
 
 // statistics.c
 float minimum(float *x, int n);
@@ -216,5 +238,13 @@ int process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, 
 void process_smoothing(float *buffer, float *tmp, uint16_t n, float *kernel, const SmoothingConfig *c);
 void process_peak_finding(bool *peaks, float *spectrum, uint16_t bins, const EventDetectionConfig *c);
 
+// serialize.c
+size_t stats_serialize(char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c);
+size_t spectra_serialize(char *msg, size_t size, float *spectrum, size_t n, uint16_t fs);
+size_t events_serialize(char *msg, size_t size, SpectrumEvent *events, size_t n);
+
+void stream_serialize_init(mpack_writer_t *writer, char *buffer, size_t n, size_t samples);
+size_t stream_serialize_close(mpack_writer_t *writer);
+void stream_serialize(mpack_writer_t *writer, uint16_t x, uint16_t y, uint16_t z);
 
 #endif

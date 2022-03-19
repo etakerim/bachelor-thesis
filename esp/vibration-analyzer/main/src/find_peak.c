@@ -114,12 +114,13 @@ void event_init(SpectrumEvent *events, uint16_t bins, uint16_t fs)
     }
 }
 
-void event_detection(SpectrumEvent *events, bool *peaks, float *spectrum,
+size_t event_detection(SpectrumEvent *events, bool *peaks, float *spectrum,
                      uint16_t bins, uint16_t min_duration, uint16_t time_proximity)
 {
     // TODO: system time
     static uint32_t t = 0;
     t++;
+    size_t changes = 0;
 
     for (uint16_t i = 0; i < bins; i++) {
         events[i].action = SPECTRUM_EVENT_NONE;
@@ -130,6 +131,7 @@ void event_detection(SpectrumEvent *events, bool *peaks, float *spectrum,
             events[i].action = SPECTRUM_EVENT_START;
             events[i].start = t - events[i].duration;
             events[i].amplitude = spectrum[i];
+            changes++;
         }
 
         if (peaks[i]) {
@@ -142,10 +144,13 @@ void event_detection(SpectrumEvent *events, bool *peaks, float *spectrum,
             if (events[i].last_seen >= time_proximity) {
                 if (events[i].duration >= min_duration) {
                     events[i].action = SPECTRUM_EVENT_FINISH;
+                    changes++;
                 }
                 events[i].duration = 0;
             }
             events[i].amplitude = 0;
         }
     }
+
+    return changes;
 }

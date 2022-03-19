@@ -49,6 +49,8 @@ void process_allocate(BufferPipeline *p, Configuration *conf)
         p->axis[i].peaks = malloc(bins * sizeof(*p->axis[i].peaks));
         p->axis[i].events = malloc(bins * sizeof(*p->axis[i].events));
         event_init(p->axis[i].events, bins, freq);
+        p->axis[i].serialize = malloc(SERIALIZE_BUFFER_LENGTH * sizeof(*p->axis[i].serialize));
+
     }
 }
 
@@ -66,6 +68,7 @@ void process_release(BufferPipeline *p)
         free(p->axis[i].spectrum);
         free(p->axis[i].peaks);
         free(p->axis[i].events);
+        free(p->axis[i].serialize);
     }
 }
 

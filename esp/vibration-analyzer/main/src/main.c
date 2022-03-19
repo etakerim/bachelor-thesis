@@ -5,21 +5,17 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "freertos/queue.h"
-#include "freertos/message_buffer.h"
 #include "soc/soc.h"
 #include "esp_system.h"
-
-#include "mpack.h"
 
 #include "inertial_unit.h"
 #include "peripheral.h"
 #include "pipeline.h"
 
 
-#define WIFI_SSID     ""
-#define WIFI_PASS     ""
-#define MQTT_BROKER   ""
+#define WIFI_SSID     "Etakerim Crew"
+#define WIFI_PASS     "4priv.hacker-turaw"
+#define MQTT_BROKER   "mqtt://192.168.1.103"
 
 
 static InertialUnit imu = {
@@ -121,15 +117,54 @@ static Configuration conf = {
         .decimation = 1,
         .samples = true,
         .stats = true,
-        .events = false,
-        .spectra = false
+        .events = true,
+        .spectra = true
     }
 };
 
 static TaskHandle_t sample_tick;
 static BufferPipeline pipeline;
 static esp_mqtt_client_handle_t mqttclient;
-static MessageBufferHandle_t sender;
+static Sender sender;
+
+void sender_setup()
+{
+    sender.mutex = xSemaphoreCreateMutex();
+    // topic, message, topic, message, ...
+    sender.messages = xMessageBufferCreate(SERIALIZE_BUFFER_LENGTH);
+}
+
+void message_send(const char *topic, const char *content, size_t length)
+{
+    if (xSemaphoreTake(sender.mutex, portMAX_DELAY) == pdTRUE) {
+        xMessageBufferSend(sender.messages, topic, strlen(topic) + 1, 0);
+        xMessageBufferSend(sender.messages, content, length, 0);
+        xSemaphoreGive(sender.mutex);
+    }
+}
+
+void mqtt_sender_task()
+{
+    char topic[TOPIC_LENGTH] = DEVICE_MQTT_TOPIC;
+    char content[SERIALIZE_BUFFER_LENGTH];
+
+    while (1) {
+        if (xSemaphoreTake(sender.mutex, portMAX_DELAY) == pdTRUE) {
+            size_t topic_len = xMessageBufferReceive(
+                sender.messages, &topic[DEVICE_MQTT_TOPIC_LENGTH - 1],
+                TOPIC_LENGTH - DEVICE_MQTT_TOPIC_LENGTH, 0
+            );
+            size_t msg_length = xMessageBufferReceive(sender.messages, content, 2048, 0);
+            xSemaphoreGive(sender.mutex);
+
+            if (topic_len > 0 && msg_length > 0) {
+                ESP_LOGI("main", "%d @[%s]@", DEVICE_MQTT_TOPIC_LENGTH, topic);
+                esp_mqtt_client_publish(mqttclient, topic, content, msg_length, 1, 0);
+                strncpy(topic, DEVICE_MQTT_TOPIC, TOPIC_LENGTH);
+            }
+        }
+    }
+}
 
 
 static bool IRAM_ATTR isr_sample(void *args)
@@ -150,9 +185,29 @@ void sampler_task()
         axis[i] = malloc(conf.sensor.n * sizeof(*axis[i]));
     }
 
+    char content[SERIALIZE_BUFFER_LENGTH];
+    mpack_writer_t writer;
+    uint16_t n = 0;
+    if (conf.mqtt.samples) {
+        stream_serialize_init(&writer, content, SERIALIZE_BUFFER_LENGTH, conf.sensor.n * AXIS_COUNT);
+    }
+
     while (1) {
         if (ulTaskNotifyTake(pdTRUE, portMAX_DELAY) == pdTRUE) {
             imu_acceleration(&imu, &axis[0][idx], &axis[1][idx], &axis[2][idx]);
+
+            if (conf.mqtt.samples) {
+                stream_serialize(&writer, axis[0][idx], axis[1][idx], axis[2][idx]);
+                // subsampling, length + TODO: subsampling, test
+                // {sub: 1, l: 512, stream: []}
+
+                if (++n == conf.sensor.n - 1) {
+                    stream_serialize_close(&writer);
+                    message_send("stream", content, mpack_writer_buffer_used(&writer));
+                    n = 0;
+                    stream_serialize_init(&writer, content, SERIALIZE_BUFFER_LENGTH, conf.sensor.n * AXIS_COUNT);
+                }
+            }
 
             if (++idx >= conf.sensor.n - 1) {
                 xQueueSend(pipeline.queue[0], axis[0], portMAX_DELAY);
@@ -171,53 +226,18 @@ void sampler_task()
     }
 }
 
-size_t stats_serialize(char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c)
+void axis_mqtt_topics(MqttAxisTopics *topics, int axis)
 {
-    mpack_writer_t writer;
-    mpack_writer_init(&writer, msg, size);
+    const static char *dirs[] = {"x", "y", "z"};
 
-    mpack_build_map(&writer);
-    if (c->min) {
-        mpack_write_cstr(&writer, "min");
-        mpack_write_float(&writer, stats->min);
-    }
-    if (c->max) {
-        mpack_write_cstr(&writer, "max");
-        mpack_write_float(&writer, stats->max);
-    }
-    if (c->rms) {
-        mpack_write_cstr(&writer, "rms");
-        mpack_write_float(&writer, stats->rms);
-    }
-    if (c->mean) {
-        mpack_write_cstr(&writer, "avg");
-        mpack_write_float(&writer, stats->mean);
-    }
-    if (c->std) {
-        mpack_write_cstr(&writer, "std");
-        mpack_write_float(&writer, stats->std);
-    }
-    if (c->skewness) {
-        mpack_write_cstr(&writer, "skew");
-        mpack_write_float(&writer, stats->skew);
-    }
-    if (c->kurtosis) {
-        mpack_write_cstr(&writer, "kurt");
-        mpack_write_float(&writer, stats->kurtosis);
-    }
-    if (c->median) {
-        mpack_write_cstr(&writer, "med");
-        mpack_write_float(&writer, stats->median);
-    }
-    if (c->mad) {
-        mpack_write_cstr(&writer, "mad");
-        mpack_write_float(&writer, stats->mad);
-    }
+    strncpy(topics->stats, "stream/statistics/", SUBTOPIC_LENGTH);
+    strcat(topics->stats, dirs[axis]);
 
-    mpack_complete_map(&writer);
-    mpack_writer_destroy(&writer); 
+    strncpy(topics->spectra, "stream/frequency/", SUBTOPIC_LENGTH);
+    strcat(topics->spectra, dirs[axis]);
 
-    return mpack_writer_buffer_used(&writer);
+    strncpy(topics->events, "event/frequency/", SUBTOPIC_LENGTH);
+    strcat(topics->events, dirs[axis]);
 }
 
 void pipeline_task(void *args)
@@ -227,9 +247,10 @@ void pipeline_task(void *args)
     BufferPipelineKernel *k = &pipeline.kernel;
     BufferPipelineAxis *p = &pipeline.axis[x];
     Statistics stats;
+    MqttAxisTopics mqtt_topics;
 
+    axis_mqtt_topics(&mqtt_topics, x);
     dsps_fft2r_init_fc32(NULL, CONFIG_DSP_MAX_FFT_SIZE);
-    char msg[128];
 
     while (1) {
         if (xQueueReceive(*source, p->stream, portMAX_DELAY) == pdTRUE) {
@@ -244,9 +265,9 @@ void pipeline_task(void *args)
             ESP_LOGI("main", "\n");
 
             process_statistics(p->stream, conf.sensor.n, &stats, &conf.stats);
-            size_t len = stats_serialize(msg, 128, &stats, &conf.stats);
             if (conf.mqtt.stats) {
-                xMessageBufferSend(sender, msg, len, portMAX_DELAY);
+                size_t len = stats_serialize(p->serialize, SERIALIZE_BUFFER_LENGTH, &stats, &conf.stats);
+                message_send(mqtt_topics.stats, p->serialize, len);
             }
 
             ESP_LOGI("main", "MIN: %.4f", stats.min);
@@ -262,7 +283,10 @@ void pipeline_task(void *args)
             ESP_LOGI("main", "\n");
 
             int bins = process_spectrum(p->spectrum, p->stream, k->window, conf.sensor.n, &conf.transform);
-            // TODO: Odoslať spektrum cez MQTT
+            if (conf.mqtt.spectra) {
+                size_t len = spectra_serialize(p->serialize, SERIALIZE_BUFFER_LENGTH, p->spectrum, bins, conf.sensor.frequency);
+                message_send(mqtt_topics.spectra, p->serialize, len);
+            }
             for (int i = 0; i < bins; i++)
                 ESP_LOGI("main", "%.3f", p->spectrum[i]);
             ESP_LOGI("main", "\n");
@@ -273,35 +297,30 @@ void pipeline_task(void *args)
                 ESP_LOGI("main", "%d", p->peaks[i]);
             ESP_LOGI("main", "\n");
 
-            event_detection(p->events, p->peaks, p->spectrum, bins, conf.peak.min_duration, conf.peak.time_proximity);
+            size_t changes = event_detection(
+                p->events, p->peaks, p->spectrum, bins, 
+                conf.peak.min_duration, conf.peak.time_proximity
+            );
+            if (conf.mqtt.events && changes > 0) {
+                size_t len = events_serialize(p->serialize, SERIALIZE_BUFFER_LENGTH, p->events, bins);
+                message_send(mqtt_topics.events, p->serialize, len);
+            }
             for (int i = 0; i < bins; i++)
                 ESP_LOGI("main", "[%d t=%d d=%d prev=%d freq=%.3f tol=%.3f amp=%.3f]", 
                             p->events[i].action, p->events[i].start, p->events[i].duration, 
                             p->events[i].last_seen, p->events[i].frequency, 
                             p->events[i].tolerance, p->events[i].amplitude);
             ESP_LOGI("main", "\n\n---------");
-            // TODO: Odoslať udalosti
+
         }
     }
     process_release(&pipeline);
 }
 
 
-void mqtt_sender_task()
-{
-    char msg[1024];
-    size_t recv = 0;
-    while (1) {
-        recv = xMessageBufferReceive(sender, msg, 1024, portMAX_DELAY);
-        if (recv > 0) {
-            esp_mqtt_client_publish(mqttclient, "imu/1/stats", msg, recv, 1, 0);
-        }
-    }
-}
-
 void app_main(void)
 {
-     wifi_config_t wifi_login = {
+    wifi_config_t wifi_login = {
         .sta = {
             .ssid = WIFI_SSID,
             .password = WIFI_PASS,
@@ -321,9 +340,9 @@ void app_main(void)
     // vTaskDelay(10000 / portTICK_RATE_MS);
 
     process_allocate(&pipeline, &conf);
-    sender = xMessageBufferCreate(2048);
+    sender_setup();
 
-    xTaskCreate(sampler_task, "sampling", 1024, NULL, 1, &sample_tick);
+    xTaskCreate(sampler_task, "sampling", 4096, NULL, 1, &sample_tick);
     xTaskCreate(pipeline_task, "x_pipeline", 4096, (void *)0, 1, NULL);
     // xTaskCreate(pipeline_task, "y_pipeline", 4096, (void *)1, 1, NULL);
     // xTaskCreate(pipeline_task, "z_pipeline", 4096,(void *)2, 1, NULL);

@@ -4,7 +4,8 @@ set(COMPONENT_SRCS  "src/main.c"
                     "src/find_peak.c"
                     "src/statistics.c"
                     "src/inertial_unit.c"
-                    "src/peripheral.c")
+                    "src/peripheral.c"
+                    "src/serialize.c")
 set(COMPONENT_ADD_INCLUDEDIRS "include")
 
 register_component()

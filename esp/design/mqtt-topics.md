@@ -10,10 +10,10 @@ Topics z pohľadu mqtt
 - **PUBLISH imu/\<uuid>/syslog**
 - **SUBSCRIBE imu/\<uuid>/config/set**
 - **PUBLISH imu/\<uuid>/config/get**
-- **PUBLISH imu/\<uuid>/event/frequency**
+- **PUBLISH imu/\<uuid>/event/frequency/x**
 - **PUBLISH imu/\<uuid>/stream/samples**
-- **PUBLISH imu/\<uuid>/stream/frequency**
-- **PUBLISH imu/\<uuid>/stream/statistics**
+- **PUBLISH imu/\<uuid>/stream/frequency/x**
+- **PUBLISH imu/\<uuid>/stream/statistics/x**
 
 #### Konfigurácia JSON  (MessagePack)
 ```
@@ -42,7 +42,6 @@ Topics z pohľadu mqtt
         "repeat":  uint8
     },
     "stats": {
-        "n": uint16,
         "min": bool,
         "max": bool,
         "rms": bool,
