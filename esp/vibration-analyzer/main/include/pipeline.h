@@ -9,6 +9,7 @@
 #include "mpack.h"
 
 #define AXIS_COUNT  3
+#define SERIALIZE_BUFFER_LENGTH   2048
 
 typedef enum {
     BOXCAR_WINDOW,
@@ -53,9 +54,9 @@ typedef struct {
     int kurtosis: 1;
     int median: 1;
     int mad: 1;
-    int corr_xy: 1;
+/*    int corr_xy: 1;
     int corr_yz: 1;
-    int corr_xz: 1;
+    int corr_xz: 1;*/
 } StatisticsConfig;
 
 typedef struct {
@@ -94,13 +95,15 @@ typedef struct {
     } hill_walker;
 } EventDetectionConfig;
 
+
 typedef struct {
-    bool enable;
-    uint16_t decimation;
+    bool local;
+    bool mqtt;
     bool samples;
     bool stats;
-    bool events;
     bool spectra;
+    bool events;
+    uint16_t subsampling;
 } SaveFormatConfig;
 
 
@@ -113,7 +116,6 @@ typedef struct {
     SmoothingConfig fsmooth;
     EventDetectionConfig peak;
     SaveFormatConfig logger;
-    SaveFormatConfig mqtt;
 } Configuration;
 
 
@@ -169,23 +171,6 @@ typedef struct {
 } BufferPipeline;
 
 
-#define SERIALIZE_BUFFER_LENGTH   2048
-#define TOPIC_LENGTH              64
-#define SUBTOPIC_LENGTH           25
-#define DEVICE_MQTT_TOPIC         "imu/1/"
-#define DEVICE_MQTT_TOPIC_LENGTH   sizeof(DEVICE_MQTT_TOPIC) / sizeof(char)
-
-typedef struct {
-    SemaphoreHandle_t mutex;
-    MessageBufferHandle_t messages;
-} Sender;
-
-typedef struct {
-    char stats[SUBTOPIC_LENGTH];
-    char spectra[SUBTOPIC_LENGTH];
-    char events[SUBTOPIC_LENGTH];
-} MqttAxisTopics;
-
 
 #define square(x)   ((x) * (x))
 #define min(x, y)   (((x) < (y)) ? (x): (y))
@@ -206,7 +191,8 @@ void find_peaks_zero_crossing(bool *peaks, float *y, int n, int k, float slope);
 void find_peaks_hill_walker(bool *peaks, float *y, int n, float tolerance, int hole, float prominence, float isolation);
 
 void event_init(SpectrumEvent *events, uint16_t bins, uint16_t fs);
-size_t event_detection(SpectrumEvent *events, bool *peaks, float *spectrum, uint16_t bins, uint16_t min_duration, uint16_t time_proximity);
+size_t event_detection(size_t t, SpectrumEvent *events, bool *peaks, float *spectrum,
+                       uint16_t bins, uint16_t min_duration, uint16_t time_proximity);
 
 // statistics.c
 float minimum(float *x, int n);
@@ -242,9 +228,11 @@ void process_peak_finding(bool *peaks, float *spectrum, uint16_t bins, const Eve
 size_t stats_serialize(char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c);
 size_t spectra_serialize(char *msg, size_t size, float *spectrum, size_t n, uint16_t fs);
 size_t events_serialize(char *msg, size_t size, SpectrumEvent *events, size_t n);
+size_t config_serialize(char *msg, size_t size, const Configuration *config);
+void config_parse(char *msg, int size, const Configuration *conf);
 
-void stream_serialize_init(mpack_writer_t *writer, char *buffer, size_t n, size_t samples);
+void stream_serialize_init(mpack_writer_t *writer, char *buffer, size_t n);
 size_t stream_serialize_close(mpack_writer_t *writer);
-void stream_serialize(mpack_writer_t *writer, uint16_t x, uint16_t y, uint16_t z);
+void stream_serialize(mpack_writer_t *writer, float x, float y, float z);
 
 #endif

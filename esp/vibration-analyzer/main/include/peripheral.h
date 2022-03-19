@@ -23,6 +23,27 @@ typedef struct {
 } OpenLog;
 
 
+#define TOPIC_LENGTH              64
+#define SUBTOPIC_LENGTH           25
+#define DEVICE_MQTT_TOPIC         "imu/1/"
+#define DEVICE_MQTT_TOPIC_LENGTH   sizeof(DEVICE_MQTT_TOPIC) / sizeof(char)
+
+typedef struct {
+    SemaphoreHandle_t mutex;
+    MessageBufferHandle_t messages;
+} Sender;
+
+typedef struct {
+    char stats[SUBTOPIC_LENGTH];
+    char spectra[SUBTOPIC_LENGTH];
+    char events[SUBTOPIC_LENGTH];
+} MqttAxisTopics;
+
+void axis_mqtt_topics(MqttAxisTopics *topics, int axis);
+void sender_setup(Sender *sender);
+void message_send(Sender *sender, const char *topic, const char *content, size_t length);
+size_t message_recv(Sender *sender, char *topic, char *content, size_t length);
+
 void peripheral_setup(void);
 esp_err_t nvs_load_config(Configuration *conf);
 esp_err_t nvs_save_config(Configuration *conf);
@@ -30,6 +51,7 @@ esp_err_t nvs_save_config(Configuration *conf);
 void openlog_setup(OpenLog *logger);
 int openlog_write(OpenLog *logger, char *str);
 
+void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data);
 void wifi_connect(wifi_config_t *wifi_config);
 esp_mqtt_client_handle_t mqtt_setup(const char *broker_url);
 

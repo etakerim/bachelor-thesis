@@ -27,33 +27,52 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t e
     }
 }
 
-
-static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
+void axis_mqtt_topics(MqttAxisTopics *topics, int axis)
 {
-    esp_mqtt_event_handle_t event = event_data;
-    esp_mqtt_client_handle_t client = event->client;
+    const static char *dirs[] = {"x", "y", "z"};
 
-    int msg_id;
-    // msg_id = esp_mqtt_client_publish(client, "/topic/qos1", "data_3", 0, 1, 0);
-    // msg_id = esp_mqtt_client_subscribe(client, "/topic/qos0", 0);
-    // event->topic_len 
-    // event->topic
-    // event->data_len
-    // event->data
+    strncpy(topics->stats, "stream/statistics/", SUBTOPIC_LENGTH);
+    strcat(topics->stats, dirs[axis]);
 
-    switch ((esp_mqtt_event_id_t)event_id) {
-        case MQTT_EVENT_CONNECTED:
-            msg_id = esp_mqtt_client_publish(client, "imu/1/syslog", "esp32 connected", 0, 1, 1);
-            break;
-        case MQTT_EVENT_DISCONNECTED:
-            break;
-        case MQTT_EVENT_SUBSCRIBED:
-            break;
-        case MQTT_EVENT_DATA:
-            break; // Receive configuration
-        default:
-            break;
+    strncpy(topics->spectra, "stream/frequency/", SUBTOPIC_LENGTH);
+    strcat(topics->spectra, dirs[axis]);
+
+    strncpy(topics->events, "event/frequency/", SUBTOPIC_LENGTH);
+    strcat(topics->events, dirs[axis]);
+}
+
+void sender_setup(Sender *sender)
+{
+    // topic, message, topic, message, ...
+    sender->mutex = xSemaphoreCreateMutex();
+    sender->messages = xMessageBufferCreate(SERIALIZE_BUFFER_LENGTH);
+}
+
+void message_send(Sender *sender, const char *topic, const char *content, size_t length)
+{
+    if (xSemaphoreTake(sender->mutex, portMAX_DELAY) == pdTRUE) {
+        xMessageBufferSend(sender->messages, topic, strlen(topic) + 1, 0);
+        xMessageBufferSend(sender->messages, content, length, 0);
+        xSemaphoreGive(sender->mutex);
     }
+}
+
+size_t message_recv(Sender *sender, char *topic, char *content, size_t length)
+{
+    size_t msg_length = 0;
+
+    if (xSemaphoreTake(sender->mutex, portMAX_DELAY) == pdTRUE) {
+        size_t topic_len = xMessageBufferReceive(
+            sender->messages, &topic[DEVICE_MQTT_TOPIC_LENGTH - 1],
+            TOPIC_LENGTH - DEVICE_MQTT_TOPIC_LENGTH, 0
+        );
+        msg_length = xMessageBufferReceive(sender->messages, content, length, 0);
+        xSemaphoreGive(sender->mutex);
+        if (topic_len <= 0)
+            msg_length = 0;
+    }
+
+    return msg_length;
 }
 
 void peripheral_setup(void)
@@ -167,7 +186,6 @@ void openlog_setup(OpenLog *logger)
 
 void clock_setup(uint16_t frequency, timer_isr_t action)
 {
-
     timer_config_t timer_config = {
         .divider = TIMER_DIVIDER,
         .alarm_en = TIMER_ALARM_EN,
