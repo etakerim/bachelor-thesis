@@ -45,7 +45,7 @@ size_t stats_serialize(char *msg, size_t size, const Statistics *stats, const St
     }
 
     mpack_complete_map(&writer);
-    mpack_writer_destroy(&writer); 
+    mpack_writer_destroy(&writer);
 
     return mpack_writer_buffer_used(&writer);
 }
@@ -157,7 +157,7 @@ static void config_smooth_serialize(mpack_writer_t *writer, const SmoothingConfi
 {
     enum smooth_key_names {KEY_ENABLE, KEY_N, KEY_REPEAT, KEY_SMOOTH_COUNT};
     static const char *smooth_keys[KEY_SMOOTH_COUNT] = {"on", "n", "repeat"};
-    
+
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, smooth_keys[KEY_ENABLE]);
@@ -180,7 +180,7 @@ static void config_stats_serialize(mpack_writer_t *writer, const StatisticsConfi
     static const char *stats_keys[KEY_STATS_COUNT] = {
         "min", "max", "rms", "avg", "var", "std", "skew", "kurtosis", "med", "mad"
     };
-    
+
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, stats_keys[KEY_MIN]);
@@ -275,7 +275,7 @@ static void config_ev_threshold_serialize(mpack_writer_t *writer, const EventDet
 {
     enum ev_threshold_names {KEY_THRESHOLD_LEVEL, KEY_THRESHOLD_COUNT};
     static const char *ev_threshold_keys[KEY_THRESHOLD_COUNT] = {"t"};
-    
+
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, ev_threshold_keys[KEY_THRESHOLD_LEVEL]);
@@ -291,7 +291,7 @@ static void config_ev_neighbours_serialize(mpack_writer_t *writer, const EventDe
         KEY_NEIGHBOURS_H_REL, KEY_NEIGHBOURS_COUNT
     };
     static const char *ev_neighbours_keys[KEY_NEIGHBOURS_COUNT] = {"k", "e", "h", "h_rel"};
-   
+
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, ev_neighbours_keys[KEY_NEIGHBOURS_K]);
@@ -328,7 +328,7 @@ static void config_ev_hill_walker_serialize(mpack_writer_t *writer, const EventD
         KEY_WALKER_COUNT
     };
     static const char *ev_walker_keys[KEY_WALKER_COUNT] = {"t", "h", "p", "i"};
-    
+
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, ev_walker_keys[KEY_WALKER_TOLERANCE]);
@@ -346,7 +346,7 @@ static void config_ev_hill_walker_serialize(mpack_writer_t *writer, const EventD
 static void config_events_serialize(mpack_writer_t *writer, const EventDetectionConfig *conf)
 {
     enum event_key_names {
-        KEY_MIN_DURATION, KEY_T_PROXIMITY, KEY_STRATEGY, 
+        KEY_MIN_DURATION, KEY_T_PROXIMITY, KEY_STRATEGY,
         KEY_THRESHOLD, KEY_NEIGHBOURS, KEY_ZERO_CROSSING, KEY_HILL_WALKER,
         KEY_EVENT_COUNT
     };
@@ -377,7 +377,7 @@ static void config_events_serialize(mpack_writer_t *writer, const EventDetection
 
 
 enum config_key_names {
-    KEY_CONFIG_SENSOR, KEY_CONFIG_TSMOOTH, KEY_CONFIG_STATS, 
+    KEY_CONFIG_SENSOR, KEY_CONFIG_TSMOOTH, KEY_CONFIG_STATS,
     KEY_CONFIG_TRANSFORM, KEY_CONFIG_WELCH, KEY_CONFIG_FSMOOTH,
     KEY_CONFIG_PEAK, KEY_CONFIG_LOGGER, KEY_CONFIG_COUNT
 };
@@ -423,8 +423,8 @@ void config_parse(char *msg, int size, const Configuration *conf)
     mpack_reader_init_data(&reader, msg, size);
     int n;
 
-    for (size_t i = mpack_expect_map_max(&reader, KEY_CONFIG_COUNT); 
-            i > 0 && mpack_reader_error(&reader) == mpack_ok; 
+    for (size_t i = mpack_expect_map_max(&reader, KEY_CONFIG_COUNT);
+            i > 0 && mpack_reader_error(&reader) == mpack_ok;
             i--) {
         switch (mpack_expect_key_cstr(&reader, config_keys, found, KEY_CONFIG_COUNT)) {
             case KEY_CONFIG_SENSOR: n = mpack_expect_map_max(&reader, 10); break;  // parser call
@@ -440,8 +440,8 @@ void config_parse(char *msg, int size, const Configuration *conf)
     }
 
     mpack_reader_destroy(&reader);
-    
-    
+
+
     /* compact is not optional
     if (!found[KEY_COMPACT])
         mpack_reader_flag_error(&reader, mpack_error_data);*/
