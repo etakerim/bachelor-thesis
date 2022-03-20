@@ -8,26 +8,30 @@
 #include "freertos/semphr.h"
 #include "mpack.h"
 
-#define AXIS_COUNT  3
-#define SERIALIZE_BUFFER_LENGTH   2048
+#define AXIS_COUNT                  3
+#define SERIALIZE_BUFFER_LENGTH     2048
+#define MAX_MPACK_FIELDS_COUNT      20
 
 typedef enum {
     BOXCAR_WINDOW,
     BARTLETT_WINDOW,
     HANN_WINDOW,
     HAMMING_WINDOW,
-    BLACKMAN_WINDOW
+    BLACKMAN_WINDOW,
+    WINDOW_TYPE_COUNT
 } WindowTypeConfig;
 
 typedef enum {
     THRESHOLD,
     NEIGHBOURS,
     ZERO_CROSSING,
-    HILL_WALKER
+    HILL_WALKER,
+    STRATEGY_COUNT
 } PeakFindingStrategy;
 
 typedef enum {
-    DFT, DCT
+    DFT, DCT,
+    TRANSFORM_COUNT
 } FrequencyTransform;
 
 typedef struct {
@@ -228,8 +232,9 @@ void process_peak_finding(bool *peaks, float *spectrum, uint16_t bins, const Eve
 size_t stats_serialize(char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c);
 size_t spectra_serialize(char *msg, size_t size, float *spectrum, size_t n, uint16_t fs);
 size_t events_serialize(char *msg, size_t size, SpectrumEvent *events, size_t n);
+
 size_t config_serialize(char *msg, size_t size, const Configuration *config);
-void config_parse(char *msg, int size, const Configuration *conf);
+void config_parse(char *msg, int size, Configuration *conf);
 
 void stream_serialize_init(mpack_writer_t *writer, char *buffer, size_t n);
 size_t stream_serialize_close(mpack_writer_t *writer);

@@ -11,11 +11,15 @@ def on_connect(client, userdata, flags, rc):
     client.subscribe("imu/1/config/response")
     # client.publish("imu/1/config/load")
     # client.subscribe("imu/1/syslog")
+    config = {"sensor": {"fs": 16}}
+    msg = msgpack.packb(config, use_bin_type=True)
+    print(">>>>", msg)
+    client.publish("imu/1/config/load", payload=msg, qos=1, retain=False)
 
-    client.subscribe("imu/1/stream/samples")
-    client.subscribe("imu/1/stream/statistics/x")
-    client.subscribe("imu/1/stream/frequency/x")
-    client.subscribe("imu/1/event/frequency/x")
+    # client.subscribe("imu/1/stream/samples")
+    # client.subscribe("imu/1/stream/statistics/x")
+    # client.subscribe("imu/1/stream/frequency/x")
+    # client.subscribe("imu/1/event/frequency/x")
 
 
 def on_message(client, userdata, msg):

@@ -38,6 +38,8 @@ void process_allocate(BufferPipeline *p, Configuration *conf)
             hamming_window(p->kernel.window, n); break;
         case BLACKMAN_WINDOW:
             blackman_window(p->kernel.window, n); break;
+        default:
+            break;
     }
 
     for (uint8_t i = 0; i < AXIS_COUNT; i++) {
@@ -120,6 +122,8 @@ int process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, 
             }
             dsps_dct_f32(spectrum, n);
             break;
+        default:
+            break;
     }
 
     if (c->log) {
@@ -168,6 +172,8 @@ void process_peak_finding(bool *peaks, float *spectrum, uint16_t bins, const Eve
                 c->hill_walker.tolerance, c->hill_walker.hole,
                 c->hill_walker.prominence, c->hill_walker.isolation
             );
+            break;
+        default:
             break;
     }
 }

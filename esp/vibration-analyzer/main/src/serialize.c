@@ -1,4 +1,5 @@
 #include "pipeline.h"
+#include "inertial_unit.h"
 
 
 size_t stats_serialize(char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c)
@@ -133,12 +134,12 @@ size_t events_serialize(char *msg, size_t size, SpectrumEvent *events, size_t n)
 
 
 /* ------------------ CONFIGURATION ----------------- */
+static const char *sensor_range[IMU_RANGE_COUNT] = {"2g", "4g", "8g", "16g"};
+enum sensor_key_names {KEY_FS, KEY_RANGE, KEY_N, KEY_OVERLAP, KEY_SENSOR_COUNT};
+static const char *sensor_keys[KEY_SENSOR_COUNT] = {"fs", "range", "n", "overlap"};
+
 static void config_sensor_serialize(mpack_writer_t *writer, const SamplingConfig *conf)
 {
-    static const char *sensor_range[] = {"2g", "4g", "8g", "16g"};
-    enum sensor_key_names {KEY_FS, KEY_RANGE, KEY_N, KEY_OVERLAP, KEY_SENSOR_COUNT};
-    static const char *sensor_keys[KEY_SENSOR_COUNT] = {"fs", "range", "n", "overlap"};
-
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, sensor_keys[KEY_FS]);
@@ -153,16 +154,35 @@ static void config_sensor_serialize(mpack_writer_t *writer, const SamplingConfig
     mpack_complete_map(writer);
 }
 
+static void config_sensor_parse(mpack_reader_t *reader, SamplingConfig *conf)
+{
+    bool found[KEY_SENSOR_COUNT] = {0};
+
+    for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
+            i > 0 && mpack_reader_error(reader) == mpack_ok;
+            i--) {
+        switch (mpack_expect_key_cstr(reader, sensor_keys, found, KEY_SENSOR_COUNT)) {
+            case KEY_FS: conf->frequency = mpack_expect_u16(reader); break;
+            case KEY_RANGE: conf->range = mpack_expect_enum(reader, sensor_range, IMU_RANGE_COUNT); break;
+            case KEY_N: conf->n = mpack_expect_u16(reader); break;
+            case KEY_OVERLAP: conf->overlap = mpack_expect_float(reader); break;
+            default: mpack_discard(reader); break;
+        }
+    }
+
+    mpack_done_array(reader);
+}
+
+enum smooth_key_names {KEY_ENABLE, KEY_SMOOTH_N, KEY_REPEAT, KEY_SMOOTH_COUNT};
+static const char *smooth_keys[KEY_SMOOTH_COUNT] = {"on", "n", "repeat"};
+
 static void config_smooth_serialize(mpack_writer_t *writer, const SmoothingConfig *conf)
 {
-    enum smooth_key_names {KEY_ENABLE, KEY_N, KEY_REPEAT, KEY_SMOOTH_COUNT};
-    static const char *smooth_keys[KEY_SMOOTH_COUNT] = {"on", "n", "repeat"};
-
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, smooth_keys[KEY_ENABLE]);
     mpack_write_bool(writer, conf->enable);
-    mpack_write_cstr(writer, smooth_keys[KEY_N]);
+    mpack_write_cstr(writer, smooth_keys[KEY_SMOOTH_N]);
     mpack_write_u16(writer, conf->n);
     mpack_write_cstr(writer, smooth_keys[KEY_REPEAT]);
     mpack_write_u8(writer, conf->repeat);
@@ -170,17 +190,35 @@ static void config_smooth_serialize(mpack_writer_t *writer, const SmoothingConfi
     mpack_complete_map(writer);
 }
 
+static void config_smooth_parse(mpack_reader_t *reader, SmoothingConfig *conf)
+{
+    bool found[KEY_SMOOTH_COUNT] = {0};
+
+    for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
+            i > 0 && mpack_reader_error(reader) == mpack_ok;
+            i--) {
+        switch (mpack_expect_key_cstr(reader, smooth_keys, found, KEY_SMOOTH_COUNT)) {
+            case KEY_ENABLE: conf->enable = mpack_expect_bool(reader); break;
+            case KEY_SMOOTH_N: conf->n = mpack_expect_u16(reader); break;
+            case KEY_REPEAT: conf->repeat = mpack_expect_u8(reader); break;
+            default: mpack_discard(reader); break;
+        }
+    }
+
+    mpack_done_array(reader);
+}
+
+enum stats_key_names {
+    KEY_MIN, KEY_MAX, KEY_RMS, KEY_MEAN, KEY_VARIANCE,
+    KEY_STD, KEY_SKEWNESS, KEY_KURTOSIS, KEY_MEDIAN, KEY_MAD,
+    KEY_STATS_COUNT
+};
+static const char *stats_keys[KEY_STATS_COUNT] = {
+    "min", "max", "rms", "avg", "var", "std", "skew", "kurtosis", "med", "mad"
+};
+
 static void config_stats_serialize(mpack_writer_t *writer, const StatisticsConfig *conf)
 {
-    enum stats_key_names {
-        KEY_MIN, KEY_MAX, KEY_RMS, KEY_MEAN, KEY_VARIANCE,
-        KEY_STD, KEY_SKEWNESS, KEY_KURTOSIS, KEY_MEDIAN, KEY_MAD,
-        KEY_STATS_COUNT
-    };
-    static const char *stats_keys[KEY_STATS_COUNT] = {
-        "min", "max", "rms", "avg", "var", "std", "skew", "kurtosis", "med", "mad"
-    };
-
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, stats_keys[KEY_MIN]);
@@ -207,13 +245,38 @@ static void config_stats_serialize(mpack_writer_t *writer, const StatisticsConfi
     mpack_complete_map(writer);
 }
 
+static void config_stats_parse(mpack_reader_t *reader, StatisticsConfig *conf)
+{
+    bool found[KEY_STATS_COUNT] = {0};
+
+    for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
+            i > 0 && mpack_reader_error(reader) == mpack_ok;
+            i--) {
+        switch (mpack_expect_key_cstr(reader, stats_keys, found, KEY_STATS_COUNT)) {
+            case KEY_MIN: conf->min = mpack_expect_bool(reader); break;
+            case KEY_MAX: conf->max = mpack_expect_bool(reader); break;
+            case KEY_RMS: conf->rms = mpack_expect_bool(reader); break;
+            case KEY_MEAN: conf->mean = mpack_expect_bool(reader); break;
+            case KEY_VARIANCE: conf->variance = mpack_expect_bool(reader); break;
+            case KEY_STD: conf->std = mpack_expect_bool(reader); break;
+            case KEY_SKEWNESS: conf->skewness = mpack_expect_bool(reader); break;
+            case KEY_KURTOSIS: conf->kurtosis = mpack_expect_bool(reader); break;
+            case KEY_MEDIAN: conf->median = mpack_expect_bool(reader); break;
+            case KEY_MAD: conf->mad = mpack_expect_bool(reader); break;
+            default: mpack_discard(reader); break;
+        }
+    }
+
+    mpack_done_array(reader);
+}
+
+static const char *transform_window[] = {"boxcar", "bartlett", "hann", "hamming", "blackman"};
+static const char *transform_func[] = {"dft", "dct"};
+enum transform_key_names {KEY_WINDOW, KEY_FUNC, KEY_LOG, KEY_TRANSFORM_COUNT};
+static const char *transform_keys[KEY_TRANSFORM_COUNT] = {"w", "f", "log"};
+
 static void config_transform_serialize(mpack_writer_t *writer, const FFTTransformConfig *conf)
 {
-    static const char *transform_window[] = {"boxcar", "bartlett", "hann", "hamming", "blackman"};
-    static const char *transform_func[] = {"dft", "dct"};
-    enum transform_key_names {KEY_WINDOW, KEY_FUNC, KEY_LOG, KEY_TRANSFORM_COUNT};
-    static const char *transform_keys[KEY_TRANSFORM_COUNT] = {"w", "f", "log"};
-
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, transform_keys[KEY_WINDOW]);
@@ -226,31 +289,70 @@ static void config_transform_serialize(mpack_writer_t *writer, const FFTTransfor
     mpack_complete_map(writer);
 }
 
+static void config_transform_parse(mpack_reader_t *reader, FFTTransformConfig *conf)
+{
+    bool found[KEY_TRANSFORM_COUNT] = {0};
+
+    for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
+            i > 0 && mpack_reader_error(reader) == mpack_ok;
+            i--) {
+        switch (mpack_expect_key_cstr(reader, transform_keys, found, KEY_TRANSFORM_COUNT)) {
+            case KEY_WINDOW:
+                conf->window = mpack_expect_enum(reader, transform_window, WINDOW_TYPE_COUNT); break;
+            case KEY_MAX:
+                conf->func = mpack_expect_enum(reader, transform_func, TRANSFORM_COUNT); break;
+            case KEY_LOG:
+                conf->log = mpack_expect_bool(reader); break;
+            default: mpack_discard(reader); break;
+        }
+    }
+
+    mpack_done_array(reader);
+}
+
+enum welch_key_names {KEY_WELCH_ENABLE, KEY_WELCH_HISTORY, KEY_WELCH_COUNT};
+static const char *welch_keys[KEY_WELCH_COUNT] = {"on", "k"};
+
 static void config_welch_serialize(mpack_writer_t *writer, const WelchAverageConfig *conf)
 {
-    enum welch_key_names {KEY_ENABLE, KEY_HISTORY, KEY_WELCH_COUNT};
-    static const char *welch_keys[KEY_WELCH_COUNT] = {"on", "k"};
-
     mpack_build_map(writer);
 
-    mpack_write_cstr(writer, welch_keys[KEY_ENABLE]);
+    mpack_write_cstr(writer, welch_keys[KEY_WELCH_ENABLE]);
     mpack_write_bool(writer, conf->enable);
-    mpack_write_cstr(writer, welch_keys[KEY_HISTORY]);
+    mpack_write_cstr(writer, welch_keys[KEY_WELCH_HISTORY]);
     mpack_write_u8(writer, conf->history);
 
     mpack_complete_map(writer);
 }
 
+static void config_welch_parse(mpack_reader_t *reader, WelchAverageConfig *conf)
+{
+    bool found[KEY_WELCH_COUNT] = {0};
+
+    for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
+            i > 0 && mpack_reader_error(reader) == mpack_ok;
+            i--) {
+        switch (mpack_expect_key_cstr(reader, welch_keys, found, KEY_WELCH_COUNT)) {
+            case KEY_WELCH_ENABLE: conf->enable = mpack_expect_bool(reader); break;
+            case KEY_WELCH_HISTORY: conf->history = mpack_expect_u8(reader); break;
+            default: mpack_discard(reader); break;
+        }
+    }
+
+    mpack_done_array(reader);
+}
+
+
+enum logger_key_names {
+    KEY_MQTT_LOG, KEY_LOCAL_LOG, KEY_LOG_SAMPLES, KEY_LOG_STATS,
+    KEY_LOG_SPECTRA, KEY_LOG_EVENTS, KEY_SUBSAMPLING, KEY_LOG_COUNT
+};
+static const char *logger_keys[KEY_LOG_COUNT] = {
+    "mqtt", "local", "samples", "stats", "spectra", "events", "subsamp"
+};
+
 static void config_logger_serialize(mpack_writer_t *writer, const SaveFormatConfig *conf)
 {
-    enum logger_key_names {
-        KEY_MQTT_LOG, KEY_LOCAL_LOG, KEY_LOG_SAMPLES, KEY_LOG_STATS,
-        KEY_LOG_SPECTRA, KEY_LOG_EVENTS, KEY_SUBSAMPLING, KEY_LOG_COUNT
-    };
-    static const char *logger_keys[KEY_LOG_COUNT] = {
-        "mqtt", "local", "samples", "stats", "spectra", "events", "subsamp"
-    };
-
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, logger_keys[KEY_MQTT_LOG]);
@@ -271,11 +373,33 @@ static void config_logger_serialize(mpack_writer_t *writer, const SaveFormatConf
     mpack_complete_map(writer);
 }
 
+static void config_logger_parse(mpack_reader_t *reader, SaveFormatConfig *conf)
+{
+    bool found[KEY_LOG_COUNT] = {0};
+
+    for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
+            i > 0 && mpack_reader_error(reader) == mpack_ok;
+            i--) {
+        switch (mpack_expect_key_cstr(reader, logger_keys, found, KEY_LOG_COUNT)) {
+            case KEY_MQTT_LOG: conf->mqtt = mpack_expect_bool(reader); break;
+            case KEY_LOCAL_LOG: conf->local = mpack_expect_bool(reader); break;
+            case KEY_LOG_SAMPLES: conf->samples = mpack_expect_bool(reader); break;
+            case KEY_LOG_STATS: conf->stats = mpack_expect_bool(reader); break;
+            case KEY_LOG_SPECTRA: conf->spectra = mpack_expect_bool(reader); break;
+            case KEY_LOG_EVENTS: conf->events = mpack_expect_bool(reader); break;
+            case KEY_SUBSAMPLING: conf->subsampling = mpack_expect_u16(reader); break;
+            default: mpack_discard(reader); break;
+        }
+    }
+
+    mpack_done_array(reader);
+}
+
+enum ev_threshold_names {KEY_THRESHOLD_LEVEL, KEY_THRESHOLD_COUNT};
+static const char *ev_threshold_keys[KEY_THRESHOLD_COUNT] = {"t"};
+
 static void config_ev_threshold_serialize(mpack_writer_t *writer, const EventDetectionConfig *conf)
 {
-    enum ev_threshold_names {KEY_THRESHOLD_LEVEL, KEY_THRESHOLD_COUNT};
-    static const char *ev_threshold_keys[KEY_THRESHOLD_COUNT] = {"t"};
-
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, ev_threshold_keys[KEY_THRESHOLD_LEVEL]);
@@ -284,14 +408,29 @@ static void config_ev_threshold_serialize(mpack_writer_t *writer, const EventDet
     mpack_complete_map(writer);
 }
 
+static void config_ev_threshold_parse(mpack_reader_t *reader, EventDetectionConfig *conf)
+{
+    bool found[KEY_THRESHOLD_COUNT] = {0};
+
+    for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
+            i > 0 && mpack_reader_error(reader) == mpack_ok;
+            i--) {
+        switch (mpack_expect_key_cstr(reader, ev_threshold_keys, found, KEY_THRESHOLD_COUNT)) {
+            case KEY_THRESHOLD_LEVEL: conf->threshold.t = mpack_expect_float(reader); break;
+            default: mpack_discard(reader); break;
+        }
+    }
+    mpack_done_array(reader);
+}
+
+enum ev_neighbours_names {
+    KEY_NEIGHBOURS_K, KEY_NEIGHBOURS_E, KEY_NEIGHBOURS_H,
+    KEY_NEIGHBOURS_H_REL, KEY_NEIGHBOURS_COUNT
+};
+static const char *ev_neighbours_keys[KEY_NEIGHBOURS_COUNT] = {"k", "e", "h", "h_rel"};
+
 static void config_ev_neighbours_serialize(mpack_writer_t *writer, const EventDetectionConfig *conf)
 {
-    enum ev_neighbours_names {
-        KEY_NEIGHBOURS_K, KEY_NEIGHBOURS_E, KEY_NEIGHBOURS_H,
-        KEY_NEIGHBOURS_H_REL, KEY_NEIGHBOURS_COUNT
-    };
-    static const char *ev_neighbours_keys[KEY_NEIGHBOURS_COUNT] = {"k", "e", "h", "h_rel"};
-
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, ev_neighbours_keys[KEY_NEIGHBOURS_K]);
@@ -306,11 +445,33 @@ static void config_ev_neighbours_serialize(mpack_writer_t *writer, const EventDe
     mpack_complete_map(writer);
 }
 
+static void config_ev_neighbours_parse(mpack_reader_t *reader, EventDetectionConfig *conf)
+{
+    bool found[KEY_NEIGHBOURS_COUNT] = {0};
+
+    for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
+            i > 0 && mpack_reader_error(reader) == mpack_ok;
+            i--) {
+        switch (mpack_expect_key_cstr(reader, ev_neighbours_keys, found, KEY_NEIGHBOURS_COUNT)) {
+            case KEY_NEIGHBOURS_K:
+                conf->neighbours.k = mpack_expect_u16(reader); break;
+            case KEY_NEIGHBOURS_E:
+                conf->neighbours.e = mpack_expect_float(reader); break;
+            case KEY_NEIGHBOURS_H:
+                conf->neighbours.h = mpack_expect_float(reader); break;
+            case KEY_NEIGHBOURS_H_REL:
+                conf->neighbours.h_rel = mpack_expect_float(reader); break;
+            default: mpack_discard(reader); break;
+        }
+    }
+    mpack_done_array(reader);
+}
+
+enum ev_crossing_names {KEY_CROSSING_K, KEY_CROSSING_SLOPE, KEY_CROSSING_COUNT};
+static const char *ev_crossing_keys[KEY_CROSSING_COUNT] = {"k", "slope"};
+
 static void config_ev_zero_crossing_serialize(mpack_writer_t *writer, const EventDetectionConfig *conf)
 {
-    enum ev_crossing_names {KEY_CROSSING_K, KEY_CROSSING_SLOPE, KEY_CROSSING_COUNT};
-    static const char *ev_crossing_keys[KEY_CROSSING_COUNT] = {"k", "slope"};
-
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, ev_crossing_keys[KEY_CROSSING_K]);
@@ -321,14 +482,32 @@ static void config_ev_zero_crossing_serialize(mpack_writer_t *writer, const Even
     mpack_complete_map(writer);
 }
 
+static void config_ev_zero_crossing_parse(mpack_reader_t *reader, EventDetectionConfig *conf)
+{
+    bool found[KEY_CROSSING_COUNT] = {0};
+
+    for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
+            i > 0 && mpack_reader_error(reader) == mpack_ok;
+            i--) {
+        switch (mpack_expect_key_cstr(reader, ev_crossing_keys, found, KEY_CROSSING_COUNT)) {
+            case KEY_CROSSING_K:
+                conf->zero_crossing.k = mpack_expect_u16(reader); break;
+            case KEY_CROSSING_SLOPE:
+                conf->zero_crossing.slope = mpack_expect_float(reader); break;
+            default: mpack_discard(reader); break;
+        }
+    }
+    mpack_done_array(reader);
+}
+
+enum ev_walker_names {
+    KEY_WALKER_TOLERANCE, KEY_WALKER_HOLE, KEY_WALKER_PROMINENCE,
+    KEY_WALKER_ISOLATION, KEY_WALKER_COUNT
+};
+static const char *ev_walker_keys[KEY_WALKER_COUNT] = {"t", "h", "p", "i"};
+
 static void config_ev_hill_walker_serialize(mpack_writer_t *writer, const EventDetectionConfig *conf)
 {
-    enum ev_walker_names {
-        KEY_WALKER_TOLERANCE, KEY_WALKER_HOLE, KEY_WALKER_PROMINENCE, KEY_WALKER_ISOLATION,
-        KEY_WALKER_COUNT
-    };
-    static const char *ev_walker_keys[KEY_WALKER_COUNT] = {"t", "h", "p", "i"};
-
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, ev_walker_keys[KEY_WALKER_TOLERANCE]);
@@ -343,18 +522,41 @@ static void config_ev_hill_walker_serialize(mpack_writer_t *writer, const EventD
     mpack_complete_map(writer);
 }
 
+static void config_ev_hill_walker_parse(mpack_reader_t *reader, EventDetectionConfig *conf)
+{
+    bool found[KEY_WALKER_COUNT] = {0};
+
+    for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
+            i > 0 && mpack_reader_error(reader) == mpack_ok;
+            i--) {
+        switch (mpack_expect_key_cstr(reader, ev_walker_keys, found, KEY_WALKER_COUNT)) {
+            case KEY_WALKER_TOLERANCE:
+                conf->hill_walker.tolerance = mpack_expect_float(reader); break;
+            case KEY_WALKER_HOLE:
+                conf->hill_walker.hole = mpack_expect_i32(reader); break;
+            case KEY_WALKER_PROMINENCE:
+                conf->hill_walker.prominence = mpack_expect_float(reader); break;
+            case KEY_WALKER_ISOLATION:
+                conf->hill_walker.isolation = mpack_expect_float(reader); break;
+            default: mpack_discard(reader); break;
+        }
+    }
+
+    mpack_done_array(reader);
+}
+
+enum event_key_names {
+    KEY_MIN_DURATION, KEY_T_PROXIMITY, KEY_STRATEGY,
+    KEY_THRESHOLD, KEY_NEIGHBOURS, KEY_ZERO_CROSSING, KEY_HILL_WALKER,
+    KEY_EVENT_COUNT
+};
+static const char *event_keys[KEY_EVENT_COUNT] = {
+    "tmin", "tprox", "strategy", "threshold", "neighbours", "zero_crossing", "hill_walker"
+};
+static const char *strategies[] = {"threshold", "neighbours", "zero_crossing", "hill_walker"};
+
 static void config_events_serialize(mpack_writer_t *writer, const EventDetectionConfig *conf)
 {
-    enum event_key_names {
-        KEY_MIN_DURATION, KEY_T_PROXIMITY, KEY_STRATEGY,
-        KEY_THRESHOLD, KEY_NEIGHBOURS, KEY_ZERO_CROSSING, KEY_HILL_WALKER,
-        KEY_EVENT_COUNT
-    };
-    static const char *event_keys[KEY_EVENT_COUNT] = {
-        "tmin", "tprox", "strategy", "threshold", "neighbours", "zero_crossing", "hill_walker"
-    };
-    static const char *strategies[] = {"threshold", "neighbours", "zero_crossing", "hill_walker"};
-
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, event_keys[KEY_MIN_DURATION]);
@@ -373,6 +575,28 @@ static void config_events_serialize(mpack_writer_t *writer, const EventDetection
     config_ev_hill_walker_serialize(writer, conf);
 
     mpack_complete_map(writer);
+}
+
+static void config_events_parse(mpack_reader_t *reader, EventDetectionConfig *conf)
+{
+    bool found[KEY_EVENT_COUNT] = {0};
+
+    for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
+            i > 0 && mpack_reader_error(reader) == mpack_ok;
+            i--) {
+        switch (mpack_expect_key_cstr(reader, event_keys, found, KEY_EVENT_COUNT)) {
+            case KEY_MIN_DURATION: conf->min_duration = mpack_expect_bool(reader); break;
+            case KEY_T_PROXIMITY: conf->time_proximity = mpack_expect_u16(reader); break;
+            case KEY_STRATEGY: conf->strategy = mpack_expect_enum(reader, strategies, STRATEGY_COUNT); break;
+            case KEY_THRESHOLD: config_ev_threshold_parse(reader, conf); break;
+            case KEY_NEIGHBOURS: config_ev_neighbours_parse(reader, conf); break;
+            case KEY_ZERO_CROSSING: config_ev_zero_crossing_parse(reader, conf); break;
+            case KEY_HILL_WALKER: config_ev_hill_walker_parse(reader, conf); break;
+            default: mpack_discard(reader); break;
+        }
+    }
+
+    mpack_done_array(reader);
 }
 
 
@@ -415,32 +639,30 @@ size_t config_serialize(char *msg, size_t size, const Configuration *conf)
     return mpack_writer_buffer_used(&writer);
 }
 
-void config_parse(char *msg, int size, const Configuration *conf)
+void config_parse(char *msg, int size, Configuration *conf)
 {
     bool found[KEY_CONFIG_COUNT] = {0};
 
     mpack_reader_t reader;
     mpack_reader_init_data(&reader, msg, size);
-    int n;
 
     for (size_t i = mpack_expect_map_max(&reader, KEY_CONFIG_COUNT);
             i > 0 && mpack_reader_error(&reader) == mpack_ok;
             i--) {
         switch (mpack_expect_key_cstr(&reader, config_keys, found, KEY_CONFIG_COUNT)) {
-            case KEY_CONFIG_SENSOR: n = mpack_expect_map_max(&reader, 10); break;  // parser call
-            case KEY_CONFIG_TSMOOTH:  n = mpack_expect_map_max(&reader, 10);  break;
-            case KEY_CONFIG_STATS:  n = mpack_expect_map_max(&reader, 10);  break;
-            case KEY_CONFIG_TRANSFORM:  n = mpack_expect_map_max(&reader, 10);  break;
-            case KEY_CONFIG_WELCH:  n = mpack_expect_map_max(&reader, 10);  break;
-            case KEY_CONFIG_FSMOOTH:  n = mpack_expect_map_max(&reader, 10);  break;
-            case KEY_CONFIG_PEAK:  n = mpack_expect_map_max(&reader, 10);  break;
-            case KEY_CONFIG_LOGGER:  n = mpack_expect_map_max(&reader, 10);  break;
+            case KEY_CONFIG_SENSOR: config_sensor_parse(&reader, &conf->sensor); break;
+            case KEY_CONFIG_TSMOOTH: config_smooth_parse(&reader, &conf->tsmooth);  break;
+            case KEY_CONFIG_STATS:  config_stats_parse(&reader, &conf->stats);  break;
+            case KEY_CONFIG_TRANSFORM:  config_transform_parse(&reader, &conf->transform);  break;
+            case KEY_CONFIG_WELCH:  config_welch_parse(&reader, &conf->welch);  break;
+            case KEY_CONFIG_FSMOOTH: config_smooth_parse(&reader, &conf->fsmooth);  break;
+            case KEY_CONFIG_PEAK:  config_events_parse(&reader, &conf->peak);  break;
+            case KEY_CONFIG_LOGGER:  config_logger_parse(&reader, &conf->logger);  break;
             default: mpack_discard(&reader); break;
         }
     }
 
     mpack_reader_destroy(&reader);
-
 
     /* compact is not optional
     if (!found[KEY_COMPACT])

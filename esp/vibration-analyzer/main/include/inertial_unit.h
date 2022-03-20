@@ -15,7 +15,8 @@ typedef enum AccelerationRange {
     IMU_2G,
     IMU_4G,
     IMU_8G,
-    IMU_16G
+    IMU_16G,
+    IMU_RANGE_COUNT
 } AccelerationRange;
 
 typedef float AccelerationPrecision;

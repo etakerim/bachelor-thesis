@@ -205,6 +205,8 @@ void imu_acceleration_range(InertialUnit *imu, AccelerationRange range)
             regval = IMU_ACCELRANGE_16G_REG;
             imu->precision = IMU_MG_LSB_16G;
             break;
+        default:
+            return;
     }
 
     reg = (reg & ~IMU_ACCELRANGE_MASK) | regval;

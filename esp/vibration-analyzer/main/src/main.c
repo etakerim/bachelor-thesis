@@ -137,10 +137,12 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
 
             } else if (strncmp(event->topic, "imu/1/config/load", event->topic_len) == 0) {
                 Configuration c;
+                memset(&c, 0, sizeof(c));
                 // memcpy(&c, &conf, sizeof(c));
-                // config_parse(event->data, event->data_len, &conf); // Apply partial changes
+                // TODO: config load and save to nvs
+                config_parse(event->data, event->data_len, &c); // Apply partial changes
                 // memcpy(&conf, &c, sizeof(c));
-                // Restart
+                // nvs_save_config(&c);
                 esp_mqtt_client_publish(client, "imu/1/config/syslog", "config received", 0, 1, 0);
             }
             break;
@@ -340,6 +342,7 @@ void app_main(void)
 
     xTaskCreate(sampler_task, "sampling", 4096, NULL, 1, &sample_tick);
     xTaskCreate(pipeline_task, "x_pipeline", 4096, (void *)0, 1, NULL);
+    // TODO: all axis at full sampling
     // xTaskCreate(pipeline_task, "y_pipeline", 4096, (void *)1, 1, NULL);
     // xTaskCreate(pipeline_task, "z_pipeline", 4096,(void *)2, 1, NULL);
     xTaskCreate(mqtt_sender_task, "mqtt_sender", 4096, NULL, 1, NULL);
