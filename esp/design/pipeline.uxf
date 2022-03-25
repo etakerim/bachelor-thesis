@@ -244,17 +244,6 @@ zmeny spektra</panel_attributes>
     <additional_attributes>80.0;170.0;50.0;170.0;50.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>210</x>
-      <y>294</y>
-      <w>42</w>
-      <h>91</h>
-    </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>40.0;10.0;10.0;110.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLNote</id>
     <coordinates>
       <x>112</x>
@@ -266,21 +255,8 @@ zmeny spektra</panel_attributes>
 - Veľkosť vyrovnávacej pamäte
 - Dynamický rozsah
 - Dolný prah snímania (x, y, z)
-- Povolenie osí (x,y,z)
-- Redukcia ZeroG s bežiacim priemerom
 </panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>364</x>
-      <y>294</y>
-      <w>28</w>
-      <h>91</h>
-    </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>20.0;10.0;10.0;110.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
@@ -295,17 +271,6 @@ zmeny spektra</panel_attributes>
 - Veľkosť kernelu
 - Počet prechodov</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>504</x>
-      <y>294</y>
-      <w>63</w>
-      <h>91</h>
-    </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>70.0;10.0;10.0;110.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
@@ -355,28 +320,6 @@ union:
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>924</x>
-      <y>294</y>
-      <w>42</w>
-      <h>91</h>
-    </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>40.0;10.0;10.0;110.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1015</x>
-      <y>189</y>
-      <w>77</w>
-      <h>196</h>
-    </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;10.0;90.0;260.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLNote</id>
     <coordinates>
       <x>1015</x>
@@ -388,28 +331,6 @@ union:
 - Uložiť na SD kartu?
 - Odoslať cez sieť?</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>672</x>
-      <y>294</y>
-      <w>42</w>
-      <h>91</h>
-    </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>40.0;10.0;10.0;110.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>357</x>
-      <y>294</y>
-      <w>469</w>
-      <h>196</h>
-    </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;190.0;10.0;260.0;590.0;260.0;650.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -432,5 +353,82 @@ union:
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>30.0;130.0;30.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>203</x>
+      <y>294</y>
+      <w>42</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;110.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>357</x>
+      <y>294</y>
+      <w>35</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;110.0;30.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>525</x>
+      <y>294</y>
+      <w>35</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;110.0;30.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>679</x>
+      <y>294</y>
+      <w>35</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;110.0;30.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1015</x>
+      <y>189</y>
+      <w>70</w>
+      <h>196</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>80.0;260.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>917</x>
+      <y>294</y>
+      <w>42</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;110.0;40.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>525</x>
+      <y>294</y>
+      <w>308</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>420.0;10.0;340.0;240.0;40.0;240.0;10.0;220.0</additional_attributes>
   </element>
 </diagram>
