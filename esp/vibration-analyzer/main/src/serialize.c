@@ -2,12 +2,15 @@
 #include "inertial_unit.h"
 
 
-size_t stats_serialize(char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c)
+size_t stats_serialize(size_t timestamp, char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c)
 {
     mpack_writer_t writer;
     mpack_writer_init(&writer, msg, size);
 
     mpack_build_map(&writer);
+    mpack_write_cstr(&writer, "t");
+    mpack_write_u32(&writer, timestamp);
+
     if (c->min) {
         mpack_write_cstr(&writer, "min");
         mpack_write_float(&writer, stats->min);
@@ -51,12 +54,14 @@ size_t stats_serialize(char *msg, size_t size, const Statistics *stats, const St
     return mpack_writer_buffer_used(&writer);
 }
 
-size_t spectra_serialize(char *msg, size_t size, float *spectrum, size_t n, uint16_t fs)
+size_t spectra_serialize(size_t timestamp, char *msg, size_t size, float *spectrum, size_t n, uint16_t fs)
 {
     mpack_writer_t writer;
     mpack_writer_init(&writer, msg, size);
 
     mpack_build_map(&writer);
+    mpack_write_cstr(&writer, "t");
+    mpack_write_u32(&writer, timestamp);
     mpack_write_cstr(&writer, "fs");
     mpack_write_u16(&writer, fs);
 
@@ -75,17 +80,15 @@ size_t spectra_serialize(char *msg, size_t size, float *spectrum, size_t n, uint
 static void events_serialize_by_type(SpectrumEventAction action, mpack_writer_t *writer, SpectrumEvent *events, size_t n)
 {
     mpack_build_array(writer);
-    for (size_t i = 0; i < n; i++) {
+    for (uint16_t i = 0; i < n; i++) {
         if (events[i].action == action) {
             mpack_build_map(writer);
             mpack_write_cstr(writer, "t");
             mpack_write_u32(writer, events[i].start);
             mpack_write_cstr(writer, "d");
             mpack_write_u32(writer, events[i].duration);
-            mpack_write_cstr(writer, "f");
-            mpack_write_float(writer, events[i].frequency);
-            mpack_write_cstr(writer, "df");
-            mpack_write_float(writer, events[i].tolerance);
+            mpack_write_cstr(writer, "i");
+            mpack_write_u16(writer, i);
             mpack_write_cstr(writer, "h");
             mpack_write_float(writer, events[i].amplitude);
             mpack_complete_map(writer);
@@ -94,32 +97,31 @@ static void events_serialize_by_type(SpectrumEventAction action, mpack_writer_t 
     mpack_complete_array(writer);
 }
 
-void stream_serialize_init(mpack_writer_t *writer, char *msg, size_t n)
+size_t stream_serialize(char *msg, size_t size, float *stream, size_t n)
 {
-    mpack_writer_init(writer, msg, n);
-    mpack_build_array(writer);
+    mpack_writer_t writer;
+
+    mpack_writer_init(&writer, msg, size);
+    mpack_build_array(&writer);
+
+    for (size_t i = 0; i < n; i++)
+        mpack_write_float(&writer, stream[i]);
+
+    mpack_complete_array(&writer);
+    mpack_writer_destroy(&writer);
+
+    return mpack_writer_buffer_used(&writer);
 }
 
-size_t stream_serialize_close(mpack_writer_t *writer)
-{
-    mpack_complete_array(writer);
-    mpack_writer_destroy(writer);
-
-    return mpack_writer_buffer_used(writer);
-}
-
-void stream_serialize(mpack_writer_t *writer, float x, float y, float z)
-{
-    mpack_write_float(writer, x);
-    mpack_write_float(writer, y);
-    mpack_write_float(writer, z);
-}
-
-size_t events_serialize(char *msg, size_t size, SpectrumEvent *events, size_t n)
+size_t events_serialize(size_t timestamp, float bin_width, char *msg, size_t size, SpectrumEvent *events, size_t n)
 {
     mpack_writer_t writer;
     mpack_writer_init(&writer, msg, size);
     mpack_build_map(&writer);
+    mpack_write_cstr(&writer, "t");
+    mpack_write_u32(&writer, timestamp);
+    mpack_write_cstr(&writer, "df");
+    mpack_write_float(&writer, bin_width);
 
     mpack_write_cstr(&writer, "start");
     events_serialize_by_type(SPECTRUM_EVENT_START, &writer, events, n);
@@ -132,6 +134,7 @@ size_t events_serialize(char *msg, size_t size, SpectrumEvent *events, size_t n)
     return mpack_writer_buffer_used(&writer);
 }
 
+// TODO: detect changes in config parse and limits
 
 /* ------------------ CONFIGURATION ----------------- */
 static const char *sensor_range[IMU_RANGE_COUNT] = {"2g", "4g", "8g", "16g"};
@@ -310,64 +313,29 @@ static void config_transform_parse(mpack_reader_t *reader, FFTTransformConfig *c
     mpack_done_array(reader);
 }
 
-enum welch_key_names {KEY_WELCH_ENABLE, KEY_WELCH_HISTORY, KEY_WELCH_COUNT};
-static const char *welch_keys[KEY_WELCH_COUNT] = {"on", "k"};
-
-static void config_welch_serialize(mpack_writer_t *writer, const WelchAverageConfig *conf)
-{
-    mpack_build_map(writer);
-
-    mpack_write_cstr(writer, welch_keys[KEY_WELCH_ENABLE]);
-    mpack_write_bool(writer, conf->enable);
-    mpack_write_cstr(writer, welch_keys[KEY_WELCH_HISTORY]);
-    mpack_write_u8(writer, conf->history);
-
-    mpack_complete_map(writer);
-}
-
-static void config_welch_parse(mpack_reader_t *reader, WelchAverageConfig *conf)
-{
-    bool found[KEY_WELCH_COUNT] = {0};
-
-    for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
-            i > 0 && mpack_reader_error(reader) == mpack_ok;
-            i--) {
-        switch (mpack_expect_key_cstr(reader, welch_keys, found, KEY_WELCH_COUNT)) {
-            case KEY_WELCH_ENABLE: conf->enable = mpack_expect_bool(reader); break;
-            case KEY_WELCH_HISTORY: conf->history = mpack_expect_u8(reader); break;
-            default: mpack_discard(reader); break;
-        }
-    }
-
-    mpack_done_array(reader);
-}
-
-
 enum logger_key_names {
-    KEY_MQTT_LOG, KEY_LOCAL_LOG, KEY_LOG_SAMPLES, KEY_LOG_STATS,
-    KEY_LOG_SPECTRA, KEY_LOG_EVENTS, KEY_SUBSAMPLING, KEY_LOG_COUNT
+    KEY_LOCAL_LOG, KEY_LOG_SAMPLES, KEY_LOG_STATS,
+    KEY_LOG_SPECTRA, KEY_LOG_EVENTS, KEY_LOG_SUBSAMPLING, KEY_LOG_COUNT
 };
 static const char *logger_keys[KEY_LOG_COUNT] = {
-    "mqtt", "local", "samples", "stats", "spectra", "events", "subsamp"
+    "local", "samples", "stats", "spectra", "events", "subsamp"
 };
 
 static void config_logger_serialize(mpack_writer_t *writer, const SaveFormatConfig *conf)
 {
     mpack_build_map(writer);
 
-    mpack_write_cstr(writer, logger_keys[KEY_MQTT_LOG]);
-    mpack_write_bool(writer, conf->mqtt);
     mpack_write_cstr(writer, logger_keys[KEY_LOCAL_LOG]);
-    mpack_write_bool(writer, conf->local);
+    mpack_write_bool(writer, conf->openlog_raw_samples);
     mpack_write_cstr(writer, logger_keys[KEY_LOG_SAMPLES]);
-    mpack_write_bool(writer, conf->samples);
+    mpack_write_bool(writer, conf->mqtt_samples);
     mpack_write_cstr(writer, logger_keys[KEY_LOG_STATS]);
-    mpack_write_bool(writer, conf->stats);
+    mpack_write_bool(writer, conf->mqtt_stats);
     mpack_write_cstr(writer, logger_keys[KEY_LOG_SPECTRA]);
-    mpack_write_bool(writer, conf->spectra);
+    mpack_write_bool(writer, conf->mqtt_spectra);
     mpack_write_cstr(writer, logger_keys[KEY_LOG_EVENTS]);
-    mpack_write_bool(writer, conf->events);
-    mpack_write_cstr(writer, logger_keys[KEY_SUBSAMPLING]);
+    mpack_write_bool(writer, conf->mqtt_events);
+    mpack_write_cstr(writer, logger_keys[KEY_LOG_SUBSAMPLING]);
     mpack_write_u16(writer, conf->subsampling);
 
     mpack_complete_map(writer);
@@ -381,13 +349,12 @@ static void config_logger_parse(mpack_reader_t *reader, SaveFormatConfig *conf)
             i > 0 && mpack_reader_error(reader) == mpack_ok;
             i--) {
         switch (mpack_expect_key_cstr(reader, logger_keys, found, KEY_LOG_COUNT)) {
-            case KEY_MQTT_LOG: conf->mqtt = mpack_expect_bool(reader); break;
-            case KEY_LOCAL_LOG: conf->local = mpack_expect_bool(reader); break;
-            case KEY_LOG_SAMPLES: conf->samples = mpack_expect_bool(reader); break;
-            case KEY_LOG_STATS: conf->stats = mpack_expect_bool(reader); break;
-            case KEY_LOG_SPECTRA: conf->spectra = mpack_expect_bool(reader); break;
-            case KEY_LOG_EVENTS: conf->events = mpack_expect_bool(reader); break;
-            case KEY_SUBSAMPLING: conf->subsampling = mpack_expect_u16(reader); break;
+            case KEY_LOCAL_LOG: conf->openlog_raw_samples = mpack_expect_bool(reader); break;
+            case KEY_LOG_SAMPLES: conf->mqtt_samples = mpack_expect_bool(reader); break;
+            case KEY_LOG_STATS: conf->mqtt_stats = mpack_expect_bool(reader); break;
+            case KEY_LOG_SPECTRA: conf->mqtt_spectra = mpack_expect_bool(reader); break;
+            case KEY_LOG_EVENTS: conf->mqtt_events = mpack_expect_bool(reader); break;
+            case KEY_LOG_SUBSAMPLING: conf->subsampling = mpack_expect_u16(reader); break;
             default: mpack_discard(reader); break;
         }
     }
@@ -624,8 +591,6 @@ size_t config_serialize(char *msg, size_t size, const Configuration *conf)
     config_stats_serialize(&writer, &conf->stats);
     mpack_write_cstr(&writer, config_keys[KEY_CONFIG_TRANSFORM]);
     config_transform_serialize(&writer, &conf->transform);
-    mpack_write_cstr(&writer, config_keys[KEY_CONFIG_WELCH]);
-    config_welch_serialize(&writer, &conf->welch);
     mpack_write_cstr(&writer, config_keys[KEY_CONFIG_FSMOOTH]);
     config_smooth_serialize(&writer, &conf->fsmooth);
     mpack_write_cstr(&writer ,config_keys[KEY_CONFIG_PEAK]);
@@ -654,7 +619,6 @@ void config_parse(char *msg, int size, Configuration *conf)
             case KEY_CONFIG_TSMOOTH: config_smooth_parse(&reader, &conf->tsmooth);  break;
             case KEY_CONFIG_STATS:  config_stats_parse(&reader, &conf->stats);  break;
             case KEY_CONFIG_TRANSFORM:  config_transform_parse(&reader, &conf->transform);  break;
-            case KEY_CONFIG_WELCH:  config_welch_parse(&reader, &conf->welch);  break;
             case KEY_CONFIG_FSMOOTH: config_smooth_parse(&reader, &conf->fsmooth);  break;
             case KEY_CONFIG_PEAK:  config_events_parse(&reader, &conf->peak);  break;
             case KEY_CONFIG_LOGGER:  config_logger_parse(&reader, &conf->logger);  break;

@@ -111,6 +111,7 @@ static uint8_t spi_recv(spi_device_handle_t spi, uint8_t reg)
     return buffer[0];
 }
 
+/*
 static void imu_isr_install(InertialUnit *imu)
 {
     gpio_config_t interrupt_pin = {
@@ -137,7 +138,7 @@ static void imu_isr_install(InertialUnit *imu)
         gpio_isr_handler_add(imu->int2, imu->isr_int2, NULL);
 
     }
-}
+}*/
 
 bool imu_setup(InertialUnit *imu)
 {
@@ -168,16 +169,32 @@ bool imu_setup(InertialUnit *imu)
         return false;
 
     spi_send(imu->dev, IMU_CTRL_REG5_XL,
-             IMU_REG5_Zen_XL | IMU_REG5_Yen_XL | IMU_REG5_Xen_XL );
-    imu_output_data_rate(imu, IMU_ODR_952HZ);
-    imu_acceleration_range(imu, IMU_2G);
+             IMU_REG5_Zen_XL | IMU_REG5_Yen_XL | IMU_REG5_Xen_XL);
+    
+    // imu_output_data_rate(imu, IMU_ODR_952HZ);
+    // imu_acceleration_range(imu, IMU_2G);
     // imu_isr_install(imu);   FIFO configuration
 
     return true;
 }
 
-void imu_output_data_rate(InertialUnit *imu, AccelerationODR odr)
+void imu_output_data_rate(InertialUnit *imu, uint16_t fs)
 {
+    AccelerationODR odr = IMU_ODR_952HZ;
+    if (fs <= 10) {
+        odr = IMU_ODR_10HZ;
+    } else if (fs <= 50) {
+        odr = IMU_ODR_50HZ;
+    } else if (fs <= 119) {
+        odr = IMU_ODR_119HZ;
+    } else if (fs <= 238) {
+        odr = IMU_ODR_238HZ;
+    } else if (fs <= 476) {
+        odr = IMU_ODR_476HZ;
+    } else if (fs <= 952) {
+        odr = IMU_ODR_952HZ;
+    }
+
     uint8_t reg = spi_recv(imu->dev, IMU_CTRL_REG6_XL);
     reg = (reg & ~IMU_ODR_MASK) | odr;
     spi_send(imu->dev, IMU_CTRL_REG6_XL, reg);
@@ -185,9 +202,7 @@ void imu_output_data_rate(InertialUnit *imu, AccelerationODR odr)
 
 void imu_acceleration_range(InertialUnit *imu, AccelerationRange range)
 {
-    uint8_t reg = spi_recv(imu->dev, IMU_CTRL_REG6_XL);
     IMURangeRegister regval = IMU_ACCELRANGE_2G_REG;
-
     switch (range) {
         case IMU_2G:
             regval = IMU_ACCELRANGE_2G_REG;
@@ -206,9 +221,9 @@ void imu_acceleration_range(InertialUnit *imu, AccelerationRange range)
             imu->precision = IMU_MG_LSB_16G;
             break;
         default:
-            return;
+            break;
     }
-
+    uint8_t reg = spi_recv(imu->dev, IMU_CTRL_REG6_XL);
     reg = (reg & ~IMU_ACCELRANGE_MASK) | regval;
     spi_send(imu->dev, IMU_CTRL_REG6_XL, reg);
 }

@@ -15,6 +15,7 @@ static EventGroupHandle_t s_wifi_event_group;
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT      BIT1
 
+
 static void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data)
 {
     if (event_base == WIFI_EVENT && 
@@ -31,48 +32,14 @@ void axis_mqtt_topics(MqttAxisTopics *topics, int axis)
 {
     const static char *dirs[] = {"x", "y", "z"};
 
-    strncpy(topics->stats, "stream/statistics/", SUBTOPIC_LENGTH);
+    strncpy(topics->stats, MQTT_TOPIC_STATS, TOPIC_LENGTH - 1);
     strcat(topics->stats, dirs[axis]);
 
-    strncpy(topics->spectra, "stream/frequency/", SUBTOPIC_LENGTH);
+    strncpy(topics->spectra, MQTT_TOPIC_SPECTRUM, TOPIC_LENGTH - 1);
     strcat(topics->spectra, dirs[axis]);
 
-    strncpy(topics->events, "event/frequency/", SUBTOPIC_LENGTH);
+    strncpy(topics->events, MQTT_TOPIC_EVENT, TOPIC_LENGTH - 1);
     strcat(topics->events, dirs[axis]);
-}
-
-void sender_setup(Sender *sender)
-{
-    // topic, message, topic, message, ...
-    sender->mutex = xSemaphoreCreateMutex();
-    sender->messages = xMessageBufferCreate(SERIALIZE_BUFFER_LENGTH);
-}
-
-void message_send(Sender *sender, const char *topic, const char *content, size_t length)
-{
-    if (xSemaphoreTake(sender->mutex, portMAX_DELAY) == pdTRUE) {
-        xMessageBufferSend(sender->messages, topic, strlen(topic) + 1, 0);
-        xMessageBufferSend(sender->messages, content, length, 0);
-        xSemaphoreGive(sender->mutex);
-    }
-}
-
-size_t message_recv(Sender *sender, char *topic, char *content, size_t length)
-{
-    size_t msg_length = 0;
-
-    if (xSemaphoreTake(sender->mutex, portMAX_DELAY) == pdTRUE) {
-        size_t topic_len = xMessageBufferReceive(
-            sender->messages, &topic[DEVICE_MQTT_TOPIC_LENGTH - 1],
-            TOPIC_LENGTH - DEVICE_MQTT_TOPIC_LENGTH, 0
-        );
-        msg_length = xMessageBufferReceive(sender->messages, content, length, 0);
-        xSemaphoreGive(sender->mutex);
-        if (topic_len <= 0)
-            msg_length = 0;
-    }
-
-    return msg_length;
 }
 
 void peripheral_setup(void)

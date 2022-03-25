@@ -9,6 +9,20 @@
 #include "pipeline.h"
 
 
+#define TOPIC_LENGTH                64
+#define LARGEST_MESSAGE             (((2 * MAX_BUFFER_SAMPLES) * (sizeof(float) + 1)) + (2 * TOPIC_LENGTH))
+#define DEVICE_MQTT_TOPIC           "imu/1/"
+#define DEVICE_MQTT_TOPIC_LENGTH    sizeof(DEVICE_MQTT_TOPIC) / sizeof(char)
+
+#define MQTT_TOPIC_REQUEST          DEVICE_MQTT_TOPIC "config/request"
+#define MQTT_TOPIC_RESPONSE         DEVICE_MQTT_TOPIC "config/response"
+#define MQTT_TOPIC_LOAD             DEVICE_MQTT_TOPIC "config/load"
+#define MQTT_TOPIC_SYSLOG           DEVICE_MQTT_TOPIC "syslog"
+#define MQTT_TOPIC_STREAM           DEVICE_MQTT_TOPIC "stream/samples"
+#define MQTT_TOPIC_STATS            DEVICE_MQTT_TOPIC "stream/statistics/"
+#define MQTT_TOPIC_SPECTRUM         DEVICE_MQTT_TOPIC "stream/frequency/"
+#define MQTT_TOPIC_EVENT            DEVICE_MQTT_TOPIC "event/frequency/"
+
 // TIMER_SCALE is value of timer at 1 second
 #define TIMER_DIVIDER         16
 #define TIMER_SCALE           (TIMER_BASE_CLK / TIMER_DIVIDER)
@@ -23,24 +37,21 @@ typedef struct {
 } OpenLog;
 
 
-#define TOPIC_LENGTH              64
-#define SUBTOPIC_LENGTH           25
-#define DEVICE_MQTT_TOPIC         "imu/1/"
-#define DEVICE_MQTT_TOPIC_LENGTH   sizeof(DEVICE_MQTT_TOPIC) / sizeof(char)
-
 typedef struct {
-    SemaphoreHandle_t mutex;
-    MessageBufferHandle_t messages;
+    uint16_t max_send_samples;
+    QueueHandle_t raw_stream;
 } Sender;
 
 typedef struct {
-    char stats[SUBTOPIC_LENGTH];
-    char spectra[SUBTOPIC_LENGTH];
-    char events[SUBTOPIC_LENGTH];
+    char stats[TOPIC_LENGTH];
+    char spectra[TOPIC_LENGTH];
+    char events[TOPIC_LENGTH];
 } MqttAxisTopics;
 
+
 void axis_mqtt_topics(MqttAxisTopics *topics, int axis);
-void sender_setup(Sender *sender);
+void sender_allocate(Sender *sender, uint16_t n);
+void sender_release(Sender *sender);
 void message_send(Sender *sender, const char *topic, const char *content, size_t length);
 size_t message_recv(Sender *sender, char *topic, char *content, size_t length);
 

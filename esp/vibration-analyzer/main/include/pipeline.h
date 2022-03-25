@@ -9,8 +9,10 @@
 #include "mpack.h"
 
 #define AXIS_COUNT                  3
-#define SERIALIZE_BUFFER_LENGTH     2048
+
 #define MAX_MPACK_FIELDS_COUNT      20
+#define SAMPLES_QUEUE_SLOTS         2
+#define MAX_BUFFER_SAMPLES          1024
 
 typedef enum {
     BOXCAR_WINDOW,
@@ -58,9 +60,6 @@ typedef struct {
     int kurtosis: 1;
     int median: 1;
     int mad: 1;
-/*    int corr_xy: 1;
-    int corr_yz: 1;
-    int corr_xz: 1;*/
 } StatisticsConfig;
 
 typedef struct {
@@ -68,11 +67,6 @@ typedef struct {
     FrequencyTransform func;
     bool log;
 } FFTTransformConfig;
-
-typedef struct {
-    bool enable;
-    uint8_t history;
-} WelchAverageConfig;
 
 typedef struct {
     uint16_t min_duration;
@@ -101,13 +95,12 @@ typedef struct {
 
 
 typedef struct {
-    bool local;
-    bool mqtt;
-    bool samples;
-    bool stats;
-    bool spectra;
-    bool events;
     uint16_t subsampling;
+    bool openlog_raw_samples;
+    bool mqtt_samples;
+    bool mqtt_stats;
+    bool mqtt_spectra;
+    bool mqtt_events;
 } SaveFormatConfig;
 
 
@@ -116,7 +109,6 @@ typedef struct {
     SmoothingConfig tsmooth;
     StatisticsConfig stats;
     FFTTransformConfig transform;
-    WelchAverageConfig welch;
     SmoothingConfig fsmooth;
     EventDetectionConfig peak;
     SaveFormatConfig logger;
@@ -147,16 +139,14 @@ typedef struct {
     uint32_t start;
     uint32_t duration;
     uint32_t last_seen;
-    float frequency;
-    float tolerance;
     float amplitude;
 } SpectrumEvent;
 
 
 typedef struct {
-    float *t_smooth;
-    float *f_smooth;
+    float *smooth;
     float *window;
+    QueueHandle_t queue[AXIS_COUNT];
 } BufferPipelineKernel;
 
 typedef struct {
@@ -165,15 +155,7 @@ typedef struct {
     float *spectrum;
     bool *peaks;
     SpectrumEvent *events;
-    char *serialize;
 } BufferPipelineAxis;
-
-typedef struct {
-    QueueHandle_t queue[AXIS_COUNT];
-    BufferPipelineKernel kernel;
-    BufferPipelineAxis axis[AXIS_COUNT];
-} BufferPipeline;
-
 
 
 #define square(x)   ((x) * (x))
@@ -194,7 +176,6 @@ void find_peaks_neighbours(bool *peaks, float *y, int n, int k, float e, float h
 void find_peaks_zero_crossing(bool *peaks, float *y, int n, int k, float slope);
 void find_peaks_hill_walker(bool *peaks, float *y, int n, float tolerance, int hole, float prominence, float isolation);
 
-void event_init(SpectrumEvent *events, uint16_t bins, uint16_t fs);
 size_t event_detection(size_t t, SpectrumEvent *events, bool *peaks, float *spectrum,
                        uint16_t bins, uint16_t min_duration, uint16_t time_proximity);
 
@@ -220,24 +201,18 @@ float average_abs_deviation(float *x, int n, float mean);
 
 // pipeline.c
 void buffer_shift_left(float *buffer, uint16_t n, uint16_t k);
-void process_allocate(BufferPipeline *p, Configuration *conf);
-void process_release(BufferPipeline *p);
-
 void process_statistics(float *buffer, uint16_t n, Statistics *stats, const StatisticsConfig *c);
 int process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, const FFTTransformConfig *c);
 void process_smoothing(float *buffer, float *tmp, uint16_t n, float *kernel, const SmoothingConfig *c);
 void process_peak_finding(bool *peaks, float *spectrum, uint16_t bins, const EventDetectionConfig *c);
 
 // serialize.c
-size_t stats_serialize(char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c);
-size_t spectra_serialize(char *msg, size_t size, float *spectrum, size_t n, uint16_t fs);
-size_t events_serialize(char *msg, size_t size, SpectrumEvent *events, size_t n);
+size_t stream_serialize(char *msg, size_t size, float *stream, size_t n);
+size_t stats_serialize(size_t timestamp, char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c);
+size_t spectra_serialize(size_t timestamp, char *msg, size_t size, float *spectrum, size_t n, uint16_t fs);
+size_t events_serialize(size_t timestamp, float bin_width, char *msg, size_t size, SpectrumEvent *events, size_t n);
 
 size_t config_serialize(char *msg, size_t size, const Configuration *config);
 void config_parse(char *msg, int size, Configuration *conf);
-
-void stream_serialize_init(mpack_writer_t *writer, char *buffer, size_t n);
-size_t stream_serialize_close(mpack_writer_t *writer);
-void stream_serialize(mpack_writer_t *writer, float x, float y, float z);
 
 #endif

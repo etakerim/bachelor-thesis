@@ -5,73 +5,13 @@
 #include "pipeline.h"
 
 
+
+
+
 void buffer_shift_left(float *buffer, uint16_t n, uint16_t k)
 {
     for (uint16_t i = k; i < n; i++)
         buffer[i - k] = buffer[i];
-}
-
-void process_allocate(BufferPipeline *p, Configuration *conf)
-{
-    const uint16_t bins = conf->sensor.n / 2;
-    const uint16_t n = conf->sensor.n;
-    const uint16_t t_smooth = conf->tsmooth.n;
-    const uint16_t f_smooth = conf->fsmooth.n;
-    const WindowTypeConfig w = conf->transform.window;
-    const uint16_t freq = conf->sensor.frequency;
-    const uint16_t n_smooth = max(t_smooth, f_smooth);
-
-    p->kernel.t_smooth = malloc(t_smooth * sizeof(*p->kernel.t_smooth));
-    p->kernel.f_smooth = malloc(f_smooth * sizeof(*p->kernel.f_smooth));
-    mean_kernel(p->kernel.t_smooth, t_smooth);
-    mean_kernel(p->kernel.f_smooth, f_smooth);
-    
-    p->kernel.window = malloc(n * sizeof(*p->kernel.window));
-    switch (w) {
-        case BOXCAR_WINDOW:
-            boxcar_window(p->kernel.window, n); break;
-        case BARTLETT_WINDOW:
-            bartlett_window(p->kernel.window, n); break;
-        case HANN_WINDOW:
-            hann_window(p->kernel.window, n); break;
-        case HAMMING_WINDOW:
-            hamming_window(p->kernel.window, n); break;
-        case BLACKMAN_WINDOW:
-            blackman_window(p->kernel.window, n); break;
-        default:
-            break;
-    }
-
-    for (uint8_t i = 0; i < AXIS_COUNT; i++) {
-        p->queue[i] = xQueueCreate(3, sizeof(float) * n);
-
-        p->axis[i].stream = malloc(n * sizeof(*p->axis[i].stream));
-        p->axis[i].tmp_conv = malloc((n + n_smooth - 1) * sizeof(*p->axis[i].tmp_conv));
-        p->axis[i].spectrum = malloc(2 * n * sizeof(*p->axis[i].spectrum));
-        p->axis[i].peaks = malloc(bins * sizeof(*p->axis[i].peaks));
-        p->axis[i].events = malloc(bins * sizeof(*p->axis[i].events));
-        event_init(p->axis[i].events, bins, freq);
-        p->axis[i].serialize = malloc(SERIALIZE_BUFFER_LENGTH * sizeof(*p->axis[i].serialize));
-
-    }
-}
-
-void process_release(BufferPipeline *p)
-{
-    free(p->kernel.t_smooth);
-    free(p->kernel.f_smooth);
-    free(p->kernel.window);
-
-    for (uint8_t i = 0; i < AXIS_COUNT; i++) {
-        vQueueDelete( p->queue[i]);
-
-        free(p->axis[i].stream);
-        free(p->axis[i].tmp_conv);
-        free(p->axis[i].spectrum);
-        free(p->axis[i].peaks);
-        free(p->axis[i].events);
-        free(p->axis[i].serialize);
-    }
 }
 
 
