@@ -5,9 +5,6 @@
 #include "pipeline.h"
 
 
-
-
-
 void buffer_shift_left(float *buffer, uint16_t n, uint16_t k)
 {
     for (uint16_t i = k; i < n; i++)

@@ -12,7 +12,11 @@
 
 #define MAX_MPACK_FIELDS_COUNT      20
 #define SAMPLES_QUEUE_SLOTS         2
+
 #define MAX_BUFFER_SAMPLES          1024
+#define MAX_FREQUENCY               952
+#define MAX_OVERLAP                 0.8
+#define MAX_SMOOTH_REPEAT           8
 
 typedef enum {
     BOXCAR_WINDOW,
@@ -50,16 +54,16 @@ typedef struct {
 } SmoothingConfig;
 
 typedef struct {
-    int min: 1;
-    int max: 1;
-    int rms: 1;
-    int mean: 1;
-    int variance: 1;
-    int std: 1;
-    int skewness: 1;
-    int kurtosis: 1;
-    int median: 1;
-    int mad: 1;
+    bool min;
+    bool max;
+    bool rms;
+    bool mean;
+    bool variance;
+    bool std;
+    bool skewness;
+    bool kurtosis;
+    bool median;
+    bool mad;
 } StatisticsConfig;
 
 typedef struct {
@@ -174,8 +178,8 @@ void blackman_window(float *w, int n);
 void find_peaks_above_threshold(bool *peaks, float *y, int n, float t);
 void find_peaks_neighbours(bool *peaks, float *y, int n, int k, float e, float h_rel, float h);
 void find_peaks_zero_crossing(bool *peaks, float *y, int n, int k, float slope);
-void find_peaks_hill_walker(bool *peaks, float *y, int n, float tolerance, int hole, float prominence, float isolation);
-
+void find_peaks_hill_walker(bool *peaks, float *y, int n, float tolerance,
+                            int hole, float prominence, float isolation);
 size_t event_detection(size_t t, SpectrumEvent *events, bool *peaks, float *spectrum,
                        uint16_t bins, uint16_t min_duration, uint16_t time_proximity);
 
@@ -213,6 +217,6 @@ size_t spectra_serialize(size_t timestamp, char *msg, size_t size, float *spectr
 size_t events_serialize(size_t timestamp, float bin_width, char *msg, size_t size, SpectrumEvent *events, size_t n);
 
 size_t config_serialize(char *msg, size_t size, const Configuration *config);
-void config_parse(char *msg, int size, Configuration *conf);
+bool config_parse(char *msg, int size, Configuration *conf, bool *change);
 
 #endif

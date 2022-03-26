@@ -51,9 +51,9 @@ OpenLog logger = {
 
 Configuration conf = {
     .sensor = {
-        .frequency = 952,
+        .frequency = 400, // 952
         .range = IMU_2G,
-        .n = 1024,
+        .n = 512,        // 1024
         .overlap = 0.5
     },
     .tsmooth = {
@@ -62,16 +62,16 @@ Configuration conf = {
         .repeat = 1
     },
     .stats = {
-        .min = 1,
-        .max = 1,
-        .rms = 1,
-        .mean = 1,
-        .variance = 1,
-        .std = 1,
-        .skewness = 1,
-        .kurtosis = 1,
-        .median = 1,
-        .mad = 1
+        .min = true,
+        .max = true,
+        .rms = true,
+        .mean = true,
+        .variance = true,
+        .std = true,
+        .skewness = true,
+        .kurtosis = true,
+        .median = true,
+        .mad = true
     },
     .transform = {
         .window = HAMMING_WINDOW,
@@ -214,12 +214,13 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
 {
     esp_mqtt_event_handle_t event = event_data;
     esp_mqtt_client_handle_t client = event->client;
+    bool change, error;
 
     switch ((esp_mqtt_event_id_t)event_id) {
         case MQTT_EVENT_CONNECTED:
             esp_mqtt_client_subscribe(client, MQTT_TOPIC_REQUEST, 1);
             esp_mqtt_client_subscribe(client, MQTT_TOPIC_LOAD, 1);
-            esp_mqtt_client_publish(client, MQTT_TOPIC_SYSLOG, "imu connected", 0, 1, 1);
+            esp_mqtt_client_publish(client, MQTT_TOPIC_SYSLOG, "imu started", 0, 1, 1);
             break;
 
         case MQTT_EVENT_DATA:
@@ -232,20 +233,25 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
 
                 Configuration c;
                 memcpy(&c, &conf, sizeof(c));
-                config_parse(event->data, event->data_len, &c);
-                /*
-                if error:
+                change = config_parse(event->data, event->data_len, &c, &error);
+
+                if (error) {
                     esp_mqtt_client_publish(client, MQTT_TOPIC_SYSLOG, "config malformed", 0, 1, 0);
-                if change:
-                    esp_mqtt_client_publish(client, MQTT_TOPIC_SYSLOG, "config applied", 0, 1, 0);
+
+                } else if (change) {
                     nvs_save_config(&c);
+                    esp_mqtt_client_publish(client, MQTT_TOPIC_SYSLOG, "config applied", 0, 1, 0);
+
                     if (conf.logger.mqtt_samples || conf.logger.mqtt_stats ||
                             conf.logger.mqtt_spectra || conf.logger.mqtt_events)
                         esp_wifi_deinit();
+
                     if (conf.logger.openlog_raw_samples)
-                        uart_driver_delete();
+                        uart_driver_delete(logger.uart);
+
+                    vTaskDelay(500 / portTICK_RATE_MS);
                     esp_restart();
-                */
+                }
             }
             break;
         default:
@@ -269,9 +275,10 @@ void logger_task()
             size_t len = stream_serialize(mqtt_handler_content, LARGEST_MESSAGE, stream, sender.max_send_samples);
             esp_mqtt_client_publish(mqttclient, MQTT_TOPIC_STREAM, mqtt_handler_content, len, 0, 0);
 
-            /*if (conf.logger.openlog_raw_samples) {
-                printf("%g %g %g", axis[0][idx], axis[1][idx], axis[2][idx]);
-            }*/
+            if (conf.logger.openlog_raw_samples) {
+                for (uint16_t i = 0; i < sender.max_send_samples; i += 3)
+                printf("%g %g %g", stream[i+0], stream[i+1], stream[i+2]);
+            }
         }
     }
 
@@ -399,7 +406,7 @@ void app_main(void)
 
     peripheral_setup();
     // nvs_save_config(&conf);     //! Factory reset for Debug
-    // nvs_load_config(&conf);
+    nvs_load_config(&conf);
 
     if (mqtt_running) {
         wifi_connect(&wifi_login);
@@ -425,6 +432,9 @@ void app_main(void)
 }
 
 /*
+uint64_t start = esp_timer_get_time();
+
+https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/performance/speed.html
 ESP_LOGI("main", "[app main] Total:%u Free:%u Largest:%u",
     heap_caps_get_total_size(MALLOC_CAP_8BIT),
     heap_caps_get_free_size(MALLOC_CAP_8BIT),

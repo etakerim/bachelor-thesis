@@ -90,39 +90,6 @@ esp_mqtt_client_handle_t mqtt_setup(const char *broker_url)
     return client;
 }
 
-esp_err_t nvs_load_config(Configuration *conf)
-{
-    nvs_handle_t storage;
-    size_t len = 0;
-    esp_err_t err = nvs_open("storage", NVS_READWRITE, &storage);
-
-    if (err != ESP_OK)
-        return err;
-
-    err = nvs_get_blob(storage, "config", conf, &len);
-    if (len != sizeof(*conf) || err == ESP_ERR_NVS_NOT_FOUND) {
-        err = nvs_set_blob(storage, "config", conf, sizeof(*conf));
-        err = nvs_commit(storage);
-    }
-    nvs_close(storage);
-    return err;
-}
-
-
-esp_err_t nvs_save_config(Configuration *conf)
-{
-    nvs_handle_t storage;
-    esp_err_t err = nvs_open("storage", NVS_READWRITE, &storage);
-
-    if (err != ESP_OK)
-        return err;
-
-    err = nvs_set_blob(storage, "config", conf, sizeof(*conf));
-    err = nvs_commit(storage);
-    nvs_close(storage);
-    return err;
-}
-
 void openlog_setup(OpenLog *logger)
 {
     gpio_config_t openlog_vcc = {
@@ -177,4 +144,47 @@ void clock_reconfigure(uint16_t frequency)
     timer_set_counter_value(TIMER_GROUP_0, TIMER_0, 0);
     timer_set_alarm_value(TIMER_GROUP_0, TIMER_0, TIMER_SCALE / frequency);
     timer_start(TIMER_GROUP_0, TIMER_0);
+}
+
+
+esp_err_t nvs_load_config(Configuration *conf)
+{
+    nvs_handle_t storage;
+    size_t len = 0;
+    esp_err_t err = nvs_open("storage", NVS_READWRITE, &storage);
+    if (err != ESP_OK) return err;
+
+    err = nvs_get_blob(storage, "config", NULL, &len);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND) return err;
+
+    // Set default values if does not exist
+    if (len == 0) {
+        err = nvs_set_blob(storage, "config", conf, len);
+        if (err != ESP_OK) return err;
+        err = nvs_commit(storage);
+        if (err != ESP_OK) return err;
+        len = sizeof(*conf);
+    }
+
+    err = nvs_get_blob(storage, "config", conf, &len);
+    if (err != ESP_OK && err != ESP_ERR_NVS_NOT_FOUND) return err;
+
+    nvs_close(storage);
+    return ESP_OK;
+}
+
+
+esp_err_t nvs_save_config(Configuration *conf)
+{
+    nvs_handle_t storage;
+    esp_err_t err = nvs_open("storage", NVS_READWRITE, &storage);
+    if (err != ESP_OK) return err;
+
+    err = nvs_set_blob(storage, "config", conf, sizeof(*conf));
+    if (err != ESP_OK) return err;
+
+    err = nvs_commit(storage);
+    if (err != ESP_OK) return err;
+    nvs_close(storage);
+    return ESP_OK;
 }
