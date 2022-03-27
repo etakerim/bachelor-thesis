@@ -14,20 +14,20 @@
 #include "pipeline.h"
 #include "driver/uart.h"
 
-
+/*
 Provisioning login = {
     .wifi_ssid="Montenegro",
     .wifi_pass="1234512345",
     .mqtt_url="mqtt://192.168.100.198"
 };
+*/
 
-/*
 Provisioning login = {
     .wifi_ssid="Etakerim Crew",
     .wifi_pass="4priv.hacker-turaw",
     .mqtt_url="mqtt://192.168.1.103"
 };
-*/
+
 
 InertialUnit imu = {
     .spi = SPI2_HOST,
@@ -73,7 +73,8 @@ Configuration conf = {
         .skewness = true,
         .kurtosis = true,
         .median = true,
-        .mad = true
+        .mad = true,
+        .correlation = true
     },
     .transform = {
         .window = HAMMING_WINDOW,
@@ -112,8 +113,8 @@ Configuration conf = {
     .logger = {
         .subsampling = 1,
         .openlog_raw_samples = false,
-        .mqtt_samples = true,
-        .mqtt_stats = false,
+        .mqtt_samples = false,
+        .mqtt_stats = true,
         .mqtt_spectra = false,
         .mqtt_events = true
     }
@@ -288,7 +289,9 @@ void pipeline_task(void *args)
 
             if (conf.logger.mqtt_stats) {
                 process_statistics(p.stream, conf.sensor.n, &stats, &conf.stats);
-
+                if (conf.stats.correlation) {
+                    process_correlation(x, p.stream, &stats, &k->corr, &conf.sensor);
+                }
                 size_t len = stats_serialize(no, serialize, LARGEST_MESSAGE, &stats, &conf.stats);
                 esp_mqtt_client_publish(mqttclient, mqtt_topics.stats, serialize, len, 0, 0);
             }
@@ -326,6 +329,8 @@ void pipeline_task(void *args)
 
 void app_main(void)
 {
+    //! ifdef nvs_save_config(&conf); nvs_save_login(&login); Factory reset for Debug
+    
     ESP_ERROR_CHECK(imu_setup(&imu));
     imu_output_data_rate(&imu, conf.sensor.frequency);
     imu_acceleration_range(&imu, conf.sensor.range);
@@ -336,9 +341,7 @@ void app_main(void)
         ESP_ERROR_CHECK(nvs_flash_init());      //  Retry nvs_flash_init
     }
 
-    //! nvs_save_config(&conf); nvs_save_login(&login); Factory reset for Debug
     // Load configuration from nvs or apply defaults
-    
     // nvs_load(&conf, &login);
 
     const bool mqtt_running = (
@@ -400,8 +403,6 @@ void app_main(void)
 }
 
 /*
-uint64_t start = esp_timer_get_time();
-
 https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/performance/speed.html
 ESP_LOGI("main", "[app main] Total:%u Free:%u Largest:%u",
     heap_caps_get_total_size(MALLOC_CAP_8BIT),

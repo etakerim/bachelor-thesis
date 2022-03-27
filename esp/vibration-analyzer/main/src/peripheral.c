@@ -204,25 +204,20 @@ void process_allocate(BufferPipelineKernel *p, Configuration *conf)
 
     p->smooth = malloc(n_smooth * sizeof(*p->smooth));
     mean_kernel(p->smooth, n_smooth);
-    
+
     p->window = malloc(n * sizeof(*p->window));
-    switch (w) {
-        case BOXCAR_WINDOW:
-            boxcar_window(p->window, n); break;
-        case BARTLETT_WINDOW:
-            bartlett_window(p->window, n); break;
-        case HANN_WINDOW:
-            hann_window(p->window, n); break;
-        case HAMMING_WINDOW:
-            hamming_window(p->window, n); break;
-        case BLACKMAN_WINDOW:
-            blackman_window(p->window, n); break;
-        default:
-            break;
-    }
+    window(w, p->window, n);
 
     for (uint8_t i = 0; i < AXIS_COUNT; i++)
         p->queue[i] = xQueueCreate(conf->sensor.frequency, sizeof(float));
+
+    p->corr.barrier = xEventGroupCreate();
+    p->corr.task_mask = 0;
+    for (uint8_t i = 0; i < AXIS_COUNT; i++) {
+        p->corr.diff[i] = malloc(conf->sensor.n * sizeof(float));
+        if (conf->sensor.axis[i]) 
+            p->corr.task_mask |= (1 << i);
+    }
 }
 
 void axis_allocate(BufferPipelineAxis *p, Configuration *conf)
@@ -258,8 +253,10 @@ void process_release(BufferPipelineKernel *p)
 {
     free(p->smooth);
     free(p->window);
-    for (uint8_t i = 0; i < AXIS_COUNT; i++)
+    for (uint8_t i = 0; i < AXIS_COUNT; i++) {
         vQueueDelete(p->queue[i]);
+        free(p->corr.diff[i]);
+    }
 }
 
 void axis_release(BufferPipelineAxis *p)

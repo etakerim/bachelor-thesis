@@ -38,6 +38,31 @@ void process_statistics(float *buffer, uint16_t n, Statistics *stats, const Stat
         stats->mad = median_abs_deviation(buffer, n, stats->median);
 }
 
+void process_correlation(uint8_t axis, float *buffer, Statistics *stats, Correlation *corr, SamplingConfig *conf)
+{
+    xEventGroupSync(corr->barrier, (1 << axis), corr->task_mask, portMAX_DELAY);
+
+    float avg = mean(buffer, conf->n);
+    corr->std[axis] = sqrt(variance(buffer, conf->n, avg));
+    for (uint16_t i = 0; i < conf->n; i++)
+        corr->diff[axis][i] = (buffer[i] - avg);
+
+    xEventGroupSync(corr->barrier, (1 << axis), corr->task_mask, portMAX_DELAY);
+
+    if (conf->axis[0] && conf->axis[1])
+        stats->corr_xy = correlation(
+            corr->diff[0], corr->diff[1], conf->n, corr->std[0], corr->std[1]
+        );
+    if (conf->axis[0] && conf->axis[2])
+        stats->corr_xz = correlation(
+            corr->diff[0], corr->diff[2], conf->n, corr->std[0], corr->std[2]
+        );
+    if (conf->axis[1] && conf->axis[2])
+        stats->corr_yz = correlation(
+            corr->diff[1], corr->diff[2], conf->n, corr->std[1], corr->std[2]
+        );
+}
+
 int process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, const FFTTransformConfig *c)
 {
     const uint16_t bins = n / 2;

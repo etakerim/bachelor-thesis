@@ -48,6 +48,16 @@ size_t stats_serialize(size_t timestamp, char *msg, size_t size, const Statistic
         mpack_write_cstr(&writer, "mad");
         mpack_write_float(&writer, stats->mad);
     }
+    if (c->correlation) {
+        mpack_write_cstr(&writer, "corrXY");
+        mpack_write_float(&writer, stats->corr_xy);
+
+        mpack_write_cstr(&writer, "corrXZ");
+        mpack_write_float(&writer, stats->corr_xz);
+
+        mpack_write_cstr(&writer, "corrYZ");
+        mpack_write_float(&writer, stats->corr_yz);
+    }
 
     mpack_complete_map(&writer);
     mpack_writer_destroy(&writer);
@@ -335,10 +345,11 @@ static void config_smooth_parse(mpack_reader_t *reader, SmoothingConfig *conf, b
 enum stats_key_names {
     KEY_MIN, KEY_MAX, KEY_RMS, KEY_MEAN, KEY_VARIANCE,
     KEY_STD, KEY_SKEWNESS, KEY_KURTOSIS, KEY_MEDIAN, KEY_MAD,
-    KEY_STATS_COUNT
+    KEY_CORR, KEY_STATS_COUNT
 };
 static const char *stats_keys[KEY_STATS_COUNT] = {
-    "min", "max", "rms", "avg", "var", "std", "skew", "kurtosis", "med", "mad"
+    "min", "max", "rms", "avg", "var", "std",
+    "skew", "kurtosis", "med", "mad", "corr"
 };
 
 static void config_stats_serialize(mpack_writer_t *writer, const StatisticsConfig *conf)
@@ -365,6 +376,8 @@ static void config_stats_serialize(mpack_writer_t *writer, const StatisticsConfi
     mpack_write_bool(writer, conf->median);
     mpack_write_cstr(writer, stats_keys[KEY_MAD]);
     mpack_write_bool(writer, conf->mad);
+    mpack_write_cstr(writer, stats_keys[KEY_CORR]);
+    mpack_write_bool(writer, conf->correlation);
 
     mpack_complete_map(writer);
 }
@@ -397,6 +410,8 @@ static void config_stats_parse(mpack_reader_t *reader, StatisticsConfig *conf, b
                 conf_bool(reader, change, &conf->median, mpack_expect_bool(reader)); break;
             case KEY_MAD: 
                 conf_bool(reader, change, &conf->mad, mpack_expect_bool(reader)); break;
+            case KEY_CORR: 
+                conf_bool(reader, change, &conf->correlation, mpack_expect_bool(reader)); break;
             default: 
                 mpack_discard(reader); break;
         }

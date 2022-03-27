@@ -6,6 +6,7 @@
 #include "freertos/queue.h"
 #include "freertos/message_buffer.h"
 #include "freertos/semphr.h"
+#include "freertos/event_groups.h"
 #include "mpack.h"
 
 #define AXIS_COUNT                  3
@@ -66,6 +67,7 @@ typedef struct {
     bool kurtosis;
     bool median;
     bool mad;
+    bool correlation;
 } StatisticsConfig;
 
 typedef struct {
@@ -133,7 +135,11 @@ typedef struct {
     float kurtosis;
     float median;
     float mad;
+    float corr_xy;
+    float corr_xz;
+    float corr_yz;
 } Statistics;
+
 
 typedef enum {
     SPECTRUM_EVENT_NONE,
@@ -150,10 +156,19 @@ typedef struct {
 } SpectrumEvent;
 
 
+// Buffers
+typedef struct {
+    EventGroupHandle_t barrier;
+    EventBits_t task_mask;
+    float *diff[AXIS_COUNT];
+    float std[AXIS_COUNT];
+} Correlation;
+
 typedef struct {
     float *smooth;
     float *window;
     QueueHandle_t queue[AXIS_COUNT];
+    Correlation corr;
 } BufferPipelineKernel;
 
 typedef struct {
@@ -181,6 +196,7 @@ void bartlett_window(float *w, int n);
 void hann_window(float *w, int n);
 void hamming_window(float *w, int n);
 void blackman_window(float *w, int n);
+void window(WindowTypeConfig type, float *w, int n);
 
 // find_peaks.c
 void find_peaks_above_threshold(bool *peaks, float *y, int n, float t);
@@ -202,9 +218,7 @@ float standard_deviation(float variance);
 float moment(float *x, int n, int m, float mean);
 float skewness(float *x, int n, float mean);
 float kurtosis(float *x, int n, float mean);
-float correlation(float *x, float *y, int n,
-                  float x_avg, float y_avg, float x_std, float y_std);
-void welford_algorithm(float x, float *average, float *variance, int k);
+float correlation(float *x_diff, float *y_diff, int n, float x_std, float y_std);
 
 float quickselect(float *x, int n, int k);
 float median(float *x, int n);
@@ -219,9 +233,9 @@ void sender_release(Sender *sender);
 void process_release(BufferPipelineKernel *p);
 void axis_release(BufferPipelineAxis *p);
 
-
 void buffer_shift_left(float *buffer, uint16_t n, uint16_t k);
 void process_statistics(float *buffer, uint16_t n, Statistics *stats, const StatisticsConfig *c);
+void process_correlation(uint8_t axis, float *buffer, Statistics *stats, Correlation *corr, SamplingConfig *conf);
 int process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, const FFTTransformConfig *c);
 void process_smoothing(float *buffer, float *tmp, uint16_t n, float *kernel, const SmoothingConfig *c);
 void process_peak_finding(bool *peaks, float *spectrum, uint16_t bins, const EventDetectionConfig *c);

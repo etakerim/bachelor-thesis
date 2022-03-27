@@ -18,11 +18,6 @@ float maximum(float *x, int n)
     return k; 
 }
 
-float peek_to_peek(float minimum, float maximum)
-{
-    return maximum - minimum;
-}
-
 float root_mean_square(float *x, int n)
 {
     float k = 0;
@@ -79,12 +74,11 @@ float kurtosis(float *x, int n, float mean)
     return (m4 / (m2 * m2)) - 3; 
 }
 
-float correlation(float *x, float *y, int n, 
-                  float x_avg, float y_avg, float x_std, float y_std)
+float correlation(float *x_diff, float *y_diff, int n, float x_std, float y_std)
 {
     float sum = 0;
     for (int i = 0; i < n; i++)
-        sum += (x[i] - x_avg) * (y[i] - y_avg);
+        sum += x_diff[i] * y_diff[i];
     return (sum / n) / (x_std * y_std);
 }
 
@@ -158,6 +152,11 @@ float average_abs_deviation(float *x, int n, float mean)
     return k / n;
 }
 
+/*
+float peek_to_peek(float minimum, float maximum)
+{
+    return maximum - minimum;
+}
 
 // INIT with average = x, variance = 0, k = 1
 // Podeľ k pre výsledok variance
@@ -170,7 +169,16 @@ void welford_algorithm(float x, float *average, float *variance, int k)
     *variance = new_var;
 }
 
-/*
+
+float correlation(float *x, float *y, int n, 
+                  float x_avg, float y_avg, float x_std, float y_std)
+{
+    float sum = 0;
+    for (int i = 0; i < n; i++)
+        sum += (x[i] - x_avg) * (y[i] - y_avg);
+    return (sum / n) / (x_std * y_std);
+}
+
 int main(void)
 {
     int N = 11;
