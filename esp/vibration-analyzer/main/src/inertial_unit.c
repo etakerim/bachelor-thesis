@@ -140,8 +140,10 @@ static void imu_isr_install(InertialUnit *imu)
     }
 }*/
 
-bool imu_setup(InertialUnit *imu)
+esp_err_t imu_setup(InertialUnit *imu)
 {
+    esp_err_t err;
+
     spi_bus_config_t spi_bus = {
         .miso_io_num = imu->miso,
         .mosi_io_num = imu->mosi,
@@ -150,7 +152,8 @@ bool imu_setup(InertialUnit *imu)
         .quadhd_io_num = -1,
         .max_transfer_sz = 32
     };
-    spi_bus_initialize(imu->spi, &spi_bus, SPI_DMA_DISABLED);
+    err = spi_bus_initialize(imu->spi, &spi_bus, SPI_DMA_DISABLED);
+    if (err != ESP_OK) return err;
 
     spi_device_interface_config_t spi_iface = {
         .clock_speed_hz=SPI_BUS_FREQUENCY,
@@ -159,23 +162,20 @@ bool imu_setup(InertialUnit *imu)
         .spics_io_num=imu->xgcs,
         .queue_size=1
     };
-    spi_bus_add_device(imu->spi, &spi_iface, &imu->dev);
+    err = spi_bus_add_device(imu->spi, &spi_iface, &imu->dev);
+    if (err != ESP_OK) return err;
 
     spi_send(imu->dev, IMU_CTRL_REG8, IMU_REG8_IF_ADD_INC | IMU_REG8_SW_RESET);
     vTaskDelay(10 / portTICK_RATE_MS);
 
     uint8_t id = spi_recv(imu->dev, IMU_WHO_AM_I);
     if (id != IMU_XG_ID)
-        return false;
+        return ESP_ERR_NOT_FOUND;
 
     spi_send(imu->dev, IMU_CTRL_REG5_XL,
              IMU_REG5_Zen_XL | IMU_REG5_Yen_XL | IMU_REG5_Xen_XL);
-    
-    // imu_output_data_rate(imu, IMU_ODR_952HZ);
-    // imu_acceleration_range(imu, IMU_2G);
-    // imu_isr_install(imu);   FIFO configuration
 
-    return true;
+    return ESP_OK;
 }
 
 void imu_output_data_rate(InertialUnit *imu, uint16_t fs)

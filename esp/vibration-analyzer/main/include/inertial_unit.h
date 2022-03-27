@@ -50,7 +50,7 @@ typedef struct {
     AccelerationPrecision precision;
 } InertialUnit;
 
-bool imu_setup(InertialUnit *imu);
+esp_err_t imu_setup(InertialUnit *imu);
 void imu_acceleration_range(InertialUnit *imu, AccelerationRange range);
 void imu_output_data_rate(InertialUnit *imu, uint16_t fs);
 void imu_acceleration(InertialUnit *imu, float *x, float *y, float *z);

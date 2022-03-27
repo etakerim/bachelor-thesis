@@ -1,4 +1,5 @@
 #include "pipeline.h"
+#include "peripheral.h"
 #include "inertial_unit.h"
 
 
@@ -176,9 +177,58 @@ static void conf_float(mpack_reader_t *reader, bool *change, float *field, float
 }
 
 /* ------------------ CONFIGURATION ----------------- */
+enum login_key_names {KEY_LOGIN_SSID, KEY_LOGIN_PASSWORD, KEY_LOGIN_MQTT_URL, KEY_LOGIN_COUNT};
+static const char *login_keys[KEY_LOGIN_COUNT] = {"ssid", "pass", "url"};
+
+size_t login_serialize(char *msg, size_t size, const Provisioning *conf)
+{
+    mpack_writer_t writer;
+    mpack_writer_init(&writer, msg, size);
+    mpack_build_map(&writer);
+
+    mpack_write_cstr(&writer, login_keys[KEY_LOGIN_SSID]);
+    mpack_write_cstr(&writer, conf->wifi_ssid);
+    mpack_write_cstr(&writer, login_keys[KEY_LOGIN_PASSWORD]);
+    mpack_write_cstr(&writer, conf->wifi_pass);
+    mpack_write_cstr(&writer, login_keys[KEY_LOGIN_MQTT_URL]);
+    mpack_write_cstr(&writer, conf->mqtt_url);
+
+    mpack_complete_map(&writer);
+    mpack_writer_destroy(&writer);
+
+    return mpack_writer_buffer_used(&writer);
+}
+
+bool login_parse(char *msg, size_t size, Provisioning *conf)
+{
+    bool found[KEY_LOGIN_COUNT] = {0};
+    mpack_reader_t reader;
+    mpack_reader_init_data(&reader, msg, size);
+
+    for (size_t i = mpack_expect_map_max(&reader, MAX_MPACK_FIELDS_COUNT);
+            i > 0 && mpack_reader_error(&reader) == mpack_ok;
+            i--) {
+        switch (mpack_expect_key_cstr(&reader, login_keys, found, KEY_LOGIN_COUNT)) {
+            case KEY_LOGIN_SSID: 
+                mpack_expect_cstr(&reader, conf->wifi_ssid, MAX_CREDENTIALS_LENGTH); break;
+            case KEY_LOGIN_PASSWORD:
+                mpack_expect_cstr(&reader, conf->wifi_pass, MAX_CREDENTIALS_LENGTH); break;
+            case KEY_LOGIN_MQTT_URL:
+                mpack_expect_cstr(&reader, conf->mqtt_url, MAX_CREDENTIALS_LENGTH); break;
+            default: 
+                mpack_discard(&reader); break;
+        }
+    }
+
+    bool error = (mpack_reader_error(&reader) != mpack_ok);
+    mpack_reader_destroy(&reader);
+    return error;
+}
+
+
 static const char *sensor_range[IMU_RANGE_COUNT] = {"2g", "4g", "8g", "16g"};
-enum sensor_key_names {KEY_FS, KEY_RANGE, KEY_N, KEY_OVERLAP, KEY_SENSOR_COUNT};
-static const char *sensor_keys[KEY_SENSOR_COUNT] = {"fs", "range", "n", "overlap"};
+enum sensor_key_names {KEY_FS, KEY_RANGE, KEY_N, KEY_OVERLAP, KEY_AXIS, KEY_SENSOR_COUNT};
+static const char *sensor_keys[KEY_SENSOR_COUNT] = {"fs", "range", "n", "overlap", "axis"};
 
 static void config_sensor_serialize(mpack_writer_t *writer, const SamplingConfig *conf)
 {
@@ -192,6 +242,12 @@ static void config_sensor_serialize(mpack_writer_t *writer, const SamplingConfig
     mpack_write_u16(writer, conf->n);
     mpack_write_cstr(writer, sensor_keys[KEY_OVERLAP]);
     mpack_write_float(writer, conf->overlap);
+
+    mpack_write_cstr(writer, sensor_keys[KEY_AXIS]);
+    mpack_build_array(writer);
+    for (uint8_t i = 0; i < AXIS_COUNT; i++)
+        mpack_write_bool(writer, conf->axis[i]);
+    mpack_complete_array(writer);
 
     mpack_complete_map(writer);
 }
@@ -220,7 +276,16 @@ static void config_sensor_parse(mpack_reader_t *reader, SamplingConfig *conf, bo
                 conf_float(reader, change, &conf->overlap, 
                            mpack_expect_float_range(reader, 0, MAX_OVERLAP));
                 break;
-            default: mpack_discard(reader); break;
+            case KEY_AXIS:
+                mpack_expect_array_match(reader, AXIS_COUNT);
+                for (uint16_t i = 0; i < AXIS_COUNT && mpack_reader_error(reader) == mpack_ok; i++)
+                    conf->axis[i] = mpack_expect_bool(reader);
+                mpack_done_array(reader);
+                if (mpack_reader_error(reader) == mpack_ok)
+                    *change = true;
+                break;
+            default:
+                mpack_discard(reader); break;
         }
     }
 }

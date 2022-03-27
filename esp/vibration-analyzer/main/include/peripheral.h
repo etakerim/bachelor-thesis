@@ -10,13 +10,15 @@
 
 
 #define TOPIC_LENGTH                64
-#define LARGEST_MESSAGE             (((2 * MAX_BUFFER_SAMPLES) * (sizeof(float) + 1)) + (2 * TOPIC_LENGTH))
+#define MAX_CREDENTIALS_LENGTH      64
+#define LARGEST_MESSAGE             ((MAX_BUFFER_SAMPLES * (sizeof(float) + 1)) + (2 * TOPIC_LENGTH))
 #define DEVICE_MQTT_TOPIC           "imu/1/"
 #define DEVICE_MQTT_TOPIC_LENGTH    sizeof(DEVICE_MQTT_TOPIC) / sizeof(char)
 
 #define MQTT_TOPIC_REQUEST          DEVICE_MQTT_TOPIC "config/request"
 #define MQTT_TOPIC_RESPONSE         DEVICE_MQTT_TOPIC "config/response"
-#define MQTT_TOPIC_LOAD             DEVICE_MQTT_TOPIC "config/load"
+#define MQTT_TOPIC_CONFIG           DEVICE_MQTT_TOPIC "config/set"
+#define MQTT_TOPIC_LOGIN            DEVICE_MQTT_TOPIC "login/set"
 #define MQTT_TOPIC_SYSLOG           DEVICE_MQTT_TOPIC "syslog"
 #define MQTT_TOPIC_STREAM           DEVICE_MQTT_TOPIC "stream/samples"
 #define MQTT_TOPIC_STATS            DEVICE_MQTT_TOPIC "stream/statistics/"
@@ -38,15 +40,16 @@ typedef struct {
 
 
 typedef struct {
-    uint16_t max_send_samples;
-    QueueHandle_t raw_stream;
-} Sender;
-
-typedef struct {
     char stats[TOPIC_LENGTH];
     char spectra[TOPIC_LENGTH];
     char events[TOPIC_LENGTH];
 } MqttAxisTopics;
+
+typedef struct {
+    char wifi_ssid[MAX_CREDENTIALS_LENGTH];
+    char wifi_pass[MAX_CREDENTIALS_LENGTH];
+    char mqtt_url[MAX_CREDENTIALS_LENGTH];
+} Provisioning;
 
 
 void axis_mqtt_topics(MqttAxisTopics *topics, int axis);
@@ -55,9 +58,10 @@ void sender_release(Sender *sender);
 void message_send(Sender *sender, const char *topic, const char *content, size_t length);
 size_t message_recv(Sender *sender, char *topic, char *content, size_t length);
 
-void peripheral_setup(void);
-esp_err_t nvs_load_config(Configuration *conf);
+esp_err_t nvs_load(Configuration *conf, Provisioning *login);
 esp_err_t nvs_save_config(Configuration *conf);
+esp_err_t nvs_save_login(Provisioning *login);
+
 
 void openlog_setup(OpenLog *logger);
 int openlog_write(OpenLog *logger, char *str);
@@ -68,5 +72,8 @@ esp_mqtt_client_handle_t mqtt_setup(const char *broker_url);
 
 void clock_setup(uint16_t frequency, timer_isr_t action);
 void clock_reconfigure(uint16_t frequency);
+
+size_t login_serialize(char *msg, size_t size, const Provisioning *conf);
+bool login_parse(char *msg, size_t size, Provisioning *conf);
 
 #endif

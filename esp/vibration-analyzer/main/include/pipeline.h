@@ -15,6 +15,7 @@
 
 #define MAX_BUFFER_SAMPLES          1024
 #define MAX_FREQUENCY               952
+#define MAX_MQTT_URL                256
 #define MAX_OVERLAP                 0.8
 #define MAX_SMOOTH_REPEAT           8
 
@@ -45,6 +46,7 @@ typedef struct {
     AccelerationRange range;
     uint16_t n;
     float overlap;
+    bool axis[AXIS_COUNT];
 } SamplingConfig;
 
 typedef struct {
@@ -105,6 +107,7 @@ typedef struct {
     bool mqtt_stats;
     bool mqtt_spectra;
     bool mqtt_events;
+    char mqtt_url[MAX_MQTT_URL];
 } SaveFormatConfig;
 
 
@@ -161,6 +164,11 @@ typedef struct {
     SpectrumEvent *events;
 } BufferPipelineAxis;
 
+typedef struct {
+    uint16_t max_send_samples;
+    QueueHandle_t raw_stream;
+} Sender;
+
 
 #define square(x)   ((x) * (x))
 #define min(x, y)   (((x) < (y)) ? (x): (y))
@@ -204,6 +212,14 @@ float median_abs_deviation(float *x, int n, float med);
 float average_abs_deviation(float *x, int n, float mean);
 
 // pipeline.c
+void process_allocate(BufferPipelineKernel *p, Configuration *conf);
+void axis_allocate(BufferPipelineAxis *p, Configuration *conf);
+void sender_allocate(Sender *sender, uint16_t length);
+void sender_release(Sender *sender);
+void process_release(BufferPipelineKernel *p);
+void axis_release(BufferPipelineAxis *p);
+
+
 void buffer_shift_left(float *buffer, uint16_t n, uint16_t k);
 void process_statistics(float *buffer, uint16_t n, Statistics *stats, const StatisticsConfig *c);
 int process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, const FFTTransformConfig *c);
