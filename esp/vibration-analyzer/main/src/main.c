@@ -14,6 +14,31 @@
 #include "pipeline.h"
 #include "driver/uart.h"
 
+// Measurements: ---------
+// #define FACTORY_RESET            1
+// #define MEMORY_MEASUREMENT          1
+// Strategies: 1 axis - speed change with buffer size (@80MHz, 100Hz tick)
+// #define EXECUTION_TIME_ALGORITHMS   1
+// Strategies: 1 vs 3 axis, no corr vs. corr
+//#define EXECUTION_TIME_PIPELINE     1
+// Plot Minimal buffer size at given sampling frequency
+
+#ifdef EXECUTION_TIME_ALGORITHMS
+    #define MEASUREMENTS_CYCLES         100
+#endif
+
+#ifdef MEMORY_MEASUREMENT
+void memory_measure(int i)
+{
+    ESP_LOGI("main", "%d, %u, %u %u", i,
+        heap_caps_get_total_size(MALLOC_CAP_8BIT),
+        heap_caps_get_free_size(MALLOC_CAP_8BIT),
+        heap_caps_get_largest_free_block(MALLOC_CAP_8BIT)
+    );
+    vTaskDelay(1000 / portTICK_RATE_MS);
+}
+#endif
+
 /*
 Provisioning login = {
     .wifi_ssid="Montenegro",
@@ -272,7 +297,9 @@ void pipeline_task(void *args)
     size_t no = 0;
     uint16_t idx = 0;
     const uint16_t leftover = conf.sensor.n * (1 - conf.sensor.overlap);
-    uint64_t start, end;
+
+    size_t changes;
+    int bins = conf.sensor.n / 2;
 
     axis_allocate(&p, &conf);
     axis_mqtt_topics(&mqtt_topics, x);
@@ -283,7 +310,10 @@ void pipeline_task(void *args)
             if (++idx < conf.sensor.n)
                 continue;
 
+#ifdef EXECUTION_TIME_PIPELINE
+            uint64_t start, end, tp;
             start = esp_timer_get_time();
+#endif
 
             process_smoothing(p.stream, p.tmp_conv, conf.sensor.n, k->smooth, &conf.tsmooth);
 
@@ -296,20 +326,49 @@ void pipeline_task(void *args)
                 esp_mqtt_client_publish(mqttclient, mqtt_topics.stats, serialize, len, 0, 0);
             }
 
-            int bins = process_spectrum(p.spectrum, p.stream, k->window, conf.sensor.n, &conf.transform);
+#ifdef EXECUTION_TIME_ALGORITHMS
+            uint64_t t0 = esp_timer_get_time();
+            for (int i = 0; i < MEASUREMENTS_CYCLES; i++) {
+#endif
+            bins = process_spectrum(p.spectrum, p.stream, k->window, conf.sensor.n, &conf.transform);
+#ifdef EXECUTION_TIME_ALGORITHMS
+            }
+            uint64_t t1 = esp_timer_get_time();
+            ESP_LOGI("main", "S:, %llu, us", (t1 - t0) / MEASUREMENTS_CYCLES);
+#endif
+
             float bin_width = conf.sensor.frequency / (float)bins;
-            
             if (conf.logger.mqtt_spectra) {
                 size_t len = spectra_serialize(no, serialize, LARGEST_MESSAGE, p.spectrum, bins, conf.sensor.frequency);
                 esp_mqtt_client_publish(mqttclient, mqtt_topics.spectra, serialize, len, 0, 0);
             }
 
             process_smoothing(p.spectrum, p.tmp_conv, bins, k->smooth, &conf.fsmooth);
+
+#ifdef EXECUTION_TIME_ALGORITHMS
+            t0 = esp_timer_get_time();
+            for (int i = 0; i < MEASUREMENTS_CYCLES; i++) {
+#endif
             process_peak_finding(p.peaks, p.spectrum, bins, &conf.peak);
-            size_t changes = event_detection(
+#ifdef EXECUTION_TIME_ALGORITHMS
+            }
+            t1 = esp_timer_get_time();
+            ESP_LOGI("main", "P:, %llu, us", (t1 - t0) / MEASUREMENTS_CYCLES);
+#endif
+
+#ifdef EXECUTION_TIME_ALGORITHMS
+            t0 = esp_timer_get_time();
+            for (int i = 0; i < MEASUREMENTS_CYCLES; i++) {
+#endif
+            changes = event_detection(
                 no, p.events, p.peaks, p.spectrum, bins,
                 conf.peak.min_duration, conf.peak.time_proximity
             );
+#ifdef EXECUTION_TIME_ALGORITHMS
+            }
+            t1 = esp_timer_get_time();
+            ESP_LOGI("main", "E:, %llu, us", (t1 - t0) / MEASUREMENTS_CYCLES);
+#endif
 
             if (conf.logger.mqtt_events && changes > 0) {
                 size_t len = events_serialize(no, bin_width, serialize, LARGEST_MESSAGE, p.events, bins);
@@ -320,17 +379,32 @@ void pipeline_task(void *args)
             idx = conf.sensor.n - leftover;
             no++;
 
+#ifdef EXECUTION_TIME_PIPELINE
             end = esp_timer_get_time();
-            ESP_LOGI("main", "[%d] %llu us", x, end - start);  // / MEASUREMENTS
+            tp = end - start;
+            ESP_LOGI("main", "%d, %llu, us", x, tp);
+#endif
         }
     }
     axis_release(&p);
 }
 
+
+#ifdef FACTORY_RESET
 void app_main(void)
 {
-    //! ifdef nvs_save_config(&conf); nvs_save_login(&login); Factory reset for Debug
-    
+    // Factory reset for Debug
+    nvs_save_config(&conf);
+    nvs_save_login(&login);
+}
+#else
+void app_main(void)
+{
+#ifdef MEMORY_MEASUREMENT 
+    ESP_LOGI("main", "[MEM] Total, Free, Largest");
+    memory_measure(-1);
+#endif
+
     ESP_ERROR_CHECK(imu_setup(&imu));
     imu_output_data_rate(&imu, conf.sensor.frequency);
     imu_acceleration_range(&imu, conf.sensor.range);
@@ -341,8 +415,8 @@ void app_main(void)
         ESP_ERROR_CHECK(nvs_flash_init());      //  Retry nvs_flash_init
     }
 
-    // Load configuration from nvs or apply defaults
-    // nvs_load(&conf, &login);
+    // Load configuration from nvs or apply defaults (dont use in measurements)
+    nvs_load(&conf, &login);
 
     const bool mqtt_running = (
         conf.logger.mqtt_samples || conf.logger.mqtt_stats ||
@@ -369,49 +443,55 @@ void app_main(void)
         vTaskDelay(10000 / portTICK_RATE_MS);
     }
 
+#ifdef MEMORY_MEASUREMENT 
+    memory_measure(0);
+#endif 
     // Allocate common buffers
     dsps_fft2r_init_fc32(NULL, conf.sensor.n);
     process_allocate(&pipeline, &conf);
 
-    ESP_LOGI("main", "[x] Total:%u Free:%u Largest:%u",
-        heap_caps_get_total_size(MALLOC_CAP_8BIT),
-        heap_caps_get_free_size(MALLOC_CAP_8BIT),
-        heap_caps_get_largest_free_block(MALLOC_CAP_8BIT)
-    );
+#ifdef MEMORY_MEASUREMENT 
+    memory_measure(1);
+#endif 
 
     // Start up tasks
+#ifdef MEMORY_MEASUREMENT 
+    memory_measure(2);
+#endif
     xTaskCreate(sampler_task, "sampling", 1024, NULL, 1, &sample_tick);
+#ifdef MEMORY_MEASUREMENT 
+    memory_measure(10);
+#endif
+
     if (conf.sensor.axis[0])
         xTaskCreate(pipeline_task, "x_pipeline", 5500, (void *)0, 1, NULL);
+#ifdef MEMORY_MEASUREMENT 
+    memory_measure(11);
+#endif
     if (conf.sensor.axis[1])
         xTaskCreate(pipeline_task, "y_pipeline", 5500, (void *)1, 1, NULL);
+#ifdef MEMORY_MEASUREMENT
+    memory_measure(12);
+#endif
     if (conf.sensor.axis[2])
         xTaskCreate(pipeline_task, "z_pipeline", 5500, (void *)2, 1, NULL);
+#ifdef MEMORY_MEASUREMENT 
+    memory_measure(13);
+#endif
     if (conf.logger.openlog_raw_samples || conf.logger.mqtt_samples)
         xTaskCreate(logger_task, "logger", 4096, NULL, 1, NULL);
-   
-    vTaskDelay(1000 / portTICK_RATE_MS);
-    ESP_LOGI("main", "[log] Total:%u Free:%u Largest:%u",
-        heap_caps_get_total_size(MALLOC_CAP_8BIT),
-        heap_caps_get_free_size(MALLOC_CAP_8BIT),
-        heap_caps_get_largest_free_block(MALLOC_CAP_8BIT)
-    );
-    vTaskDelay(2000 / portTICK_RATE_MS);
+#ifdef MEMORY_MEASUREMENT 
+    memory_measure(20);
+#endif
 
     // Start sampling timer
     clock_setup(conf.sensor.frequency, isr_sample);
 }
+#endif
 
 /*
 https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/performance/speed.html
-ESP_LOGI("main", "[app main] Total:%u Free:%u Largest:%u",
-    heap_caps_get_total_size(MALLOC_CAP_8BIT),
-    heap_caps_get_free_size(MALLOC_CAP_8BIT),
-    heap_caps_get_largest_free_block(MALLOC_CAP_8BIT)
-);
-*/
-
-/* // DEBUG
+ // DEBUG
 for (int i = 0; i < conf.sensor.n; i++)
     ESP_LOGI("main", " %.3f", p.stream[i]);
 ESP_LOGI("main", "\n");
