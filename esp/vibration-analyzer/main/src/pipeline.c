@@ -38,7 +38,7 @@ void process_statistics(float *buffer, uint16_t n, Statistics *stats, const Stat
         stats->mad = median_abs_deviation(buffer, n, stats->median);
 }
 
-void process_correlation(uint8_t axis, float *buffer, Statistics *stats, Correlation *corr, SamplingConfig *conf)
+void process_correlation(uint8_t axis, const float *buffer, Statistics *stats, Correlation *corr, SamplingConfig *conf)
 {
     xEventGroupSync(corr->barrier, (1 << axis), corr->task_mask, portMAX_DELAY);
 
@@ -63,7 +63,7 @@ void process_correlation(uint8_t axis, float *buffer, Statistics *stats, Correla
         );
 }
 
-int process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, const FFTTransformConfig *c)
+int process_spectrum(float *spectrum, const float *buffer, const float *window, uint16_t n, const FFTTransformConfig *c)
 {
     const uint16_t bins = n / 2;
 
@@ -76,25 +76,29 @@ int process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, 
             dsps_fft2r_fc32_ae32(spectrum, n);
             dsps_bit_rev2r_fc32(spectrum, n);
             dsps_cplx2reC_fc32(spectrum, n);
+            for (uint16_t i = 0; i < bins; i++)
+                spectrum[i] = dsps_sqrtf_f32_ansi(
+                    square(spectrum[i*2]) + square(spectrum[i*2+1])
+                );
             break;
 
         case DCT:
-            for (uint16_t i = 0; i < n; i++) {
+            for (uint16_t i = 0; i < n; i++)
                 spectrum[i] = buffer[i] * window[i];
-            }
             dsps_dct_f32(spectrum, n);
+            for (uint16_t i = 0; i < bins; i++)
+                spectrum[i] *= 2;
             break;
         default:
             break;
     }
 
     if (c->log) {
-        for (uint16_t i = 0; i < bins; i++)
-            spectrum[i] = square(spectrum[i*2]) + square(spectrum[i*2+1]);
         float ref = maximum(spectrum, bins);
         for (uint16_t i = 0; i < bins; i++)
-            spectrum[i] = 10 * log10f(spectrum[i] / ref);
+            spectrum[i] = 20 * log10f(spectrum[i] / ref);
     }
+
     return bins;
 }
 
@@ -109,7 +113,7 @@ void process_smoothing(float *buffer, float *tmp, uint16_t n, float *kernel, con
     }
 }
 
-void process_peak_finding(bool *peaks, float *spectrum, uint16_t bins, const EventDetectionConfig *c)
+void process_peak_finding(bool *peaks, const float *spectrum, uint16_t bins, const EventDetectionConfig *c)
 {
     switch (c->strategy) {
         case THRESHOLD:

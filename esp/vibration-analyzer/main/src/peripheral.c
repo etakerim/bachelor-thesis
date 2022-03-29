@@ -238,7 +238,9 @@ void axis_allocate(BufferPipelineAxis *p, Configuration *conf)
 
 void sender_allocate(Sender *sender, uint16_t length)
 {
-    sender->max_send_samples = length;
+    // To by divisible by number of axis in order to accomodate whole
+    // sample as a vector
+    sender->max_send_samples = (length / AXIS_COUNT + 1) * AXIS_COUNT;
     sender->raw_stream = xQueueCreate(
         SAMPLES_QUEUE_SLOTS * sender->max_send_samples, sizeof(float)
     );

@@ -12,7 +12,7 @@
 #define AXIS_COUNT                  3
 
 #define MAX_MPACK_FIELDS_COUNT      20
-#define SAMPLES_QUEUE_SLOTS         2
+#define SAMPLES_QUEUE_SLOTS         3
 
 #define MAX_BUFFER_SAMPLES          1024
 #define MAX_FREQUENCY               952
@@ -199,26 +199,26 @@ void blackman_window(float *w, int n);
 void window(WindowTypeConfig type, float *w, int n);
 
 // find_peaks.c
-void find_peaks_above_threshold(bool *peaks, float *y, int n, float t);
-void find_peaks_neighbours(bool *peaks, float *y, int n, int k, float e, float h_rel, float h);
-void find_peaks_zero_crossing(bool *peaks, float *y, int n, int k, float slope);
-void find_peaks_hill_walker(bool *peaks, float *y, int n, float tolerance,
+void find_peaks_above_threshold(bool *peaks, const float *y, int n, float t);
+void find_peaks_neighbours(bool *peaks, const float *y, int n, int k, float e, float h_rel, float h);
+void find_peaks_zero_crossing(bool *peaks, const float *y, int n, int k, float slope);
+void find_peaks_hill_walker(bool *peaks, const float *y, int n, float tolerance,
                             int hole, float prominence, float isolation);
-size_t event_detection(size_t t, SpectrumEvent *events, bool *peaks, float *spectrum,
+size_t event_detection(size_t t, SpectrumEvent *events, const bool *peaks, const float *spectrum,
                        uint16_t bins, uint16_t min_duration, uint16_t time_proximity);
 
 // statistics.c
-float minimum(float *x, int n);
-float maximum(float *x, int n);
+float minimum(const float *x, int n);
+float maximum(const float *x, int n);
 float peek_to_peek(float minimum, float maximum);
-float root_mean_square(float *x, int n);
-float mean(float *x, int n);
-float variance(float *x, int n, float mean);
+float root_mean_square(const float *x, int n);
+float mean(const float *x, int n);
+float variance(const float *x, int n, float mean);
 float standard_deviation(float variance);
-float moment(float *x, int n, int m, float mean);
-float skewness(float *x, int n, float mean);
-float kurtosis(float *x, int n, float mean);
-float correlation(float *x_diff, float *y_diff, int n, float x_std, float y_std);
+float moment(const float *x, int n, int m, float mean);
+float skewness(const float *x, int n, float mean);
+float kurtosis(const float *x, int n, float mean);
+float correlation(const float *x_diff, const float *y_diff, int n, float x_std, float y_std);
 
 float quickselect(float *x, int n, int k);
 float median(float *x, int n);
@@ -235,10 +235,10 @@ void axis_release(BufferPipelineAxis *p);
 
 void buffer_shift_left(float *buffer, uint16_t n, uint16_t k);
 void process_statistics(float *buffer, uint16_t n, Statistics *stats, const StatisticsConfig *c);
-void process_correlation(uint8_t axis, float *buffer, Statistics *stats, Correlation *corr, SamplingConfig *conf);
-int process_spectrum(float *spectrum, float *buffer, float *window, uint16_t n, const FFTTransformConfig *c);
+void process_correlation(uint8_t axis, const float *buffer, Statistics *stats, Correlation *corr, SamplingConfig *conf);
+int process_spectrum(float *spectrum, const float *buffer, const float *window, uint16_t n, const FFTTransformConfig *c);
 void process_smoothing(float *buffer, float *tmp, uint16_t n, float *kernel, const SmoothingConfig *c);
-void process_peak_finding(bool *peaks, float *spectrum, uint16_t bins, const EventDetectionConfig *c);
+void process_peak_finding(bool *peaks, const float *spectrum, uint16_t bins, const EventDetectionConfig *c);
 
 // serialize.c
 size_t stream_serialize(char *msg, size_t size, float *stream, size_t n);

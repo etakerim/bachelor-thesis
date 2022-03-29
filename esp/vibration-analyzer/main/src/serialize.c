@@ -94,12 +94,12 @@ static void events_serialize_by_type(SpectrumEventAction action, mpack_writer_t 
     for (uint16_t i = 0; i < n; i++) {
         if (events[i].action == action) {
             mpack_build_map(writer);
+            mpack_write_cstr(writer, "i");
+            mpack_write_u16(writer, i);
             mpack_write_cstr(writer, "t");
             mpack_write_u32(writer, events[i].start);
             mpack_write_cstr(writer, "d");
             mpack_write_u32(writer, events[i].duration);
-            mpack_write_cstr(writer, "i");
-            mpack_write_u16(writer, i);
             mpack_write_cstr(writer, "h");
             mpack_write_float(writer, events[i].amplitude);
             mpack_complete_map(writer);
@@ -134,9 +134,9 @@ size_t events_serialize(size_t timestamp, float bin_width, char *msg, size_t siz
     mpack_write_cstr(&writer, "df");
     mpack_write_float(&writer, bin_width);
 
-    mpack_write_cstr(&writer, "start");
+    mpack_write_cstr(&writer, "A");
     events_serialize_by_type(SPECTRUM_EVENT_START, &writer, events, n);
-    mpack_write_cstr(&writer, "finish");
+    mpack_write_cstr(&writer, "Z");
     events_serialize_by_type(SPECTRUM_EVENT_FINISH, &writer, events, n);
 
     mpack_complete_map(&writer);
@@ -265,6 +265,7 @@ static void config_sensor_serialize(mpack_writer_t *writer, const SamplingConfig
 static void config_sensor_parse(mpack_reader_t *reader, SamplingConfig *conf, bool *change)
 {
     bool found[KEY_SENSOR_COUNT] = {0};
+    uint16_t j, n;
 
     for (size_t i = mpack_expect_map_max(reader, MAX_MPACK_FIELDS_COUNT);
             i > 0 && mpack_reader_error(reader) == mpack_ok;
@@ -279,8 +280,11 @@ static void config_sensor_parse(mpack_reader_t *reader, SamplingConfig *conf, bo
                          mpack_expect_enum(reader, sensor_range, IMU_RANGE_COUNT));
                 break;
             case KEY_N:
-                conf_u16(reader, change, &conf->n, 
-                         mpack_expect_u16_range(reader, 1, MAX_BUFFER_SAMPLES));
+                n = mpack_expect_u16_range(reader, 1, MAX_BUFFER_SAMPLES);
+                if (!dsp_is_power_of_two(n))
+                    mpack_reader_flag_error(reader, mpack_error_data);
+                else
+                    conf_u16(reader, change, &conf->n, n);
                 break;
             case KEY_OVERLAP: 
                 conf_float(reader, change, &conf->overlap, 
@@ -288,8 +292,8 @@ static void config_sensor_parse(mpack_reader_t *reader, SamplingConfig *conf, bo
                 break;
             case KEY_AXIS:
                 mpack_expect_array_match(reader, AXIS_COUNT);
-                for (uint16_t i = 0; i < AXIS_COUNT && mpack_reader_error(reader) == mpack_ok; i++)
-                    conf->axis[i] = mpack_expect_bool(reader);
+                for (j = 0; j < AXIS_COUNT && mpack_reader_error(reader) == mpack_ok; j++)
+                    conf->axis[j] = mpack_expect_bool(reader);
                 mpack_done_array(reader);
                 if (mpack_reader_error(reader) == mpack_ok)
                     *change = true;

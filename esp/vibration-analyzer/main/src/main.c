@@ -35,7 +35,7 @@ void memory_measure(int i)
         heap_caps_get_free_size(MALLOC_CAP_8BIT),
         heap_caps_get_largest_free_block(MALLOC_CAP_8BIT)
     );
-    vTaskDelay(1000 / portTICK_RATE_MS);
+    vTaskDelay(1500 / portTICK_RATE_MS);
 }
 #endif
 
@@ -72,14 +72,14 @@ OpenLog logger = {
     .rx = 5,
     .tx = 13,
     .baudrate = 9600,
-    .buffer = 1024
+    .buffer = MAX_BUFFER_SAMPLES * 2
 };
 
 Configuration conf = {
     .sensor = {
-        .frequency = 952,
+        .frequency = 128,
         .range = IMU_2G,
-        .n = 1024,
+        .n = 128,
         .overlap = 0.5,
         .axis = {true, true, true}
     },
@@ -102,9 +102,9 @@ Configuration conf = {
         .correlation = true
     },
     .transform = {
-        .window = HAMMING_WINDOW,
+        .window = HANN_WINDOW,
         .func = DFT,
-        .log = true
+        .log = false
     },
     .fsmooth = {
         .enable = false,
@@ -141,7 +141,7 @@ Configuration conf = {
         .mqtt_samples = false,
         .mqtt_stats = true,
         .mqtt_spectra = false,
-        .mqtt_events = true
+        .mqtt_events = false
     }
 };
 
@@ -189,14 +189,13 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
                     nvs_save_config(&c);
                     esp_mqtt_client_publish(client, MQTT_TOPIC_SYSLOG, "config applied", 0, 1, 0);
 
-                    if (conf.logger.mqtt_samples || conf.logger.mqtt_stats ||
-                            conf.logger.mqtt_spectra || conf.logger.mqtt_events)
-                        esp_wifi_deinit();
-
+                    esp_wifi_stop();
+	                vTaskDelay(200 / portTICK_PERIOD_MS);
+                    esp_wifi_deinit();
+                    vTaskDelay(200 / portTICK_PERIOD_MS);
                     if (conf.logger.openlog_raw_samples)
                         uart_driver_delete(logger.uart);
 
-                    vTaskDelay(500 / portTICK_RATE_MS);
                     esp_restart();
                 }
 
@@ -229,6 +228,7 @@ void sampler_task()
 {
     uint8_t i;
     float axis[AXIS_COUNT];
+    // uint64_t start = 0; uint64_t end;
 
     uint16_t subsample = 0;
     const bool logger = (
@@ -237,6 +237,8 @@ void sampler_task()
 
     while (1) {
         if (ulTaskNotifyTake(pdTRUE, portMAX_DELAY) == pdTRUE) {
+            // end = esp_timer_get_time();
+            // ESP_LOGI("main", "us %llu", end - start);
             imu_acceleration(&imu, &axis[0], &axis[1], &axis[2]);
 
             for (i = 0; i < AXIS_COUNT; i++) {
@@ -251,6 +253,7 @@ void sampler_task()
                     xQueueSend(sender.raw_stream, &axis[i], 0);
                 }
             }
+            // start = esp_timer_get_time();
         }
     }
 }
@@ -276,7 +279,7 @@ void logger_task()
 
             if (conf.logger.openlog_raw_samples) {
                 for (uint16_t i = 0; i < sender.max_send_samples; i += 3)
-                    printf("%g %g %g", stream[i+0], stream[i+1], stream[i+2]);
+                    printf("%.3f %.3f %.3f\n", stream[i+0], stream[i+1], stream[i+2]);
             }
         }
     }
@@ -331,6 +334,7 @@ void pipeline_task(void *args)
             for (int i = 0; i < MEASUREMENTS_CYCLES; i++) {
 #endif
             bins = process_spectrum(p.spectrum, p.stream, k->window, conf.sensor.n, &conf.transform);
+
 #ifdef EXECUTION_TIME_ALGORITHMS
             }
             uint64_t t1 = esp_timer_get_time();
@@ -393,49 +397,72 @@ void pipeline_task(void *args)
 #ifdef FACTORY_RESET
 void app_main(void)
 {
-    // Factory reset for Debug
-    nvs_save_config(&conf);
-    nvs_save_login(&login);
-}
-#else
-void app_main(void)
-{
-#ifdef MEMORY_MEASUREMENT 
-    ESP_LOGI("main", "[MEM] Total, Free, Largest");
-    memory_measure(-1);
-#endif
-
-    ESP_ERROR_CHECK(imu_setup(&imu));
-    imu_output_data_rate(&imu, conf.sensor.frequency);
-    imu_acceleration_range(&imu, conf.sensor.range);
-
     esp_err_t err = nvs_flash_init();
     if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());     // NVS partition was truncated and needs to be erased 
         ESP_ERROR_CHECK(nvs_flash_init());      //  Retry nvs_flash_init
     }
 
-    // Load configuration from nvs or apply defaults (dont use in measurements)
+    nvs_save_config(&conf);
+    nvs_save_login(&login);
+    ESP_LOGI("main", "Config written");
+}
+#else
+void app_main(void)
+{
+
+#ifdef MEMORY_MEASUREMENT 
+    ESP_LOGI("main", "[MEM] Total, Free, Largest");
+    memory_measure(-1);
+#endif
+
+    // Initialize Non-Volatile Storage 
+    esp_err_t err = nvs_flash_init();
+    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK(nvs_flash_erase());     // NVS partition was truncated and needs to be erased 
+        ESP_ERROR_CHECK(nvs_flash_init());      //  Retry nvs_flash_init
+    }
+
+    // Load configuration from nvs or apply defaults
     nvs_load(&conf, &login);
+    ESP_LOGI("main", "NEW: fs %u", conf.sensor.frequency);
+
+    // Initialize accelerometer
+    ESP_ERROR_CHECK(imu_setup(&imu));
+    imu_output_data_rate(&imu, conf.sensor.frequency);
+    imu_acceleration_range(&imu, conf.sensor.range);
+
+#ifdef MEMORY_MEASUREMENT 
+    memory_measure(0);
+#endif 
+    // Allocate common buffers (4x becaus of DCT table lookup)
+    dsps_fft2r_init_fc32(NULL, 4 * conf.sensor.n); 
+    process_allocate(&pipeline, &conf);
+
+#ifdef MEMORY_MEASUREMENT 
+    memory_measure(1);
+#endif 
 
     const bool mqtt_running = (
         conf.logger.mqtt_samples || conf.logger.mqtt_stats ||
         conf.logger.mqtt_spectra || conf.logger.mqtt_events
     );
-
     wifi_config_t wifi_login = {};
-    strcpy((char *)wifi_login.sta.ssid, (char *)login.wifi_ssid);
-    strcpy((char *)wifi_login.sta.password, (char *)login.wifi_pass);
-    wifi_login.sta.threshold.authmode = WIFI_AUTH_WPA2_PSK;
+
+    if (conf.logger.openlog_raw_samples || mqtt_running) {
+        sender_allocate(&sender, conf.sensor.n);
+    }
 
     if (mqtt_running) {
+        strcpy((char *)wifi_login.sta.ssid, (char *)login.wifi_ssid);
+        strcpy((char *)wifi_login.sta.password, (char *)login.wifi_pass);
+        wifi_login.sta.threshold.authmode = WIFI_AUTH_WPA2_PSK;
+
         ESP_ERROR_CHECK(esp_netif_init());                  // Initialize TCP/IP
         ESP_ERROR_CHECK(esp_event_loop_create_default());   // Initialize event loop
 
         wifi_connect(&wifi_login);
         mqttclient = mqtt_setup(login.mqtt_url);
-
-        sender_allocate(&sender, conf.sensor.n);
     }
 
     if (conf.logger.openlog_raw_samples) {
@@ -443,18 +470,7 @@ void app_main(void)
         vTaskDelay(10000 / portTICK_RATE_MS);
     }
 
-#ifdef MEMORY_MEASUREMENT 
-    memory_measure(0);
-#endif 
-    // Allocate common buffers
-    dsps_fft2r_init_fc32(NULL, conf.sensor.n);
-    process_allocate(&pipeline, &conf);
-
-#ifdef MEMORY_MEASUREMENT 
-    memory_measure(1);
-#endif 
-
-    // Start up tasks
+    // Start up tasks ----------------------------------
 #ifdef MEMORY_MEASUREMENT 
     memory_measure(2);
 #endif
@@ -488,38 +504,3 @@ void app_main(void)
     clock_setup(conf.sensor.frequency, isr_sample);
 }
 #endif
-
-/*
-https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-guides/performance/speed.html
- // DEBUG
-for (int i = 0; i < conf.sensor.n; i++)
-    ESP_LOGI("main", " %.3f", p.stream[i]);
-ESP_LOGI("main", "\n");
-
-ESP_LOGI("main", "MIN: %.4f", stats.min);
-ESP_LOGI("main", "MAX: %.4f", stats.max);
-ESP_LOGI("main", "RMS: %.4f", stats.rms);
-ESP_LOGI("main", "MEAN: %.4f", stats.mean);
-ESP_LOGI("main", "VAR: %.4f", stats.var);
-ESP_LOGI("main", "STD: %.4f", stats.std);
-ESP_LOGI("main", "SKEW: %.4f", stats.skew);
-ESP_LOGI("main", "KURT: %.4f", stats.kurtosis);
-ESP_LOGI("main", "MEDIAN: %.4f", stats.median);
-ESP_LOGI("main", "MAD: %.4f", stats.mad);
-ESP_LOGI("main", "\n");
-
-for (int i = 0; i < bins; i++)
-    ESP_LOGI("main", "%.3f", p.spectrum[i]);
-ESP_LOGI("main", "\n");
-
-for (int i = 0; i < bins; i++)
-    ESP_LOGI("main", "%d", p.peaks[i]);
-ESP_LOGI("main", "\n");
-
-for (int i = 0; i < bins; i++)
-    ESP_LOGI("main", "[%d t=%d d=%d prev=%d freq=%.3f tol=%.3f amp=%.3f]", 
-                p.events[i].action, p.events[i].start, p.events[i].duration, 
-                p.events[i].last_seen, p.events[i].frequency, 
-                p.events[i].tolerance, p.events[i].amplitude);
-ESP_LOGI("main", "\n\n---------");
-*/

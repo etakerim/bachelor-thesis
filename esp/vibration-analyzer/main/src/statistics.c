@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 
-float minimum(float *x, int n) 
+float minimum(const float *x, int n) 
 {
     float k = x[0];
     for (int i = 0; i < n; i++)
@@ -10,7 +10,7 @@ float minimum(float *x, int n)
     return k; 
 }
 
-float maximum(float *x, int n) 
+float maximum(const float *x, int n) 
 {
     float k = x[0];
     for (int i = 0; i < n; i++)
@@ -18,7 +18,7 @@ float maximum(float *x, int n)
     return k; 
 }
 
-float root_mean_square(float *x, int n)
+float root_mean_square(const float *x, int n)
 {
     float k = 0;
     for (int i = 0; i < n; i++)
@@ -27,7 +27,7 @@ float root_mean_square(float *x, int n)
 }
 
 
-float mean(float *x, int n)
+float mean(const float *x, int n)
 {
     float k = 0;
     for (int i = 0; i < n; i++)
@@ -35,7 +35,7 @@ float mean(float *x, int n)
     return k / n;
 }
 
-float variance(float *x, int n, float mean)
+float variance(const float *x, int n, float mean)
 {
     float k = 0;
     float diff = 0;
@@ -52,7 +52,7 @@ float standard_deviation(float variance)
     return sqrt(variance);
 }
 
-float moment(float *x, int n, int m, float mean)
+float moment(const float *x, int n, int m, float mean)
 {
     float k = 0;
     for (int i = 0; i < n; i++)
@@ -60,21 +60,21 @@ float moment(float *x, int n, int m, float mean)
     return k / n;
 }
 
-float skewness(float *x, int n, float mean)
+float skewness(const float *x, int n, float mean)
 {
     float m2 = variance(x, n, mean);
     float m3 = moment(x, n, 3, mean);
     return m3 / pow(m2, 1.5); 
 }
 
-float kurtosis(float *x, int n, float mean)
+float kurtosis(const float *x, int n, float mean)
 {
     float m2 = variance(x, n, mean);
     float m4 = moment(x, n, 4, mean);
     return (m4 / (m2 * m2)) - 3; 
 }
 
-float correlation(float *x_diff, float *y_diff, int n, float x_std, float y_std)
+float correlation(const float *x_diff, const float *y_diff, int n, float x_std, float y_std)
 {
     float sum = 0;
     for (int i = 0; i < n; i++)

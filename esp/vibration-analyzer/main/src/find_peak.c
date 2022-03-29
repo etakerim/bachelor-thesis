@@ -5,13 +5,13 @@
 #include "pipeline.h"
 
 
-void find_peaks_above_threshold(bool *peaks, float *y, int n, float t)
+void find_peaks_above_threshold(bool *peaks, const float *y, int n, float t)
 {
     for (int i = 0; i < n; i++)
         peaks[i] = (y[i] >= t);
 }
 
-void find_peaks_neighbours(bool *peaks, float *y, int n, int k, float e, float h_rel, float h)
+void find_peaks_neighbours(bool *peaks, const float *y, int n, int k, float e, float h_rel, float h)
 {
     for (int i = 0; i < n; i++) {
         peaks[i] = false;
@@ -37,7 +37,7 @@ void find_peaks_neighbours(bool *peaks, float *y, int n, int k, float e, float h
     }
 }
 
-void find_peaks_zero_crossing(bool *peaks, float *y, int n, int k, float slope)
+void find_peaks_zero_crossing(bool *peaks, const float *y, int n, int k, float slope)
 {
     for (int i = 0; i < n; i++) {
         peaks[i] = false;
@@ -53,7 +53,7 @@ void find_peaks_zero_crossing(bool *peaks, float *y, int n, int k, float slope)
     }
 }
 
-void find_peaks_hill_walker(bool *peaks, float *y, int n, float tolerance, int hole, float prominence, float isolation)
+void find_peaks_hill_walker(bool *peaks, const float *y, int n, float tolerance, int hole, float prominence, float isolation)
 {
     int i_change = 0;
     int prev_peak = 0;
@@ -102,7 +102,7 @@ void find_peaks_hill_walker(bool *peaks, float *y, int n, float tolerance, int h
     }
 }
 
-size_t event_detection(size_t t, SpectrumEvent *events, bool *peaks, float *spectrum,
+size_t event_detection(size_t t, SpectrumEvent *events, const bool *peaks, const float *spectrum,
                      uint16_t bins, uint16_t min_duration, uint16_t time_proximity)
 {
     size_t changes = 0;
