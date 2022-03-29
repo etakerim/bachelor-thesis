@@ -102,38 +102,70 @@ void find_peaks_hill_walker(bool *peaks, const float *y, int n, float tolerance,
     }
 }
 
+void event_init(SpectrumEvent *events, uint16_t bins)
+{
+    for (uint16_t i = 0; i < bins; i++) {    
+        events[i].start = 0;
+        events[i].last_seen = -1;
+        events[i].duration = 0;
+        events[i].amplitude = 0;
+    }
+}
+
+// Online algoritmus (neumožňuje prechod bezo zmeny, počíta s o jedna sa zvyšujúcim t)
 size_t event_detection(size_t t, SpectrumEvent *events, const bool *peaks, const float *spectrum,
-                     uint16_t bins, uint16_t min_duration, uint16_t time_proximity)
+                       uint16_t bins, uint16_t min_duration, uint16_t time_proximity)
 {
     size_t changes = 0;
+    // Minimal duration = najkratšia súvislá postupnosť 1, aby bola vo vedierku vytvorená udalosť
+    // Time proximity = aj keď je medzera núl a bola predtým 1, nezruš udalosť, ale počkaj na možnú jednotku
 
     for (uint16_t i = 0; i < bins; i++) {
-        events[i].action = SPECTRUM_EVENT_NONE;
-    }
-
-    for (uint16_t i = 0; i < bins; i++) {
-        if (events[i].duration == min_duration) {
-            events[i].action = SPECTRUM_EVENT_START;
-            events[i].start = t - events[i].duration;
-            events[i].amplitude = spectrum[i];
-            changes++;
+        // Odstráň predošlú notifikáciu o udalosti vo frekvečnom vedierku
+        if (events[i].action == SPECTRUM_EVENT_FINISH) {
+            events[i].start = 0;
+            events[i].last_seen = -1;  // -1 znamená, že nebola videná ešte jednotka
+            events[i].duration = 0;
+            events[i].amplitude = 0;
         }
+        events[i].action = SPECTRUM_EVENT_NONE;
 
         if (peaks[i]) {
-           events[i].duration += max(1, events[i].last_seen);
-           events[i].last_seen = 0;
-           events[i].amplitude += (spectrum[i] - events[i].amplitude) / events[i].duration;
-
-        } else {
             events[i].last_seen++;
-            if (events[i].last_seen >= time_proximity) {
+            uint32_t fastforward = max(1, events[i].last_seen);
+
+            // Detekcia udalosti po prekročení minimálneho trvania
+            if (events[i].duration < min_duration && 
+                    events[i].duration + fastforward >= min_duration) {
+
+                events[i].action = SPECTRUM_EVENT_START;
+                events[i].start = t - events[i].duration - fastforward + 1;
+                changes++;
+            }
+
+            // Súvislý výskyt vrcholov vo vedierku zvyšuje trvanie udalosti
+            events[i].duration += fastforward;
+            events[i].amplitude += (spectrum[i] - events[i].amplitude) / events[i].duration;
+            events[i].last_seen = 0;    // Výskyt vrchola 'n' okien dozadu
+
+        } else if (events[i].last_seen >= 0) {
+            // Ak predtým bola videná 1-tka (vrchol) zvýš last_seen
+            events[i].last_seen++;
+            // Ak sú 1-tky príliš vzdialené, odznač udalosť
+            if (events[i].last_seen > time_proximity) { 
                 if (events[i].duration >= min_duration) {
+                    // Vo vedierku nie je detegovaný vrchol
                     events[i].action = SPECTRUM_EVENT_FINISH;
                     changes++;
+
+                } else {
+                    // udalosť je príliš krátka a nebol medzičasom nájdený iný vrchol
+                    events[i].start = 0;
+                    events[i].last_seen = -1;  // -1 znamená, že nebola videná ešte jednotka
+                    events[i].duration = 0;
+                    events[i].amplitude = 0;
                 }
-                events[i].duration = 0;
             }
-            events[i].amplitude = 0;
         }
     }
 

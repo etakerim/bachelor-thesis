@@ -233,7 +233,7 @@ void axis_allocate(BufferPipelineAxis *p, Configuration *conf)
     p->spectrum = malloc(2 * n * sizeof(*p->spectrum));
     p->peaks = malloc(bins * sizeof(*p->peaks));
     p->events = malloc(bins * sizeof(*p->events));
-    memset(p->events, 0, bins * sizeof(*p->events));
+    event_init(p->events, bins);
 }
 
 void sender_allocate(Sender *sender, uint16_t length)
