@@ -80,27 +80,25 @@ typedef enum IMURangeRegister {
 
 static void spi_send(spi_device_handle_t spi, uint8_t reg, uint8_t value)
 {
-    spi_transaction_t t;
-    memset(&t, 0, sizeof(t));
-
     uint8_t buffer[2] = {reg & 0x7F, value};
-    t.length = 8 * sizeof(buffer);
-    t.tx_buffer = buffer;
 
+    spi_transaction_t t = {
+        .length = 8 * sizeof(buffer),
+        .tx_buffer = buffer
+    };
     spi_device_transmit(spi, &t);
 }
 
 static void spi_read_buffer(spi_device_handle_t spi, uint8_t reg, uint8_t len, uint8_t *buffer)
 {
-    spi_transaction_t t;
-    memset(&t, 0, sizeof(t));
-
     uint8_t tx_buffer[1] = {reg | 0x80};
-    t.length = 8 * sizeof(tx_buffer);
-    t.rxlength = 8 * len;
-    t.tx_buffer = tx_buffer;
-    t.rx_buffer = buffer;
 
+    spi_transaction_t t = {
+        .length = 8 * sizeof(tx_buffer),
+        .rxlength = 8 * len,
+        .tx_buffer = tx_buffer,
+        .rx_buffer = buffer
+    };
     spi_device_transmit(spi, &t);
 }
 
