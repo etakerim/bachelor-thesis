@@ -1,0 +1,35 @@
+https://www.fiit.stuba.sk/studium/bakalarsky-projekt/bp.html?page_id=1862
+
+Opis riešenia
+Táto časť bakalárskeho projektu obsahuje opis výsledkov riešenia jednotlivých etáp projektu. V prípade, že záverečný projekt nerieši všetky etapy, malo by byť v príslušnej časti uvedené kto, resp. kde sa príslušná etapa rieši/riešila/bude riešiť.
+Typické etapy riešenia pri tvorbe softvérového systému:
+
+    špecifikácia požiadaviek
+    návrh
+    implementácia (ak to zadanie požaduje)
+    overenie riešenia
+
+Podľa možností treba vychádzať zo známych prístupov (napr. pri softvérových projektoch štruktúrovaný alebo objektovo orientovaný prístup) a techník (napr. blokové schémy, vývojové diagramy, UML, entito-relačné diagramy atď.). Táto časť práce závisí od konkrétneho zadania.
+Je dôležité prezentovať návrhové rozhodnutia, alternatívy, ktoré sa zvažovali pri riešení a samotný návrh riešenia zadaného problému. Štruktúrovanie textu tejto časti DP by malo vychádzať zo zadanej úlohy, ktorá sa rieši. Najmä v tejto časti študent preukazuje tvorivý prístup k riešeniu problémov a kritické myslenie.
+
+Zhodnotenie
+Hlavné výsledky práce, prípadne porovnanie s inými prístupmi, možné smery ďalšieho rozvíjania.
+Tu sa musí presne špecifikovať, čo je pôvodné a čo riešiteľ prebral.
+
+Technická dokumentácia
+Obsah technickej dokumentácie závisí od povahy riešeného problému. Uvádza sa technická dokumentácia k systému (počítačový, softvérový), ktorý bol vytvorený v rámci riešenia projektu (ak sa toto v zadaní požadovalo). Samotný obsah a rozsah závisí aj od účelu vytvoreného systému (produkt, experimentovanie a pod.)
+V prípade softvérového systému technická dokumentácia spravidla obsahuje časti v náväznosti na etapy tvorby softvérového systému:
+
+    dokumentáciu k etape špecifikácie požiadaviek
+    dokumentáciu k etape návrhu projektu
+    dokumentáciu k implementácii
+    v prípade, že súčasťou riešenia sú programy, dokumentáciu k implementácii tvoria zdrojové texty programov
+    v prípade, že súčasťou riešenia je návrh zariadenia, dokumentáciu k implementácii tvorí technická dokumentácia (schémy zapojenia, návrh dosiek plošných spojov, schémy rozmiestnenia súčiastok, zoznam použitých súčiastok, opis konektorov atď.)
+    dokumentáciu k overeniu riešenia
+    dokumentáciu k používaniu a údržbe (návody na použitie a údržbu projektu)
+
+Zoznam použitej literatúry
+Zoznam použitej literatúry musí obsahovať všetky náležitosti, tak ako uvádza norma STN ISO 690. V texte bakalárskeho projektu sa musia nachádzať odvolávky na každú citovanú literatúru.
+
+Elektronické médium obsahujúce vytvorený produkt spolu s dokumentáciou a anotáciou
+Na médiu musia byť súbory v zhode so zadaním bakalárskeho projektu a samotný text bakalárskeho projektu. Treba, aby elektronické médium obsahovalo informáciu o obsahu (zoznam adresárov, súborov a ich účel) v prehľadnej forme. 

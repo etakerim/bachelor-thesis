@@ -4,8 +4,8 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>330</x>
-      <y>510</y>
+      <x>550</x>
+      <y>480</y>
       <w>140</w>
       <h>80</h>
     </coordinates>
@@ -17,31 +17,31 @@ MQTT Broker</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>390</x>
-      <y>460</y>
+      <x>610</x>
+      <y>550</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=()-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>380</x>
-      <y>410</y>
+      <x>600</x>
+      <y>610</y>
       <w>50</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=)-</panel_attributes>
-    <additional_attributes>20.0;40.0;20.0;10.0</additional_attributes>
+    <additional_attributes>20.0;20.0;20.0;50.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>330</x>
-      <y>340</y>
-      <w>140</w>
+      <x>550</x>
+      <y>660</y>
+      <w>150</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>symbol=component
@@ -53,19 +53,20 @@ externý klient</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>460</x>
-      <y>540</y>
+      <x>680</x>
+      <y>500</y>
       <w>100</w>
-      <h>30</h>
+      <h>40</h>
     </coordinates>
-    <panel_attributes>lt=()-</panel_attributes>
-    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=()-
+MQTT</panel_attributes>
+    <additional_attributes>80.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>620</x>
-      <y>300</y>
+      <x>1190</x>
+      <y>470</y>
       <w>140</w>
       <h>90</h>
     </coordinates>
@@ -77,21 +78,8 @@ WiFi Station</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>620</x>
-      <y>510</y>
-      <w>140</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>symbol=component
-
-ESP-MQTT</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>1010</x>
-      <y>690</y>
+      <x>840</x>
+      <y>660</y>
       <w>140</w>
       <h>90</h>
     </coordinates>
@@ -104,8 +92,8 @@ MessagePack
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>860</x>
-      <y>300</y>
+      <x>710</x>
+      <y>280</y>
       <w>140</w>
       <h>90</h>
     </coordinates>
@@ -118,52 +106,30 @@ konfigurácie</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1070</x>
-      <y>660</y>
-      <w>30</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>lt=()-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>750</x>
-      <y>550</y>
-      <w>70</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>lt=()-</panel_attributes>
-    <additional_attributes>50.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>680</x>
-      <y>420</y>
+      <x>900</x>
+      <y>610</y>
       <w>30</w>
       <h>70</h>
     </coordinates>
-    <panel_attributes>lt=&lt;.</panel_attributes>
+    <panel_attributes>lt=()-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>530</y>
-      <w>100</w>
-      <h>50</h>
+      <x>1060</x>
+      <y>500</y>
+      <w>90</w>
+      <h>40</h>
     </coordinates>
-    <panel_attributes>lt=)-</panel_attributes>
-    <additional_attributes>20.0;20.0;80.0;20.0</additional_attributes>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>860</x>
-      <y>130</y>
+      <x>710</x>
+      <y>110</y>
       <w>140</w>
       <h>90</h>
     </coordinates>
@@ -176,8 +142,8 @@ storage (NVS)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>920</x>
-      <y>210</y>
+      <x>770</x>
+      <y>190</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
@@ -187,8 +153,8 @@ storage (NVS)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>910</x>
-      <y>250</y>
+      <x>760</x>
+      <y>230</y>
       <w>50</w>
       <h>70</h>
     </coordinates>
@@ -198,58 +164,59 @@ storage (NVS)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1120</x>
-      <y>520</y>
+      <x>1210</x>
+      <y>280</y>
       <w>140</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>symbol=component
 
 OpenLog
-(UART)</panel_attributes>
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1080</x>
-      <y>300</y>
+      <x>960</x>
+      <y>280</y>
       <w>140</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>symbol=component
-
-Dátovod
-(Pipeline)</panel_attributes>
+Pipeline
+spracovania
+signálu</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1180</x>
-      <y>440</y>
-      <w>30</w>
-      <h>100</h>
+      <x>1150</x>
+      <y>300</y>
+      <w>80</w>
+      <h>40</h>
     </coordinates>
-    <panel_attributes>lt=()-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+    <panel_attributes>lt=()-
+UART</panel_attributes>
+    <additional_attributes>10.0;20.0;60.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>990</x>
-      <y>340</y>
-      <w>60</w>
+      <x>840</x>
+      <y>320</y>
+      <w>90</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=()-</panel_attributes>
-    <additional_attributes>40.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1030</x>
-      <y>330</y>
+      <x>910</x>
+      <y>310</y>
       <w>70</w>
       <h>50</h>
     </coordinates>
@@ -259,23 +226,22 @@ Dátovod
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1080</x>
-      <y>130</y>
+      <x>1210</x>
+      <y>110</y>
       <w>140</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>symbol=component
 
 Akcelerometer
-LSM9DS1
-(SPI)</panel_attributes>
+LSM9DS1</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1140</x>
-      <y>210</y>
+      <x>1020</x>
+      <y>190</y>
       <w>30</w>
       <h>60</h>
     </coordinates>
@@ -285,8 +251,8 @@ LSM9DS1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1130</x>
-      <y>250</y>
+      <x>1010</x>
+      <y>230</y>
       <w>50</w>
       <h>70</h>
     </coordinates>
@@ -296,22 +262,21 @@ LSM9DS1
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>860</x>
-      <y>520</y>
-      <w>140</w>
+      <x>820</x>
+      <y>480</y>
+      <w>180</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>symbol=component
 
-Sieťová
-komunikácia</panel_attributes>
+ESP MQTT</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>800</x>
-      <y>540</y>
+      <x>760</x>
+      <y>500</y>
       <w>80</w>
       <h>50</h>
     </coordinates>
@@ -321,122 +286,116 @@ komunikácia</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>920</x>
-      <y>600</y>
-      <w>50</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>lt=)-</panel_attributes>
-    <additional_attributes>20.0;30.0;20.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>880</x>
-      <y>380</y>
-      <w>50</w>
+      <x>770</x>
+      <y>360</y>
+      <w>170</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>lt=)-</panel_attributes>
-    <additional_attributes>20.0;70.0;20.0;10.0</additional_attributes>
+    <additional_attributes>140.0;70.0;140.0;40.0;10.0;40.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1170</x>
-      <y>380</y>
-      <w>50</w>
-      <h>80</h>
+      <x>1090</x>
+      <y>300</y>
+      <w>80</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=)-</panel_attributes>
-    <additional_attributes>20.0;50.0;20.0;10.0</additional_attributes>
+    <additional_attributes>50.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>440</y>
+      <w>30</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=()-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>890</x>
-      <y>460</y>
-      <w>30</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=()-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>950</x>
-      <y>460</y>
-      <w>30</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=()-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>940</x>
-      <y>380</y>
-      <w>210</w>
+      <y>360</y>
+      <w>140</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>lt=)-</panel_attributes>
-    <additional_attributes>20.0;70.0;20.0;50.0;190.0;50.0;190.0;10.0</additional_attributes>
+    <additional_attributes>20.0;70.0;20.0;40.0;120.0;40.0;120.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>680</x>
-      <y>380</y>
-      <w>30</w>
-      <h>60</h>
+      <x>1130</x>
+      <y>500</y>
+      <w>80</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=()-</panel_attributes>
-    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>670</x>
-      <y>460</y>
+      <x>990</x>
+      <y>500</y>
+      <w>100</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=)-</panel_attributes>
+    <additional_attributes>70.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>890</x>
+      <y>560</y>
       <w>50</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=)-</panel_attributes>
-    <additional_attributes>20.0;20.0;20.0;50.0</additional_attributes>
+    <additional_attributes>20.0;40.0;20.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>960</x>
+      <y>110</y>
+      <w>140</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+
+Časovač
+Vzorkovania</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1170</x>
-      <y>600</y>
-      <w>50</w>
-      <h>60</h>
+      <x>1090</x>
+      <y>140</y>
+      <w>80</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>lt=)-</panel_attributes>
-    <additional_attributes>20.0;30.0;20.0;10.0</additional_attributes>
+    <additional_attributes>50.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>930</x>
-      <y>630</y>
-      <w>160</w>
-      <h>60</h>
+      <x>1150</x>
+      <y>140</y>
+      <w>80</w>
+      <h>50</h>
     </coordinates>
-    <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>140.0;40.0;10.0;40.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1080</x>
-      <y>630</y>
-      <w>130</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>10.0;40.0;110.0;40.0;110.0;10.0</additional_attributes>
+    <panel_attributes>lt=()-
+SPI
+</panel_attributes>
+    <additional_attributes>10.0;20.0;60.0;20.0</additional_attributes>
   </element>
 </diagram>

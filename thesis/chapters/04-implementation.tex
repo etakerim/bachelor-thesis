@@ -1,0 +1,27 @@
+\chapter{Implementácia}
+MQTT topics:
+
+Prefix: \verb|imu/[id]/|
+\begin{verbatim}
+config/request
+config/response
+config/set
+login/set
+syslog
+
+stream/samples
+stream/statistics/+
+stream/frequency/+
+event/frequency/+
+\end{verbatim}
+Vzorec na výpočet spotreby dynamickej pamäte
+
+Globálnej pre pipeline
+$$ (n_smooth \cdot sizeof(float)) + (n \cdot sizeof(float)) + (fs \cdot 3 \cdot sizeof(float)) + (n \cdot 3 \cdot sizeof(float)) $$
+
+Pre každú os
+$$ (n \cdot sizeof(float)) + ((n + max(Fsmooth, Tsmooth) - 1) \cdot sizeof(float)) + (2 \cdot n \cdot sizeof(float)) + (n / 2  \cdot sizeof(float)) + (n / 2 * sizeof(event = 5*4))  $$
+
+Plus ešte pamäť pre sendera
+
+\emptypage
