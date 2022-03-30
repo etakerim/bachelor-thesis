@@ -104,7 +104,8 @@ void find_peaks_hill_walker(bool *peaks, const float *y, int n, float tolerance,
 
 void event_init(SpectrumEvent *events, uint16_t bins)
 {
-    for (uint16_t i = 0; i < bins; i++) {    
+    for (uint16_t i = 0; i < bins; i++) {
+        events[i].start = SPECTRUM_EVENT_NONE;
         events[i].start = 0;
         events[i].last_seen = -1;
         events[i].duration = 0;
