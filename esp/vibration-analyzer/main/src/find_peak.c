@@ -23,7 +23,7 @@ void find_peaks_neighbours(bool *peaks, const float *y, int n, int k, float e, f
         int b = min(i + k, n);
         float valley = y[a];
 
-        for (int j = a; i < b; i++) {
+        for (int j = a; j < b; j++) {
             if (i != j) {
                 if (y[j] - y[i] > e)
                     possible_peak = false;
