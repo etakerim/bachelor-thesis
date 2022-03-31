@@ -68,18 +68,18 @@ InertialUnit imu = {
 
 OpenLog logger = {
     .vcc = 25,
-    .uart = 0, 
+    .uart = 0,
     .rx = 5,
     .tx = 13,
-    .baudrate = 9600,
+    .baudrate = 115200,
     .buffer = MAX_BUFFER_SAMPLES * 2
 };
 
 Configuration conf = {
     .sensor = {
-        .frequency = 128,
+        .frequency = 64,
         .range = IMU_2G,
-        .n = 128,
+        .n = 64,
         .overlap = 0.5,
         .axis = {true, true, true}
     },
@@ -99,12 +99,12 @@ Configuration conf = {
         .kurtosis = true,
         .median = true,
         .mad = true,
-        .correlation = true
+        .correlation = false
     },
     .transform = {
         .window = HANN_WINDOW,
         .func = DFT,
-        .log = false
+        .log = true
     },
     .fsmooth = {
         .enable = false,
@@ -112,8 +112,8 @@ Configuration conf = {
         .repeat = 1
     },
     .peak = {
-        .min_duration = 1,
-        .time_proximity = 0,
+        .min_duration = 4,
+        .time_proximity = 5,
         .strategy = THRESHOLD,
         .threshold = {
             .t = -15
@@ -425,7 +425,6 @@ void app_main(void)
 
     // Load configuration from nvs or apply defaults
     nvs_load(&conf, &login);
-    ESP_LOGI("main", "NEW: fs %u", conf.sensor.frequency);
 
     // Initialize accelerometer
     ESP_ERROR_CHECK(imu_setup(&imu));
