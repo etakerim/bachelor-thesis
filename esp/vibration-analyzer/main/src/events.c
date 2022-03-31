@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
-#include "pipeline.h"
+#include "events.h"
 
 
 void find_peaks_above_threshold(bool *peaks, const float *y, int n, float t)
@@ -92,10 +92,9 @@ void find_peaks_hill_walker(bool *peaks, const float *y, int n, float tolerance,
 
             } else if (prev_uphill && !uphill && fabs(y[i - hole] - y_valley) > prominence) {
                 if (!found_prev_peak || (found_prev_peak && i_change - prev_peak > isolation)) {
-                    // y_peak = y[i_change];
-                    prev_peak = prev_peak;
+                    prev_peak = i_change;
                     found_prev_peak = true;
-                    peaks[i] = true;
+                    peaks[i_change] = true;
                 }
             }
         }

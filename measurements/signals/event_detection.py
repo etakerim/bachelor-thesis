@@ -18,11 +18,11 @@ def find_peaks_neighbours(y: np.array, k: int, e: float, h_rel: float, h: float)
     :param k: Počet najbližších uvažovaných susedov na každú zo strán od vrchola [i-k; i+k]. Rozsah: [1, length(y) / 2]
     :param e: Relatívna tolerancia vyššieho bodu v susedstve od vrchola. Rozsah: [0, max{y}]
     :param h_rel: Relatívna výška vrcholu v susedstve. Rozsah: [0, max{y}]
-    :param h: Absolútna amplitúda. Rozsah: [0, max{y}]
+    :param h: Absolútna amplitúda. Rozsah: [min{y}, max{y}]
     """
     peaks = []
     for i in range(len(y)):
-        if abs(y[i]) >= h:
+        if y[i] >= h:
             possible_peak = True
             a = max(i - k, 0)
             b = min(i + k, len(y))
@@ -35,7 +35,7 @@ def find_peaks_neighbours(y: np.array, k: int, e: float, h_rel: float, h: float)
                     if y[j] < valley:
                         valley = y[j]
 
-            if possible_peak is True and y[i] - valley > h_rel:
+            if possible_peak is True and y[i] - valley >= h_rel:
                 peaks.append(i)
     return peaks
 
