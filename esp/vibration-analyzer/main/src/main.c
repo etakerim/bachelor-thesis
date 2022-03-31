@@ -119,7 +119,7 @@ Configuration conf = {
             .t = -15
         },
         .neighbours = {
-            .k = 8,
+            .k = 9,
             .e = 0,
             .h_rel = 10,
             .h = -50

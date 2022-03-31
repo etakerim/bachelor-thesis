@@ -3,7 +3,8 @@ thesis/*/build
 *.elf
 *.bin
 *.o
-*/.ipynb_checkpoints/*
+.ipynb_checkpoints
 measurements/datasets/r-das
-measurements/esp32-demo/.pio/build/
 esp/*/build/*
+__pycache__
+.vscode

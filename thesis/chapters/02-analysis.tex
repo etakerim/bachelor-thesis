@@ -433,7 +433,7 @@ $k$ hodnôt na obe strany, ak existujú.
 \Function{Find\_Peaks\_Neighbours}{$y$, $k$, $\varepsilon$, $h_{rel}$, $h$}
 	\State $peaks \gets \left[\; \right]$ 	\Comment{Zoznam indexov nájdených špičiek v signále $y$}
 	\For{$i \gets 0$ \textbf{to} $length(y)$}
-		\If {$|y[i]| \geq h$}  						\Comment{Preskoč príliš nízke magnitúdy}
+		\If {$y[i] \geq h$}  						\Comment{Preskoč príliš nízke amplitúdy}
 			\State $possible\_peak \gets true$
 			\State $a \gets max(i - k, 0)$
 			\State $b \gets min(i + k, length(y))$

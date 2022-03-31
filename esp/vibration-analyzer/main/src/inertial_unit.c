@@ -109,35 +109,6 @@ static uint8_t spi_recv(spi_device_handle_t spi, uint8_t reg)
     return buffer[0];
 }
 
-/*
-static void imu_isr_install(InertialUnit *imu)
-{
-    gpio_config_t interrupt_pin = {
-        .intr_type = GPIO_INTR_POSEDGE,
-        .mode = GPIO_MODE_INPUT,
-        .pin_bit_mask = (1 << imu->int1),
-        .pull_down_en = GPIO_PULLDOWN_DISABLE,
-        .pull_up_en = GPIO_PULLUP_DISABLE
-    };
-
-    gpio_install_isr_service(0);
-    if (imu->isr_int1 != NULL) {
-        spi_send(imu->dev, IMU_INT1_CTRL, IMU_INT_DRDY_XL);
-        spi_send(imu->dev, IMU_CTRL_REG9, IMU_REG9_DRDY_mask);
-
-        gpio_config(&interrupt_pin);
-        gpio_isr_handler_add(imu->int1, imu->isr_int1, NULL);
-    }
-    if (imu->isr_int2 != NULL) {
-        spi_send(imu->dev, IMU_INT2_CTRL, IMU_INT_IG_XL);
-
-        interrupt_pin.pin_bit_mask = (1 << imu->int2);
-        gpio_config(&interrupt_pin);
-        gpio_isr_handler_add(imu->int2, imu->isr_int2, NULL);
-
-    }
-}*/
-
 esp_err_t imu_setup(InertialUnit *imu)
 {
     esp_err_t err;
@@ -249,3 +220,32 @@ void imu_acceleration(InertialUnit *imu, float *x, float *y, float *z)
     if (y != NULL) *y = yhi * imu->precision * G_CONSTANT;
     if (z != NULL) *z = zhi * imu->precision * G_CONSTANT;
 }
+
+/*
+static void imu_isr_install(InertialUnit *imu)
+{
+    gpio_config_t interrupt_pin = {
+        .intr_type = GPIO_INTR_POSEDGE,
+        .mode = GPIO_MODE_INPUT,
+        .pin_bit_mask = (1 << imu->int1),
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .pull_up_en = GPIO_PULLUP_DISABLE
+    };
+
+    gpio_install_isr_service(0);
+    if (imu->isr_int1 != NULL) {
+        spi_send(imu->dev, IMU_INT1_CTRL, IMU_INT_DRDY_XL);
+        spi_send(imu->dev, IMU_CTRL_REG9, IMU_REG9_DRDY_mask);
+
+        gpio_config(&interrupt_pin);
+        gpio_isr_handler_add(imu->int1, imu->isr_int1, NULL);
+    }
+    if (imu->isr_int2 != NULL) {
+        spi_send(imu->dev, IMU_INT2_CTRL, IMU_INT_IG_XL);
+
+        interrupt_pin.pin_bit_mask = (1 << imu->int2);
+        gpio_config(&interrupt_pin);
+        gpio_isr_handler_add(imu->int2, imu->isr_int2, NULL);
+
+    }
+}*/
