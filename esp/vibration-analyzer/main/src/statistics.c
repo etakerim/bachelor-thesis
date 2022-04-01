@@ -1,5 +1,5 @@
 #include <math.h>
-#include <stdio.h>
+#include <string.h>
 
 
 float minimum(const float *x, int n) 
@@ -106,26 +106,28 @@ static int partition(float *x, int left, int right, int pivot_idx)
     return split;
 }
 
-float quickselect(float *x, int n, int k)
+float quickselect(const float *x, int n, int k)
 {
     int left = 0;
     int right = n-1;
+    float xx[n];
+    memcpy(xx, x, n * sizeof(*x));
 
     while (left < right) {        
-        int split = partition(x, left, right, left);
+        int split = partition(xx, left, right, left);
         if (k == split)
-            return x[k];
+            return xx[k];
         else if (k < split)
             right = split - 1;
         else
             left = split + 1;
 
     }
-    return x[left];
+    return xx[left];
 }
 
 
-float median(float *x, int n)
+float median(const float *x, int n)
 {
     if (n % 2)
         return quickselect(x, n, n / 2);
@@ -134,7 +136,7 @@ float median(float *x, int n)
                 quickselect(x, n, n / 2)) / 2;
 }
 
-float median_abs_deviation(float *x, int n, float med)
+float median_abs_deviation(const float *x, int n, float med)
 {
     float tmp[n];
     for (int i = 0; i < n; i++)
@@ -144,7 +146,7 @@ float median_abs_deviation(float *x, int n, float med)
     return m;
 }
 
-float average_abs_deviation(float *x, int n, float mean)
+float average_abs_deviation(const float *x, int n, float mean)
 {
     float k = 0;
     for (int i = 0; i < n; i++)

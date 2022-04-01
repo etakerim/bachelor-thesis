@@ -143,3 +143,80 @@ void process_peak_finding(bool *peaks, const float *spectrum, uint16_t bins, con
             break;
     }
 }
+
+
+void process_allocate(BufferPipelineKernel *p, Configuration *conf)
+{
+    const uint16_t n = conf->sensor.n;
+    const uint16_t t_smooth = conf->tsmooth.n;
+    const uint16_t f_smooth = conf->fsmooth.n;
+    const uint16_t n_smooth = max(t_smooth, f_smooth);
+    const WindowTypeConfig w = conf->transform.window;
+
+    p->smooth = malloc(n_smooth * sizeof(*p->smooth));
+    mean_kernel(p->smooth, n_smooth);
+
+    p->window = malloc(n * sizeof(*p->window));
+    window(w, p->window, n);
+
+    for (uint8_t i = 0; i < AXIS_COUNT; i++)
+        p->queue[i] = xQueueCreate(conf->sensor.frequency, sizeof(float));
+
+    p->corr.barrier = xEventGroupCreate();
+    p->corr.task_mask = 0;
+    for (uint8_t i = 0; i < AXIS_COUNT; i++) {
+        p->corr.diff[i] = malloc(conf->sensor.n * sizeof(float));
+        if (conf->sensor.axis[i]) 
+            p->corr.task_mask |= (1 << i);
+    }
+}
+
+void axis_allocate(BufferPipelineAxis *p, Configuration *conf)
+{
+    const uint16_t n = conf->sensor.n;
+    const uint16_t bins = n / 2;
+    const uint16_t t_smooth = conf->tsmooth.n;
+    const uint16_t f_smooth = conf->fsmooth.n;
+    const uint16_t n_smooth = max(t_smooth, f_smooth);
+
+    p->stream = malloc(n * sizeof(*p->stream));
+    p->tmp_conv = malloc((n + n_smooth - 1) * sizeof(*p->tmp_conv));
+    p->spectrum = malloc(2 * n * sizeof(*p->spectrum));
+    p->peaks = malloc(bins * sizeof(*p->peaks));
+    p->events = malloc(bins * sizeof(*p->events));
+    event_init(p->events, bins);
+}
+
+void sender_allocate(Sender *sender, uint16_t length)
+{
+    // To by divisible by number of axis in order to accomodate whole
+    // sample as a vector
+    sender->max_send_samples = (length / AXIS_COUNT + 1) * AXIS_COUNT;
+    sender->raw_stream = xQueueCreate(
+        SAMPLES_QUEUE_SLOTS * sender->max_send_samples, sizeof(float)
+    );
+}
+
+void sender_release(Sender *sender)
+{
+    vQueueDelete(sender->raw_stream);
+}
+
+void process_release(BufferPipelineKernel *p)
+{
+    free(p->smooth);
+    free(p->window);
+    for (uint8_t i = 0; i < AXIS_COUNT; i++) {
+        vQueueDelete(p->queue[i]);
+        free(p->corr.diff[i]);
+    }
+}
+
+void axis_release(BufferPipelineAxis *p)
+{
+    free(p->stream);
+    free(p->tmp_conv);
+    free(p->spectrum);
+    free(p->peaks);
+    free(p->events);
+}

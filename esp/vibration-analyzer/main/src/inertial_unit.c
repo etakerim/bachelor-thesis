@@ -5,6 +5,12 @@
 #include "inertial_unit.h"
 
 
+#define IMU_MG_LSB_2G       0.061
+#define IMU_MG_LSB_4G       0.122
+#define IMU_MG_LSB_8G       0.244
+#define IMU_MG_LSB_16G      0.732
+
+
 typedef enum IMURegister {
     IMU_ACT_THS = 0x04,             // Activity threshold register.
     IMU_ACT_DUR = 0x05,             // Inactivity duration register
@@ -59,6 +65,16 @@ typedef enum IMURangeRegister {
 } IMURangeRegister;
 
 
+typedef enum AccelerationODR {
+    IMU_ODR_10HZ = 0x20,
+    IMU_ODR_50HZ = 0x40,
+    IMU_ODR_119HZ = 0x60,
+    IMU_ODR_238HZ = 0x80,
+    IMU_ODR_476HZ = 0xA0,
+    IMU_ODR_952HZ = 0xE0
+} AccelerationODR;
+
+
 #define SPI_BUS_FREQUENCY       4000000
 #define IMU_XG_ID               0x68
 #define IMU_ACCELRANGE_MASK     IMU_ACCELRANGE_8G_REG
@@ -75,7 +91,6 @@ typedef enum IMURangeRegister {
 #define IMU_REG5_Xen_XL         (1 << 3)
 #define IMU_REG8_IF_ADD_INC     4
 #define IMU_REG8_SW_RESET       1
-
 
 
 static void spi_send(spi_device_handle_t spi, uint8_t reg, uint8_t value)

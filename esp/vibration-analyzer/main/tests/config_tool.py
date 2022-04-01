@@ -31,7 +31,7 @@ def mqtt_message(client, userdata, msg):
     if msg.topic == f'{userdata.prefix}/syslog':
         if not userdata.recv and msg.payload == b'config received':
             userdata.recv = True
-        
+
         if userdata.recv and msg.payload in (
                 b'imu started', b'config malformed'):
             client.unsubscribe(f'{userdata.prefix}/syslog')

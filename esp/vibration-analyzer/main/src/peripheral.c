@@ -10,6 +10,10 @@
 #include "peripheral.h"
 
 
+// TIMER_SCALE is value of timer at 1 second
+#define TIMER_DIVIDER         16
+#define TIMER_SCALE           (TIMER_BASE_CLK / TIMER_DIVIDER)
+
 static EventGroupHandle_t s_wifi_event_group;
 
 #define WIFI_CONNECTED_BIT BIT0
@@ -79,7 +83,7 @@ void openlog_setup(OpenLog *logger)
         .source_clk = UART_SCLK_APB
     };
 
-    uart_driver_install(logger->uart, logger->buffer * 2, 0, 0, NULL, 0);
+    uart_driver_install(logger->uart, logger->buffer, 0, 0, NULL, 0);
     uart_param_config(logger->uart, &uart_config);
     uart_set_pin(logger->uart, logger->tx, logger->rx, 
                  UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
@@ -150,7 +154,7 @@ esp_err_t nvs_load(Configuration *conf, Provisioning *login)
     return ESP_OK;
 }
 
-esp_err_t nvs_save_config(Configuration *conf)
+esp_err_t nvs_save_config(const Configuration *conf)
 {
     nvs_handle_t storage;
     esp_err_t err = nvs_open("storage", NVS_READWRITE, &storage);
@@ -165,7 +169,7 @@ esp_err_t nvs_save_config(Configuration *conf)
     return ESP_OK;
 }
 
-esp_err_t nvs_save_login(Provisioning *login)
+esp_err_t nvs_save_login(const Provisioning *login)
 {
     nvs_handle_t storage;
     esp_err_t err = nvs_open("storage", NVS_READWRITE, &storage);
@@ -192,80 +196,4 @@ void axis_mqtt_topics(MqttAxisTopics *topics, int axis)
 
     strncpy(topics->events, MQTT_TOPIC_EVENT, TOPIC_LENGTH - 1);
     strcat(topics->events, dirs[axis]);
-}
-
-void process_allocate(BufferPipelineKernel *p, Configuration *conf)
-{
-    const uint16_t n = conf->sensor.n;
-    const uint16_t t_smooth = conf->tsmooth.n;
-    const uint16_t f_smooth = conf->fsmooth.n;
-    const uint16_t n_smooth = max(t_smooth, f_smooth);
-    const WindowTypeConfig w = conf->transform.window;
-
-    p->smooth = malloc(n_smooth * sizeof(*p->smooth));
-    mean_kernel(p->smooth, n_smooth);
-
-    p->window = malloc(n * sizeof(*p->window));
-    window(w, p->window, n);
-
-    for (uint8_t i = 0; i < AXIS_COUNT; i++)
-        p->queue[i] = xQueueCreate(conf->sensor.frequency, sizeof(float));
-
-    p->corr.barrier = xEventGroupCreate();
-    p->corr.task_mask = 0;
-    for (uint8_t i = 0; i < AXIS_COUNT; i++) {
-        p->corr.diff[i] = malloc(conf->sensor.n * sizeof(float));
-        if (conf->sensor.axis[i]) 
-            p->corr.task_mask |= (1 << i);
-    }
-}
-
-void axis_allocate(BufferPipelineAxis *p, Configuration *conf)
-{
-    const uint16_t n = conf->sensor.n;
-    const uint16_t bins = n / 2;
-    const uint16_t t_smooth = conf->tsmooth.n;
-    const uint16_t f_smooth = conf->fsmooth.n;
-    const uint16_t n_smooth = max(t_smooth, f_smooth);
-
-    p->stream = malloc(n * sizeof(*p->stream));
-    p->tmp_conv = malloc((n + n_smooth - 1) * sizeof(*p->tmp_conv));
-    p->spectrum = malloc(2 * n * sizeof(*p->spectrum));
-    p->peaks = malloc(bins * sizeof(*p->peaks));
-    p->events = malloc(bins * sizeof(*p->events));
-    event_init(p->events, bins);
-}
-
-void sender_allocate(Sender *sender, uint16_t length)
-{
-    // To by divisible by number of axis in order to accomodate whole
-    // sample as a vector
-    sender->max_send_samples = (length / AXIS_COUNT + 1) * AXIS_COUNT;
-    sender->raw_stream = xQueueCreate(
-        SAMPLES_QUEUE_SLOTS * sender->max_send_samples, sizeof(float)
-    );
-}
-
-void sender_release(Sender *sender)
-{
-    vQueueDelete(sender->raw_stream);
-}
-
-void process_release(BufferPipelineKernel *p)
-{
-    free(p->smooth);
-    free(p->window);
-    for (uint8_t i = 0; i < AXIS_COUNT; i++) {
-        vQueueDelete(p->queue[i]);
-        free(p->corr.diff[i]);
-    }
-}
-
-void axis_release(BufferPipelineAxis *p)
-{
-    free(p->stream);
-    free(p->tmp_conv);
-    free(p->spectrum);
-    free(p->peaks);
-    free(p->events);
 }
