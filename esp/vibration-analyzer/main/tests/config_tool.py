@@ -1,116 +1,164 @@
-import paho.mqtt.client as mqtt
-import msgpack
+#!/usr/bin/env python
+import cmd
 import json
 import time
+import sys
+from threading import Barrier
+import paho.mqtt.client as mqtt
+import msgpack
 
-conn = False
-recv = False
-done = False
-prefix = ''
 
-
-def on_connect(client, userdata, flags, rc):
-    global conn
+def mqtt_connect(client, userdata, flags, rc):
     print('Connected with result code: ', rc)
-    conn = True
+    userdata.connected = True
+    userdata.done.wait()
 
 
-def on_message(client, userdata, msg):
-    global recv, done, prefix
-    CONFIG_SYSLOG = (b'config malformed', b'config applied')
+def mqtt_disconnect(client, userdata, rc):
+    print('Disconnected with result code: ', rc)
+    userdata.connected = False
+    userdata.done.wait()
 
-    if msg.topic == f'{prefix}/syslog':
-        if not recv and msg.payload in CONFIG_SYSLOG:
-            recv = True
-        elif msg.payload == b'imu started':
-            client.unsubscribe(f'{prefix}/syslog')
-            recv = False
-            done = True
 
-    elif msg.topic == f'{prefix}/config/response':
-        client.unsubscribe(f'{prefix}/config/response')
-        done = True
+def mqtt_message(client, userdata, msg):
 
-    if msg.topic != f'{prefix}/syslog':
-        s = msgpack.unpackb(msg.payload)
+    if msg.topic != f'{userdata.prefix}/syslog':
+        s = json.dumps(msgpack.unpackb(msg.payload))
     else:
         s = msg.payload.decode('utf-8')
-    print(f'[{msg.topic}]: {s}')
+    print(f'[{msg.topic}]:\n\t{s}')
+
+    if msg.topic == f'{userdata.prefix}/syslog':
+        if not userdata.recv and msg.payload == b'config received':
+            userdata.recv = True
+        
+        if userdata.recv and msg.payload in (
+                b'imu started', b'config malformed'):
+            client.unsubscribe(f'{userdata.prefix}/syslog')
+            userdata.recv = False
+            userdata.done.wait()
+
+    elif msg.topic == f'{userdata.prefix}/config/response':
+        client.unsubscribe(f'{userdata.prefix}/config/response')
+        userdata.done.wait()
+
+
+class DeviceShell(cmd.Cmd):
+    intro = (
+        'Interactive communication with Inertial Measurement Unit. '
+        'Type help or ? to list commands.'
+    )
+    prompt = '-> '
+
+    def __init__(self):
+        self.client = mqtt.Client(userdata=self)
+        self.client.on_connect = mqtt_connect
+        self.client.on_disconnect = mqtt_disconnect
+        self.client.on_message = mqtt_message
+        self.prefix = ''
+
+        self.connected = False
+        self.prefix = False
+        self.recv = False
+
+        self.done = Barrier(2)
+
+        super().__init__()
+
+    def do_connect(self, arg):
+        if self.connected:
+            print('Error: Client is already connected. Disconnect first.')
+            return
+
+        dev = input('Device ID [1]: ')
+        ip = input('Broker IP [192.168.1.103]: ')
+        port = input('Broker Port [1883]: ')
+
+        dev = dev if dev else '1'
+        ip = ip if ip else '192.168.1.103'
+        port = int(port) if port else 1883
+
+        self.prefix = f'imu/{dev}'
+        self.client.connect(ip, port, 60)
+        self.client.loop_start()
+        self.done.wait()
+
+    def do_disconnect(self, arg):
+        if not self.connected:
+            print('Error: Client is not connected.')
+            return
+        self.client.disconnect()
+        self.done.wait()
+        self.client.loop_stop()
+
+    def do_set(self, arg):
+        """ Upload changes in configuration to the device."""
+        if not self.connected:
+            print('Error: Client is not connected to MQTT Broker.')
+            return
+
+        try:
+            config = json.loads(input('config> '))
+        except json.decoder.JSONDecodeError:
+            print('Error: JSON format of config expected')
+            return
+
+        config = msgpack.packb(config, use_bin_type=True)
+        self.client.subscribe(f'{self.prefix}/syslog')
+        self.client.publish(f'{self.prefix}/config/set', payload=config, qos=1, retain=False)
+        self.done.wait()
+
+    def do_config(self, arg):
+        """ Show current device configuration """
+        if not self.connected:
+            print('Error: Client is not connected to MQTT Broker.')
+            return
+
+        self.client.subscribe(f'{self.prefix}/config/response')
+        self.client.publish(f'{self.prefix}/config/request')
+        self.done.wait()
+
+    def do_topic(self, arg):
+        """ Listen to messages on topic """
+        if not self.connected:
+            print('Error: Client is not connected to MQTT Broker.')
+            return
+
+        topic = input('topic> ')
+        if not topic:
+            print('Error: No topic to listen to')
+            return
+
+        wait = input('Listen time on topic in sec [10]: ')
+        try:
+            wait = int(wait) if wait else 10
+        except ValueError:
+            print('Error: wait time must be integer')
+            return
+
+        self.client.subscribe(f'{self.prefix}/{topic}')
+        try:
+            time.sleep(wait)
+        finally:
+            self.client.unsubscribe(f'{self.prefix}/{topic}')
+
+    def do_end(self, arg):
+        """ Exit shell """
+        print('Exiting device shell ...')
+        if self.connected:
+            self.client.disconnect()
+            self.done.wait()
+        sys.exit()
+
+    def cmdloop(self, intro=None):
+        print(self.intro)
+        while True:
+            try:
+                super().cmdloop(intro="")
+                break
+            except KeyboardInterrupt:
+                print("^C")
 
 
 if __name__ == '__main__':
-    client = mqtt.Client()
-    client.on_connect = on_connect
-    client.on_message = on_message
-
-    dev = input('Device ID [1]: ')
-    ip = input('Broker IP [192.168.1.103]: ')
-    port = input('Broker Port [1883]: ')
-
-    dev = dev if dev else '1'
-    ip = ip if ip else '192.168.1.103'
-    port = int(port) if port else 1883
-    prefix = f'imu/{dev}'
-
-    client.connect(ip, port, 60)
-    client.loop_start()
-    while not conn:
-        time.sleep(1)
-
-    while True:
-        try:
-            cmd = input('> ')
-
-            if cmd == 'set':
-                try:
-                    config = json.loads(input('config> '))
-                except json.decoder.JSONDecodeError as err:
-                    print('Error: JSON format of config expected')
-                    continue
-
-                config = msgpack.packb(config, use_bin_type=True)
-                client.subscribe(f'{prefix}/syslog')
-                client.publish(
-                    f'{prefix}/config/set',
-                    payload=config,
-                    qos=1, retain=False
-                )
-                while not done:
-                    time.sleep(1)
-                done = False
-
-            elif cmd == 'config':
-                client.subscribe(f'{prefix}/syslog')
-                client.subscribe(f'{prefix}/config/response')
-                client.publish(f'{prefix}/config/request')
-                recv = True
-
-                while not done:
-                    time.sleep(1)
-                done = False
-
-            elif cmd == 'topic':
-                topic = input('topic> ')
-                if not topic:
-                    print('Error: No topic to listen to')
-                    continue
-                wait = input('Listen time on topic in sec [10]: ')
-                try:
-                    wait = int(wait) if wait else 10
-                except ValueError:
-                    print('Error: wait time must be integer')
-                    continue
-
-                client.subscribe(f'{prefix}/{topic}')
-                try:
-                    time.sleep(wait)
-                finally:
-                    client.unsubscribe(f'{prefix}/{topic}')
-
-            elif cmd == 'end':
-                break
-
-        except KeyboardInterrupt:
-            print('Help: To exit enter command: "end"')
-
-    print('Exiting intractive command prompt ...')
+    DeviceShell().cmdloop()

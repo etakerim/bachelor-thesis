@@ -188,7 +188,7 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
                 } else if (change) {
                     nvs_save_config(&c);
                     esp_mqtt_client_publish(client, MQTT_TOPIC_SYSLOG, "config applied", 0, 1, 0);
-
+                    vTaskDelay(500 / portTICK_PERIOD_MS);
                     esp_wifi_stop();
 	                vTaskDelay(200 / portTICK_PERIOD_MS);
                     esp_wifi_deinit();
