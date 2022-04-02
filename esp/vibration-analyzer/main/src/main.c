@@ -30,15 +30,13 @@
 #ifdef MEMORY_MEASUREMENT
 void memory_measure(int i)
 {
-    ESP_LOGI("main", "%d, %u, %u %u", i,
+    ESP_LOGW("main", "MEM, %d, %u, %u, %u", i,
         heap_caps_get_total_size(MALLOC_CAP_8BIT),
         heap_caps_get_free_size(MALLOC_CAP_8BIT),
         heap_caps_get_largest_free_block(MALLOC_CAP_8BIT)
     );
-    vTaskDelay(1500 / portTICK_RATE_MS);
 }
 #endif
-
 /*
 Provisioning login = {
     .wifi_ssid="Montenegro",
@@ -263,6 +261,10 @@ void logger_task()
     uint16_t idx = 0;
     float *stream = malloc(sender.max_send_samples * sizeof(*stream));
 
+#ifdef MEMORY_MEASUREMENT 
+    memory_measure(20);
+#endif
+
     while (1) {
         if (xQueueReceive(sender.raw_stream, &stream[idx], portMAX_DELAY) == pdTRUE) {
             if (++idx < sender.max_send_samples)
@@ -306,6 +308,10 @@ void pipeline_task(void *args)
 
     axis_allocate(&p, &conf);
     axis_mqtt_topics(&mqtt_topics, x);
+
+#ifdef MEMORY_MEASUREMENT 
+    memory_measure(10 + x);
+#endif
 
     while (1) {
         if (xQueueReceive(k->queue[x], &p.stream[idx], portMAX_DELAY) == pdTRUE) {
@@ -412,7 +418,7 @@ void app_main(void)
 {
 
 #ifdef MEMORY_MEASUREMENT 
-    ESP_LOGI("main", "[MEM] Total, Free, Largest");
+    ESP_LOGW("main", "MEM, State, Total, Free, Largest");
     memory_measure(-1);
 #endif
 
@@ -473,33 +479,33 @@ void app_main(void)
 #ifdef MEMORY_MEASUREMENT 
     memory_measure(2);
 #endif
-    xTaskCreate(sampler_task, "sampling", 1024, NULL, 1, &sample_tick);
-#ifdef MEMORY_MEASUREMENT 
-    memory_measure(10);
-#endif
-
     if (conf.sensor.axis[0])
         xTaskCreate(pipeline_task, "x_pipeline", 5500, (void *)0, 1, NULL);
 #ifdef MEMORY_MEASUREMENT 
-    memory_measure(11);
+    vTaskDelay(1000 / portTICK_RATE_MS);
 #endif
     if (conf.sensor.axis[1])
         xTaskCreate(pipeline_task, "y_pipeline", 5500, (void *)1, 1, NULL);
 #ifdef MEMORY_MEASUREMENT
-    memory_measure(12);
+    vTaskDelay(1000 / portTICK_RATE_MS);
 #endif
     if (conf.sensor.axis[2])
         xTaskCreate(pipeline_task, "z_pipeline", 5500, (void *)2, 1, NULL);
 #ifdef MEMORY_MEASUREMENT 
-    memory_measure(13);
+    vTaskDelay(1000 / portTICK_RATE_MS);
 #endif
+
+    xTaskCreate(sampler_task, "sampling", 1024, NULL, 1, &sample_tick);
+
     if (conf.logger.openlog_raw_samples || conf.logger.mqtt_samples)
         xTaskCreate(logger_task, "logger", 4096, NULL, 1, NULL);
-#ifdef MEMORY_MEASUREMENT 
-    memory_measure(20);
-#endif
 
     // Start sampling timer
     clock_setup(conf.sensor.frequency, isr_sample);
+    
+#ifdef MEMORY_MEASUREMENT 
+    vTaskDelay(1000 / portTICK_RATE_MS);
+    memory_measure(30);
+#endif
 }
 #endif
