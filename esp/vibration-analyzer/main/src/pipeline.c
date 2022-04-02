@@ -11,8 +11,7 @@ void buffer_shift_left(float *buffer, uint16_t n, uint16_t k)
         buffer[i - k] = buffer[i];
 }
 
-
-void process_statistics(float *buffer, uint16_t n, Statistics *stats, const StatisticsConfig *c)
+void process_statistics(const float *buffer, uint16_t n, Statistics *stats, const StatisticsConfig *c)
 {
     memset(stats, 0, sizeof(*stats));
 
@@ -38,28 +37,28 @@ void process_statistics(float *buffer, uint16_t n, Statistics *stats, const Stat
         stats->mad = median_abs_deviation(buffer, n, stats->median);
 }
 
-void process_correlation(uint8_t axis, const float *buffer, Statistics *stats, Correlation *corr, SamplingConfig *conf)
+void process_correlation(uint8_t axis, const float *buffer, Statistics *stats, Correlation *corr, const SamplingConfig *c)
 {
     xEventGroupSync(corr->barrier, (1 << axis), corr->task_mask, portMAX_DELAY);
 
-    float avg = mean(buffer, conf->n);
-    corr->std[axis] = sqrt(variance(buffer, conf->n, avg));
-    for (uint16_t i = 0; i < conf->n; i++)
+    float avg = mean(buffer, c->n);
+    corr->std[axis] = sqrt(variance(buffer, c->n, avg));
+    for (uint16_t i = 0; i < c->n; i++)
         corr->diff[axis][i] = (buffer[i] - avg);
 
     xEventGroupSync(corr->barrier, (1 << axis), corr->task_mask, portMAX_DELAY);
 
-    if (conf->axis[0] && conf->axis[1])
+    if (c->axis[0] && c->axis[1])
         stats->corr_xy = correlation(
-            corr->diff[0], corr->diff[1], conf->n, corr->std[0], corr->std[1]
+            corr->diff[0], corr->diff[1], c->n, corr->std[0], corr->std[1]
         );
-    if (conf->axis[0] && conf->axis[2])
+    if (c->axis[0] && c->axis[2])
         stats->corr_xz = correlation(
-            corr->diff[0], corr->diff[2], conf->n, corr->std[0], corr->std[2]
+            corr->diff[0], corr->diff[2], c->n, corr->std[0], corr->std[2]
         );
-    if (conf->axis[1] && conf->axis[2])
+    if (c->axis[1] && c->axis[2])
         stats->corr_yz = correlation(
-            corr->diff[1], corr->diff[2], conf->n, corr->std[1], corr->std[2]
+            corr->diff[1], corr->diff[2], c->n, corr->std[1], corr->std[2]
         );
 }
 
@@ -102,7 +101,7 @@ int process_spectrum(float *spectrum, const float *buffer, const float *window, 
     return bins;
 }
 
-void process_smoothing(float *buffer, float *tmp, uint16_t n, float *kernel, const SmoothingConfig *c)
+void process_smoothing(float *buffer, float *tmp, uint16_t n, const float *kernel, const SmoothingConfig *c)
 {
     if (!c->enable)
         return;
@@ -145,7 +144,7 @@ void process_peak_finding(bool *peaks, const float *spectrum, uint16_t bins, con
 }
 
 
-void process_allocate(BufferPipelineKernel *p, Configuration *conf)
+void process_allocate(BufferPipelineKernel *p, const Configuration *conf)
 {
     const uint16_t n = conf->sensor.n;
     const uint16_t t_smooth = conf->tsmooth.n;
@@ -171,7 +170,7 @@ void process_allocate(BufferPipelineKernel *p, Configuration *conf)
     }
 }
 
-void axis_allocate(BufferPipelineAxis *p, Configuration *conf)
+void axis_allocate(BufferPipelineAxis *p, const Configuration *conf)
 {
     const uint16_t n = conf->sensor.n;
     const uint16_t bins = n / 2;
@@ -189,8 +188,6 @@ void axis_allocate(BufferPipelineAxis *p, Configuration *conf)
 
 void sender_allocate(Sender *sender, uint16_t length)
 {
-    // To by divisible by number of axis in order to accomodate whole
-    // sample as a vector
     sender->max_send_samples = (length / AXIS_COUNT + 1) * AXIS_COUNT;
     sender->raw_stream = xQueueCreate(
         SAMPLES_QUEUE_SLOTS * sender->max_send_samples, sizeof(float)

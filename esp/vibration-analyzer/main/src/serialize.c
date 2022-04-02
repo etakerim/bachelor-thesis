@@ -65,7 +65,7 @@ size_t stats_serialize(size_t timestamp, char *msg, size_t size, const Statistic
     return mpack_writer_buffer_used(&writer);
 }
 
-size_t spectra_serialize(size_t timestamp, char *msg, size_t size, float *spectrum, size_t n, uint16_t fs)
+size_t spectra_serialize(size_t timestamp, char *msg, size_t size, const float *spectrum, size_t n, uint16_t fs)
 {
     mpack_writer_t writer;
     mpack_writer_init(&writer, msg, size);
@@ -88,7 +88,7 @@ size_t spectra_serialize(size_t timestamp, char *msg, size_t size, float *spectr
     return mpack_writer_buffer_used(&writer);
 }
 
-static void events_serialize_by_type(SpectrumEventAction action, mpack_writer_t *writer, SpectrumEvent *events, size_t n)
+static void events_serialize_by_type(SpectrumEventAction action, mpack_writer_t *writer, const SpectrumEvent *events, size_t n)
 {
     mpack_build_array(writer);
     for (uint16_t i = 0; i < n; i++) {
@@ -108,7 +108,7 @@ static void events_serialize_by_type(SpectrumEventAction action, mpack_writer_t 
     mpack_complete_array(writer);
 }
 
-size_t stream_serialize(char *msg, size_t size, float *stream, size_t n)
+size_t stream_serialize(char *msg, size_t size, const float *stream, size_t n)
 {
     mpack_writer_t writer;
 
@@ -124,7 +124,7 @@ size_t stream_serialize(char *msg, size_t size, float *stream, size_t n)
     return mpack_writer_buffer_used(&writer);
 }
 
-size_t events_serialize(size_t timestamp, float bin_width, char *msg, size_t size, SpectrumEvent *events, size_t n)
+size_t events_serialize(size_t timestamp, float bin_width, char *msg, size_t size, const SpectrumEvent *events, size_t n)
 {
     mpack_writer_t writer;
     mpack_writer_init(&writer, msg, size);
@@ -209,7 +209,7 @@ size_t login_serialize(char *msg, size_t size, const Provisioning *conf)
     return mpack_writer_buffer_used(&writer);
 }
 
-bool login_parse(char *msg, size_t size, Provisioning *conf)
+bool login_parse(const char *msg, size_t size, Provisioning *conf)
 {
     bool found[KEY_LOGIN_COUNT] = {0};
     mpack_reader_t reader;
@@ -782,7 +782,7 @@ size_t config_serialize(char *msg, size_t size, const Configuration *conf)
     return mpack_writer_buffer_used(&writer);
 }
 
-bool config_parse(char *msg, int size, Configuration *conf, bool *error)
+bool config_parse(const char *msg, int size, Configuration *conf, bool *error)
 {
     bool found[KEY_CONFIG_COUNT] = {0};
     bool change = false;

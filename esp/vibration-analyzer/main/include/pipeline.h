@@ -14,75 +14,126 @@
  *  @{
  */
 
-
+/**
+ * @brief Celkový počet osí akcelerácie
+ */
 #define AXIS_COUNT                  3
-
+/**
+ * @brief Maximálny počet dvojíc kľúč - hodnota v Message Pack slovníku
+ */
 #define MAX_MPACK_FIELDS_COUNT      20
+/**
+ * @brief Násobok veľkosti posuvného okna ako počet vzoriek čakajúcich na spracovanie vo fronte
+ */
 #define SAMPLES_QUEUE_SLOTS         3
+/**
+ * @brief Maximálna dĺžka prihlasovacieho údaju Wifi pripojenia
+ */
 #define MAX_CREDENTIALS_LENGTH      64
-
-#define MAX_BUFFER_SAMPLES          1024
-#define MAX_FREQUENCY               952
+/**
+ * @brief Dĺžka URL adresy na MQTT broker 
+ */
 #define MAX_MQTT_URL                256
+
+/**
+ * @brief Najdlhšie povolené posuvné okno (vyššia mocnina 2 ako 1024 sa nezmestí do DRAM)
+ */
+#define MAX_BUFFER_SAMPLES          1024
+/**
+ * @brief Najvyššia vzorkovacia frekvencia daná fyzickým obmedzením akcelerometra
+ */
+#define MAX_FREQUENCY               952
+/**
+ * @brief Maximálny prekryv posuvných okien v rozsahu 0 - 1
+ */
 #define MAX_OVERLAP                 0.8
+/**
+ * @brief Maximálny počet prechodu konvolučnej masky vyhladzovacieho filtra
+ */
 #define MAX_SMOOTH_REPEAT           8
 
+/**
+ * @brief Oknové funkcie 
+ */
 typedef enum {
-    BOXCAR_WINDOW,
-    BARTLETT_WINDOW,
-    HANN_WINDOW,
-    HAMMING_WINDOW,
-    BLACKMAN_WINDOW,
-    WINDOW_TYPE_COUNT
+    BOXCAR_WINDOW,      /**< @brief Obdĺžníkové okno */
+    BARTLETT_WINDOW,    /**< @brief Bartlettovo okno */
+    HANN_WINDOW,        /**< @brief Hannovo okno */
+    HAMMING_WINDOW,     /**< @brief Hammingovo okno */
+    BLACKMAN_WINDOW,    /**< @brief Blackmanovo okno */
+    WINDOW_TYPE_COUNT   /**< @brief Počet dostupných oknových funkcií. Potrebné pre serializáciu */
 } WindowTypeConfig;
 
+/**
+ * @brief Algoritmy na hľadanie špičiek 
+ */
 typedef enum {
-    THRESHOLD,
-    NEIGHBOURS,
-    ZERO_CROSSING,
-    HILL_WALKER,
-    STRATEGY_COUNT
+    THRESHOLD,          /**< @brief Špičky nad prahovou úrovňou **/
+    NEIGHBOURS,         /**< @brief Špičky najvýznačnejšieho bodu spomedzi susedov **/
+    ZERO_CROSSING,      /**< @brief Špičky prechodou nulou do záporu **/
+    HILL_WALKER,        /**< @brief Špičky algoritmom horského turistu **/
+    STRATEGY_COUNT      /**< @brief Počet dostupných algoritmov. Potrebné pre serializáciu */
 } PeakFindingStrategy;
 
+/**
+ * @brief Frekvenčné transformácie 
+ */
 typedef enum {
-    DFT, DCT,
-    TRANSFORM_COUNT
+    DFT,                /**< @brief Rýchla Fourierová transformácia radix-2 */
+    DCT,                /**< @brief Konsínusová transformácia DCT II */
+    TRANSFORM_COUNT     /**< @brief Počet dostupných frekvenčných transformácií. Potrebné pre serializáciu */
 } FrequencyTransform;
 
+/**
+ * @brief Nastavenie vzorkovania signálu
+ */
 typedef struct {
-    uint16_t frequency;
-    AccelerationRange range;
-    uint16_t n;
-    float overlap;
-    bool axis[AXIS_COUNT];
+    uint16_t frequency;         /**< @brief Vzorkovacia frekvencia v Hz. Najviac `MAX_FREQUENCY` */
+    AccelerationRange range;    /**< @brief Dynamický rozsah akcelerometra */
+    uint16_t n;                 /**< @brief Veľkosť posuvného okna. Musí byť mocninou dvojky a najviac `MAX_BUFFER_SAMPLES` */
+    float overlap;              /**< @brief Pomer prekryvu posuvných okien. Rozsah: 0 až `MAX_OVERLAP` */
+    bool axis[AXIS_COUNT];      /**< @brief Osi akcelerácie povolené na spracovanie */
 } SamplingConfig;
 
+/**
+ * @brief Nastavenie vyhladzovania signálu alebo frekvenčného spektra
+ */
 typedef struct {
-    bool enable;
-    uint16_t n;
-    uint8_t repeat;
+    bool enable;        /**< @brief Vyhladzovanie signálu povolené */
+    uint16_t n;         /**< @brief Dĺžka konvolučnej masky */
+    uint8_t repeat;     /**< @brief Počet prechodov konvolučnej masky. Najviac `MAX_SMOOTH_REPEAT` */
 } SmoothingConfig;
 
+/**
+ * @brief Nastavenie zberu štatistík posuvného okna
+ */
 typedef struct {
-    bool min;
-    bool max;
-    bool rms;
-    bool mean;
-    bool variance;
-    bool std;
-    bool skewness;
-    bool kurtosis;
-    bool median;
-    bool mad;
-    bool correlation;
+    bool min;           /**< @brief Výpočet minimálnej hodnoty povolený */
+    bool max;           /**< @brief Výpočet maximálnej hodnoty povolený */
+    bool rms;           /**< @brief Výpočet strednej kvadratickej odchýlky povolený */
+    bool mean;          /**< @brief Výpočet aritmetického priemeru povolený */
+    bool variance;      /**< @brief Výpočet rozptylu povolený */
+    bool std;           /**< @brief Výpočet smerodajnej odchýlky povolený */
+    bool skewness;      /**< @brief Výpočet šikmosti povolený */
+    bool kurtosis;      /**< @brief Výpočet špicatosti povolený */
+    bool median;        /**< @brief Výpočet mediánu povolený */
+    bool mad;           /**< @brief Výpočet mediánovej absolútnej odchýlky povolený */
+    bool correlation;   /**< @brief Výpočet korelácie medzi osami povolený */
 } StatisticsConfig;
 
+/**
+ * @brief Nastavenie frekvenčnej transformácie
+ */
 typedef struct {
-    WindowTypeConfig window;
-    FrequencyTransform func;
-    bool log;
+    WindowTypeConfig window;    /**< @brief Oknová funkcia */
+    FrequencyTransform func;    /**< @brief Typ frekvenčnej transformácie */
+    bool log;                   /**< @brief Prevod magnitúdy frekvencie do dB */
 } FFTTransformConfig;
 
+
+/**
+ * @brief Nastavenia algoritmov na detekciu udalostí a ich parametrov 
+ */
 typedef struct {
     uint16_t min_duration;
     uint16_t time_proximity;
@@ -108,18 +159,24 @@ typedef struct {
     } hill_walker;
 } EventDetectionConfig;
 
-
+/**
+ * @brief Nastavenia ukladania a posielania spracovaných dát
+ * 
+ * OpenLog bude po spustený aktívny iba ako je povolené `openlog_raw_samples`.
+ * Wifi pripojenie a MQTT klient budú spusetný iba ak aspoň jedna z možností `mqtt_*` je povolená.
+ */
 typedef struct {
-    uint16_t subsampling;
-    bool openlog_raw_samples;
-    bool mqtt_samples;
-    bool mqtt_stats;
-    bool mqtt_spectra;
-    bool mqtt_events;
-    char mqtt_url[MAX_MQTT_URL];
+    uint16_t subsampling;       /**< @brief Podvzorkovanie pre záznam vzoriek bez ďalšieho spracovania. Preskočí sa každých `subsampling` vzoriek */
+    bool openlog_raw_samples;   /**< @brief Záznam vzoriek na SD kartu povolený. OpenLog bude zapnutý po spustení */
+    bool mqtt_samples;          /**< @brief Odosielanie vzoriek cez MQTT na topic podľa `MQTT_TOPIC_STREAM` */
+    bool mqtt_stats;            /**< @brief Odosielanie štatistík cez MQTT na topic podľa `MQTT_TOPIC_STATS` */
+    bool mqtt_spectra;          /**< @brief Odosielanie frekvenčného spektra cez MQTT na topic podľa `MQTT_TOPIC_SPECTRUM` */
+    bool mqtt_events;           /**< @brief Odosielanie zmien spektra cez MQTT na topic podľa `MQTT_TOPIC_EVENT` */
 } SaveFormatConfig;
 
-
+/**
+ * @brief Systémová konfigurácia dátovodu spracovania vzoriek z akcelerometra
+ */
 typedef struct {
     SamplingConfig sensor;
     SmoothingConfig tsmooth;
@@ -129,6 +186,16 @@ typedef struct {
     EventDetectionConfig peak;
     SaveFormatConfig logger;
 } Configuration;
+
+
+/**
+ * @brief Sieťové nastavenia pre pripojenie na Wifi AP s WPA2 a MQTT broker 
+ */
+typedef struct {
+    char wifi_ssid[MAX_CREDENTIALS_LENGTH];     /**< @brief Wifi AP SSID */
+    char wifi_pass[MAX_CREDENTIALS_LENGTH];     /**< @brief Wifi AP heslo */
+    char mqtt_url[MAX_MQTT_URL];      /**< @brief URL MQTT brokera "mqtt://..."" */
+} Provisioning;
 
 
 typedef struct {
@@ -148,7 +215,6 @@ typedef struct {
 } Statistics;
 
 
-// Buffers
 typedef struct {
     EventGroupHandle_t barrier;
     EventBits_t task_mask;
@@ -156,6 +222,9 @@ typedef struct {
     float std[AXIS_COUNT];
 } Correlation;
 
+/**
+ * @brief Vyrovnávacie pamäte spoločné pre celú pipeline
+ */
 typedef struct {
     float *smooth;
     float *window;
@@ -163,6 +232,9 @@ typedef struct {
     Correlation corr;
 } BufferPipelineKernel;
 
+/**
+ * @brief Vyrovnávacie pamäte samostatné pre každú os akcelerácie
+ */
 typedef struct {
     float *stream;
     float *tmp_conv;
@@ -171,23 +243,26 @@ typedef struct {
     SpectrumEvent *events;
 } BufferPipelineAxis;
 
+/**
+ * @brief Fronta pre záznam vzoriek bez ďalšiho spracovania
+ */
 typedef struct {
     uint16_t max_send_samples;
     QueueHandle_t raw_stream;
 } Sender;
 
+
 /**
- * @brief Sieťové nastavenia pre pripojenie na Wifi AP s WPA2 a MQTT broker 
+ * @brief Druhá mocnina čísla
  */
-typedef struct {
-    char wifi_ssid[MAX_CREDENTIALS_LENGTH];     /**< @brief Wifi AP SSID */
-    char wifi_pass[MAX_CREDENTIALS_LENGTH];     /**< @brief Wifi AP heslo */
-    char mqtt_url[MAX_CREDENTIALS_LENGTH];      /**< @brief URL MQTT brokera "mqtt://..."" */
-} Provisioning;
-
-
 #define square(x)   ((x) * (x))
+/**
+ * @brief Minimum z dvoch hodnôt
+ */
 #define min(x, y)   (((x) < (y)) ? (x): (y))
+/**
+ * @brief Maximum z dvoch hodnôt
+ */
 #define max(x, y)   (((x) > (y)) ? (x): (y))
 
 // window.c
@@ -409,28 +484,125 @@ float average_abs_deviation(const float *x, int n, float mean);
  * @defgroup pipeline_buffer Správa pamäti dátovodu
  * @{
  */
-void process_allocate(BufferPipelineKernel *p, Configuration *conf);
-void axis_allocate(BufferPipelineAxis *p, Configuration *conf);
-void sender_allocate(Sender *sender, uint16_t length);
-void sender_allocate(Sender *sender, uint16_t n);
 
-void sender_release(Sender *sender);
+/**
+ * @brief Alokácia a inicializácia dynamických vyrovnávacích pamätí a synchronizačných primitív
+ *  
+ * @param[out]  p       Dynamické vyrovnávacie pamäte s dĺžkami podľa nastavení
+ * @param[in]   conf     Konfigurácia systému
+ */
+void process_allocate(BufferPipelineKernel *p, const Configuration *conf);
+
+/**
+ * @brief Alokácia dynamických vyrovnávacích pamätí pre jednu os akcelerácie
+ *  
+ * @param[out]  p       Dynamické vyrovnávacie pamäte s dĺžkami podľa nastavení
+ * @param[in]   conf     Konfigurácia systému
+ */
+void axis_allocate(BufferPipelineAxis *p, const Configuration *conf);
+
+/**
+ * @brief Vytvorenie fronty na odosielanie nameraných vzoriek odlišnou systémovou úlohou
+ *  
+ * @param[out]  sender   Vyhradená fronta s požadovanou maximálnou kapacitou
+ * @param[in]   length    Dĺžka fronty
+ */
+void sender_allocate(Sender *sender, uint16_t length);
+
+/**
+ * @brief Uvoľnenie pamäte pre dynamické vyrovnávacie pamäte
+ *  
+ * @param[out]  p       Dynamické vyrovnávacie pamäte
+ */
 void process_release(BufferPipelineKernel *p);
+
+/**
+ * @brief Uvoľnenie pamäte pre dynamické vyrovnávacie pamäte pre jednu os akcelerácie
+ *  
+ * @param[out]  p       Dynamické vyrovnávacie pamäte
+ */
 void axis_release(BufferPipelineAxis *p);
+/**
+ * @brief Odstránenie fronty na odosielanie nameraných vzoriek
+ *  
+ * @param  sender   Fronta s vyhradenou kapacitou
+ */
 void sender_release(Sender *sender);
 /** @} */
-
 
 
 /** 
  * @defgroup stages Fázy spracovania oknovaného signálu
  * @{
  */
+
+/**
+ * @brief Posun vzoriek vo vyrovnávacej pamäti doľava, čím sa dosahuje prekryv okien
+ * 
+ * Nadbytočné hodnoty od začiatku poľa budú nadhradené vzorkami o `k` pozícii vpravo.  
+ *  
+ * @param  buffer   Vyrovnávacia pamäť, ktorej obsah bude posunutý
+ * @param  n        Dĺžka vyrovnávacej pamäte
+ * @param  k        Počet pozícii o koľko sa majú posunúť hodnoty.
+ */
 void buffer_shift_left(float *buffer, uint16_t n, uint16_t k);
-void process_statistics(float *buffer, uint16_t n, Statistics *stats, const StatisticsConfig *c);
-void process_correlation(uint8_t axis, const float *buffer, Statistics *stats, Correlation *corr, SamplingConfig *conf);
+
+/**
+ * @brief Požadované štatistiky podľa nastavení.
+ *  
+ * @param[in]  buffer       Posuvné okno vzoriek signálu
+ * @param[in]  n            Dĺžka posuvného okna
+ * @param[out] stats        Deskriptívne štatistiky zo vzoriek posuvného okna. Korektné hodnoty majú len tie povolené v nastaveniach `c`
+ * @param[in]  c            Povolenia pre zber vybraných štatistík
+ */
+void process_statistics(const float *buffer, uint16_t n, Statistics *stats, const StatisticsConfig *c);
+
+/**
+ * @brief Korelácia medzi osami akcelerácie: XY, XZ, YZ. Dochádza k bariérovej synchronizácii! 
+ * 
+ * Úloha pre každú os zrýchlenia si nezávisle prepočíta rozdiely vzoriek od priemeru a smerodajné odchýlky.
+ * Následne dochádza k bariérovej synchronizácii aktívnych osí. Každá úloha si dopočíta všetky korelácie
+ * samostatne. 
+ * 
+ * @param[in]  axis         Os akcelerácie: 0, 1, 2
+ * @param[in]  buffer       Posuvné okno vzoriek signálu          
+ * @param[out] stats        Zistené medziosové korelácie
+ * @param[out] corr         Pomocné polia pre výmenu predspracovaných údajov medz úlohami (osami)
+ * @param[in]  c            Nastavenia vzorkovania. Využíva sa dĺžka posuvného okna a povolené osi.
+ */
+void process_correlation(uint8_t axis, const float *buffer, Statistics *stats, Correlation *corr, const SamplingConfig *c);
+
+/**
+ * @brief Frekvenčné spektrum (FFT, FCT) posuvného okna vzoriek vynásobené váhami oknovej funkcie
+ * 
+ * @param[out]  spectrum   Frekvenčné spektrum s dĺžkou `n / 2`  
+ * @param[in]   buffer     Posuvné okno vzoriek signálu s dĺžkou `n`
+ * @param[in]   window     Váhy oknovej funkcie  s dĺžkou `n`
+ * @param[in]   n          Dĺžka posuvného okna
+ * @param[in]   c          Nastavenia frekvenčnej transformácie
+ */
 int process_spectrum(float *spectrum, const float *buffer, const float *window, uint16_t n, const FFTTransformConfig *c);
-void process_smoothing(float *buffer, float *tmp, uint16_t n, float *kernel, const SmoothingConfig *c);
+
+/**
+ * @brief Vyhladzovanie signálu
+ * 
+ * @param       buffer     Posuvné okno vzoriek signálu s dĺžkou `n`, ktoré bude vyhladené
+ * @param       tmp        Pomocné pole o dĺžke `n + c.n - 1`
+ * @param[in]   window     Váhy oknovej funkcie  s dĺžkou `n`
+ * @param[in]   n          Dĺžka posuvného okna
+ * @param[in]   kernel     Konvolučná maska vyhladzovania
+ * @param[in]   c          Nastavenia vyhladzovanie
+ */
+void process_smoothing(float *buffer, float *tmp, uint16_t n, const float *kernel, const SmoothingConfig *c);
+
+/**
+ * @brief Hľadanie špičiek vo frekvenčnom spektre podľa nastavení aktívneho algoritmu
+ * 
+ * @param[out]  peaks      Váhy oknovej funkcie  s dĺžkou `bins`
+ * @param[in]   spectrum   Frekvenčné spektrum s dĺžkou `bins`  
+ * @param[in]   bins       Počet frekvenčných vedierok
+ * @param[in]   c          Nastavenia spracovania udalostí
+ */
 void process_peak_finding(bool *peaks, const float *spectrum, uint16_t bins, const EventDetectionConfig *c);
 /** @} */
 
@@ -439,16 +611,104 @@ void process_peak_finding(bool *peaks, const float *spectrum, uint16_t bins, con
  * @defgroup stages Serializácia a parsovanie nameraných dát a konfigurácie
  * @{
  */
-size_t stream_serialize(char *msg, size_t size, float *stream, size_t n);
+
+/**
+ * @brief Serializácia prúdu vzoriek v posuvnom okne do formátu Message Pack
+ * 
+ * @param[out]  msg         Serializované vzorky signálu
+ * @param[in]   size        Vyhradená veľkosť pre správu do `msg`
+ * @param[in]   stream      Vzorky signálu
+ * @param[in]   n           Počet vzoriek signálu
+ * 
+ * @return Dĺžka serializovanej správy
+ */
+size_t stream_serialize(char *msg, size_t size, const float *stream, size_t n);
+
+/**
+ * @brief Serializácia štatistík signálu v posuvnom okne do formátu Message Pack
+ * 
+ * @param[in]   timestamp   Poradové číslo posuvného okna
+ * @param[out]  msg         Serializované štatistiky
+ * @param[in]   size        Vyhradená veľkosť pre správu do `msg`
+ * @param[in]   stats       Štatistiky signálu
+ * @param[in]   n           Nastavenia zberu štatistík. Do serializovanej správy sa zahrnú len aktívne štatistiky.
+ * 
+ * @return Dĺžka serializovanej správy
+ */
 size_t stats_serialize(size_t timestamp, char *msg, size_t size, const Statistics *stats, const StatisticsConfig *c);
-size_t spectra_serialize(size_t timestamp, char *msg, size_t size, float *spectrum, size_t n, uint16_t fs);
-size_t events_serialize(size_t timestamp, float bin_width, char *msg, size_t size, SpectrumEvent *events, size_t n);
 
+/**
+ * @brief Serializácia frekvenčného spektra posuvného okna do formátu Message Pack
+ * 
+ * @param[in]   timestamp   Poradové číslo posuvného okna
+ * @param[out]  msg         Serializované frekvenčné spektrum
+ * @param[in]   size        Vyhradená veľkosť pre správu do `msg`
+ * @param[in]   spectrum    Frekvenčné spektrum
+ * @param[in]   n           Počet frekvenčných vedierok
+ * @param[in]   fs          Vzorkovacia frekvencia v Hz
+ * 
+ * @return Dĺžka serializovanej správy
+ */
+size_t spectra_serialize(size_t timestamp, char *msg, size_t size, const float *spectrum, size_t n, uint16_t fs);
+
+/**
+ * @brief Serializácia udalostí zmien frekvenčného spektra do formátu Message Pack
+ * 
+ * @param[in]   timestamp   Poradové číslo posuvného okna
+ * @param[in]   bin_width   Veľkosť frekvenčného vedierka v Hz: vzorkovacia frekvencia / n
+ * @param[out]  msg         Serializované udalosti
+ * @param[in]   size        Vyhradená veľkosť pre správu do `msg`
+ * @param[in]   events      Udalosti frekvenčného spektra s dĺžkou `n`. Do správy budú pridané iba začiatočné a ukončujúce udalosti.
+ * @param[in]   n           Počet frekvenčných vedierok
+ * 
+ * @return Dĺžka serializovanej správy
+ */
+size_t events_serialize(size_t timestamp, float bin_width, char *msg, size_t size, const SpectrumEvent *events, size_t n);
+
+/**
+ * @brief Serializácia systémovej konfigurácie do formátu Message Pack 
+ * 
+ * @param[out]  msg         Serializovaná konfigurácia
+ * @param[in]   size        Vyhradená veľkosť pre správu do `msg`
+ * @param[in]   config      Systémová konfigurácia
+ * 
+ * @return Dĺžka serializovanej správy
+ */
 size_t config_serialize(char *msg, size_t size, const Configuration *config);
-bool config_parse(char *msg, int size, Configuration *conf, bool *change);
 
+/**
+ * @brief Parsovanie systémovej konfigurácie z formátu Message Pack
+ * 
+ * @param[in]   msg       Serializované konfigurácia
+ * @param[in]   size      Dĺžka konfigurácie v Message Pack
+ * @param[out]  conf      Systémová konfigurácia
+ * @param[out]  error     Chyba pri parsovaní
+ * 
+ * @return  Zmena konfigurácie oproti pôvodnému obsahu `conf`
+ */
+bool config_parse(const char *msg, int size, Configuration *conf, bool *error);
+
+/**
+ * @brief Serializácia údajov o sieťovom pripojení
+ * 
+ * @param[out]  msg         Serializované nastavenia pripojenia
+ * @param[in]   size        Vyhradená veľkosť pre správu do `msg`
+ * @param[in]   config      Nastavenia pripojenia
+ * 
+ * @return Dĺžka serializovanej správy
+ */
 size_t login_serialize(char *msg, size_t size, const Provisioning *conf);
-bool login_parse(char *msg, size_t size, Provisioning *conf);
+
+/**
+ * @brief Parsovanie nastavení sieťového pripojenia z formátu Message Pack
+ * 
+ * @param[in]   msg       Serializované konfigurácia
+ * @param[in]   size      Vyhradená veľkosť pre správu do `msg`
+ * @param[out]  conf      Nastavenia pripojenia
+ * 
+ * @return  Chyba pri parsovaní
+ */
+bool login_parse(const char *msg, size_t size, Provisioning *conf);
 /** @} */
 
 /** @} */
