@@ -1,6 +1,75 @@
-## Bakalársky projekt - Osnova
+# Bakalársky projekt - Osnova
 
-###### Tématické okruhy
+
+
+## Letný semester
+
+#### Osnova praktickej časti Bakalárskej práce
+
+#### Návrh
+
+- Bloková schéma hardvéru
+- Diagram komponentov pre subsystémy firmvéru
+- Diagram aktivít pipeline
+- Diagram aktivít správy konfigurácie
+- Sekvenčný diagram rozdelenia spracovania medzi úlohy
+- Stavový diagram: online algoritmus na detekciu udalostí
+
+#### Implementácia
+
+- Programovacie jazyky a knižnice: C, esp-idf 4.0, esp-dsp, mpack
+- Diagram balíčkov - hlavičkové súbory
+- Uchovávanie udalostí - opis štruktúry
+- Opis struct-ov konfigurácie
+- Formát msgpack správ
+
+#### Overenie
+
+- Profil spotreby pamäte (Pre všetky N: 8, 16, 32, 64, 128, 256, 512, 1024)  - otázka: aký je najväčšia vyrovnávacia pamäť vzoriek? (graf)
+- Veľkosti prenášaných správ (tabuľka) - otázka: od akého počtu vzoriek sa oplatí agregovať dáta vzhľadom na prenesené správy?
+  - Min. počet vzoriek pre štatistiky?
+  - Max. počet udalostí < ako počet prenášaných frekvenčných bins
+- Časové vykonávanie algoritmov (1 os). Priemerované cez 100 behov, Pre všetky N: 8, 16, 32, 64, 128, 256, 512, 1024
+  - N=512, T Smoothing (k = 4, 8, 16, 32, 64)
+  - DFT dB
+  - DCT dB
+  - Algoritmus č.1
+  - Algoritmus č.2
+  - Algoritmus č.3
+  - Event detection
+- Časové vykonávanie celej pipeline pre rôzne N (graf) vs. real time deadline T * n (resp. n / fs). Priemer 100 behov. Scenáre (to isté pre 3 osi):
+  - 1 os, SD karta + MQTT off, T smooth off, stats no, FFT, F smooth off, find_neigh
+  - 1 os, SD karta + MQTT off, T smooth off, stats no, DCT, F smooth off, find_neigh
+  - 1 os, SD karta + MQTT off, T smooth off, stats full, FFT, F smooth off, find_neigh
+  - 1 os, MQTT stats,  T smooth off, stats full, FFT, F smooth off, find_neigh
+  - 1 os, MQTT events,  T smooth off, stats full, FFT, F smooth off, find_neigh
+  - 1 os, MQTT stats, MQTT events,  T smooth off, stats full, FFT, F smooth off, find_neigh
+  - 1 os, MQTT samples, MQTT stats, MQTT events,  T smooth off, stats full, FFT, F smooth off, find_neigh
+  - 1 os, MQTT samples, MQTT stats, MQTT events,  T smooth off, stats full, FFT, F smooth on (n=8), find_neigh
+- Vhodné parametre algoritmov na detekciu špičiek (tab.) - z reálneho datasetu syntetický a na ňom grid search pre rôzne veľkosti n
+  - Algoritmus č.1
+  - Algoritmus č.2
+  - Algoritmus č.3
+
+#### Záver
+
+Ukázali sme možnosti hardvéru na okraji siete pre predspracovanie udalostí a poskytli základný náčrt redukcie množstva zosnímaných dát agregovaných do udalostí. Potenciálne rozšírenia: samoučiace algoritmy detekcie špičiek, porovnať rýchlejšie implementácie DCT, Posielanie cez Bluetooth, anotované datasety z reálnej prepravy automobilom
+
+#### A - Plán práce
+
+#### B - Technická dokumentácia
+
+- [ ] Návod na inštaláciu
+- [ ] Návod na použitie  - flashovanie firmvéru, prihlásenie do siete, zmena konfigurácie cez python klienta
+- [ ] Návod na použitie jupyter notebook pre exploráciu datasetov z vibrácii a generovanie syntetických dát
+
+#### C - Obsah digitálneho média
+
+
+
+
+
+## Zimný semester
 
 #### Analýza
 
