@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "pipeline.h"
+#include "statistics.h"
 
 
 void buffer_shift_left(float *buffer, uint16_t n, uint16_t k)

@@ -12,11 +12,13 @@
 #include "inertial_unit.h"
 #include "peripheral.h"
 #include "pipeline.h"
+#include "statistics.h"
 #include "driver/uart.h"
 
 // Measurements: ---------
-// #define FACTORY_RESET            1
-// #define MEMORY_MEASUREMENT          1
+// #define FACTORY_RESET                1
+// #define MESSAGES_MEASUREMENT         1
+// #define MEMORY_MEASUREMENT           1
 // Strategies: 1 axis - speed change with buffer size (@80MHz, 100Hz tick)
 // #define EXECUTION_TIME_ALGORITHMS   1
 // Strategies: 1 vs 3 axis, no corr vs. corr
@@ -436,6 +438,18 @@ void app_main(void)
     ESP_ERROR_CHECK(imu_setup(&imu));
     imu_output_data_rate(&imu, conf.sensor.frequency);
     imu_acceleration_range(&imu, conf.sensor.range);
+
+#ifdef MESSAGES_MEASUREMENT
+    ESP_LOGW("main", "N: %d", conf.sensor.n);
+    ESP_LOGW("main", "Size of config(B): %d", sizeof(Configuration));
+    ESP_LOGW("main", "Size of statistics(B): %d", sizeof(Statistics));
+    ESP_LOGW("main", "Size of event(B): %d", sizeof(SpectrumEvent));
+    ESP_LOGW("main", "Size of samples per axis(B): %d", conf.sensor.n *  sizeof(float));
+    ESP_LOGW("main", "Size of bins per axis(B): %d", (conf.sensor.n / 2) *  sizeof(float));
+    ESP_LOGW("main", "Size of logger samples(B): %d",
+            (conf.sensor.n / AXIS_COUNT + 1) * AXIS_COUNT* sizeof(float));
+
+#endif
 
 #ifdef MEMORY_MEASUREMENT 
     memory_measure(0);
