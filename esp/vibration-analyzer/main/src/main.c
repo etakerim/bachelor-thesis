@@ -18,12 +18,13 @@
 // Measurements:
 // #define FACTORY_RESET                1
 // #define MESSAGES_MEASUREMENT         1
-#define MEMORY_MEASUREMENT              1
-// #define EXECUTION_TIME_ALGORITHMS   1
+// #define MEMORY_MEASUREMENT          1
+// #define EXECUTION_TIME_ALGORITHMS      1
+// #define EXECUTION_TIME_SMOOTHING    1
 // #define EXECUTION_TIME_PIPELINE     1
 
-#ifdef EXECUTION_TIME_ALGORITHMS
-    #define MEASUREMENTS_CYCLES         100
+#if defined(EXECUTION_TIME_ALGORITHMS) || defined(EXECUTION_TIME_SMOOTHING)
+    #define MEASUREMENTS_CYCLES         10
 #endif
 
 #ifdef MEMORY_MEASUREMENT
@@ -323,27 +324,46 @@ void pipeline_task(void *args)
             uint64_t start, end, tp;
             start = esp_timer_get_time();
 #endif
-            process_smoothing(p.stream, p.tmp_conv, conf.sensor.n, k->smooth, &conf.tsmooth);
 
-            if (conf.logger.mqtt_stats) {
+#ifdef EXECUTION_TIME_SMOOTHING
+            uint64_t t0 = esp_timer_get_time();
+            for (int i = 0; i < MEASUREMENTS_CYCLES; i++) {
+#endif
+            process_smoothing(p.stream, p.tmp_conv, conf.sensor.n, k->smooth, &conf.tsmooth);
+#ifdef EXECUTION_TIME_SMOOTHING
+            }
+            uint64_t t1 = esp_timer_get_time();
+            ESP_LOGW("main", "C:, %llu, us", (t1 - t0) / MEASUREMENTS_CYCLES);
+#endif
+#ifdef EXECUTION_TIME_ALGORITHMS
+            uint64_t t0 = esp_timer_get_time();
+            for (int i = 0; i < MEASUREMENTS_CYCLES; i++) {
+#endif
                 process_statistics(p.stream, conf.sensor.n, &stats, &conf.stats);
                 if (conf.stats.correlation) {
                     process_correlation(x, p.stream, &stats, &k->corr, &conf.sensor);
                 }
+#ifdef EXECUTION_TIME_ALGORITHMS
+            }
+            uint64_t t1 = esp_timer_get_time();
+            ESP_LOGW("main", "S:, %llu, us", (t1 - t0) / MEASUREMENTS_CYCLES);
+#endif
+
+            if (conf.logger.mqtt_stats) {
                 size_t len = stats_serialize(no, serialize, LARGEST_MESSAGE, &stats, &conf.stats);
                 esp_mqtt_client_publish(mqttclient, mqtt_topics.stats, serialize, len, 0, 0);
             }
 
 #ifdef EXECUTION_TIME_ALGORITHMS
-            uint64_t t0 = esp_timer_get_time();
+            t0 = esp_timer_get_time();
             for (int i = 0; i < MEASUREMENTS_CYCLES; i++) {
 #endif
             process_spectrum(p.spectrum, p.stream, k->window, conf.sensor.n, &conf.transform);
 
 #ifdef EXECUTION_TIME_ALGORITHMS
             }
-            uint64_t t1 = esp_timer_get_time();
-            ESP_LOGI("main", "S:, %llu, us", (t1 - t0) / MEASUREMENTS_CYCLES);
+            t1 = esp_timer_get_time();
+            ESP_LOGW("main", "F:, %llu, us", (t1 - t0) / MEASUREMENTS_CYCLES);
 #endif
 
             if (conf.logger.mqtt_samples == RAW_FREQUENCY_SEND) {
@@ -361,7 +381,7 @@ void pipeline_task(void *args)
 #ifdef EXECUTION_TIME_ALGORITHMS
             }
             t1 = esp_timer_get_time();
-            ESP_LOGI("main", "P:, %llu, us", (t1 - t0) / MEASUREMENTS_CYCLES);
+            ESP_LOGW("main", "P:, %llu, us", (t1 - t0) / MEASUREMENTS_CYCLES);
 #endif
 
 #ifdef EXECUTION_TIME_ALGORITHMS
@@ -375,7 +395,7 @@ void pipeline_task(void *args)
 #ifdef EXECUTION_TIME_ALGORITHMS
             }
             t1 = esp_timer_get_time();
-            ESP_LOGI("main", "E:, %llu, us", (t1 - t0) / MEASUREMENTS_CYCLES);
+            ESP_LOGW("main", "E:, %llu, us", (t1 - t0) / MEASUREMENTS_CYCLES);
 #endif
 
             if (conf.logger.mqtt_events && changes > 0) {
@@ -390,7 +410,7 @@ void pipeline_task(void *args)
 #ifdef EXECUTION_TIME_PIPELINE
             end = esp_timer_get_time();
             tp = end - start;
-            ESP_LOGI("main", "%d, %llu, us", x, tp);
+            ESP_LOGW("main", "%d, %llu, us", x, tp);
 #endif
         }
     }

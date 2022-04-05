@@ -38,6 +38,10 @@ def mqtt_message(client, userdata, msg):
             userdata.recv = False
             userdata.done.wait()
 
+        if msg.payload in (b'login saved', b'login malformed'):
+            client.unsubscribe(f'{userdata.prefix}/syslog')
+            userdata.done.wait()
+
     elif msg.topic == f'{userdata.prefix}/config/response':
         client.unsubscribe(f'{userdata.prefix}/config/response')
         userdata.done.wait()
@@ -123,6 +127,23 @@ class DeviceShell(cmd.Cmd):
         self.done.wait()
 
     def do_login(self, arg):
+        """ Upload changes in network credentials to the device."""
+        if not self.connected:
+            print('Error: Client is not connected to MQTT Broker.')
+            return
+
+        try:
+            config = json.loads(input('login> '))
+        except json.decoder.JSONDecodeError:
+            print('Error: JSON format of config expected')
+            return
+
+        config = msgpack.packb(config, use_bin_type=True)
+        self.client.subscribe(f'{self.prefix}/syslog')
+        self.client.publish(f'{self.prefix}/login/set', payload=config, qos=1, retain=False)
+        self.done.wait()
+
+    def do_credentials(self, arg):
         """ Show current network credentials """
         if not self.connected:
             print('Error: Client is not connected to MQTT Broker.')

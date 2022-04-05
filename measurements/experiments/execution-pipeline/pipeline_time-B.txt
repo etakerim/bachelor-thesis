@@ -1,0 +1,1535 @@
+ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (36) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (43) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (50) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (63) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (76) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (137) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (141) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (343) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (392) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (412) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (816) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:3, winSize:64
+W (4036) main: 2, 1016, us
+W (4036) main: 0, 1072, us
+W (4036) main: 1, 169, us
+W (5036) main: 2, 207, us
+W (5036) main: 1, 163, us
+W (5036) main: 0, 632, us
+W (6036) main: 2, 191, us
+W (6036) main: 1, 148, us
+W (6036) main: 0, 565, us
+W (7046) main: 2, 3797, us
+W (7046) main: 0, 7891, us
+W (7046) main: 1, 6397, us
+W (8036) main: 2, 590, us
+W (8036) main: 1, 168, us
+W (8046) main: 0, 6066, us
+W (9036) main: 2, 326, us
+W (9036) main: 0, 762, us
+W (9046) main: 1, 2884, us
+W (10036) main: 0, 825, us
+W (10036) main: 1, 266, us
+W (10046) main: 2, 3995, us
+W (11036) main: 2, 477, us
+W (11036) main: 0, 834, us
+W (11036) main: 1, 174, us
+W (12036) main: 2, 186, us
+W (12036) main: 1, 159, us
+W (12036) main: 0, 544, us
+W (13036) main: 2, 187, us
+W (13036) main: 1, 163, us
+W (13036) main: 0, 542, us
+W (14036) main: 2, 187, us
+W (14036) main: 1, 168, us
+W (14036) main: 0, 551, us
+W (15036) main: 2, 202, us
+W (15036) main: 1, 167, us
+W (15036) main: 0, 558, us
+W (16036) main: 2, 238, us
+W (16036) main: 1, 170, us
+W (16036) main: 0, 598, us
+W (17036) main: 2, 186, us
+W (17036) main: 1, 163, us
+W (17036) main: 0, 542, us
+W (18036) main: 2, 284, us
+W (18036) main: 1, 178, us
+W (18036) main: 0, 654, us
+W (19036) main: 2, 195, us
+W (19036) main: 1, 168, us
+W (19036) main: 0, 555, us
+W (20036) main: 2, 187, us
+W (20036) main: 1, 167, us
+W (20036) main: 0, 551, us
+W (20746) wifi:<ba-del>idx
+W (20746) wifi:hmac tx: ifx0 stop, discard
+W (20746) wifi:hmac tx: ifx0 stop, discard
+W (21036) main: 2, 733, us
+W (21036) main: 0, 1007, us
+W (21036) main: 1, 167, us
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (817) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:2, winSize:64
+W (4037) main: 2, 972, us
+W (4037) main: 0, 1019, us
+W (4037) main: 1, 132, us
+W (5037) main: 2, 305, us
+W (5037) main: 1, 112, us
+W (5037) main: 0, 654, us
+W (6037) main: 2, 128, us
+W (6037) main: 1, 108, us
+W (6037) main: 0, 492, us
+W (7037) main: 2, 262, us
+W (7037) main: 1, 123, us
+W (7037) main: 0, 641, us
+W (8037) main: 2, 129, us
+W (8037) main: 1, 105, us
+W (8037) main: 0, 455, us
+W (9037) main: 2, 129, us
+W (9037) main: 1, 111, us
+W (9037) main: 0, 455, us
+W (10037) main: 2, 128, us
+W (10037) main: 1, 112, us
+W (10037) main: 0, 491, us
+W (11037) main: 2, 128, us
+W (11037) main: 1, 104, us
+W (11037) main: 0, 446, us
+W (12037) main: 2, 129, us
+W (12037) main: 1, 108, us
+W (12037) main: 0, 449, us
+W (13037) main: 2, 129, us
+W (13037) main: 1, 108, us
+W (13037) main: 0, 449, us
+W (14037) main: 2, 129, us
+W (14037) main: 1, 107, us
+W (14037) main: 0, 449, us
+W (15037) main: 2, 129, us
+W (15037) main: 1, 107, us
+W (15037) main: 0, 450, us
+W (16037) main: 2, 129, us
+W (16037) main: 1, 108, us
+W (16037) main: 0, 449, us
+W (16817) wifi:<ba-del>idx
+W (16817) wifi:hmac tx: ifx0 stop, discard
+W (16817) wifi:hmac tx: ifx0 stop, discard
+W (17037) main: 2, 634, us
+W (17037) main: 0, 961, us
+W (17037) main: 1, 114, us
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (817) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:2, winSize:64
+W (4037) main: 2, 1054, us
+W (4037) main: 0, 1111, us
+W (4037) main: 1, 130, us
+W (5037) main: 2, 140, us
+W (5037) main: 1, 117, us
+W (5037) main: 0, 546, us
+W (6037) main: 2, 247, us
+W (6037) main: 1, 128, us
+W (6037) main: 0, 735, us
+W (7037) main: 2, 137, us
+W (7037) main: 1, 122, us
+W (7037) main: 0, 519, us
+W (8037) main: 2, 131, us
+W (8037) main: 1, 113, us
+W (8037) main: 0, 477, us
+W (9037) main: 2, 131, us
+W (9037) main: 1, 112, us
+W (9037) main: 0, 483, us
+W (10037) main: 2, 131, us
+W (10037) main: 1, 120, us
+W (10037) main: 0, 527, us
+W (11037) main: 2, 131, us
+W (11037) main: 1, 116, us
+W (11037) main: 0, 479, us
+W (12037) main: 2, 172, us
+W (12037) main: 1, 116, us
+W (12037) main: 0, 548, us
+W (13037) main: 2, 131, us
+W (13037) main: 1, 112, us
+W (13037) main: 0, 478, us
+W (14037) main: 2, 251, us
+W (14037) main: 1, 128, us
+W (14037) main: 0, 659, us
+W (15037) main: 2, 377, us
+W (15037) main: 0, 924, us
+W (15037) main: 1, 125, us
+W (15077) wifi:<ba-del>idx
+W (15077) wifi:hmac tx: ifx0 stop, discard
+W (15077) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (821) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:3, winSize:64
+W (4061) main: 2, 2046, us
+W (4061) main: 0, 2086, us
+W (4061) main: 1, 1126, us
+W (5061) main: 2, 1115, us
+W (5061) main: 0, 1520, us
+W (5061) main: 1, 1124, us
+W (6061) main: 2, 1116, us
+W (6061) main: 0, 1498, us
+W (6061) main: 1, 1119, us
+W (7061) main: 2, 5717, us
+W (7071) main: 0, 9436, us
+W (7071) main: 1, 8498, us
+W (8061) main: 2, 1439, us
+W (8061) main: 0, 1715, us
+W (8061) main: 1, 1115, us
+W (9061) main: 2, 1114, us
+W (9061) main: 0, 6846, us
+W (9071) main: 1, 7499, us
+W (10061) main: 2, 1477, us
+W (10061) main: 0, 2625, us
+W (10061) main: 1, 1118, us
+W (11061) main: 2, 1116, us
+W (11061) main: 0, 1461, us
+W (11061) main: 1, 1123, us
+W (12061) main: 2, 1115, us
+W (12061) main: 0, 1461, us
+W (12061) main: 1, 1125, us
+W (13061) main: 2, 1114, us
+W (13061) main: 0, 1464, us
+W (13061) main: 1, 1120, us
+W (14061) main: 2, 1239, us
+W (14061) main: 0, 1561, us
+W (14061) main: 1, 1122, us
+W (15061) main: 2, 1116, us
+W (15061) main: 0, 1462, us
+W (15061) main: 1, 1120, us
+W (16061) main: 2, 1115, us
+W (16061) main: 0, 1461, us
+W (16061) main: 1, 1122, us
+W (16931) wifi:<ba-del>idx
+W (16931) wifi:hmac tx: ifx0 stop, discard
+W (16931) wifi:hmac tx: ifx0 stop, discard
+W (17061) main: 2, 1666, us
+W (17061) main: 0, 1874, us
+W (17061) main: 1, 1122, us
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (811) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:2, winSize:64
+W (4061) main: 2, 1599, us
+W (4061) main: 0, 1640, us
+W (4061) main: 1, 712, us
+W (5061) main: 2, 712, us
+W (5061) main: 0, 1103, us
+W (5061) main: 1, 722, us
+W (6061) main: 2, 716, us
+W (6061) main: 0, 1081, us
+W (6061) main: 1, 722, us
+W (7061) main: 2, 715, us
+W (7061) main: 0, 1052, us
+W (7061) main: 1, 3635, us
+W (8061) main: 2, 1055, us
+W (8061) main: 1, 713, us
+W (8061) main: 0, 6893, us
+W (9061) main: 2, 902, us
+W (9061) main: 0, 1289, us
+W (9061) main: 1, 722, us
+W (10061) main: 2, 711, us
+W (10061) main: 0, 1074, us
+W (10061) main: 1, 3427, us
+W (11061) main: 1, 817, us
+W (11061) main: 2, 5357, us
+W (11071) main: 0, 8284, us
+W (12061) main: 0, 1299, us
+W (12061) main: 2, 4715, us
+W (12061) main: 1, 3721, us
+W (13061) main: 2, 1020, us
+W (13061) main: 0, 1327, us
+W (13061) main: 1, 720, us
+W (14061) main: 1, 932, us
+W (14061) main: 2, 4954, us
+W (14071) main: 0, 8664, us
+W (15061) main: 2, 1012, us
+W (15061) main: 1, 720, us
+W (15061) main: 0, 6716, us
+W (16061) main: 2, 829, us
+W (16061) main: 0, 6366, us
+W (16071) main: 1, 7084, us
+W (16831) wifi:<ba-del>idx
+W (16831) wifi:hmac tx: ifx0 stop, discard
+W (16831) wifi:hmac tx: ifx0 stop, discard
+W (17061) main: 0, 1502, us
+W (17061) main: 1, 683, us
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (821) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:2, winSize:64
+W (4041) main: 2, 1742, us
+W (4041) main: 0, 1787, us
+W (4041) main: 1, 761, us
+W (5041) main: 2, 789, us
+W (5041) main: 1, 763, us
+W (5041) main: 0, 2094, us
+W (6041) main: 2, 822, us
+W (6041) main: 0, 1220, us
+W (6041) main: 1, 766, us
+W (7041) main: 2, 755, us
+W (7041) main: 0, 1116, us
+W (7041) main: 1, 772, us
+W (8041) main: 2, 849, us
+W (8041) main: 0, 1167, us
+W (8041) main: 1, 751, us
+W (9041) main: 2, 752, us
+W (9041) main: 0, 1108, us
+W (9041) main: 1, 756, us
+W (10041) main: 2, 746, us
+W (10041) main: 0, 1132, us
+W (10041) main: 1, 755, us
+W (11041) main: 2, 750, us
+W (11041) main: 0, 1102, us
+W (11041) main: 1, 756, us
+W (12041) main: 2, 753, us
+W (12041) main: 0, 1109, us
+W (12041) main: 1, 759, us
+W (13041) main: 2, 754, us
+W (13041) main: 0, 1110, us
+W (13041) main: 1, 763, us
+W (14041) main: 2, 762, us
+W (14041) main: 0, 1106, us
+W (14041) main: 1, 768, us
+W (15041) main: 2, 838, us
+W (15041) main: 0, 1242, us
+W (15041) main: 1, 767, us
+W (16041) main: 2, 756, us
+W (16041) main: 0, 1110, us
+W (16041) main: 1, 758, us
+W (17041) main: 2, 965, us
+W (17041) main: 0, 1438, us
+W (17041) main: 1, 753, us
+W (17161) wifi:<ba-del>idx
+W (17161) wifi:hmac tx: ifx0 stop, discard
+W (17161) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (856) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:2, winSize:64
+W (4106) main: 1, 5253, us
+W (4106) main: 0, 6449, us
+W (4116) main: 2, 11021, us
+W (5116) main: 0, 5126, us
+W (5116) main: 2, 9173, us
+W (5116) main: 1, 4612, us
+W (6126) main: 0, 5085, us
+W (6126) main: 1, 4563, us
+W (6126) main: 2, 9317, us
+W (7136) main: 0, 10902, us
+W (7146) main: 1, 11396, us
+W (7146) main: 2, 14522, us
+W (8146) main: 2, 5065, us
+W (8156) main: 0, 11090, us
+W (8156) main: 1, 7417, us
+W (9166) main: 0, 5354, us
+W (9166) main: 1, 4524, us
+W (9166) main: 2, 12739, us
+W (10176) main: 0, 5379, us
+W (10176) main: 1, 4535, us
+W (10176) main: 2, 10011, us
+W (11186) main: 0, 5149, us
+W (11186) main: 1, 4514, us
+W (11186) main: 2, 9332, us
+W (12186) main: 2, 4631, us
+W (12186) main: 0, 5062, us
+W (12196) main: 1, 4608, us
+W (13196) main: 0, 5005, us
+W (13196) main: 1, 4523, us
+W (13196) main: 2, 9498, us
+W (14196) main: 2, 4711, us
+W (14206) main: 1, 4857, us
+W (14206) main: 0, 10582, us
+W (15206) main: 2, 4895, us
+W (15206) main: 0, 5308, us
+W (15216) main: 1, 4608, us
+W (16226) main: 2, 4840, us
+W (16226) main: 0, 5336, us
+W (16236) main: 1, 4613, us
+W (16516) wifi:<ba-del>idx
+W (16516) wifi:hmac tx: ifx0 stop, discard
+W (16516) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (856) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:2, winSize:64
+W (4116) main: 1, 4141, us
+W (4116) main: 2, 2920, us
+W (4116) main: 0, 7844, us
+W (5116) main: 1, 3087, us
+W (5116) main: 0, 3511, us
+W (5116) main: 2, 2922, us
+W (6116) main: 1, 3026, us
+W (6116) main: 0, 3548, us
+W (6126) main: 2, 2932, us
+W (7126) main: 0, 3415, us
+W (7126) main: 1, 6335, us
+W (7136) main: 2, 6148, us
+W (8136) main: 1, 5995, us
+W (8146) main: 2, 11727, us
+W (8146) main: 0, 18860, us
+W (9146) main: 1, 3387, us
+W (9156) main: 0, 6187, us
+W (9156) main: 2, 10545, us
+W (10166) main: 1, 5781, us
+W (10176) main: 0, 14220, us
+W (10176) main: 2, 16616, us
+W (11186) main: 1, 6341, us
+W (11196) main: 2, 12784, us
+W (11196) main: 0, 17100, us
+W (12196) main: 1, 3381, us
+W (12196) main: 0, 3699, us
+W (12206) main: 2, 8505, us
+W (13206) main: 0, 3603, us
+W (13206) main: 1, 5934, us
+W (13216) main: 2, 10471, us
+W (14226) main: 1, 3294, us
+W (14226) main: 2, 8829, us
+W (14236) main: 0, 17709, us
+W (15246) main: 1, 3139, us
+W (15246) main: 2, 9117, us
+W (15256) main: 0, 17527, us
+W (16256) main: 1, 6028, us
+W (16266) main: 0, 13312, us
+W (16276) main: 2, 14932, us
+W (17276) main: 1, 6154, us
+W (17286) main: 0, 15763, us
+W (17296) main: 2, 14692, us
+W (18296) main: 1, 3339, us
+W (18296) main: 2, 8962, us
+W (18306) main: 0, 17444, us
+W (19306) main: 1, 5936, us
+W (19316) main: 0, 14169, us
+W (19326) main: 2, 13663, us
+W (20326) main: 1, 6175, us
+W (20326) main: 0, 12909, us
+W (20336) main: 2, 13821, us
+W (21766) wifi:<ba-del>idx
+W (21766) wifi:hmac tx: ifx0 stop, discard
+W (21766) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (856) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:3, winSize:64
+W (4116) main: 2, 4437, us
+W (4116) main: 0, 4458, us
+W (4126) main: 1, 3134, us
+W (5126) main: 1, 3159, us
+W (5126) main: 0, 4651, us
+W (5126) main: 2, 6533, us
+W (6136) main: 2, 3167, us
+W (6136) main: 0, 3625, us
+W (6136) main: 1, 3096, us
+W (7136) main: 2, 3155, us
+W (7136) main: 0, 3572, us
+W (7136) main: 1, 3118, us
+W (8136) main: 2, 3322, us
+W (8136) main: 0, 3728, us
+W (8146) main: 1, 3152, us
+W (9146) main: 0, 3668, us
+W (9146) main: 1, 3043, us
+W (9146) main: 2, 6418, us
+W (10146) main: 2, 3146, us
+W (10146) main: 0, 4539, us
+W (10146) main: 1, 3170, us
+W (11146) main: 2, 3159, us
+W (11146) main: 0, 3601, us
+W (11156) main: 1, 3139, us
+W (12156) main: 1, 3232, us
+W (12156) main: 0, 3729, us
+W (12156) main: 2, 6626, us
+W (13156) main: 2, 3154, us
+W (13156) main: 0, 3598, us
+W (13166) main: 1, 3127, us
+W (14166) main: 0, 3590, us
+W (14166) main: 1, 3062, us
+W (14166) main: 2, 6476, us
+W (15166) main: 2, 3181, us
+W (15166) main: 0, 3629, us
+W (15166) main: 1, 3103, us
+W (16166) main: 2, 3152, us
+W (16166) main: 0, 3595, us
+W (16176) main: 1, 3124, us
+W (17176) main: 0, 3576, us
+W (17176) main: 1, 3110, us
+W (17176) main: 2, 6397, us
+W (18176) main: 2, 3139, us
+W (18176) main: 0, 3586, us
+W (18176) main: 1, 3134, us
+W (18756) wifi:<ba-del>idx
+W (18756) wifi:hmac tx: ifx0 stop, discard
+W (18756) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (817) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:2, winSize:64
+W (4037) main: 2, 1020, us
+W (4037) main: 0, 1020, us
+W (4037) main: 1, 155, us
+W (5037) main: 2, 171, us
+W (5037) main: 1, 151, us
+W (5037) main: 0, 1377, us
+W (6037) main: 2, 168, us
+W (6037) main: 1, 150, us
+W (6037) main: 0, 527, us
+W (7037) main: 2, 177, us
+W (7037) main: 1, 155, us
+W (7037) main: 0, 509, us
+W (8037) main: 2, 167, us
+W (8037) main: 1, 153, us
+W (8037) main: 0, 505, us
+W (9037) main: 2, 167, us
+W (9037) main: 1, 148, us
+W (9037) main: 0, 496, us
+W (10037) main: 2, 169, us
+W (10037) main: 1, 143, us
+W (10037) main: 0, 523, us
+W (11037) main: 2, 359, us
+W (11037) main: 0, 683, us
+W (11037) main: 1, 161, us
+W (12037) main: 2, 167, us
+W (12037) main: 1, 157, us
+W (12037) main: 0, 509, us
+W (13037) main: 2, 189, us
+W (13037) main: 1, 164, us
+W (13037) main: 0, 519, us
+W (14037) main: 2, 259, us
+W (14037) main: 1, 158, us
+W (14037) main: 0, 606, us
+W (15037) main: 2, 168, us
+W (15037) main: 1, 156, us
+W (15037) main: 0, 509, us
+W (16037) main: 2, 180, us
+W (16037) main: 1, 158, us
+W (16037) main: 0, 513, us
+W (17037) main: 0, 672, us
+W (17047) main: 1, 382, us
+W (17047) main: 2, 4095, us
+W (18037) main: 2, 464, us
+W (18037) main: 0, 869, us
+W (18037) main: 1, 165, us
+W (18257) wifi:<ba-del>idx
+W (18257) wifi:hmac tx: ifx0 stop, discard
+W (18257) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (817) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:3, winSize:64
+W (4037) main: 2, 969, us
+W (4037) main: 0, 988, us
+W (4037) main: 1, 117, us
+W (5037) main: 2, 134, us
+W (5037) main: 1, 107, us
+W (5037) main: 0, 487, us
+W (6037) main: 2, 129, us
+W (6037) main: 1, 108, us
+W (6037) main: 0, 455, us
+W (7037) main: 2, 130, us
+W (7037) main: 1, 114, us
+W (7037) main: 0, 447, us
+W (8037) main: 2, 130, us
+W (8037) main: 1, 116, us
+W (8037) main: 0, 446, us
+W (9037) main: 2, 130, us
+W (9037) main: 1, 114, us
+W (9037) main: 0, 447, us
+W (10037) main: 2, 129, us
+W (10037) main: 1, 111, us
+W (10037) main: 0, 457, us
+W (11037) main: 2, 129, us
+W (11037) main: 1, 117, us
+W (11037) main: 0, 451, us
+W (12037) main: 2, 130, us
+W (12037) main: 1, 119, us
+W (12037) main: 0, 438, us
+W (13037) main: 2, 223, us
+W (13037) main: 1, 118, us
+W (13037) main: 0, 560, us
+W (14037) main: 2, 129, us
+W (14037) main: 1, 117, us
+W (14037) main: 0, 443, us
+W (15037) main: 2, 130, us
+W (15037) main: 1, 111, us
+W (15037) main: 0, 449, us
+W (16037) main: 2, 130, us
+W (16037) main: 1, 118, us
+W (16037) main: 0, 443, us
+W (17037) main: 2, 130, us
+W (17037) main: 1, 114, us
+W (17037) main: 0, 447, us
+W (18037) main: 2, 129, us
+W (18037) main: 1, 117, us
+W (18037) main: 0, 443, us
+W (19037) main: 2, 235, us
+W (19037) main: 1, 118, us
+W (19037) main: 0, 568, us
+W (20037) main: 2, 130, us
+W (20037) main: 1, 115, us
+W (20037) main: 0, 448, us
+W (21037) main: 2, 185, us
+W (21037) main: 1, 112, us
+W (21037) main: 0, 473, us
+W (22037) main: 2, 267, us
+W (22037) main: 1, 116, us
+W (22037) main: 0, 587, us
+W (23037) main: 2, 130, us
+W (23037) main: 1, 116, us
+W (23037) main: 0, 450, us
+W (24037) main: 2, 130, us
+W (24037) main: 1, 117, us
+W (24037) main: 0, 451, us
+W (25037) main: 2, 130, us
+W (25037) main: 1, 115, us
+W (25037) main: 0, 449, us
+W (26037) main: 2, 155, us
+W (26037) main: 1, 120, us
+W (26037) main: 0, 482, us
+W (27037) main: 2, 130, us
+W (27037) main: 1, 115, us
+W (27037) main: 0, 449, us
+W (28037) main: 2, 287, us
+W (28037) main: 0, 754, us
+W (28037) main: 1, 118, us
+W (28497) wifi:<ba-del>idx
+W (28497) wifi:hmac tx: ifx0 stop, discard
+W (28497) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (827) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:2, winSize:64
+W (4037) main: 2, 1013, us
+W (4037) main: 0, 1037, us
+W (4037) main: 1, 120, us
+W (5037) main: 2, 138, us
+W (5037) main: 1, 120, us
+W (5037) main: 0, 517, us
+W (6037) main: 2, 268, us
+W (6037) main: 1, 113, us
+W (6037) main: 0, 650, us
+W (7037) main: 2, 132, us
+W (7037) main: 1, 122, us
+W (7037) main: 0, 457, us
+W (8037) main: 2, 157, us
+W (8037) main: 1, 120, us
+W (8037) main: 0, 483, us
+W (9037) main: 2, 219, us
+W (9037) main: 1, 125, us
+W (9037) main: 0, 584, us
+W (10037) main: 2, 132, us
+W (10037) main: 1, 112, us
+W (10037) main: 0, 473, us
+W (11037) main: 2, 131, us
+W (11037) main: 1, 118, us
+W (11037) main: 0, 464, us
+W (12037) main: 2, 131, us
+W (12037) main: 1, 120, us
+W (12037) main: 0, 466, us
+W (13037) main: 2, 218, us
+W (13037) main: 1, 122, us
+W (13037) main: 0, 592, us
+W (14037) main: 2, 131, us
+W (14037) main: 1, 121, us
+W (14037) main: 0, 460, us
+W (15037) main: 2, 131, us
+W (15037) main: 1, 119, us
+W (15037) main: 0, 464, us
+W (16037) main: 2, 132, us
+W (16037) main: 1, 119, us
+W (16037) main: 0, 459, us
+W (17037) main: 2, 131, us
+W (17037) main: 1, 118, us
+W (17037) main: 0, 469, us
+W (18037) main: 2, 132, us
+W (18037) main: 1, 120, us
+W (18037) main: 0, 460, us
+W (19037) main: 2, 131, us
+W (19037) main: 1, 121, us
+W (19037) main: 0, 460, us
+W (20037) main: 2, 659, us
+W (20037) main: 0, 860, us
+W (20037) main: 1, 121, us
+W (20307) wifi:<ba-del>idx
+W (20307) wifi:hmac tx: ifx0 stop, discard
+W (20307) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (821) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:2, winSize:64
+W (4061) main: 2, 1844, us
+W (4061) main: 0, 1898, us
+W (4061) main: 1, 1149, us
+W (5061) main: 2, 1148, us
+W (5061) main: 0, 1464, us
+W (5061) main: 1, 1145, us
+W (6061) main: 2, 1163, us
+W (6061) main: 0, 1469, us
+W (6061) main: 1, 1130, us
+W (7061) main: 2, 1144, us
+W (7061) main: 0, 1433, us
+W (7061) main: 1, 1132, us
+W (8061) main: 0, 1490, us
+W (8061) main: 1, 1281, us
+W (8061) main: 2, 6153, us
+W (9061) main: 2, 1326, us
+W (9061) main: 0, 1573, us
+W (9061) main: 1, 1149, us
+W (10061) main: 2, 1163, us
+W (10061) main: 0, 1466, us
+W (10061) main: 1, 1141, us
+W (11061) main: 2, 1153, us
+W (11061) main: 0, 1444, us
+W (11061) main: 1, 1130, us
+W (12061) main: 2, 1148, us
+W (12061) main: 0, 1437, us
+W (12061) main: 1, 1139, us
+W (13061) main: 2, 1150, us
+W (13061) main: 0, 1437, us
+W (13061) main: 1, 1136, us
+W (14061) main: 2, 1151, us
+W (14061) main: 0, 1443, us
+W (14061) main: 1, 1128, us
+W (15061) main: 2, 1145, us
+W (15061) main: 0, 1435, us
+W (15061) main: 1, 1133, us
+W (16061) main: 0, 1502, us
+W (16061) main: 1, 1272, us
+W (16061) main: 2, 5823, us
+W (17061) main: 2, 1309, us
+W (17061) main: 0, 1558, us
+W (17061) main: 1, 1135, us
+W (18061) main: 2, 1206, us
+W (18061) main: 0, 1430, us
+W (18061) main: 1, 1136, us
+W (19071) main: 2, 1386, us
+W (19071) main: 0, 1624, us
+W (19081) main: 1, 1145, us
+W (19391) wifi:<ba-del>idx
+W (19391) wifi:hmac tx: ifx0 stop, discard
+W (19391) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (821) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:2, winSize:64
+W (4071) main: 2, 1471, us
+W (4071) main: 0, 1502, us
+W (4081) main: 1, 715, us
+W (5071) main: 2, 705, us
+W (5071) main: 0, 1019, us
+W (5071) main: 1, 702, us
+W (6071) main: 2, 700, us
+W (6071) main: 0, 999, us
+W (6071) main: 1, 696, us
+W (7071) main: 2, 764, us
+W (7071) main: 0, 1039, us
+W (7071) main: 1, 703, us
+W (8071) main: 2, 696, us
+W (8071) main: 0, 973, us
+W (8071) main: 1, 696, us
+W (9071) main: 2, 699, us
+W (9071) main: 0, 973, us
+W (9071) main: 1, 702, us
+W (10071) main: 2, 708, us
+W (10071) main: 0, 996, us
+W (10071) main: 1, 700, us
+W (11071) main: 2, 698, us
+W (11071) main: 0, 972, us
+W (11071) main: 1, 706, us
+W (12071) main: 2, 699, us
+W (12071) main: 0, 970, us
+W (12071) main: 1, 702, us
+W (13071) main: 2, 761, us
+W (13071) main: 0, 1041, us
+W (13071) main: 1, 707, us
+W (14071) main: 2, 742, us
+W (14071) main: 0, 1018, us
+W (14071) main: 1, 697, us
+W (15071) main: 2, 701, us
+W (15071) main: 0, 971, us
+W (15071) main: 1, 704, us
+W (16071) main: 2, 701, us
+W (16071) main: 0, 971, us
+W (16071) main: 1, 701, us
+W (17071) main: 2, 702, us
+W (17071) main: 0, 973, us
+W (17071) main: 1, 702, us
+W (18071) main: 2, 737, us
+W (18071) main: 0, 1007, us
+W (18071) main: 1, 691, us
+W (19071) main: 2, 692, us
+W (19071) main: 0, 968, us
+W (19071) main: 1, 695, us
+W (20071) main: 2, 699, us
+W (20071) main: 0, 973, us
+W (20071) main: 1, 703, us
+W (21181) main: 2, 820, us
+W (21181) main: 0, 1183, us
+W (21181) main: 1, 701, us
+W (21461) wifi:<ba-del>idx
+W (21461) wifi:hmac tx: ifx0 stop, discard
+W (21461) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (851) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:2, winSize:64
+W (4041) main: 0, 1181, us
+W (4041) main: 1, 710, us
+W (4051) main: 2, 1184, us
+W (5041) main: 0, 1053, us
+W (5041) main: 1, 814, us
+W (5041) main: 2, 902, us
+W (6041) main: 0, 1044, us
+W (6041) main: 2, 717, us
+W (6041) main: 1, 714, us
+W (7041) main: 0, 1015, us
+W (7041) main: 1, 722, us
+W (7041) main: 2, 734, us
+W (8041) main: 0, 1018, us
+W (8041) main: 2, 806, us
+W (8041) main: 1, 801, us
+W (9041) main: 0, 1029, us
+W (9041) main: 1, 721, us
+W (9041) main: 2, 734, us
+W (10041) main: 0, 1037, us
+W (10041) main: 1, 760, us
+W (10041) main: 2, 768, us
+W (11041) main: 0, 1014, us
+W (11041) main: 1, 725, us
+W (11041) main: 2, 767, us
+W (12041) main: 0, 1043, us
+W (12041) main: 1, 717, us
+W (12041) main: 2, 814, us
+W (13041) main: 0, 1037, us
+W (13041) main: 1, 711, us
+W (13041) main: 2, 732, us
+W (14041) main: 0, 1012, us
+W (14041) main: 1, 719, us
+W (14041) main: 2, 770, us
+W (15041) main: 0, 1007, us
+W (15041) main: 1, 722, us
+W (15041) main: 2, 753, us
+W (16041) main: 0, 1016, us
+W (16041) main: 1, 726, us
+W (16041) main: 2, 742, us
+W (17041) main: 2, 724, us
+W (17041) main: 1, 934, us
+W (17041) main: 0, 2569, us
+W (18041) main: 0, 1139, us
+W (18041) main: 1, 719, us
+W (18041) main: 2, 842, us
+W (18131) wifi:<ba-del>idx
+W (18131) wifi:hmac tx: ifx0 stop, discard
+W (18131) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (856) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:2, winSize:64
+W (4126) main: 0, 5374, us
+W (4126) main: 1, 4791, us
+W (4126) main: 2, 10767, us
+W (5136) main: 0, 4986, us
+W (5136) main: 1, 4620, us
+W (5136) main: 2, 9369, us
+W (6136) main: 2, 4631, us
+W (6136) main: 0, 4973, us
+W (6146) main: 1, 4620, us
+W (7136) main: 2, 4684, us
+W (7136) main: 0, 4987, us
+W (7146) main: 1, 7614, us
+W (8146) main: 0, 5091, us
+W (8146) main: 1, 4703, us
+W (8146) main: 2, 9823, us
+W (9146) main: 2, 4625, us
+W (9156) main: 0, 5871, us
+W (9156) main: 1, 4629, us
+W (10156) main: 0, 4992, us
+W (10156) main: 1, 4622, us
+W (10156) main: 2, 9399, us
+W (11156) main: 2, 4621, us
+W (11156) main: 0, 4938, us
+W (11166) main: 1, 4628, us
+W (12166) main: 0, 4958, us
+W (12166) main: 1, 4619, us
+W (12166) main: 2, 9385, us
+W (13166) main: 0, 5000, us
+W (13176) main: 1, 10190, us
+W (13176) main: 2, 12703, us
+W (14176) main: 0, 5903, us
+W (14176) main: 1, 4595, us
+W (14176) main: 2, 9799, us
+W (15176) main: 2, 4625, us
+W (15176) main: 0, 4937, us
+W (15186) main: 1, 4638, us
+W (16176) main: 2, 4617, us
+W (16186) main: 0, 4940, us
+W (16186) main: 1, 4633, us
+W (17216) main: 2, 4789, us
+W (17216) main: 0, 5108, us
+W (17226) main: 1, 4644, us
+W (17486) wifi:<ba-del>idx
+W (17486) wifi:hmac tx: ifx0 stop, discard
+W (17486) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (856) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:3, winSize:64
+W (4116) main: 2, 3521, us
+W (4116) main: 0, 3554, us
+W (4116) main: 1, 2830, us
+W (5116) main: 2, 2846, us
+W (5116) main: 0, 3198, us
+W (5126) main: 1, 2836, us
+W (6126) main: 0, 3165, us
+W (6126) main: 1, 2827, us
+W (6126) main: 2, 5774, us
+W (7126) main: 2, 2878, us
+W (7126) main: 0, 3358, us
+W (7126) main: 1, 2815, us
+W (8136) main: 2, 2832, us
+W (8136) main: 0, 3117, us
+W (8136) main: 1, 2815, us
+W (9136) main: 2, 2809, us
+W (9136) main: 0, 3106, us
+W (9146) main: 1, 2827, us
+W (10146) main: 0, 3151, us
+W (10146) main: 1, 2791, us
+W (10146) main: 2, 5758, us
+W (11146) main: 2, 2822, us
+W (11146) main: 0, 3110, us
+W (11156) main: 1, 2815, us
+W (12146) main: 2, 2818, us
+W (12146) main: 0, 3116, us
+W (12156) main: 1, 2826, us
+W (13146) main: 2, 2822, us
+W (13146) main: 0, 3107, us
+W (13156) main: 1, 2818, us
+W (14146) main: 2, 2821, us
+W (14146) main: 0, 3134, us
+W (14156) main: 1, 2833, us
+W (15156) main: 0, 3120, us
+W (15156) main: 2, 5687, us
+W (15156) main: 1, 2831, us
+W (16156) main: 2, 2886, us
+W (16156) main: 0, 3165, us
+W (16156) main: 1, 2810, us
+W (17166) main: 0, 3125, us
+W (17166) main: 1, 2782, us
+W (17166) main: 2, 5748, us
+W (18186) main: 0, 3249, us
+W (18186) main: 1, 2879, us
+W (18186) main: 2, 6002, us
+W (18256) wifi:<ba-del>idx
+W (18256) wifi:hmac tx: ifx0 stop, discard
+W (18256) wifi:hmac tx: ifx0 stop, discard
+ets Jun  8 2016 00:22:57
+
+rst:0xc (SW_CPU_RESET),boot:0x1b (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:5760
+load:0x40078000,len:14780
+load:0x40080400,len:3792
+entry 0x40080694
+I (27) boot: ESP-IDF v4.4 2nd stage bootloader
+I (27) boot: compile time 22:55:42
+I (27) boot: chip revision: 1
+I (27) boot_comm: chip revision: 1, min. bootloader chip revision: 0
+I (33) boot.esp32: SPI Speed      : 40MHz
+I (37) boot.esp32: SPI Mode       : DIO
+I (40) boot.esp32: SPI Flash Size : 2MB
+I (44) boot: Enabling RNG early entropy source...
+I (48) boot: Partition Table:
+I (51) boot: ## Label            Usage          Type ST Offset   Length
+I (57) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (64) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (70) boot:  2 factory          factory app      00 00 00010000 00100000
+I (77) boot: End of partition table
+I (80) boot_comm: chip revision: 1, min. application chip revision: 0
+I (86) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=1dbech (121836) map
+I (138) esp_image: segment 1: paddr=0002dc14 vaddr=3ffb0000 size=02404h (  9220) load
+I (142) esp_image: segment 2: paddr=00030020 vaddr=400d0020 size=882c4h (557764) map
+I (344) esp_image: segment 3: paddr=000b82ec vaddr=3ffb2404 size=016bch (  5820) load
+I (346) esp_image: segment 4: paddr=000b99b0 vaddr=40080000 size=14b48h ( 84808) load
+I (382) esp_image: segment 5: paddr=000ce500 vaddr=50000000 size=00010h (    16) load
+I (393) boot: Loaded app from partition at offset 0x10000
+I (393) boot: Disabling RNG early entropy source...
+W (413) spi_flash: Detected size(16384k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+W (856) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:3, winSize:64
+W (4106) main: 0, 3683, us
+W (4116) main: 1, 2958, us
+W (4106) main: 2, 3716, us
+W (5116) main: 2, 2928, us
+W (5116) main: 0, 3259, us
+W (5116) main: 1, 2914, us
+W (6116) main: 2, 2997, us
+W (6116) main: 0, 3323, us
+W (6126) main: 1, 2920, us
+W (7126) main: 0, 3246, us
+W (7126) main: 1, 2922, us
+W (7126) main: 2, 5969, us
+W (8126) main: 2, 3037, us
+W (8126) main: 0, 3305, us
+W (8126) main: 1, 2949, us
+W (9126) main: 2, 2918, us
+W (9136) main: 0, 3245, us
+W (9136) main: 1, 2976, us
+W (10136) main: 2, 2985, us
+W (10136) main: 0, 3373, us
+W (10136) main: 1, 2911, us
+W (11136) main: 2, 2922, us
+W (11136) main: 0, 3236, us
+W (11146) main: 1, 2918, us
+W (12146) main: 0, 3235, us
+W (12146) main: 1, 2940, us
+W (12146) main: 2, 6301, us
+W (13146) main: 2, 2932, us
+W (13146) main: 0, 3239, us
+W (13146) main: 1, 2910, us
+W (14146) main: 2, 2989, us
+W (14156) main: 0, 4127, us
+W (14156) main: 1, 2931, us
+W (15156) main: 0, 3234, us
+W (15156) main: 2, 5867, us
+W (15156) main: 1, 2927, us
+W (16156) main: 2, 2963, us
+W (16156) main: 0, 3855, us
+W (16156) main: 1, 2924, us
+W (17166) main: 0, 3254, us
+W (17166) main: 1, 3035, us
+W (17166) main: 2, 6112, us
+W (18166) main: 2, 2917, us
+W (18166) main: 0, 3229, us
+W (18166) main: 1, 3075, us
+W (19166) main: 2, 3160, us
+W (19166) main: 0, 4014, us
+W (19176) main: 1, 2916, us
+W (20176) main: 0, 3332, us
+W (20176) main: 1, 2931, us
+W (20176) main: 2, 6051, us
+W (21176) main: 2, 2911, us
+W (21176) main: 0, 3242, us
+W (21176) main: 1, 2982, us
+Executing action: monitor
+Running idf_monitor in directory /home/miroslav/fiit-stu/BP/bachelor-thesis/esp/vibration-analyzer
+Executing "/home/miroslav/.espressif/python_env/idf4.4_py3.10_env/bin/python /home/miroslav/fiit-stu/BP/bachelor-thesis/esp/esp-idf/tools/idf_monitor.py -p /dev/ttyUSB0 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 /home/miroslav/fiit-stu/BP/bachelor-thesis/esp/vibration-analyzer/build/vibrations.elf -m '/home/miroslav/.espressif/python_env/idf4.4_py3.10_env/bin/python' '/home/miroslav/fiit-stu/BP/bachelor-thesis/esp/esp-idf/tools/idf.py' '-p' '/dev/ttyUSB0'"...

@@ -1,9 +1,3 @@
-ESP_LOGW("main", "MEM, %d, %u, %u, %u", i,
-        heap_caps_get_total_size(MALLOC_CAP_8BIT),
-        heap_caps_get_free_size(MALLOC_CAP_8BIT),
-        heap_caps_get_largest_free_block(MALLOC_CAP_8BIT)
-);
-
 -Os
 #define MEMORY_MEASUREMENT          1
 
@@ -15,7 +9,7 @@ $ python tests/config_tool.py
 -> connect
 -> config
 [imu/1/config/response]:
-        {"sensor": {"fs": 8, "range": "2g", "n": 8, "overlap": 0.5, "axis": [true, true, true]}, "tsmooth": {"on": false, "n": 8, "repeat": 1}, "stats": {"min": true, "max": true, "rms": true, "avg": true, "var": true, "std": true, "skew": true, "kurtosis": true, "med": true, "mad": true, "corr": false}, "transform": {"w": "hann", "f": "dft", "log": true}, "fsmooth": {"on": false, "n": 8, "repeat": 1}, "peak": {"tmin": 4, "tprox": 5, "strategy": "threshold", "threshold": {"t": -15.0}, "neighbours": {"k": 9, "e": 0.0, "h": -50.0, "h_rel": 10.0}, "zero_crossing": {"k": 4, "slope": 3.0}, "hill_walker": {"t": 0.0, "h": 0, "p": 10.0, "i": 3.0}}, "logger": {"local": true, "samples": false, "stats": true, "spectra": false, "events": false, "subsamp": 1}}
+        {"sensor": {"fs": 8, "range": "2g", "n": 8, "overlap": 0.5, "axis": [true, true, true]}, "tsmooth": {"on": false, "n": 8, "repeat": 1}, "stats": {"min": true, "max": true, "rms": true, "avg": true, "var": true, "std": true, "skew": true, "kurtosis": true, "med": true, "mad": true, "corr": false}, "transform": {"w": "hann", "f": "dft", "log": true}, "fsmooth": {"on": false, "n": 8, "repeat": 1}, "peak": {"tmin": 4, "tprox": 5, "strategy": "threshold", "threshold": {"t": -15.0}, "neighbours": {"k": 9, "e": 0.0, "h": -50.0, "h_rel": 10.0}, "zero_crossing": {"k": 4, "slope": 3.0}, "hill_walker": {"t": 0.0, "h": 0, "p": 10.0, "i": 3.0}}, "logger": {"local": false, "mqtt": true, "samples": "", "stats": false, "events": false, "subsamp": 1}}
 
 -> set
  {"sensor": {"n": 8}, "tsmooth": {"n": 8}, "fsmooth": {"n": 8}}
