@@ -40,6 +40,7 @@
 - Časové vykonávanie celej pipeline pre rôzne N (graf) vs. real time deadline T * n (resp. n / fs). Priemer 100 behov. Scenáre (to isté pre 3 osi):
   - 1 os, SD karta + MQTT off, T smooth off, stats no, FFT, F smooth off, find_neigh
   - 1 os, SD karta + MQTT off, T smooth off, stats no, DCT, F smooth off, find_neigh
+  -   - 1 os, SD karta + MQTT off, T smooth off, stats bez corr, FFT, F smooth off, find_neigh
   - 1 os, SD karta + MQTT off, T smooth off, stats full, FFT, F smooth off, find_neigh
   - 1 os, MQTT stats,  T smooth off, stats full, FFT, F smooth off, find_neigh
   - 1 os, MQTT events,  T smooth off, stats full, FFT, F smooth off, find_neigh

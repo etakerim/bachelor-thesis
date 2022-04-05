@@ -51,6 +51,15 @@
  * @brief Maximálny počet prechodu konvolučnej masky vyhladzovacieho filtra
  */
 #define MAX_SMOOTH_REPEAT           8
+/**
+ * @brief Najväčšia veľkosť vyrovnávacej pamäte pre serializáciu vzoriek
+ */
+#define LARGEST_MESSAGE             14000
+// ((MAX_BUFFER_SAMPLES * (sizeof(float) + 1)))
+/**
+ * @brief Najväčšia veľkosť serializovanej konfigurácie
+ */
+#define LARGEST_CONFIG              480
 
 /**
  * @brief Oknové funkcie 
@@ -83,6 +92,13 @@ typedef enum {
     DCT,                /**< @brief Konsínusová transformácia DCT II */
     TRANSFORM_COUNT     /**< @brief Počet dostupných frekvenčných transformácií. Potrebné pre serializáciu */
 } FrequencyTransform;
+
+typedef enum {
+    RAW_NONE_SEND,
+    RAW_TIME_SEND,
+    RAW_FREQUENCY_SEND,
+    SEND_UNPROCESSED_COUNT
+} SendUnprocessed;
 
 /**
  * @brief Nastavenie vzorkovania signálu
@@ -166,12 +182,13 @@ typedef struct {
  * Wifi pripojenie a MQTT klient budú spusetný iba ak aspoň jedna z možností `mqtt_*` je povolená.
  */
 typedef struct {
-    uint16_t subsampling;       /**< @brief Podvzorkovanie pre záznam vzoriek bez ďalšieho spracovania. Preskočí sa každých `subsampling` vzoriek */
-    bool openlog_raw_samples;   /**< @brief Záznam vzoriek na SD kartu povolený. OpenLog bude zapnutý po spustení */
-    bool mqtt_samples;          /**< @brief Odosielanie vzoriek cez MQTT na topic podľa `MQTT_TOPIC_STREAM` */
+    bool local;                 /**< @brief Záznam vzoriek na SD kartu povolený. OpenLog bude zapnutý po spustení */
+    bool mqtt;                  /**< @brief Posielanie cez MQTT povolené. Wifi a MQTT klient bude zapnutý po spustení */
     bool mqtt_stats;            /**< @brief Odosielanie štatistík cez MQTT na topic podľa `MQTT_TOPIC_STATS` */
-    bool mqtt_spectra;          /**< @brief Odosielanie frekvenčného spektra cez MQTT na topic podľa `MQTT_TOPIC_SPECTRUM` */
     bool mqtt_events;           /**< @brief Odosielanie zmien spektra cez MQTT na topic podľa `MQTT_TOPIC_EVENT` */
+    SendUnprocessed mqtt_samples; /**< @brief Odosielanie nespracovaných vzoriek alebo frekvencií cez MQTT na topic podľa `MQTT_TOPIC_STREAM`,
+                                     `MQTT_TOPIC_SPECTRUM` */
+    uint16_t subsampling;       /**< @brief Podvzorkovanie pre záznam vzoriek bez ďalšieho spracovania. Preskočí sa každých `subsampling` vzoriek */
 } SaveFormatConfig;
 
 /**

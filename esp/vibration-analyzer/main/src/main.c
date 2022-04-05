@@ -8,31 +8,28 @@
 #include "soc/soc.h"
 #include "esp_system.h"
 #include "nvs_flash.h"
+#include "driver/uart.h"
 
 #include "inertial_unit.h"
 #include "peripheral.h"
 #include "pipeline.h"
 #include "statistics.h"
-#include "driver/uart.h"
 
-// Measurements: ---------
+// Measurements:
 // #define FACTORY_RESET                1
 // #define MESSAGES_MEASUREMENT         1
-// #define MEMORY_MEASUREMENT           1
-// Strategies: 1 axis - speed change with buffer size (@80MHz, 100Hz tick)
+#define MEMORY_MEASUREMENT              1
 // #define EXECUTION_TIME_ALGORITHMS   1
-// Strategies: 1 vs 3 axis, no corr vs. corr
-//#define EXECUTION_TIME_PIPELINE     1
-// Plot Minimal buffer size at given sampling frequency
+// #define EXECUTION_TIME_PIPELINE     1
 
 #ifdef EXECUTION_TIME_ALGORITHMS
     #define MEASUREMENTS_CYCLES         100
 #endif
 
 #ifdef MEMORY_MEASUREMENT
-void memory_measure(int i)
+void memory_measure(const char *reason)
 {
-    ESP_LOGW("main", "MEM, %d, %u, %u, %u", i,
+    ESP_LOGW("main", "MEM, %s, %u, %u, %u", reason,
         heap_caps_get_total_size(MALLOC_CAP_8BIT),
         heap_caps_get_free_size(MALLOC_CAP_8BIT),
         heap_caps_get_largest_free_block(MALLOC_CAP_8BIT)
@@ -47,14 +44,13 @@ Provisioning login = {
 };
 */
 
-Provisioning login = {
+static Provisioning login = {
     .wifi_ssid="Etakerim Crew",
     .wifi_pass="4priv.hacker-turaw",
     .mqtt_url="mqtt://192.168.1.103"
 };
 
-
-InertialUnit imu = {
+static InertialUnit imu = {
     .spi = SPI2_HOST,
     .clk = 21,
     .miso = 23,
@@ -66,7 +62,7 @@ InertialUnit imu = {
     .en_data = 18
 };
 
-OpenLog logger = {
+static OpenLog logger = {
     .vcc = 25,
     .uart = 0,
     .rx = 5,
@@ -75,17 +71,17 @@ OpenLog logger = {
     .buffer = MAX_BUFFER_SAMPLES * 2
 };
 
-Configuration conf = {
+static Configuration conf = {
     .sensor = {
-        .frequency = 64,
+        .frequency = 256,
         .range = IMU_2G,
-        .n = 64,
+        .n = 1024,
         .overlap = 0.5,
         .axis = {true, true, true}
     },
     .tsmooth = {
         .enable = false,
-        .n = 3,
+        .n = 8,
         .repeat = 1
     },
     .stats = {
@@ -99,7 +95,7 @@ Configuration conf = {
         .kurtosis = true,
         .median = true,
         .mad = true,
-        .correlation = false
+        .correlation = true
     },
     .transform = {
         .window = HANN_WINDOW,
@@ -108,7 +104,7 @@ Configuration conf = {
     },
     .fsmooth = {
         .enable = false,
-        .n = 4,
+        .n = 8,
         .repeat = 1
     },
     .peak = {
@@ -137,23 +133,18 @@ Configuration conf = {
     },
     .logger = {
         .subsampling = 1,
-        .openlog_raw_samples = false,
-        .mqtt_samples = false,
-        .mqtt_stats = true,
-        .mqtt_spectra = false,
+        .local = false,
+        .mqtt = true,
+        .mqtt_samples = RAW_NONE_SEND,
+        .mqtt_stats = false,
         .mqtt_events = false
     }
 };
 
-
-TaskHandle_t sample_tick;
-esp_mqtt_client_handle_t mqttclient;
-BufferPipelineKernel pipeline;
-Sender sender;
-
-char logger_content[LARGEST_MESSAGE];
-char mqtt_handler_content[LARGEST_MESSAGE];
-char axis_serialize[AXIS_COUNT][LARGEST_MESSAGE];
+static TaskHandle_t sample_tick;
+static esp_mqtt_client_handle_t mqttclient;
+static BufferPipelineKernel pipeline;
+static Sender sender;
 
 
 void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
@@ -161,19 +152,26 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
     esp_mqtt_event_handle_t event = event_data;
     esp_mqtt_client_handle_t client = event->client;
     bool change, error;
+    static char config[LARGEST_CONFIG];
 
     switch ((esp_mqtt_event_id_t)event_id) {
         case MQTT_EVENT_CONNECTED:
             esp_mqtt_client_subscribe(client, MQTT_TOPIC_REQUEST, 1);
             esp_mqtt_client_subscribe(client, MQTT_TOPIC_CONFIG, 1);
             esp_mqtt_client_subscribe(client, MQTT_TOPIC_LOGIN, 1);
+            // V prevádzke vypni z bezpečnostných dôvodov
+            esp_mqtt_client_subscribe(client, MQTT_TOPIC_LOGIN_GET, 1);
             esp_mqtt_client_publish(client, MQTT_TOPIC_SYSLOG, "imu started", 0, 1, 1);
             break;
 
         case MQTT_EVENT_DATA:
             if (strncmp(event->topic, MQTT_TOPIC_REQUEST, event->topic_len) == 0) {
-                size_t n = config_serialize(mqtt_handler_content, LARGEST_MESSAGE, &conf);
-                esp_mqtt_client_publish(client, MQTT_TOPIC_RESPONSE, mqtt_handler_content, n, 1, 0);
+                size_t n = config_serialize(config, LARGEST_CONFIG, &conf);
+                esp_mqtt_client_publish(client, MQTT_TOPIC_RESPONSE, config, n, 1, 0);
+
+            } else if (strncmp(event->topic, MQTT_TOPIC_LOGIN_GET, event->topic_len) == 0) {
+                size_t n = login_serialize(config, LARGEST_CONFIG, &login);
+                esp_mqtt_client_publish(client, MQTT_TOPIC_LOGIN_SEND, config, n, 1, 0);
 
             } else if (strncmp(event->topic, MQTT_TOPIC_CONFIG, event->topic_len) == 0) {
                 esp_mqtt_client_publish(client, MQTT_TOPIC_SYSLOG, "config received", 0, 1, 0);
@@ -193,7 +191,7 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
 	                vTaskDelay(200 / portTICK_PERIOD_MS);
                     esp_wifi_deinit();
                     vTaskDelay(200 / portTICK_PERIOD_MS);
-                    if (conf.logger.openlog_raw_samples)
+                    if (conf.logger.local)
                         uart_driver_delete(logger.uart);
 
                     esp_restart();
@@ -228,17 +226,15 @@ void sampler_task()
 {
     uint8_t i;
     float axis[AXIS_COUNT];
-    // uint64_t start = 0; uint64_t end;
 
     uint16_t subsample = 0;
     const bool logger = (
-        conf.logger.openlog_raw_samples || conf.logger.mqtt_samples
+        conf.logger.local || conf.logger.mqtt_samples != RAW_NONE_SEND
     );
 
     while (1) {
         if (ulTaskNotifyTake(pdTRUE, portMAX_DELAY) == pdTRUE) {
-            // end = esp_timer_get_time();
-            // ESP_LOGI("main", "us %llu", end - start);
+
             imu_acceleration(&imu, &axis[0], &axis[1], &axis[2]);
 
             for (i = 0; i < AXIS_COUNT; i++) {
@@ -253,7 +249,6 @@ void sampler_task()
                     xQueueSend(sender.raw_stream, &axis[i], 0);
                 }
             }
-            // start = esp_timer_get_time();
         }
     }
 }
@@ -262,9 +257,11 @@ void logger_task()
 {
     uint16_t idx = 0;
     float *stream = malloc(sender.max_send_samples * sizeof(*stream));
+    static char message[LARGEST_MESSAGE];
+
 
 #ifdef MEMORY_MEASUREMENT 
-    memory_measure(20);
+    memory_measure("logger_task");
 #endif
 
     while (1) {
@@ -273,15 +270,15 @@ void logger_task()
                 continue;
 
             idx = 0;
-            if (conf.logger.mqtt_samples) {
+            if (conf.logger.mqtt_samples == RAW_TIME_SEND) {
                 size_t len = stream_serialize(
-                    logger_content, LARGEST_MESSAGE, stream, sender.max_send_samples
+                    message, LARGEST_MESSAGE, stream, sender.max_send_samples
                 );
                 if (len > 0)
-                    esp_mqtt_client_publish(mqttclient, MQTT_TOPIC_STREAM, logger_content, len, 0, 0);
+                    esp_mqtt_client_publish(mqttclient, MQTT_TOPIC_STREAM, message, len, 0, 0);
             }
 
-            if (conf.logger.openlog_raw_samples) {
+            if (conf.logger.local) {
                 for (uint16_t i = 0; i < sender.max_send_samples; i += 3)
                     printf("%.3f %.3f %.3f\n", stream[i+0], stream[i+1], stream[i+2]);
             }
@@ -295,7 +292,7 @@ void pipeline_task(void *args)
 {
     uint32_t x = (uint32_t)args;
     BufferPipelineKernel *k = &pipeline;
-    char *serialize = axis_serialize[x];
+    static char serialize[LARGEST_MESSAGE];
 
     BufferPipelineAxis p;
     Statistics stats;
@@ -306,13 +303,14 @@ void pipeline_task(void *args)
     const uint16_t leftover = conf.sensor.n * (1 - conf.sensor.overlap);
 
     size_t changes;
-    int bins = conf.sensor.n / 2;
+    const int bins = conf.sensor.n / 2;
+    const float bin_width = conf.sensor.frequency / (float)bins;
 
     axis_allocate(&p, &conf);
     axis_mqtt_topics(&mqtt_topics, x);
 
 #ifdef MEMORY_MEASUREMENT 
-    memory_measure(10 + x);
+    memory_measure("pipeline_task");
 #endif
 
     while (1) {
@@ -325,7 +323,6 @@ void pipeline_task(void *args)
             uint64_t start, end, tp;
             start = esp_timer_get_time();
 #endif
-
             process_smoothing(p.stream, p.tmp_conv, conf.sensor.n, k->smooth, &conf.tsmooth);
 
             if (conf.logger.mqtt_stats) {
@@ -341,7 +338,7 @@ void pipeline_task(void *args)
             uint64_t t0 = esp_timer_get_time();
             for (int i = 0; i < MEASUREMENTS_CYCLES; i++) {
 #endif
-            bins = process_spectrum(p.spectrum, p.stream, k->window, conf.sensor.n, &conf.transform);
+            process_spectrum(p.spectrum, p.stream, k->window, conf.sensor.n, &conf.transform);
 
 #ifdef EXECUTION_TIME_ALGORITHMS
             }
@@ -349,8 +346,7 @@ void pipeline_task(void *args)
             ESP_LOGI("main", "S:, %llu, us", (t1 - t0) / MEASUREMENTS_CYCLES);
 #endif
 
-            float bin_width = conf.sensor.frequency / (float)bins;
-            if (conf.logger.mqtt_spectra) {
+            if (conf.logger.mqtt_samples == RAW_FREQUENCY_SEND) {
                 size_t len = spectra_serialize(no, serialize, LARGEST_MESSAGE, p.spectrum, bins, conf.sensor.frequency);
                 esp_mqtt_client_publish(mqttclient, mqtt_topics.spectra, serialize, len, 0, 0);
             }
@@ -413,17 +409,15 @@ void app_main(void)
 
     nvs_save_config(&conf);
     nvs_save_login(&login);
-    ESP_LOGI("main", "Config written");
+    ESP_LOGW("main", "Config written");
 }
 #else
 void app_main(void)
 {
-
-#ifdef MEMORY_MEASUREMENT 
+#ifdef MEMORY_MEASUREMENT
     ESP_LOGW("main", "MEM, State, Total, Free, Largest");
-    memory_measure(-1);
+    memory_measure("app_main");
 #endif
-
     // Initialize Non-Volatile Storage 
     esp_err_t err = nvs_flash_init();
     if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
@@ -444,35 +438,30 @@ void app_main(void)
     ESP_LOGW("main", "Size of config(B): %d", sizeof(Configuration));
     ESP_LOGW("main", "Size of statistics(B): %d", sizeof(Statistics));
     ESP_LOGW("main", "Size of event(B): %d", sizeof(SpectrumEvent));
-    ESP_LOGW("main", "Size of samples per axis(B): %d", conf.sensor.n *  sizeof(float));
-    ESP_LOGW("main", "Size of bins per axis(B): %d", (conf.sensor.n / 2) *  sizeof(float));
-    ESP_LOGW("main", "Size of logger samples(B): %d",
+    ESP_LOGW("main", "Size of sample(B): %d", sizeof(float));
+    ESP_LOGW("main", "Size of max. message samples(B): %d",
             (conf.sensor.n / AXIS_COUNT + 1) * AXIS_COUNT* sizeof(float));
-
 #endif
 
 #ifdef MEMORY_MEASUREMENT 
-    memory_measure(0);
+    memory_measure("imu");
 #endif 
     // Allocate common buffers (4x becaus of DCT table lookup)
     dsps_fft2r_init_fc32(NULL, 4 * conf.sensor.n); 
     process_allocate(&pipeline, &conf);
 
 #ifdef MEMORY_MEASUREMENT 
-    memory_measure(1);
+    memory_measure("fft&buffers");
 #endif 
 
-    const bool mqtt_running = (
-        conf.logger.mqtt_samples || conf.logger.mqtt_stats ||
-        conf.logger.mqtt_spectra || conf.logger.mqtt_events
-    );
+
     wifi_config_t wifi_login = {};
 
-    if (conf.logger.openlog_raw_samples || mqtt_running) {
+    if (conf.logger.local || conf.logger.mqtt) {
         sender_allocate(&sender, conf.sensor.n);
     }
 
-    if (mqtt_running) {
+    if (conf.logger.mqtt) {
         strcpy((char *)wifi_login.sta.ssid, (char *)login.wifi_ssid);
         strcpy((char *)wifi_login.sta.password, (char *)login.wifi_pass);
         wifi_login.sta.threshold.authmode = WIFI_AUTH_WPA2_PSK;
@@ -484,34 +473,34 @@ void app_main(void)
         mqttclient = mqtt_setup(login.mqtt_url);
     }
 
-    if (conf.logger.openlog_raw_samples) {
+    if (conf.logger.local) {
         openlog_setup(&logger);
         vTaskDelay(10000 / portTICK_RATE_MS);
     }
 
     // Start up tasks ----------------------------------
 #ifdef MEMORY_MEASUREMENT 
-    memory_measure(2);
+    memory_measure("wifi");
 #endif
     if (conf.sensor.axis[0])
-        xTaskCreate(pipeline_task, "x_pipeline", 5500, (void *)0, 1, NULL);
+        xTaskCreate(pipeline_task, "x_pipeline", 10000, (void *)0, 1, NULL);
 #ifdef MEMORY_MEASUREMENT 
     vTaskDelay(1000 / portTICK_RATE_MS);
 #endif
     if (conf.sensor.axis[1])
-        xTaskCreate(pipeline_task, "y_pipeline", 5500, (void *)1, 1, NULL);
+        xTaskCreate(pipeline_task, "y_pipeline", 10000, (void *)1, 1, NULL);
 #ifdef MEMORY_MEASUREMENT
     vTaskDelay(1000 / portTICK_RATE_MS);
 #endif
     if (conf.sensor.axis[2])
-        xTaskCreate(pipeline_task, "z_pipeline", 5500, (void *)2, 1, NULL);
+        xTaskCreate(pipeline_task, "z_pipeline", 10000, (void *)2, 1, NULL);
 #ifdef MEMORY_MEASUREMENT 
     vTaskDelay(1000 / portTICK_RATE_MS);
 #endif
 
     xTaskCreate(sampler_task, "sampling", 1024, NULL, 1, &sample_tick);
 
-    if (conf.logger.openlog_raw_samples || conf.logger.mqtt_samples)
+    if (conf.logger.local|| conf.logger.mqtt_samples != RAW_NONE_SEND)
         xTaskCreate(logger_task, "logger", 4096, NULL, 1, NULL);
 
     // Start sampling timer
@@ -519,7 +508,7 @@ void app_main(void)
     
 #ifdef MEMORY_MEASUREMENT 
     vTaskDelay(1000 / portTICK_RATE_MS);
-    memory_measure(30);
+    memory_measure("all");
 #endif
 }
 #endif

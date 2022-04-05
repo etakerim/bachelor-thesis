@@ -20,18 +20,19 @@
 #define DEVICE_MQTT_TOPIC           "imu/1/"
 
 #define TOPIC_LENGTH                64
-#define LARGEST_MESSAGE             ((MAX_BUFFER_SAMPLES * (sizeof(float) + 1)) + (2 * TOPIC_LENGTH))
 #define DEVICE_MQTT_TOPIC_LENGTH    sizeof(DEVICE_MQTT_TOPIC) / sizeof(char)
 
 #define MQTT_TOPIC_REQUEST          DEVICE_MQTT_TOPIC "config/request"
 #define MQTT_TOPIC_RESPONSE         DEVICE_MQTT_TOPIC "config/response"
 #define MQTT_TOPIC_CONFIG           DEVICE_MQTT_TOPIC "config/set"
 #define MQTT_TOPIC_LOGIN            DEVICE_MQTT_TOPIC "login/set"
+#define MQTT_TOPIC_LOGIN_GET        DEVICE_MQTT_TOPIC "login/request"
+#define MQTT_TOPIC_LOGIN_SEND       DEVICE_MQTT_TOPIC "login/response"
 #define MQTT_TOPIC_SYSLOG           DEVICE_MQTT_TOPIC "syslog"
-#define MQTT_TOPIC_STREAM           DEVICE_MQTT_TOPIC "stream/samples"
-#define MQTT_TOPIC_STATS            DEVICE_MQTT_TOPIC "stream/statistics/"
-#define MQTT_TOPIC_SPECTRUM         DEVICE_MQTT_TOPIC "stream/frequency/"
-#define MQTT_TOPIC_EVENT            DEVICE_MQTT_TOPIC "event/frequency/"
+#define MQTT_TOPIC_STREAM           DEVICE_MQTT_TOPIC "samples"
+#define MQTT_TOPIC_STATS            DEVICE_MQTT_TOPIC "stats/"
+#define MQTT_TOPIC_SPECTRUM         DEVICE_MQTT_TOPIC "spectrum/"
+#define MQTT_TOPIC_EVENT            DEVICE_MQTT_TOPIC "events/"
 
 /**
  * @brief SparkFun OpenLog - zaznenávač údajov na SD kartu cez sériovú linku

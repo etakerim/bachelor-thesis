@@ -88,6 +88,22 @@ size_t spectra_serialize(size_t timestamp, char *msg, size_t size, const float *
     return mpack_writer_buffer_used(&writer);
 }
 
+size_t stream_serialize(char *msg, size_t size, const float *stream, size_t n)
+{
+    mpack_writer_t writer;
+
+    mpack_writer_init(&writer, msg, size);
+    mpack_build_array(&writer);
+
+    for (size_t i = 0; i < n; i++)
+        mpack_write_float(&writer, stream[i]);
+
+    mpack_complete_array(&writer);
+    mpack_writer_destroy(&writer);
+
+    return mpack_writer_buffer_used(&writer);
+}
+
 static void events_serialize_by_type(SpectrumEventAction action, mpack_writer_t *writer, const SpectrumEvent *events, size_t n)
 {
     mpack_build_array(writer);
@@ -106,22 +122,6 @@ static void events_serialize_by_type(SpectrumEventAction action, mpack_writer_t 
         }
     }
     mpack_complete_array(writer);
-}
-
-size_t stream_serialize(char *msg, size_t size, const float *stream, size_t n)
-{
-    mpack_writer_t writer;
-
-    mpack_writer_init(&writer, msg, size);
-    mpack_build_array(&writer);
-
-    for (size_t i = 0; i < n; i++)
-        mpack_write_float(&writer, stream[i]);
-
-    mpack_complete_array(&writer);
-    mpack_writer_destroy(&writer);
-
-    return mpack_writer_buffer_used(&writer);
 }
 
 size_t events_serialize(size_t timestamp, float bin_width, char *msg, size_t size, const SpectrumEvent *events, size_t n)
@@ -466,12 +466,13 @@ static void config_transform_parse(mpack_reader_t *reader, FFTTransformConfig *c
     }
 }
 
+static const char *samples_domain[] = {"", "t", "f"};
 enum logger_key_names {
-    KEY_LOCAL_LOG, KEY_LOG_SAMPLES, KEY_LOG_STATS,
-    KEY_LOG_SPECTRA, KEY_LOG_EVENTS, KEY_LOG_SUBSAMPLING, KEY_LOG_COUNT
+    KEY_LOCAL_LOG, KEY_MQTT_LOG, KEY_LOG_SAMPLES, KEY_LOG_STATS,
+    KEY_LOG_EVENTS, KEY_LOG_SUBSAMPLING, KEY_LOG_COUNT
 };
 static const char *logger_keys[KEY_LOG_COUNT] = {
-    "local", "samples", "stats", "spectra", "events", "subsamp"
+    "local", "mqtt", "samples", "stats",  "events", "subsamp"
 };
 
 static void config_logger_serialize(mpack_writer_t *writer, const SaveFormatConfig *conf)
@@ -479,13 +480,13 @@ static void config_logger_serialize(mpack_writer_t *writer, const SaveFormatConf
     mpack_build_map(writer);
 
     mpack_write_cstr(writer, logger_keys[KEY_LOCAL_LOG]);
-    mpack_write_bool(writer, conf->openlog_raw_samples);
+    mpack_write_bool(writer, conf->local);
+    mpack_write_cstr(writer, logger_keys[KEY_MQTT_LOG]);
+    mpack_write_bool(writer, conf->mqtt);
     mpack_write_cstr(writer, logger_keys[KEY_LOG_SAMPLES]);
-    mpack_write_bool(writer, conf->mqtt_samples);
+    mpack_write_cstr(writer, samples_domain[conf->mqtt_samples]);
     mpack_write_cstr(writer, logger_keys[KEY_LOG_STATS]);
     mpack_write_bool(writer, conf->mqtt_stats);
-    mpack_write_cstr(writer, logger_keys[KEY_LOG_SPECTRA]);
-    mpack_write_bool(writer, conf->mqtt_spectra);
     mpack_write_cstr(writer, logger_keys[KEY_LOG_EVENTS]);
     mpack_write_bool(writer, conf->mqtt_events);
     mpack_write_cstr(writer, logger_keys[KEY_LOG_SUBSAMPLING]);
@@ -503,13 +504,15 @@ static void config_logger_parse(mpack_reader_t *reader, SaveFormatConfig *conf, 
             i--) {
         switch (mpack_expect_key_cstr(reader, logger_keys, found, KEY_LOG_COUNT)) {
             case KEY_LOCAL_LOG: 
-                conf_bool(reader, change, &conf->openlog_raw_samples, mpack_expect_bool(reader)); break;
+                conf_bool(reader, change, &conf->local, mpack_expect_bool(reader)); break;
+            case KEY_MQTT_LOG: 
+                conf_bool(reader, change, &conf->mqtt, mpack_expect_bool(reader)); break;
             case KEY_LOG_SAMPLES: 
-                conf_bool(reader, change, &conf->mqtt_samples, mpack_expect_bool(reader)); break;
+                conf_int(reader, change, (int *)&conf->mqtt_samples,
+                         mpack_expect_enum(reader, samples_domain, SEND_UNPROCESSED_COUNT));
+                break;
             case KEY_LOG_STATS: 
                 conf_bool(reader, change, &conf->mqtt_stats, mpack_expect_bool(reader)); break;
-            case KEY_LOG_SPECTRA:
-                conf_bool(reader, change, &conf->mqtt_spectra, mpack_expect_bool(reader)); break;
             case KEY_LOG_EVENTS: 
                 conf_bool(reader, change, &conf->mqtt_events, mpack_expect_bool(reader)); break;
             case KEY_LOG_SUBSAMPLING: 

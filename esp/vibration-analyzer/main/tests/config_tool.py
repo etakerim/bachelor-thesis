@@ -42,6 +42,10 @@ def mqtt_message(client, userdata, msg):
         client.unsubscribe(f'{userdata.prefix}/config/response')
         userdata.done.wait()
 
+    elif msg.topic == f'{userdata.prefix}/login/response':
+        client.unsubscribe(f'{userdata.prefix}/login/response')
+        userdata.done.wait()
+
 
 class DeviceShell(cmd.Cmd):
     intro = (
@@ -116,6 +120,16 @@ class DeviceShell(cmd.Cmd):
 
         self.client.subscribe(f'{self.prefix}/config/response')
         self.client.publish(f'{self.prefix}/config/request')
+        self.done.wait()
+
+    def do_login(self, arg):
+        """ Show current network credentials """
+        if not self.connected:
+            print('Error: Client is not connected to MQTT Broker.')
+            return
+
+        self.client.subscribe(f'{self.prefix}/login/response')
+        self.client.publish(f'{self.prefix}/login/request')
         self.done.wait()
 
     def do_topic(self, arg):
