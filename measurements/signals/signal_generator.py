@@ -38,6 +38,12 @@ def signal_generate(rules: dict) -> TimeSeries:
         t_part = Ts * np.arange(duration_samples)
         s = sine['amp'] * np.sin(2 * np.pi * sine['freq'] * t_part)
         
+        if 'fade' in sine:
+            t0_fade = int(sine['fade'] * rules['f_sampling'])
+            tn_fade = duration_samples - t0_fade
+            w_fade = np.logspace(-1, 0, t0_fade)
+            s = np.array(list(s[:t0_fade] * w_fade) + list(s[t0_fade:tn_fade]) + list(s[tn_fade:] * np.flip(w_fade)))
+        
         signal += np.pad(s, pad_width=s_offsets(sine, rules), constant_values=0)[:len(t_series)]
 
     for noise in rules.get('noises', []):
@@ -47,6 +53,26 @@ def signal_generate(rules: dict) -> TimeSeries:
         signal += np.pad(s, pad_width=s_offsets(noise, rules), constant_values=0)[:len(t_series)]
         
     return t_series, signal
+
+
+def synthetic_recording(duration, fs, components):
+    s = {
+        'duration': duration,
+        'f_sampling': fs,
+        'sines': [],
+        'noises': [{'amp': 0.2, 't0': 0, 'tn': duration}]
+    }
+    divider = 10
+    
+    for unit in range(0, duration, duration // divider):
+        freq = np.random.randint(0, fs // 2, size=components)
+        for f in freq:
+            a = np.random.randint(0.1, 2.5)
+            t0 = max(0, unit - np.random.randint(0, 2 * duration / divider))
+            tn = min(duration, unit + np.random.randint(0, 2 * duration / divider))
+            s['sines'].append({'freq': f, 'amp': a, 'fade': (tn - t0) / 3 , 't0': t0 , 'tn':tn})
+    
+    return s
 
 
 def signal_threshold(y: np.array, level: float) -> np.array:

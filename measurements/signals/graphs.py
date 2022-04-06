@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import numpy as np
 
 
 def plot_sinusoid(x, y, p, ax):
@@ -70,4 +71,12 @@ def plot_spectra_event_vs_peaks(spectrum, events, peaks=[], ylog=False, yrange=N
     
     plot_spectrogram(spectrum, ax, ylog, yrange)
     draw_peaks(ax, spectrum, peaks)
-    draw_events(ax, spectrum, events) 
+    draw_events(ax, spectrum, events)
+
+
+def gamma_correction(spectrum):
+    offset = 100
+    return np.array([
+        np.power((s+offset) / (s+offset).max(), 2)
+        for s in spectrum['magnitudes']
+    ])

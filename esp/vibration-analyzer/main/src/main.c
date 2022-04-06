@@ -474,7 +474,6 @@ void app_main(void)
     memory_measure("fft&buffers");
 #endif 
 
-
     wifi_config_t wifi_login = {};
 
     if (conf.logger.local || conf.logger.mqtt) {
