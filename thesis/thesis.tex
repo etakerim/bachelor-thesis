@@ -28,6 +28,9 @@
 \usepackage{tocloft}
 \usepackage{csquotes}
 \usepackage{expl3}
+\usepackage{etoolbox}
+\preto\tabular{\shorthandoff{-}}
+
 \usepackage[style=iso-numeric, backend=biber]{biblatex}
 \addbibresource{literature.bib}
 
