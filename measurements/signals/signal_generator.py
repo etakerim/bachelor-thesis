@@ -60,14 +60,14 @@ def synthetic_recording(duration, fs, components):
         'duration': duration,
         'f_sampling': fs,
         'sines': [],
-        'noises': [{'amp': 0.2, 't0': 0, 'tn': duration}]
+        'noises': [{'amp': 0.1, 't0': 0, 'tn': duration}]
     }
     divider = 10
     
     for unit in range(0, duration, duration // divider):
         freq = np.random.randint(0, fs // 2, size=components)
         for f in freq:
-            a = np.random.randint(0.1, 2.5)
+            a = np.random.randint(0.2, 2)
             t0 = max(0, unit - np.random.randint(0, 2 * duration / divider))
             tn = min(duration, unit + np.random.randint(0, 2 * duration / divider))
             s['sines'].append({'freq': f, 'amp': a, 'fade': (tn - t0) / 3 , 't0': t0 , 'tn':tn})

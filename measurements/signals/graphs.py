@@ -73,10 +73,3 @@ def plot_spectra_event_vs_peaks(spectrum, events, peaks=[], ylog=False, yrange=N
     draw_peaks(ax, spectrum, peaks)
     draw_events(ax, spectrum, events)
 
-
-def gamma_correction(spectrum):
-    offset = 100
-    return np.array([
-        np.power((s+offset) / (s+offset).max(), 2)
-        for s in spectrum['magnitudes']
-    ])
