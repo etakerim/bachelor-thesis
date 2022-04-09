@@ -36,7 +36,7 @@ nasledujúcu rovnicu vo vektorovom tvare:
    \vec{a}(t) = \frac{\vec{F}(t)}{m}
 \end{align}\end{ceqn}
 
-Magnitúda akcelerácie s troma súradnicami je daná $L_2$ normou vektora $\vec{a} = (a_x, a_y, a_z)$:
+Magnitúda 3D vektora akcelerácie $\vec{a} = (a_x, a_y, a_z)$ je $L_2$ normou vektora:
 \myequations{Magnitúda vektora akcelerácie}
 \begin{ceqn}\begin{align}
    |a| = \sqrt{a_x^2 + a_y^2 + a_z^2}
@@ -330,13 +330,10 @@ rozptyl, z ktorého je v ktoromkoľvek okamihu získateľná smerodajná odchýl
    \sigma &= \sqrt{S_n / (n - 1)}
 \end{align}\end{ceqn}
 
-Tvar distribúcie náhodnej premennej opisujú centrálne momenty šikmosť a špicatosť. Šikmosť $\gamma_1 = \mu^3 / \sigma^3$ udáva skosenie
-rozdelenia, pričom platí že záporná šikmosť značí dlhší ľavý chvost a modus funkcie hustoty sa prevažuje napravo. Zatiaľ čo u kladnej
-šikmosti je to naopak (obr. \ref{fig:skewness}).
-
-Špicatosť $\gamma_2 = \mu^4 / \sigma^4 - 3$ (obr. \ref{fig:kurtosis}) porovnáva rozdelenie pozorovaní so strmosťou krivky normálneho rozdelenia,
-čiže viacej realizácií leží bližšie alebo ďalej od strednej hodnosti. Kladná špicatosť signalizuje strmejšiu
-a záporná zasa sploštenejšiu distribúciu. Platí, že $\mu_n $ je priemerom hodnôt $(x_t - \bar{x})^n$.
+Tvar distribúcie náhodnej premennej opisujú centrálne momenty šikmosť a špicatosť. Šikmosť udáva skosenie
+rozdelenia, pričom platí že záporná šikmosť značí dlhší ľavý chvost, zatiaľ čo u kladnej je to naopak (obr. \ref{fig:skewness}). 
+Špicatosť  (obr. \ref{fig:kurtosis}) porovnáva rozdelenie pozorovaní so strmosťou krivky normálneho rozdelenia. Kladná špicatosť 
+signalizuje strmejšiu a záporná sploštenejšiu distribúciu.
 \begin{figure}[h]
 \centering
 \begin{subfigure}[b]{0.48\textwidth}
@@ -369,10 +366,10 @@ a $+1$ priamu závislosť.
 \rho(\mathbf{x}, \mathbf{y}) &= \frac{\mathrm{cov}(\mathbf{x}, \mathbf{y})}{\sigma_x \sigma_y} \label{eq:correlation}
 \end{align}\end{ceqn}
 
-\subsection{Algoritmy na rozpoznávanie špičiek}
+\section{Algoritmy na rozpoznávanie špičiek}
 \label{peak-detection}
 Detekcia udalostí a významných zmien signálového priebehu sa spolieha na hodnovernú identifikáciu špičiek amplitúdy.
-Dôležitými indikátormi pre celkovú charakterizáciu javu slúži potom časová pozícia špičky v rámci prúdu, výška prejavujúca
+Dôležitými indikátormi pre celkovú opis javu slúži časová pozícia špičky v rámci prúdu, výška prejavujúca
 sa nadobudnutou úrovňou, šírka obsahujúca údaj o trvaní, či plocha stvárňujúca energiu.
 
 Ekvivalentne sa špičky z matematického hľadiska stotožňujú s lokálnymi extrémami funkcie, čo sú maximá (vrcholy) a minimá (údolia).
@@ -381,8 +378,8 @@ $t_0 \in I$ (\ref{equ:local-maxima}), lokálne minimum má na intervale najmenš
 \cite{survey-peaks-valleys}.
 \myequations{Lokálne extrémy funkcie}
 \begin{ceqn}\begin{align}
-f[t_0] \geq f[t],\, \forall t \in I \label{equ:local-maxima}\\
-f[t_0] \leq f[t],\, \forall t \in I \label{equ:local-minima}
+f_{t_0} \geq f_t,\, \forall t \in I \label{equ:local-maxima}\\
+f_{t_0} \leq f_t,\, \forall t \in I \label{equ:local-minima}
 \end{align}\end{ceqn}
 
 Kľúčové pre spoľahlivé určenie extrémov je práve interpretácia intervalu $I$ v algoritmoch, ktoré zastupujú rozličné
@@ -397,13 +394,13 @@ diskrétnou jednorozmernou konvolúciou vstupného signálu a masky filtra $y[n]
 ktorá býva hardvérovo akcelerovaná inštrukciami vynásob a sčítaj (,,multiply-accumulate'') za zvýšenia
 presnosti.
 
-\subsubsection{Detekcia špičiek prahovou úrovňou}
+\subsection{Detekcia špičiek prahovou úrovňou}
 Za predpokladu, že priebeh meranej veličiny sa vyznačuje krátkymi impulzmi s viac-menej pravidelnou amplitúdou
 je priamočiarou metódou na odlíšenie špičiek od hladín nízkej aktivity určenie prahu $\theta$, ktorý zaregistruje
 všetky väčšie hodnoty. Lokálne extrémy sú potom vzorky signálu spĺňajúce podmienku:
 \myequations{Detekcia špičiek prahovou úrovňou}
 \begin{ceqn}\begin{align}
-|f[t]| \geq \theta
+|f_t| \geq \theta
 \end{align}\end{ceqn}
 
 Určenie takejto hraničnej hladiny prebieha zväčša empiricky alebo na základe heuristík, ktoré so sebou nesú
@@ -413,53 +410,47 @@ smerodajných odchýlok. Odlišné nazeranie na prahovú hodnotu spočíva v jej
 vzájomnej korelácie signálu a masky zodpovedajúcej tvaru impulzu. Táto úvaha sa opiera o to, že impulz
 musí byť dostatočne pravidelný, aby bol nezameniteľne odlíšiteľný.
 
-\subsubsection{Význačnosť vrchola spomedzi susedov}
+\subsection{Význačnosť vrchola spomedzi susedov}
 Doplnkom ku rozpoznávaniu špičiek podľa absolútnej prahovej úrovne je porovnávanie bodov na
 obe strany od preskúmavaného vrchola, čím zistíme relatívnu významnosť extrému pre najbližšie susedstvo.
 Aby bola hodnota na danej pozícii $t$ označená za špičku v okolí pozostávajúcom z $k$ priľahlých bodov,
-musí byť v porovnaní so všetkými väčšia. Pre okrajové dátové body $f[0]$ a $f[n]$ dochádza k porovnaniu
+musí byť v porovnaní so všetkými väčšia. Pre okrajové dátové body $f_0$ a $f_{n-1}$ dochádza k porovnaniu
 iba z jednej strany \cite{survey-peaks-valleys}:
 \myequations{Význačnosť vrchola spomedzi susedov}
 \begin{ceqn}\begin{align}
-f[t-i] < f[t] > f[t+i],\quad \forall i \in 1, 2, ..., k
+f_{t-i} < f_t > f_{t+i},\quad \forall i \in 1, 2, ..., k
 \end{align}\end{ceqn}
 
 Algoritmus č.\ref{algo:neighbours} ,,najvyšší spomedzi susedov'' \cite{peak-finding}
-prechádza postupne pozorovania veličiny zo zoznamu $y$ a ku kandidátnej špičke na indexe $i$ preveruje najbližších
+prechádza postupne pozorovania veličiny zo zoznamu $Y$ a ku kandidátnej špičke na indexe $i$ preveruje najbližších
 $k$ hodnôt na obe strany, ak existujú.
 \begin{algorithm}[h]
-\caption{Najvyšší spomedzi susedov}
+\caption{Hľadanie špičiek najvyšších spomedzi susedov}
 \begin{algorithmic}[1]
-\Function{Find\_Peaks\_Neighbours}{$y$, $k$, $\varepsilon$, $h_{rel}$, $h$}
-	\State $peaks \gets \left[\; \right]$ 	\Comment{Zoznam indexov nájdených špičiek v signále $y$}
-	\For{$i \gets 0$ \textbf{to} $length(y)$}
-		\If {$y[i] \geq h$}  						\Comment{Preskoč príliš nízke amplitúdy}
-			\State $possible\_peak \gets true$
-			\State $a \gets max(i - k, 0)$
-			\State $b \gets min(i + k, length(y))$
-			\State $valley \gets y[a]$
+\Require{$y$, $k$, $\varepsilon$, $h_{rel}$, $h$}
+\Ensure{$peaks$}
 
-			\For{$j \gets a$ \textbf{to} $b$}		\Comment{Porovnanie špičky s bodmi v susedstve}
-				\If {$i \neq j$}
-					\If {$y[j] - y[i] > \epsilon$}	\Comment{Tolerancia pre vyšší bod v susedstve}
-						\State $possible\_peak \gets false$
-					\EndIf
-					\If {$y[j] < valley$}			\Comment{Údolie v susedstve na relatívnu výšku}
-						\State $valley \gets y[j]$
-					\EndIf
-				\EndIf
-			\EndFor
-			\If {$possible\_peak = true$ \textbf{and} $y[i] - valley \geq h_{rel}$}
-				\State $peaks \gets peaks + [i]$    \Comment{Kandidát je prehlásený za špičku}
-			\EndIf
+\State Zoznam $peaks$ pre špičky v $Y$ nastav na prázdny
+
+\ForAll{$i \in [0..\mathrm{length}(Y)]$}
+	\State $a \gets \max\{i - k, 0\}$
+	\State $b \gets \min\{i + k, \mathrm{length}(Y)\}$	
+	\State $valley \gets \min_{j \in [a..b]}\{Y_j\}$
+			
+	\If {$Y_i \geq h$ \textbf{and} $Y_i - valley \geq h_{rel}$} \Comment{Preskoč nízke amplitúdy}
+	
+		\If {$Y_i \geq Y_j + \epsilon; \; \forall j \in [a..b] \land i \neq j$}
+			\Comment{Bod je  najvyšší v susedstve}
+			\State Pridaj kandidátny bod $Y_i$ do zoznamu špičiek $peaks$
 		\EndIf
-	\EndFor
-	\State \Return $peaks$
-\EndFunction
+	\EndIf
+\EndFor
+%\EndFunction
 \end{algorithmic}
 \label{algo:neighbours}
 \end{algorithm}
-Keď po preskúmaní zostáva $y[i]$ najväčšou hodnotou spomedzi susedov
+
+Keď po preskúmaní zostáva $Y_i$ najväčšou hodnotou spomedzi susedov
 v rozmedzí $[a; b]$, za tolerancie bodu s vyššou amplitúdou $\varepsilon$ v susedstve, a súčasne je relatívna
 výška vrcholu väčšia než parameter $h_{rel}$ potom je kandidátny bod prehlásený
 za skutočnú špičku a pridaný do zoznamu $peaks$.
@@ -468,10 +459,10 @@ Súčasťou algoritmu je tiež preskočenie hodnôt, ktoré nespĺňajú základ
 Časová zložitosť pre rozhodnutie o jednej špičke je lineárna v závislosti od veľkosti posuvného okna uvažovaného
 susedstva $\mathcal{O}(2k)$.
 
-\subsubsection{Algoritmus prechodu nulou do záporu}
+\subsection{Algoritmus prechodu nulou do záporu}
 Pomyselné vrcholy a údolia v zosnímaných hodnotách sú miestom, kde sa mení smer úrovní amplitúdy zo stúpania na klesanie alebo
 z klesania na stúpanie, čím na pomedzí týchto opozitných trendov vzniká stacionárny bod, kde je prvá diferencia nulová:
-$\Delta f[i] = 0$. V lokálnom maxime dochádza súčasne k zmene znamienka prvej diferencie z kladného na záporné. Prudkosť
+$\Delta f_i = 0$. V lokálnom maxime dochádza súčasne k zmene znamienka prvej diferencie z kladného na záporné. Prudkosť
 kopca vyplýva z absolútnej hodnoty diferencie.
 
 Viacnásobné vyhladenie signálu predom je nesmierne dôležité,
@@ -480,18 +471,19 @@ na zákmity a nesprávne by ich považoval za špičky. Zvýšenie odolnosti pro
 spájajúcou bod $i$ s $k$-tou vzorkou vedľa, ktorá sa použije namiesto diferencie s jednotkovým krokom.
 
 \begin{algorithm}[h]
-\caption{Prechod prvej derivácie nulou do záporu}
+\caption{Hľadanie špičiek prechodom prvej derivácie nulou do záporu}
 \begin{algorithmic}[1]
-\Function{Find\_Peaks\_Zero\_Crossing}{$y$, $k$, $slope$}
-	\State $peaks \gets \left[\; \right]$
-	\For{$i \gets k$ \textbf{to} $length(y) - k$}
-		\If {($y[i + k] - y[i]) < 0$ \textbf{and} $(y[i] - y[i - k]) > 0$
-		     \State \hskip1.5em $|y[i + k] - y[i]| \geq slope$ \textbf{and} $|y[i] - y[i - k]| \geq slope$)}
-		    \State $peaks \gets peaks + [i]$
+\Require{$Y$, $k$, $slope$}
+\Ensure{$peaks$}
+\State Zoznam $peaks$ pre špičky v $Y$ nastav na prázdny
+
+\For{$i \gets k$ \textbf{to} $\mathrm{length}(Y) - k$}
+	\If {$Y_{i + k} - Y_i < 0$ \textbf{and} $Y_i - Y_{i - k} > 0$}
+		\If {$|Y_{i + k} - Y_i| \geq slope$ \textbf{and} $|Y_i - Y_{i - k}| \geq slope$}
+	    	\State Pridaj kandidátny bod $Y_i$ do zoznamu špičiek $peaks$
 		\EndIf
-	\EndFor
-	\State \Return $peaks$
-\EndFunction
+	\EndIf
+\EndFor
 \end{algorithmic}
 \label{algo:zero-crossing}
 \end{algorithm}
@@ -500,7 +492,6 @@ Označenie kandidátneho bodu za špičku v zozname hodnôt $y$ stojí na teda d
 vrchola sa musia líšiť znamienkom a ich dĺžka má prekračovať prahovú strmosť kopca $slope$. Časová zložitosť pre jednu špičku je 
 $\mathcal{O}(1)$.
 
-
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/analysis/topography.png}
@@ -508,58 +499,11 @@ $\mathcal{O}(1)$.
     \label{fig:topography}
 \end{figure}
 
-\subsubsection{Algoritmus horského turistu}
+\subsection{Algoritmus horského turistu}
 Zanesením do grafu pripomína priebeh funkcie kmitajúceho deja členité pohorie. Na problém rozhodovania sa o tom, či danú lokalitu
 považovať za vrchol možno nahliadať z pohľadu chodca cestujúceho po krivke z lineárne interpolovaných vzoriek. V princípe
 ide myšlienkou o jednoduchý stavový automat sledujúci aktuálny stav terénu a konajúci rozhodnutia na základe predošlej
 skúsenosti v intenciách rozhodovacích pravidiel.
-\begin{algorithm}[h]
-\caption{Algoritmus horského turistu}
-\begin{algorithmic}[1]
-\Function{Find\_Peaks\_Hill\_Walker}{$y$, $tolerance$, $hole$, $prominence$, $isolation$}
-	\State $peaks \gets \left[\; \right]$
-	\State $i\_change \gets 0$
-	\State $y\_valley \gets 0$
-	\State $possible\_change \gets false$
-	\State $uphill \gets (y[1] - y[0]) \geq 0$
-
-	\For{$i \gets 1$ \textbf{to} $length(y)$}
-		\State $y\_step \gets y[i] - y[i-1]$
-        \State $slope \gets y\_step \geq 0$
-
-        \If {$possible\_change = false$ \textbf{and} $uphill \neq slope$}
-        	\State $possible\_change \gets true$   \Comment{Označenie potenciálneho extrému}
-        	\State $i\_change \gets i - 1$
-        \ElsIf {$possible\_change = true$ \textbf{and} $uphill = slope$}
-        	\State $possible\_change \gets false$  \Comment{Potenciálny extrém bol zachvením}
-        \EndIf
-
-        \If {($possible\_change = true$
-        	\State \hskip1.5em \textbf{and} $uphill \neq slope$
-        	\State \hskip1.5em \textbf{and} $|i - i\_change| > hole$
-        	\State \hskip1.5em \textbf{and} $|y[i] - y[i\_change]| > tolerance$)}
-
-        	\State $posible\_change \gets False$        \Comment{Významný lokálny extrém potvrdený}
-        	\State $prev\_uphill \gets uphill$
-        	\State $uphill \gets slope$
-
-        	\If {$prev\_uphill = false$ \textbf{and} $uphill = true$}
-				\State $y\_valley \gets y[i\_change]$   \Comment{Nájdené údolie}
-
-            \ElsIf {($prev\_uphill = true$
-            		\State \hskip1.5em \textbf{and} $uphill = false$
-            		\State \hskip1.5em \textbf{and}  $|y[i - hole] - y\_valley| > prominence$)
-            		\State \hskip1.5em \textbf{and}  $|y[i - hole] - y[last(peaks)]| > isolation$)}
-				\State $y\_peak \gets y[i\_{change}]$    \Comment{Skutočný vrchol identifikovaný}
-				\State $peaks \gets peaks + [i\_change]$
-            \EndIf
-        \EndIf
-	\EndFor
-	\State \Return $peaks$
-\EndFunction
-\end{algorithmic}
-\label{algo:mountain-hiker}
-\end{algorithm}
 
 Algoritmus č.\ref{algo:mountain-hiker} horského turistu na začiatku púte z počiatočných bodov zistí, ktorým z dvoch vertikálnych
 smerov sa krivka uberá. V prípade, že po druhom kroku dôjde k zmene smeru zapíše sa indikácia možného spádu kopca.
@@ -568,7 +512,47 @@ ignorovaná, lebo ani na lesnom chodníku sa nepovažuje každá jama alebo vydu
 
 Domnelý vrchol je označený za lokálne maximum, keď spĺňa parametre pre topografické vlastnosti minimálnej akceptovateľnej
 prominencie a izolácie (obr. \ref{fig:topography}). Prominencia znamená relatívnu výšku oproti predošlej navštívenej doline. Izolácia vyčísľuje vzdialenosť k najbližšiemu skoršiemu vrcholu. Podobný algoritmus už existuje v literatúre \cite{peek-mountaineer-method}, avšak prezentovaný pseudokód je oproti nemu zjednodušený a doplnený o požadované tolerancie.
-\afterpage{\clearpage}
+
+\begin{algorithm}[h]
+\caption{Hľadanie špičiek metódou horského turistu}
+\begin{algorithmic}[1]
+\Require{$Y$, $tolerance$, $hole$, $prominence$, $isolation$}
+\Ensure{$peaks$}
+\State Zoznam $peaks$ pre špičky v $Y$ nastav na prázdny
+\State $change \gets 0$, $valley \gets 0$, $candidate \gets false$, $uphill \gets Y_1 - Y_0 \geq 0$
+
+\For{$i \gets 1$ \textbf{to} $\mathrm{length}(Y)$}
+	\State $step \gets Y_i - Y_{i-1}$
+    \State $slope \gets step \geq 0$
+
+    \If {$\neg candidate$ \textbf{and} $uphill \neq slope$}
+    	\State $candidate \gets \neg candidate$   \Comment{Označenie potenciálneho extrému}
+        \State $change \gets i - 1$
+    \ElsIf {$candidate$ \textbf{and} $uphill = slope$}
+       	\State $candidate \gets \neg candidate$  \Comment{Potenciálny extrém bol zachvením}
+    \EndIf
+    
+    \If {($candidate$ \textbf{and} $uphill \neq slope$ \textbf{and}
+    	\State \hskip1.5em $|i - change| > hole$ \textbf{and} $|Y_i - Y_{change}| > tolerance$)}
+
+        \State $candidate \gets \neg candidate$
+        \State $prev\_uphill \gets uphill$      \Comment{Významný lokálny extrém potvrdený}
+        \State $uphill \gets slope$
+
+        \If {$\neg prev\_uphill$ \textbf{and} $uphill = true$}
+			\State $valley \gets change$   \Comment{Nájdené údolie}
+
+            \ElsIf {($prev\_uphill$ \textbf{and} $\neg uphill$ \textbf{and}
+            		\State \hskip1.5em $|Y_{i - hole} - valley > prominence$ \textbf{and}
+            		\State \hskip1.5em $|Y_{i - hole} - Y_{last(peaks)}| > isolation$}
+            		
+				\State Pridaj kandidátny bod $Y_{change}$ do zoznamu špičiek $peaks$
+            \EndIf
+        \EndIf
+\EndFor
+\end{algorithmic}
+\label{algo:mountain-hiker}
+\end{algorithm}
 
 \subsection{Metriky pre binárny klasifikátor}
 Uviedli sme tri rozdielne rovnocenné prístupy odhalenia špičiek. Rozobrali sme algoritmus porovnávajúci susedov na obe strany,
@@ -603,6 +587,7 @@ PPV = \frac{TP}{TP + FP} \label{equ:ppv} \\
 ACC = \frac{TP + TN}{P + N}\label{equ:accuracy} \\
 FPR = \frac{FP}{FP + TN} \label{equ:error-rate}
 \end{align}\end{ceqn}
+
 
 Štandardným nástrojom na vyjadrenie kvality binárneho klasifikátora je \emph{ROC krivka} zakresľujúca
 senzitivitu $TPR$ vo zvislom smere voči vodorovnej chybovosti $FPR$. ROC vytvoríme postupným posúvaním prahu
@@ -660,12 +645,6 @@ kosínusových transformácií (DCT). Vyznačujú sa dobrou dekoreláciu vstupu 
 časť celkovej spektrálne energie je sústredená v málo koeficientoch \cite{dct-applications}. Navyše oproti DFT umožňuje redukciu
 výpočtovej náročnosti odstránením súčinov v komplexných číslach.
 
-Podľa charakteru obmien kosínusovej bázy rozlišujeme
-štyri typy DCT,  z nich najvýznačnejšie sú transformácie DCT-II, ktorej inverziou je DCT-III, a DCT-IV, ktorá je inverzná
-sama sebe \cite{dct}. Z DCT-IV vychádza MDCT, ktorá navyše spracováva prekrývajúce sa bloky, tak že druhá polovica vzoriek
-pochádza z prvej polovice ďalšieho bloku. Dokopy vytvorí z $2N$ vzoriek $N$ koeficientov. MDCT sa hojne využíva pri stratovej
-kompresii zvuku, pretože sa prelínaním blokom vyvaruje artefaktom na hraniciach blokov
-\cite{mdct}.
 \myequations{Kosínusové transformácie: DCT-II, DCT-III, DCT-IV, MDCT}
 \begin{ceqn}\begin{align}
 \tag{DCT-II} W_{N}^{nk} &= \cos{\left[\left(n + \frac{1}{2}\right) k\frac{\pi}{N}\right]} \\
@@ -673,6 +652,12 @@ kompresii zvuku, pretože sa prelínaním blokom vyvaruje artefaktom na hranicia
 \tag{DCT-IV} W_{N}^{nk} &= \cos{\left[\left(n + \frac{1}{2} \right) \left(k + \frac{1}{2} \right) \frac{\pi}{N} \right]} \\
 \tag{MDCT} W_{N}^{nk} &= \cos{\left[\left(n + \frac{1}{2} + \frac{N}{2} \right) \left(k + \frac{1}{2} \right) \frac{\pi}{N} \right]};\quad n = 0, \dots, 2N - 1
 \end{align}\end{ceqn}
+
+Podľa charakteru obmien kosínusovej bázy rozlišujeme štyri typy DCT,  z nich najvýznačnejšie sú transformácie DCT-II, ktorej inverziou je DCT-III, a DCT-IV, ktorá je inverzná
+sama sebe \cite{dct}. Z DCT-IV vychádza MDCT, ktorá navyše spracováva prekrývajúce sa bloky, tak že druhá polovica vzoriek
+pochádza z prvej polovice ďalšieho bloku. Dokopy vytvorí z $2N$ vzoriek $N$ koeficientov. MDCT sa hojne využíva pri stratovej
+kompresii zvuku, pretože sa prelínaním blokom vyvaruje artefaktom na hraniciach blokov
+\cite{mdct}.
 
 \subsection{Algoritmus FFT}
 Priamočiarou implementáciou vzťahom na výpočet Fourierovej a kosínusovej transformácie dosiahneme časovú zložitosť
@@ -751,7 +736,7 @@ Na základe predošlého predošlého príkladu dostaneme postupnosť $(x_1, x_3
 Široké použitie FFT pri spracovaní signálov sa prejavuje dostupnosťou implementácií rôznych obmien algoritmu
 v širokej škále programovacích jazykov a optimalizovaných pre konkrétne hardvérové platformy. V jazyku C stoja
 za zmienku knižnice: FFTW, FFTPACK, GNU Scientific Library, CMSIS DSP a Espressif DSP. Na účely analýzy údajov je FFT
-prítomné pre jazyk Python v balíkoch \emph{numpy} a \emph{scipy}, tiež napr. v jazyku R je súčasťou \emph{stats} modulu.
+prítomná pre jazyk Python v balíkoch \emph{numpy} a \emph{scipy}.
 
 \subsection{Oknové funkcie}
 U stochastického signálu má zmysel delenie na rovnako dlhé úseky, pretože sa s časom mení jeho spektrálny obsah, ktorý
@@ -768,8 +753,9 @@ presnosti v amplitúde a spôsobu poklesu úniku spektra do ostatných vedierok.
 (\ref{equ:window-rectangular}), Bartlettovo (\ref{equ:window-bartlett}), Hannovo (\ref{equ:window-hann}), Hammingovo
 (\ref{equ:window-hamming}) a Blackmannovo okno \ref{equ:window-blackmann}. Uvedené okná sú stredovo súmerné 
 (obr. \ref{fig:window-time}). Plochejšie okná, napríklad obdĺžníkové, sa vyznačujú ponechaním ostrejších špičiek 
-s neskreslenou amplitúdou za
-cenu väčšieho spektrálneho úniku, čím sa znižuje odstup od šumu. Predchádzanie hraničným javom sa dosahuje plynulým
+s neskreslenou amplitúdou za cenu väčšieho spektrálneho úniku, čím sa znižuje odstup od šumu. 
+
+Predchádzanie hraničným javom sa dosahuje plynulým
 znižovaním hodnôt k okrajom okna až na nulu, čím špičky strácajú na amplitúde (scalloping loss) \cite{spectral-density-estimation}.
 \myequations{Oknové funkcie: obdĺžník, Bartlett, Hann, Hamming, Blackman}
 \begin{ceqn}\begin{align}

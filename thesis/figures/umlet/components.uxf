@@ -29,12 +29,12 @@ MQTT Broker</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>600</x>
-      <y>610</y>
+      <y>600</y>
       <w>50</w>
-      <h>70</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=)-</panel_attributes>
-    <additional_attributes>20.0;20.0;20.0;50.0</additional_attributes>
+    <additional_attributes>20.0;20.0;20.0;60.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -198,7 +198,7 @@ signálu</panel_attributes>
       <h>40</h>
     </coordinates>
     <panel_attributes>lt=()-
-UART</panel_attributes>
+ UART</panel_attributes>
     <additional_attributes>10.0;20.0;60.0;20.0</additional_attributes>
   </element>
   <element>
@@ -262,9 +262,9 @@ LSM9DS1</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>820</x>
+      <x>840</x>
       <y>480</y>
-      <w>180</w>
+      <w>150</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>symbol=component
@@ -277,11 +277,11 @@ ESP MQTT</panel_attributes>
     <coordinates>
       <x>760</x>
       <y>500</y>
-      <w>80</w>
+      <w>100</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=)-</panel_attributes>
-    <additional_attributes>20.0;20.0;60.0;20.0</additional_attributes>
+    <additional_attributes>20.0;20.0;80.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -341,13 +341,13 @@ ESP MQTT</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>990</x>
+      <x>980</x>
       <y>500</y>
-      <w>100</w>
+      <w>110</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=)-</panel_attributes>
-    <additional_attributes>70.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>80.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>

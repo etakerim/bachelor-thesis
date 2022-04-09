@@ -2,6 +2,7 @@
 Východiskom pre riešenie spracovania akceleračných dát budú nasledujúce výskumné otázky, ktoré
 sa pokúsime zodpovedať za kontrolovaných aj reálnych podmienok primárne na vlastných datasetoch:
 
+\section{Požiadavky - Výskumné otázky}
 \begin{itemize}[noitemsep]
 	\item Ako vplýva nastavenie parametrov metód časovej a frekvenčnej analýzy na úspešnosť detekcie význačných udalostí,
 	teda náhlych zmien distribúcie v čase a hlavných frekvenčných komponentov?
@@ -30,12 +31,21 @@ distribúcie vzhľadom na predošlé okná. Okrem toho sa môžu po podvzorkovan
 hodnôt veličiny v čase alebo frekvenčných vedierok. Numerická kvadratúra korigovaná obálkami umožní extrahovať zo
 snímaného zrýchlenia odhad o rýchlosti a polohe.
 
+\section{Hardvér}
+OpenLog VCC zapojený cez MOSFET tranzistor cez BTS117
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{figures/design/block-circuit-diagram.png}
+	\includegraphics[width=0.8\textwidth]{figures/design/block-circuit-diagram.png}
 	\caption{Blokový diagram hardvéru}
 \end{figure}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{figures/design/esp32.jpg}
+	\caption{Zariadenie}
+\end{figure}
+
+\section{Komponenty spracovania signálu}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{figures/design/components.png}
@@ -50,8 +60,77 @@ snímaného zrýchlenia odhad o rýchlosti a polohe.
 
 \begin{figure}[h]
 	\centering
+	\includegraphics[width=\textwidth]{figures/design/tasks.png}
+	\caption{Sekvenčný diagram}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
 	\includegraphics[width=\textwidth]{figures/design/configuration.png}
 	\caption{Diagram aktivít konfigurácie}
 \end{figure}
 
-\emptypage
+\section{Prúdový algoritmus na detekciu zmien zložiek frekvenčného spektra}
+Nevidí celý prúd naraz ani ho nemôže celý uložiť. Welchove priemerovanie vyžaduje veľa pamäte pre dlhšie okno.
+Ale musíme dosiahnuť odšumenie detegovanie špičiek a zároveň posielať cez sieť menej ako nespracované
+frekvenčné vedierka. Detegovanie anomálií, resp. automatické upozornenie na prevládajúce zložky.
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{0.8\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/design/event-detection-min-duration.png}
+    \caption{Minimálne trvanie udalosti $t_{\min} = 2$}
+\end{subfigure}
+\begin{subfigure}[b]{0.8\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/design/event-detection-time-proximity.png}
+    \caption{Maximálna vzdialenosť špičiek $t_{\Delta} = 1$ v čase}
+\end{subfigure}
+\caption{Parametre algoritmu na detekciu udalostí. $t$ je poradové číslo okna, $f$ je stav detegovanie špičky
+vo frekvenčnom vedierku, $t_d$ je trvanie udalosti (duration), $t_p$ je počet okien do minulosti naposledy videnej špičky (past)}
+\end{figure}
+
+\begin{algorithm}[h]
+\caption{Detektor zmeny frekvenčnej zložky}
+\begin{algorithmic}[1]
+\Require{$event$, $bin$, $t$, $t_{min}$, $t_{\Delta}$}
+\If {V predošlom okne $t - 1$ bola emitovaná udalosť Koniec}
+	\State Vynuluj udalosť: $event$: $duration \gets amplitude \gets 0$, $lastSeen \gets -1$
+\EndIf
+
+\If {$\mathrm{IsPeak}(bin)$}  
+	\State $link \gets \max\{1, event.lastSeen + 1\}$
+	\If {$event.duration < t_{min} \leq event.duration + link$}
+		\State $event.start \gets t - event.duration - link + 1$
+		\State \textbf{Emituj udalosť Štart} výskytu frekvencie podľa $event$
+	\EndIf
+	
+	\State \textbf{Inkrementuj} $event.duration$ \textbf{o} $link$
+	\State \textbf{Inkrementuj} $event.amplitude$ \textbf{o} $(bin - event.amplitude)\;/\;event.duration$
+	\State $event.lastSeen \gets 0$
+
+\ElsIf {$event.lastSeen \geq 0$}
+	\State \textbf{Inkrementuj} $event.lastSeen$ \textbf{o}  $1$
+
+	\If {$events.lastSeen > t_{\Delta}$}
+        	\If {$event.duration \geq t_{min}$}
+        		\State \textbf{Emituj udalosť Koniec} výskytu frekvencie podľa $event$
+        	\EndIf
+        \Else
+        	\State Vynuluj udalosť: $event$: $duration \gets amplitude \gets 0$, $lastSeen \gets -1$
+        \EndIf
+\EndIf
+\end{algorithmic}
+\label{algo:event-detector}
+\end{algorithm}
+
+\section{Generátor signálov}
+\begin{figure}[h]
+   \centering
+    \includegraphics[width=0.8\textwidth]{figures/verification/fade-in-sinusoid.png}
+   \caption{Základný tón formujúci syntetický signál}
+\end{figure} 
+
+
+

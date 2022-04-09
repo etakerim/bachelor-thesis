@@ -12,6 +12,7 @@
 \usepackage{subcaption}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{tabularx}
 \usepackage{afterpage}
 \usepackage{multirow}
 \usepackage{amsfonts}
@@ -27,6 +28,7 @@
 \usepackage{nccmath}
 \usepackage{tocloft}
 \usepackage{csquotes}
+\usepackage{diagbox}
 \usepackage{expl3}
 \usepackage{etoolbox}
 \preto\tabular{\shorthandoff{-}}
@@ -44,6 +46,8 @@
 \makeatletter
 \renewcommand*{\ALG@name}{Algoritmus}
 \renewcommand{\listalgorithmname}{Zoznam algoritmov}
+\algrenewcommand\algorithmicrequire{\textbf{Vstupy:}}
+\algrenewcommand\algorithmicensure{\textbf{Výstup:}}
 \makeatother
 
 % Číslo kapitoly na rovnakom riadku ako názov
@@ -75,6 +79,20 @@
   \fancyhf[lef,rof]{\thepage}%
 }
 
+\lstdefinestyle{cstyle}{ 
+    language=C,
+    basicstyle=\fontfamily{pcr}\selectfont\footnotesize,
+    numbers=left,
+    numberstyle=\tiny,
+    frame=single,
+    tabsize=4,
+    captionpos=b,
+    breaklines=true,
+    texcl=true,  
+	numbersep=8pt, 
+	framexleftmargin=15pt,
+	morekeywords = {uint8_t,uint16_t,int16_t,uint32_t,int32_t}
+}
 
 \setstretch{1.5}
 \newcommand{\University}[0] {Slovenská technická univerzita v Bratislave}

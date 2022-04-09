@@ -4,7 +4,7 @@
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>720</x>
+      <x>776</x>
       <y>264</y>
       <w>104</w>
       <h>48</h>
@@ -16,7 +16,7 @@ v časovej doméne</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>720</x>
+      <x>784</x>
       <y>632</y>
       <w>112</w>
       <h>48</h>
@@ -28,7 +28,7 @@ vo frekvenciach</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>496</x>
+      <x>600</x>
       <y>768</y>
       <w>112</w>
       <h>48</h>
@@ -40,7 +40,7 @@ udalostí</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>224</x>
+      <x>368</x>
       <y>384</y>
       <w>112</w>
       <h>48</h>
@@ -52,7 +52,7 @@ posuvných okien</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>216</x>
+      <x>360</x>
       <y>200</y>
       <w>112</w>
       <h>48</h>
@@ -64,7 +64,7 @@ po podvzorkovaní</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>232</x>
+      <x>376</x>
       <y>560</y>
       <w>104</w>
       <h>48</h>
@@ -76,7 +76,7 @@ spektra</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>240</x>
+      <x>384</x>
       <y>840</y>
       <w>104</w>
       <h>48</h>
@@ -88,7 +88,7 @@ zmeny spektra</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>616</x>
+      <x>720</x>
       <y>0</y>
       <w>240</w>
       <h>88</h>
@@ -104,7 +104,7 @@ zmeny spektra</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>752</x>
+      <x>808</x>
       <y>192</y>
       <w>136</w>
       <h>40</h>
@@ -116,8 +116,8 @@ zmeny spektra</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>696</x>
-      <y>408</y>
+      <x>792</x>
+      <y>416</y>
       <w>160</w>
       <h>56</h>
     </coordinates>
@@ -129,7 +129,7 @@ zmeny spektra</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>712</x>
+      <x>800</x>
       <y>744</y>
       <w>224</w>
       <h>136</h>
@@ -139,16 +139,16 @@ zmeny spektra</panel_attributes>
 - Minimálne trvanie udalosti
 
 Nastavenia algoritmov:
-0. threshold
-1. k, e, h_rel, h
-2. k, slope
-3. tolerance, hole, prominence, isolation</panel_attributes>
+A0: threshold
+A1: k, e, h_rel, h
+A2: k, slope
+A3: tolerance, hole, prominence, isolation</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
+      <x>552</x>
       <y>32</y>
       <w>184</w>
       <h>80</h>
@@ -159,18 +159,18 @@ Nastavenia algoritmov:
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
+      <x>704</x>
       <y>776</y>
-      <w>128</w>
+      <w>112</w>
       <h>32</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>140.0;10.0;10.0;20.0</additional_attributes>
+    <additional_attributes>120.0;10.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>784</x>
+      <x>840</x>
       <y>224</y>
       <w>48</w>
       <h>56</h>
@@ -181,7 +181,7 @@ Nastavenia algoritmov:
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>536</x>
+      <x>640</x>
       <y>208</y>
       <w>32</w>
       <h>32</h>
@@ -192,7 +192,7 @@ Nastavenia algoritmov:
   <element>
     <id>UMLTimer</id>
     <coordinates>
-      <x>232</x>
+      <x>336</x>
       <y>104</y>
       <w>80</w>
       <h>72</h>
@@ -204,7 +204,7 @@ vzorkovania</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>376</x>
+      <x>480</x>
       <y>96</y>
       <w>112</w>
       <h>48</h>
@@ -216,7 +216,7 @@ z akcelerometra</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>536</x>
+      <x>640</x>
       <y>104</y>
       <w>32</w>
       <h>32</h>
@@ -227,7 +227,7 @@ z akcelerometra</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>648</x>
+      <x>752</x>
       <y>112</y>
       <w>16</w>
       <h>16</h>
@@ -238,7 +238,7 @@ z akcelerometra</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>536</x>
+      <x>640</x>
       <y>392</y>
       <w>32</w>
       <h>32</h>
@@ -249,7 +249,7 @@ z akcelerometra</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>536</x>
+      <x>640</x>
       <y>568</y>
       <w>32</w>
       <h>32</h>
@@ -260,7 +260,7 @@ z akcelerometra</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>496</x>
+      <x>600</x>
       <y>464</y>
       <w>112</w>
       <h>48</h>
@@ -273,7 +273,7 @@ domény</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>536</x>
+      <x>640</x>
       <y>640</y>
       <w>32</w>
       <h>32</h>
@@ -284,7 +284,7 @@ domény</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>536</x>
+      <x>640</x>
       <y>336</y>
       <w>32</w>
       <h>32</h>
@@ -295,7 +295,7 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>264</x>
+      <x>368</x>
       <y>112</y>
       <w>128</w>
       <h>24</h>
@@ -306,7 +306,7 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>480</x>
+      <x>584</x>
       <y>112</y>
       <w>72</w>
       <h>24</h>
@@ -317,7 +317,7 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
+      <x>664</x>
       <y>112</y>
       <w>104</w>
       <h>24</h>
@@ -328,42 +328,44 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
+      <x>648</x>
       <y>128</y>
-      <w>200</w>
+      <w>136</w>
       <h>96</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-[Vyrovnávania pamäť je naplnená]</panel_attributes>
+[Vyrovnávacia pamäť
+je naplnená]</panel_attributes>
     <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>320</x>
+      <x>464</x>
       <y>208</y>
-      <w>232</w>
-      <h>32</h>
+      <w>192</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-[Odosielanie vzoriek povolené]</panel_attributes>
-    <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
+[Odosielanie vzoriek 
+povolené]</panel_attributes>
+    <additional_attributes>10.0;20.0;220.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>264</x>
+      <x>408</x>
       <y>240</y>
-      <w>288</w>
+      <w>248</w>
       <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>340.0;60.0;10.0;60.0;10.0;10.0</additional_attributes>
+    <additional_attributes>290.0;60.0;10.0;60.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
+      <x>648</x>
       <y>232</y>
       <w>24</w>
       <h>56</h>
@@ -374,30 +376,31 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>328</x>
+      <x>472</x>
       <y>392</y>
-      <w>224</w>
-      <h>32</h>
+      <w>184</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-[Odosielanie štatistík povolené]</panel_attributes>
-    <additional_attributes>10.0;20.0;260.0;20.0</additional_attributes>
+[Odosielanie štatistík 
+povolené]</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
+      <x>664</x>
       <y>304</y>
-      <w>224</w>
+      <w>176</w>
       <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;60.0;260.0;60.0;260.0;10.0</additional_attributes>
+    <additional_attributes>10.0;60.0;200.0;60.0;200.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
+      <x>648</x>
       <y>416</y>
       <w>24</w>
       <h>64</h>
@@ -408,30 +411,31 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>272</x>
+      <x>416</x>
       <y>424</y>
-      <w>240</w>
+      <w>200</w>
       <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>280.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>230.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>328</x>
+      <x>472</x>
       <y>568</y>
-      <w>224</w>
-      <h>32</h>
+      <w>184</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-[Odosielanie spektra povolené]</panel_attributes>
-    <additional_attributes>10.0;20.0;260.0;20.0</additional_attributes>
+[Odosielanie spektra
+povolené]</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
+      <x>648</x>
       <y>504</y>
       <w>24</w>
       <h>80</h>
@@ -442,30 +446,31 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
+      <x>664</x>
       <y>640</y>
-      <w>176</w>
-      <h>32</h>
+      <w>136</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-[Vyhladzovanie povolené]</panel_attributes>
-    <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
+[Vyhladzovanie
+povolené]</panel_attributes>
+    <additional_attributes>150.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>280</x>
+      <x>424</x>
       <y>600</y>
-      <w>272</w>
+      <w>232</w>
       <h>72</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>320.0;70.0;10.0;70.0;10.0;10.0</additional_attributes>
+    <additional_attributes>270.0;70.0;10.0;70.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>536</x>
+      <x>640</x>
       <y>272</y>
       <w>32</w>
       <h>32</h>
@@ -476,19 +481,20 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
+      <x>664</x>
       <y>272</y>
-      <w>176</w>
-      <h>32</h>
+      <w>128</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-[Vyhladzovanie povolené]</panel_attributes>
-    <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
+[Vyhladzovanie
+povolené]</panel_attributes>
+    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
+      <x>648</x>
       <y>296</y>
       <w>24</w>
       <h>56</h>
@@ -499,7 +505,7 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
+      <x>648</x>
       <y>360</y>
       <w>24</w>
       <h>48</h>
@@ -510,7 +516,7 @@ domény</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>536</x>
+      <x>640</x>
       <y>704</y>
       <w>32</w>
       <h>32</h>
@@ -521,7 +527,7 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
+      <x>648</x>
       <y>664</y>
       <w>24</w>
       <h>56</h>
@@ -532,18 +538,18 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
+      <x>664</x>
       <y>672</y>
-      <w>232</w>
+      <w>192</w>
       <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;60.0;270.0;60.0;270.0;10.0</additional_attributes>
+    <additional_attributes>10.0;60.0;220.0;60.0;220.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
+      <x>648</x>
       <y>592</y>
       <w>24</w>
       <h>64</h>
@@ -554,7 +560,7 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
+      <x>648</x>
       <y>728</y>
       <w>24</w>
       <h>56</h>
@@ -565,7 +571,7 @@ domény</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>752</x>
+      <x>816</x>
       <y>560</y>
       <w>136</w>
       <h>40</h>
@@ -577,7 +583,7 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>792</x>
+      <x>856</x>
       <y>592</y>
       <w>40</w>
       <h>56</h>
@@ -588,7 +594,7 @@ domény</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>536</x>
+      <x>640</x>
       <y>848</y>
       <w>32</w>
       <h>32</h>
@@ -599,19 +605,20 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>336</x>
+      <x>480</x>
       <y>848</y>
-      <w>216</w>
-      <h>32</h>
+      <w>176</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-[Odosielanie udalostí povolené]</panel_attributes>
-    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
+[Odosielanie udalostí
+povolené]</panel_attributes>
+    <additional_attributes>10.0;20.0;200.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
+      <x>648</x>
       <y>808</y>
       <w>24</w>
       <h>56</h>
@@ -622,7 +629,7 @@ domény</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>536</x>
+      <x>640</x>
       <y>904</y>
       <w>32</w>
       <h>32</h>
@@ -633,7 +640,7 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>544</x>
+      <x>648</x>
       <y>872</y>
       <w>24</w>
       <h>48</h>
@@ -644,18 +651,18 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
+      <x>432</x>
       <y>880</y>
-      <w>264</w>
+      <w>224</w>
       <h>56</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>310.0;50.0;10.0;50.0;10.0;10.0</additional_attributes>
+    <additional_attributes>260.0;50.0;10.0;50.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>560</x>
+      <x>664</x>
       <y>912</y>
       <w>96</w>
       <h>24</h>
@@ -666,7 +673,7 @@ domény</panel_attributes>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>832</x>
+      <x>936</x>
       <y>912</y>
       <w>16</w>
       <h>16</h>
@@ -677,18 +684,18 @@ domény</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>432</y>
-      <w>112</w>
-      <h>72</h>
+      <x>704</x>
+      <y>440</y>
+      <w>104</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>120.0;10.0;10.0;70.0</additional_attributes>
+    <additional_attributes>110.0;10.0;10.0;60.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>640</x>
+      <x>744</x>
       <y>896</y>
       <w>136</w>
       <h>48</h>
@@ -700,7 +707,7 @@ pamäte</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>768</x>
+      <x>872</x>
       <y>912</y>
       <w>80</w>
       <h>24</h>
