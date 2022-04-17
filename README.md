@@ -17,10 +17,10 @@
 
 #### Implementácia
 
-- Programovacie jazyky a knižnice: C, esp-idf 4.0, esp-dsp, mpack
+- Programovacie jazyky a knižnice: C, esp-idf 4.0, esp-dsp, mpack, FreeRTOS
 - Diagram balíčkov - hlavičkové súbory
 - Uchovávanie udalostí - opis štruktúry
-- Opis struct-ov konfigurácie
+- Opis štruktúr konfigurácie
 - Formát msgpack správ
 
 #### Overenie

@@ -5,6 +5,21 @@
 - msgpack, json, cmd
 
 
+\begin{figure}[h]
+\centering
+\begin{subfigure}[b]{0.65\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/design/esp32.jpg}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figures/design/esp32-front.jpg}
+\end{subfigure}
+\label{schematics}
+\caption{Schéma zapojenia hardvéru}
+\end{figure}
+
 \section{Adaptér akcelerometra}
 Načítavanie a prepočet osi zrýchlenia z akcelerometra % na m/s^2 vo funkcii imu\_acceleration (imu, *x)
 Nastavenie vzorkovacej frekvencie a dynamického rozsahu
@@ -89,14 +104,10 @@ if (error) {
 }
 \end{lstlisting}
 
-\section{Príloha - Technická dokumentácia, použivateľská a inštalačná príručka}
-- Doxygen dokumentácia
-- Formát generovania syntetických dát
-- MQTT topics a správy do technickej dokumentácie
-- Použivateľská príručka: 
-	- Inštalácia	
-	- Flashovanie a sprevádzkovanie
-	- MQTT klient na nahrávanie konfigurácií
-- Replikovateľnosť experimentov
+\begin{verbatim}
+# /etc/mosquitto/mosquitto.conf
+listener 1883 0.0.0.0
+allow_anonymous true
+\end{verbatim}
 
 \emptypage

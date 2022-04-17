@@ -87,7 +87,7 @@ hovorí o koľko sa v rámci tolerancie odlišuje skutočná citlivosť od refer
 Na meranie zrýchlenia má vplyv šum zapríčinený Brownovým pohybom a nedokonalosťou skutočných materiálov v štruktúre
 akcelerometra. Intenzita šumu rastie inverznou odmocninou so šírkou pásma, čiže s častejším meraním získavame menšiu presnosť. 
 Hardvér akcelerometra umožňuje vzorkovať amplitúdy až nad stanovený prah generovaním prerušenia, čím sa efektívne odstránia 
-nevýznamné fluktuácie, za predpokladu dostatočného odstupe signálu od šumu ($SNR = P_{signal} / P_{noise}$).
+nevýznamné fluktuácie, za predpokladu dostatočného odstupu signálu od šumu.
 
 \subsection{Analógovo-digitálny prevodník}
 Spojitú napäťovú úroveň transformuje analógovo-digitálny (A/D) prevodník pre spracovanie digitálnym systémom do množiny diskrétnych
@@ -390,9 +390,8 @@ Skutočné signály sa potýkajú so šumom, ktorý sťažuje odlíšenie pravej
 Pred samotným procesom hľadania špičiek je preto aplikovaný vyhladzovací filter, v prípade potreby aj opakovane na už
 vyhladení signál. Najčastejšie sa jedná o filter
 kĺzavého priemeru, Savitzky–Golay alebo Gaussov filter \cite{spectrometry-peak-detection}. Filtrovanie sa realizuje
-diskrétnou jednorozmernou konvolúciou vstupného signálu a masky filtra $y[n] = x[n] * h[n]$,
-ktorá býva hardvérovo akcelerovaná inštrukciami vynásob a sčítaj (,,multiply-accumulate'') za zvýšenia
-presnosti.
+diskrétnou jednorozmernou konvolúciou vstupného signálu a masky filtra, ktorá býva hardvérovo akcelerovaná inštrukciami vynásob a sčítaj 
+(,,multiply-accumulate'') za zvýšenia presnosti výsledku.
 
 \subsection{Detekcia špičiek prahovou úrovňou}
 Za predpokladu, že priebeh meranej veličiny sa vyznačuje krátkymi impulzmi s viac-menej pravidelnou amplitúdou
@@ -461,7 +460,7 @@ susedstva $\mathcal{O}(2k)$.
 
 \subsection{Algoritmus prechodu nulou do záporu}
 Pomyselné vrcholy a údolia v zosnímaných hodnotách sú miestom, kde sa mení smer úrovní amplitúdy zo stúpania na klesanie alebo
-z klesania na stúpanie, čím na pomedzí týchto opozitných trendov vzniká stacionárny bod, kde je prvá diferencia nulová:
+z klesania na stúpanie. Na pomedzí týchto opozitných trendov vzniká stacionárny bod, kde je prvá diferencia nulová:
 $\Delta f_i = 0$. V lokálnom maxime dochádza súčasne k zmene znamienka prvej diferencie z kladného na záporné. Prudkosť
 kopca vyplýva z absolútnej hodnoty diferencie.
 
@@ -492,13 +491,6 @@ Označenie kandidátneho bodu za špičku v zozname hodnôt $y$ stojí na teda d
 vrchola sa musia líšiť znamienkom a ich dĺžka má prekračovať prahovú strmosť kopca $slope$. Časová zložitosť pre jednu špičku je 
 $\mathcal{O}(1)$.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figures/analysis/topography.png}
-    \caption{Topografia priebehu signálu}
-    \label{fig:topography}
-\end{figure}
-
 \subsection{Algoritmus horského turistu}
 Zanesením do grafu pripomína priebeh funkcie kmitajúceho deja členité pohorie. Na problém rozhodovania sa o tom, či danú lokalitu
 považovať za vrchol možno nahliadať z pohľadu chodca cestujúceho po krivke z lineárne interpolovaných vzoriek. V princípe
@@ -509,6 +501,12 @@ Algoritmus č.\ref{algo:mountain-hiker} horského turistu na začiatku púte z p
 smerov sa krivka uberá. V prípade, že po druhom kroku dôjde k zmene smeru zapíše sa indikácia možného spádu kopca.
 Výchylka môže byť v dôsledku neprekročenia prahových úrovní v horizontálnej ($hole$) a vertikálnej ($tolerance$) osi
 ignorovaná, lebo ani na lesnom chodníku sa nepovažuje každá jama alebo vydutie za horu.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/analysis/topography.png}
+    \caption{Topografia priebehu signálu}
+    \label{fig:topography}
+\end{figure}
 
 Domnelý vrchol je označený za lokálne maximum, keď spĺňa parametre pre topografické vlastnosti minimálnej akceptovateľnej
 prominencie a izolácie (obr. \ref{fig:topography}). Prominencia znamená relatívnu výšku oproti predošlej navštívenej doline. Izolácia vyčísľuje vzdialenosť k najbližšiemu skoršiemu vrcholu. Podobný algoritmus už existuje v literatúre \cite{peek-mountaineer-method}, avšak prezentovaný pseudokód je oproti nemu zjednodušený a doplnený o požadované tolerancie.
@@ -922,5 +920,4 @@ tri vzájomne sa dopĺňajúce úrovne: Device edge, Local edge a Cloud \cite{ed
 vrámci device edge pôsobia  samotné IoT zariadenia získavajúce dáta z fyzických veličín prostredia a posielajú ich
 sieťovým edge bránam. Local Edge zahŕňa aktívne sieťové prvky a aplikácie s úlohami, ktoré nie je možné realizovať
 okrajovými zariadeniami. V cloude sa zhromažďujú dáta do dlhodobého úložiska pre komplexnú a celistvú analytiku.
-Zároveň cloud obsahuje softvér na spravovanie a monitorovanie zdrojov.
-
+Cloud obsahuje zároveň softvér na spravovanie a monitorovanie zdrojov.

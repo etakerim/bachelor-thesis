@@ -51,14 +51,170 @@
 \end{tabular}
 \end{table}
 
-% Digitálne médium
-%\thispagestyle{empty}
+\thispagestyle{empty}
 
-%\chapter{Obsah digitálneho média}
-%\pagenumbering{arabic}
-%\renewcommand*{\thepage}{C-\arabic{page}}
-%\par Evidenčné číslo práce v informačnom systéme: \RegNo
-%\par Obsah digitálnej časti práce (archív ZIP):
-%\par Názov odovzdaného archívu: ...zip
+\chapter{Technická dokumentácia}
+\pagenumbering{arabic}
+\renewcommand*{\thepage}{B-\arabic{page}}
 
- 
+- Doxygen dokumentácia
+Po moduloch - hlavičkové súbory
+- events.h  (events.c)
+- inertial\_unit.h (inertial\_unit.c)
+- peripheral.h  (peripheral.c)
+- pipeline.h (pipeline.c, serialize.c, window.c)
+- statistics.h (statistics.c)
+Tasky: main.c
+
+- Formát generovania syntetických dát
+- MQTT topics a správy do technickej dokumentácie
+imu/[id]/
+- config/request
+- config/response
+- config/set
+
+- login/set
+- login/request
+- login/response
+
+- syslog
+	"imu started"
+	"config received"
+	"config malformed"
+	"config applied"
+	"login malformed"
+	"login saved"
+
+- samples
+\begin{verbatim}
+[-0.07836493849754333, -0.9104690551757812, -9.964909553527832, -1.7736798524856567, -16.43988800048828, -0.4007977843284607, 1.4985052347183228, 5.201996326446533, 1.499103307723999]
+\end{verbatim}
+
+- stats/x, stats/y, stats/z
+\begin{verbatim}
+{"t": 386, "min": -9.964909553527832, "max": 11.8468656539917, "rms": 8.343297004699707, "avg": 4.126497745513916, "std": 7.251387119293213, "skew": -0.6144028306007385, "kurt": -0.8219752311706543, "med": 5.772983551025391, "mad": 5.370391845703125}
+\end{verbatim}
+
+- spectrum/x spectrum/y  spectrum/z
+\begin{verbatim}
+{"t": 25, "fs": 8, "bins": [0.0, -0.026730040088295937, -38.7723274230957, -38.19501495361328]}
+\end{verbatim}
+
+- events/x events/y events/z
+\begin{verbatim}
+{
+"t": 386, "df": 2.0, 
+"A": [{"i": 2, "t": 382, "d": 5, "h": -5.620919704437256}, {"i": 3, "t": 382, "d": 5, "h": -3.549427032470703}], 
+"Z": []
+}
+\end{verbatim}
+
+\begin{verbatim}
+{"sensor": {"fs": 8, "range": "2g", "n": 8, "overlap": 0.5, "axis": [false, false, true]}, 
+"tsmooth": {"on": false, "n": 8, "repeat": 1}, 
+"stats": {"min": true, "max": true, "rms": true, "avg": true, "var": true, "std": true, "skew": true, "kurtosis": true, "med": true, "mad": true, "corr": false}, 
+"transform": {"w": "hann", "f": "dft", "log": true},
+"fsmooth": {"on": false, "n": 8, "repeat": 1},
+"peak": {"tmin": 4, "tprox": 5, "strategy": "threshold", "threshold": {"t": -15.0},
+"neighbours": {"k": 9, "e": 0.0, "h": -100.0, "h_rel": 10.0}, 
+"zero_crossing": {"k": 4, "slope": 3.0}, 
+"hill_walker": {"t": 0.0, "h": 0, "p": 10.0, "i": 3.0}}, 
+"logger": {"local": false, "mqtt": true, "samples": "t", "stats": true, "events": true, "subsamp": 1}}
+\end{verbatim}
+
+\thispagestyle{empty}
+
+\chapter{Inštalačná príručka}
+\pagenumbering{arabic}
+\renewcommand*{\thepage}{C-\arabic{page}}
+
+sudo apt-get install git wget flex bison gperf python3 python3-pip python3-setuptools cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
+
+sudo pacman -S --needed gcc git make flex bison gperf python-pip cmake ninja ccache dfu-util libusb
+cd ~/esp/esp-idf
+./install.sh esp32
+
+
+\thispagestyle{empty}
+
+\chapter{Používateľská príručka}
+\pagenumbering{arabic}
+\renewcommand*{\thepage}{D-\arabic{page}}
+
+\textbf{Flashovanie a sprevádzkovanie}
+. ./export.sh
+cd firmware/vibration-analyzer
+idf.py build
+idf.py -p /dev/ttyUSB0 flash
+idf.py -p /dev/ttyUSB0 monitor 
+
+na SD kartu dať: config.txt
+
+
+\textbf{MQTT klient na nahrávanie konfigurácií}
+cd  main/tests/
+pip install -r requirements.txt
+python config\_tool.py
+
+Príkazy:
+	connect
+		Device ID [1]:
+      	Broker IP [192.168.1.103]
+        Broker Port [1883]
+	disconnect
+	end
+	^C
+	
+	set
+		config>
+	config
+	topic
+		topic>
+		Listen time on topic in sec [10]:
+	
+	login
+	credentials
+	
+\url{https://github.com/espressif/esp-idf}
+\url{https://github.com/espressif/esp-dsp} s úpravou
+\url{https://github.com/ludocode/mpack/releases/download/v1.1/mpack-amalgamation-1.1.tar.gz}
+
+\textbf{Jupyter notebooky}
+cd measurements
+pip install -r requirements.txt
+jupyter notebook
+
+- Replikovateľnosť experimentov
+
+	
+\thispagestyle{empty}
+
+
+\chapter{Obsah digitálneho média}
+\pagenumbering{arabic}
+\renewcommand*{\thepage}{E-\arabic{page}}
+\par Evidenčné číslo práce v informačnom systéme: \RegNo
+\par Obsah digitálnej časti práce (archív ZIP):
+\par Názov odovzdaného archívu: ...zip
+\begin{verbatim}
+> firmware
+	> esp-dsp
+	> esp-idf
+	> mpack
+	> vibration-analyzer
+		> main
+			> conf
+			> docs
+			> include
+			> src
+			> tests
+> measurements
+	> datasets
+		> esp
+		> synth-signal
+	> experiments
+	> signals
+> BP_MiroslavHajek.pdf
+\end{verbatim}
+
+
