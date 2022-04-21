@@ -7,7 +7,7 @@ def load_dataset(source, dataset, G=9.80665):
     """
     if source == 'r-das': 
         FS_HZ = 952
-        PATH = 'datasets/r-das/'
+        PATH = 'datasets/'
 
         measurement = pd.read_csv(PATH + dataset, sep='\t', skiprows=2)
         measurement = measurement[['A_X [mg] ', ' A_Y [mg] ', ' A_Z [mg] ']].rename(columns={
@@ -20,7 +20,7 @@ def load_dataset(source, dataset, G=9.80665):
     elif source == 'esp':
         FS_HZ = 500
         MG_LSB = 0.061
-        PATH = 'datasets/esp/'
+        PATH = 'datasets/'
 
         measurement = pd.read_csv(PATH + dataset, sep=' ').rename(columns={
             'A_X[LSB]': 'x', 'A_Y[LSB]': 'y', 'A_Z[LSB]': 'z'
