@@ -126,11 +126,11 @@ Presnejší prevod dosiahneme zužitkovaním deklarovanej citlivosti senzora pri
    a = \hat{x} \cdot (S_R \cdot g)\;/\;1000
 \end{align}\end{ceqn}
 
-\subsection{Vlastnosti bežných akcelerometrov}
+\subsection{Vlastnosti bežných akcelerometrov} \label{section:accelometers}
 Na ilustráciu uvádzame parametre zvolených najrozšírenejších typov akcelerometrov. Akcelerometer LSM9DS1 \cite{lsm9ds1} umožňuje cez
 zbernicu SPI alebo I$^\mathrm{2}$C zvoliť zo štyroch dynamických rozsahov, pričom každé rozpätie sa vyznačuje svojou 
-citlivosťou. Zvolením menšieho
-dynamického rozsahu zvýšime citlivosť. LSM9DS1 funguje pri rozsahoch $\pm2$g, $\pm4$g a $\pm8$g a $\pm16$g, postupne s citlivosťami
+citlivosťou. Zvolením menšieho dynamického rozsahu zvýšime citlivosť. LSM9DS1 funguje pri rozsahoch $\pm2$g, $\pm4$g a $\pm8$g 
+a $\pm16$g, postupne s citlivosťami
 $0.061$ mg/LSB, $0.122$ mg/LSB, $0.244$ mg/LSB, $0.732$ mg/LSB. Výstupný dátový tok (ODR) je možné nastaviť na $10$Hz, $50$Hz,
 $119$Hz, $238$Hz, $476$Hz a najvyššie na $952$ Hz. Navzorkované hodnoty sú ukladané do 16-bitového výstupného registra v
 dvojkovom doplnku.
@@ -576,10 +576,10 @@ TPR = \frac{TP}{P} = \frac{TP}{TP + FN} \label{equ:sensitivity} \\
 TNR = \frac{TN}{N} = \frac{TN}{TN + FP} \label{equ:specifity}
 \end{align}\end{ceqn}
 
-Presnosť určenia lokálneho extrému sa skladá z správnosti (\ref{equ:ppv}) a precíznosti (\ref{equ:accuracy}),
+Presnosť určenia lokálneho extrému sa skladá z správnosti (\ref{equ:ppv}) a presnosť (\ref{equ:accuracy}),
 ktoré je rovnako žiaduce dosahovať čo najbližšie sto percentám, pri nízkej chybovosti (\ref{equ:error-rate}), čiže
 nízkeho počtu falošných poplachov.
-\myequations{Metriky klasifikátora: správnosť, precíznosť, chybovosť}
+\myequations{Metriky klasifikátora: správnosť, presnosť, chybovosť}
 \begin{ceqn}\begin{align}
 PPV = \frac{TP}{TP + FP} \label{equ:ppv} \\
 ACC = \frac{TP + TN}{P + N}\label{equ:accuracy} \\
@@ -630,7 +630,7 @@ W_{N}^{nk} = \cos(2\pi nk/ N) - i \cdot \sin(2\pi nk/ N)
 Spektrálne komponenty opísané vektorom komplexných Fourierových koeficientov majú magnitúdy dané veľkosťami komplexných čísel
 (\ref{equ:magnitude-spectrum}). Pre vstupy $x \in \mathbb{R}$ je výstup z DFT zrkadlovo symetrický, čiže druhá polovica
 výstupu je komplexne združená k prvej $x[m] = x^{*}[N - m]$. Symetrickosť zapríčiňuje nadbytočnosť výsledkov
-nad pozíciou  $N/2$. Rovnako naznačuje reformulácia vety o vzorkovaní, že za vzorkovacej frekvencie $f_s$ sú zapríčinením aliasingu v signále prítomné frekvencie do maximálne polovice $f_s$. Energia vo frekvenčnom vedierku je druhou mocninou magnitúdy, ale častejšie sa
+nad pozíciou  $N/2$. Rovnako naznačuje reformulácia vety o vzorkovaní, že za vzorkovacej frekvencie $f_s$ sú zapríčinením aliasingu, v signále prítomné frekvencie do maximálne polovice $f_s$. Energia vo frekvenčnom vedierku je druhou mocninou magnitúdy, ale častejšie sa
 objavuje reprezentácia relatívneho energetického spektra v decibeloch (\ref{equ:decibel-spectrum}) \cite{understanding-dsp}.
 \myequations{Magnitúdové spektrum absolútne a relatívne v decibeloch}
 \begin{ceqn}\begin{align}

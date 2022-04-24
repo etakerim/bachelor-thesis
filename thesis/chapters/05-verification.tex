@@ -161,6 +161,8 @@ vrámci prehľadávaného priestoru cez grid search. Vyhodnotenie metrík prebie
 Stanovenie parametrov je nepresné, vyžaduje sa manuálne adaptovať hyperparametre podľa situácie. Na ilustráciu
 sú presnosti a parametre v tabuľkách, dá sa použiť ako referencia pre výhodný rozsah hodnôt. FFT s prekryvom 50\% a Hannovo okno
 
+Relevantná metriky. Vysoká fs zároveň s nízkym n dávajú nižšie presnosti.
+
 \begin{table}[h]
 \def\arraystretch{1.1}
 \centering
@@ -172,21 +174,7 @@ sú presnosti a parametre v tabuľkách, dá sa použiť ako referencia pre výh
 \textbf{256}        & \multicolumn{1}{c|}{91.19}        & \multicolumn{1}{c|}{85.41}        & 73.59        & \multicolumn{1}{c|}{90.63}        & \multicolumn{1}{c|}{84.39}        & 71.84        & \multicolumn{1}{c|}{91.30}        & \multicolumn{1}{c|}{84.78}        & 72.00        \\ \hline
 \textbf{512}        & \multicolumn{1}{c|}{95.54}        & \multicolumn{1}{c|}{91.91}        & 85.19        & \multicolumn{1}{c|}{95.45}        & \multicolumn{1}{c|}{91.92}        & 84.05        & \multicolumn{1}{c|}{95.54}        & \multicolumn{1}{c|}{91.93}        & 85.05        \\ \hline
 \end{tabular}
-\caption{Accuracy (precíznosť)}
-\end{table}
-
-\begin{table}[h]
-\def\arraystretch{1.1}
-\centering
-\begin{tabular}{|c|lll|lll|lll|}
-\hline
-                    & \multicolumn{3}{c|}{\textbf{Algoritmus 1}}                                                                & \multicolumn{3}{c|}{\textbf{Algoritmus 2}}                                                                & \multicolumn{3}{c|}{\textbf{Algoritmus 3}}                                                                \\ \hline
-\diagbox{$n$}{$f_s$} & \multicolumn{1}{c|}{\textbf{238}} & \multicolumn{1}{c|}{\textbf{476}} & \multicolumn{1}{c|}{\textbf{952}} & \multicolumn{1}{c|}{\textbf{238}} & \multicolumn{1}{c|}{\textbf{476}} & \multicolumn{1}{c|}{\textbf{952}} & \multicolumn{1}{c|}{\textbf{238}} & \multicolumn{1}{c|}{\textbf{476}} & \multicolumn{1}{c|}{\textbf{952}} \\ \hline
-\textbf{128}        & \multicolumn{1}{l|}{52.59}        & \multicolumn{1}{l|}{55.91}        & 65.70                             & \multicolumn{1}{l|}{48.40}        & \multicolumn{1}{l|}{64.07}        & 65.73                             & \multicolumn{1}{l|}{46.30}        & \multicolumn{1}{l|}{64.35}        & 65.73                             \\ \hline
-\textbf{256}        & \multicolumn{1}{l|}{46.30}        & \multicolumn{1}{l|}{56.69}        & 58.37                             & \multicolumn{1}{l|}{29.86}        & \multicolumn{1}{l|}{49.72}        & 52.59                             & \multicolumn{1}{l|}{53.05}        & \multicolumn{1}{l|}{51.52}        & 59.79                             \\ \hline
-\textbf{512}        & \multicolumn{1}{l|}{53.92}        & \multicolumn{1}{l|}{51.44}        & 54.75                             & \multicolumn{1}{l|}{5.88}         & \multicolumn{1}{l|}{0.00}         & 48.62                             & \multicolumn{1}{l|}{23.53}        & \multicolumn{1}{l|}{27.78}        & 60.11                             \\ \hline
-\end{tabular}
-\caption{PPV (správnosť)}
+\caption{Presnosť v percentách}
 \end{table}
 
 \begin{table}[h]
@@ -214,7 +202,7 @@ sú presnosti a parametre v tabuľkách, dá sa použiť ako referencia pre výh
 \textbf{256}        & \multicolumn{1}{l|}{1.08}         & \multicolumn{1}{l|}{4.10}         & 8.66                              & \multicolumn{1}{l|}{1.26}         & \multicolumn{1}{l|}{3.12}         & 10.33                             & \multicolumn{1}{l|}{1.19}         & \multicolumn{1}{l|}{1.97}         & 2.41                              \\ \hline
 \textbf{512}        & \multicolumn{1}{l|}{5.27}         & \multicolumn{1}{l|}{1.30}         & 5.00                              & \multicolumn{1}{l|}{0.96}         & \multicolumn{1}{l|}{0.00}         & 3.48                              & \multicolumn{1}{l|}{0.96}         & \multicolumn{1}{l|}{0.15}         & 1.95                              \\ \hline
 \end{tabular}
-\caption{FPR - True positive rate (Chybovosť)}
+\caption{FPR - False positive rate (Chybovosť)}
 \end{table}
 
 
@@ -242,8 +230,6 @@ sú presnosti a parametre v tabuľkách, dá sa použiť ako referencia pre výh
 % Best parametre algoritmu z grid search
 
 \section{Spektrá a eventy v syntetických dátach}
-
-
 \begin{figure}[h]
 	\centering
      \begin{subfigure}{\textwidth}
@@ -273,7 +259,6 @@ sú presnosti a parametre v tabuľkách, dá sa použiť ako referencia pre výh
 
 
 \section{Obrázky spektier z reálnych datasetov}
-
 Popis datasetov - vzorkovacia frekvencia 500 Hz mestská hromadná doprava (autobusy a električky) na suchých nových cestách.
 
 \begin{figure}[h]
@@ -286,11 +271,6 @@ Popis datasetov - vzorkovacia frekvencia 500 Hz mestská hromadná doprava (auto
 
 \begin{figure}[h]
 	\centering
-	\begin{subfigure}{\textwidth}
-        \centering
-     	\includegraphics[width=\textwidth]{figures/verification/L83-dataset-spectrum.png}
-     	\caption{Algoritmus č.1}
-     \end{subfigure}
      \begin{subfigure}{\textwidth}
         \centering
      	\includegraphics[width=\textwidth]{figures/verification/L83-dataset-A1.png}
@@ -307,32 +287,6 @@ Popis datasetov - vzorkovacia frekvencia 500 Hz mestská hromadná doprava (auto
         \caption{Algoritmus č.3}
      \end{subfigure}     
      \caption{L83 - Ilustrácia detegovaných špičiek pri fs 476Hz a N = 256 a parametrov podľa grid search}
-\end{figure}
-
-
-\begin{figure}[h]
-	\centering
-	\begin{subfigure}{\textwidth}
-        \centering
-     	\includegraphics[width=\textwidth]{figures/verification/L35-dataset-spectrum.png}
-     	\caption{Algoritmus č.1}
-     \end{subfigure}
-     \begin{subfigure}{\textwidth}
-        \centering
-     	\includegraphics[width=\textwidth]{figures/verification/L35-dataset-A1.png}
-     	\caption{Algoritmus č.1}
-     \end{subfigure}
-     \begin{subfigure}{\textwidth}
-    	\centering
-        \includegraphics[width=\textwidth]{figures/verification/L35-dataset-A2.png}
-        \caption{Algoritmus č.2}
-     \end{subfigure}
-      \begin{subfigure}{\textwidth}
-    	\centering
-        \includegraphics[width=\textwidth]{figures/verification/L35-dataset-A3.png}
-        \caption{Algoritmus č.3}
-     \end{subfigure}     
-     \caption{L35 - Ilustrácia detegovaných špičiek pri fs 476Hz a N = 256 a parametrov podľa grid search}
 \end{figure}
 
 \emptypage

@@ -1,6 +1,0 @@
-[submodule "esp/esp-idf"]
-	path = firmware/esp-idf
-	url = https://github.com/espressif/esp-idf.git
-[submodule "esp/esp-dsp"]
-	path = firmware/esp-dsp
-	url = https://github.com/espressif/esp-dsp.git

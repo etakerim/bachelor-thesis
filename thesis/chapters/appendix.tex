@@ -57,7 +57,7 @@
 \pagenumbering{arabic}
 \renewcommand*{\thepage}{B-\arabic{page}}
 
-- Doxygen dokumentácia
+\section{Doxygen dokumentácia}
 Po moduloch - hlavičkové súbory
 - events.h  (events.c)
 - inertial\_unit.h (inertial\_unit.c)
@@ -67,7 +67,8 @@ Po moduloch - hlavičkové súbory
 Tasky: main.c
 
 - Formát generovania syntetických dát
-- MQTT topics a správy do technickej dokumentácie
+
+\section{MQTT topics a formát Message Pack správ}
 imu/[id]/
 - config/request
 - config/response
@@ -122,24 +123,37 @@ imu/[id]/
 "logger": {"local": false, "mqtt": true, "samples": "t", "stats": true, "events": true, "subsamp": 1}}
 \end{verbatim}
 
+\section{Datasety z premávky}
+Typy vozidiel, trasy a umiestnenie zariadenia v každom z nich.
+\begin{itemize}[noitemsep]
+\item Električka Škoda 30 T 
+\item Električka Škoda 29 T
+\item Električka ČKD Tatra T6A5
+\item Midibus Solaris Urbino 8,6
+\item Elektrobus SOR NS 12 Electric
+\item Kĺbový autobus Mercedes-Benz O 530 GL CapaCity
+\end{itemize}
+
 \thispagestyle{empty}
 
-\chapter{Inštalačná príručka}
+\chapter{Inštalačná a používateľská príručka}
 \pagenumbering{arabic}
 \renewcommand*{\thepage}{C-\arabic{page}}
-
-sudo apt-get install git wget flex bison gperf python3 python3-pip python3-setuptools cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
+Špecifikovať testovaciu platformu
+(esp-idf) v4.4, FreeRTOS v9.0.0, esp-dsp v1.2, MPack v1.1, CMake - nástroj na automatizácie kompilácie (GNU 8.4.0), Platforma Manjaro Linux
+	Linux ThinkPad 5.10.109-1-MANJARO (\url{https://ludocode.github.io/mpack/md_docs_expect.html}), Verzie a návod na inštaláciu v prílohe
+- Python3.10, numpy, scipy (stats, signal, fft, interpolate), pandas, seaborn, matplotlib
+- msgpack, json, cmd,  Eclipse Mosquitto
 
 sudo pacman -S --needed gcc git make flex bison gperf python-pip cmake ninja ccache dfu-util libusb
+\url{git clone -b v4.4 --recursive https://github.com/espressif/esp-idf.git}
+\url{git clone -b v1.2.0 https://github.com/espressif/esp-dsp.git}
+\url{wget https://github.com/ludocode/mpack/releases/download/v1.1/mpack-amalgamation-1.1.tar.gz}
+
+
 cd ~/esp/esp-idf
 ./install.sh esp32
 
-
-\thispagestyle{empty}
-
-\chapter{Používateľská príručka}
-\pagenumbering{arabic}
-\renewcommand*{\thepage}{D-\arabic{page}}
 
 \textbf{Flashovanie a sprevádzkovanie}
 . ./export.sh
@@ -189,6 +203,38 @@ jupyter notebook
 	
 \thispagestyle{empty}
 
+\chapter{Vizualizácia datasetov}
+\pagenumbering{arabic}
+\renewcommand*{\thepage}{D-\arabic{page}}
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{\textwidth}
+        \centering
+     	\includegraphics[width=\textwidth]{figures/verification/L83-dataset-spectrum.png}
+     	\caption{Algoritmus č.1}
+     \end{subfigure}
+	\begin{subfigure}{\textwidth}
+        \centering
+     	\includegraphics[width=\textwidth]{figures/verification/L35-dataset-spectrum.png}
+     	\caption{Algoritmus č.1}
+     \end{subfigure}
+     \begin{subfigure}{\textwidth}
+        \centering
+     	\includegraphics[width=\textwidth]{figures/verification/L35-dataset-A1.png}
+     	\caption{Algoritmus č.1}
+     \end{subfigure}
+     \begin{subfigure}{\textwidth}
+    	\centering
+        \includegraphics[width=\textwidth]{figures/verification/L35-dataset-A2.png}
+        \caption{Algoritmus č.2}
+     \end{subfigure}
+      \begin{subfigure}{\textwidth}
+    	\centering
+        \includegraphics[width=\textwidth]{figures/verification/L35-dataset-A3.png}
+        \caption{Algoritmus č.3}
+     \end{subfigure}     
+     \caption{L35 - Ilustrácia detegovaných špičiek pri fs 476Hz a N = 256 a parametrov podľa grid search}
+\end{figure}
 
 \chapter{Obsah digitálneho média}
 \pagenumbering{arabic}
