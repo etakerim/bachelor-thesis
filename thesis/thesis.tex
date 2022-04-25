@@ -23,6 +23,7 @@
 \usepackage{titlesec}
 \usepackage{setspace}
 \usepackage{fancyhdr}
+\usepackage{fancyvrb}
 \usepackage{pdfpages}
 \usepackage[fleqn]{amsmath}
 \usepackage{nccmath}
@@ -79,9 +80,10 @@
   \fancyhf[lef,rof]{\thepage}%
 }
 
+\renewcommand{\ttdefault}{pcr}
 \lstdefinestyle{cstyle}{ 
     language=C,
-    basicstyle=\fontfamily{pcr}\selectfont\footnotesize,
+	basicstyle=\linespread{1.1}\ttfamily\footnotesize,
     numbers=left,
     numberstyle=\tiny,
     frame=single,
@@ -91,6 +93,8 @@
     texcl=true,  
 	numbersep=8pt, 
 	framexleftmargin=15pt,
+	xleftmargin=5ex,
+    xrightmargin=3.4pt,
 	morekeywords = {uint8_t,uint16_t,int16_t,uint32_t,int32_t,bool}
 }
 \renewcommand{\lstlistingname}{Zdrojový kód}

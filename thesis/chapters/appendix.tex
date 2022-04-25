@@ -104,29 +104,29 @@ imu/[id]/
 - events/x events/y events/z
 \begin{verbatim}
 {
-"t": 386, "df": 2.0, 
-"A": [{"i": 2, "t": 382, "d": 5, "h": -5.620919704437256}, {"i": 3, "t": 382, "d": 5, "h": -3.549427032470703}], 
+"t": 386, "df": 2.0,
+"A": [{"i": 2, "t": 382, "d": 5, "h": -5.620919704437256}, {"i": 3, "t": 382, "d": 5, "h": -3.549427032470703}],
 "Z": []
 }
 \end{verbatim}
 
 \begin{verbatim}
-{"sensor": {"fs": 8, "range": "2g", "n": 8, "overlap": 0.5, "axis": [false, false, true]}, 
-"tsmooth": {"on": false, "n": 8, "repeat": 1}, 
-"stats": {"min": true, "max": true, "rms": true, "avg": true, "var": true, "std": true, "skew": true, "kurtosis": true, "med": true, "mad": true, "corr": false}, 
+{"sensor": {"fs": 8, "range": "2g", "n": 8, "overlap": 0.5, "axis": [false, false, true]},
+"tsmooth": {"on": false, "n": 8, "repeat": 1},
+"stats": {"min": true, "max": true, "rms": true, "avg": true, "var": true, "std": true, "skew": true, "kurtosis": true, "med": true, "mad": true, "corr": false},
 "transform": {"w": "hann", "f": "dft", "log": true},
 "fsmooth": {"on": false, "n": 8, "repeat": 1},
 "peak": {"tmin": 4, "tprox": 5, "strategy": "threshold", "threshold": {"t": -15.0},
-"neighbours": {"k": 9, "e": 0.0, "h": -100.0, "h_rel": 10.0}, 
-"zero_crossing": {"k": 4, "slope": 3.0}, 
-"hill_walker": {"t": 0.0, "h": 0, "p": 10.0, "i": 3.0}}, 
+"neighbours": {"k": 9, "e": 0.0, "h": -100.0, "h_rel": 10.0},
+"zero_crossing": {"k": 4, "slope": 3.0},
+"hill_walker": {"t": 0.0, "h": 0, "p": 10.0, "i": 3.0}},
 "logger": {"local": false, "mqtt": true, "samples": "t", "stats": true, "events": true, "subsamp": 1}}
 \end{verbatim}
 
 \section{Datasety z premávky}
 Typy vozidiel, trasy a umiestnenie zariadenia v každom z nich.
 \begin{itemize}[noitemsep]
-\item Električka Škoda 30 T 
+\item Električka Škoda 30 T
 \item Električka Škoda 29 T
 \item Električka ČKD Tatra T6A5
 \item Midibus Solaris Urbino 8,6
@@ -160,7 +160,7 @@ cd ~/esp/esp-idf
 cd firmware/vibration-analyzer
 idf.py build
 idf.py -p /dev/ttyUSB0 flash
-idf.py -p /dev/ttyUSB0 monitor 
+idf.py -p /dev/ttyUSB0 monitor
 
 na SD kartu dať: config.txt
 
@@ -178,17 +178,17 @@ Príkazy:
 	disconnect
 	end
 	^C
-	
+
 	set
 		config>
 	config
 	topic
 		topic>
 		Listen time on topic in sec [10]:
-	
+
 	login
 	credentials
-	
+
 \url{https://github.com/espressif/esp-idf}
 \url{https://github.com/espressif/esp-dsp} s úpravou
 \url{https://github.com/ludocode/mpack/releases/download/v1.1/mpack-amalgamation-1.1.tar.gz}
@@ -200,7 +200,7 @@ jupyter notebook
 
 - Replikovateľnosť experimentov
 
-	
+
 \thispagestyle{empty}
 
 \chapter{Vizualizácia datasetov}
@@ -232,7 +232,7 @@ jupyter notebook
     	\centering
         \includegraphics[width=\textwidth]{figures/verification/L35-dataset-A3.png}
         \caption{Algoritmus č.3}
-     \end{subfigure}     
+     \end{subfigure}
      \caption{L35 - Ilustrácia detegovaných špičiek pri fs 476Hz a N = 256 a parametrov podľa grid search}
 \end{figure}
 
@@ -244,7 +244,7 @@ jupyter notebook
 \par Názov odovzdaného archívu: ...zip
 \begin{verbatim}
 > firmware
-	> esp-dsp
+    > esp-dsp
 	> esp-idf
 	> mpack
 	> vibration-analyzer
