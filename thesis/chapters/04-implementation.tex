@@ -1,19 +1,19 @@
 \chapter{Implementácia}
 Firmvér senzorovej jednotky je implementovaný v programovacom jazyku C so
-SDK Espressif IoT Development Framework. Súbežný beh úloh spravuje operačný systém reálneho času FreeRTOS.
+SDK Espressif IoT Development Framework (ESP-IDF). Súbežný beh úloh spravuje operačný systém reálneho času FreeRTOS.
 Optimalizované rutiny spracovania signálu poskytuje Espressif DSP Library. Knižnica MPack má na starosti
-kódovanie a dekódovanie formátu Message Pack. Nástroj na automatizáciu kompilácie CMake riadi zostavovanie
+kódovanie a dekódovanie formátu Message Pack. CMake riadi zostavovanie
 modulov zdrojového kódu. Eclipse Mosquitto pôsobí ako MQTT broker správ.
 
 V jazyku Python sú napísané Jupyter notebooky na analýzu zozbieraných datasetov a otestovanie fáz navrhnutej dátovej pipeline,
 so závislosťami numpy, scipy, pandas a matplotlib. Rozhranie príkazového riadku na nahrávanie konfigurácie a náhľad odoberaných
-správ sa spolieha na externé balíčky Paho MQTT, cmd a msgpack. Návod na inštaláciu a konkrétne verzie sú uvedené v prílohe.
+správ sa spolieha na balíčky Paho MQTT, cmd a msgpack. Návod na inštaláciu a konkrétne verzie sú uvedené v prílohe.
 
 \section{Senzorová sieť}
 Súčiastky FireBeetle ESP32, OpenLog, STEVAL-MKI159V1 a BTS117 sú naspájkované na univerzálny plošný spoj rozmerov 5 x 7 cm
 (obr. \ref{board}). Doska je vsadená do plastovej krabičky s hrúbkou stien 3 mm vo výške 2 cm nad povrchom.
-Akcelerometer je namontovaný tesne pod modulom MCU. Externý 5 V zdroj sa pripája cez Micro USB konektor, alebo cez JST PH
-2 pin zapojíme 3,7 V lítiovú batériu.
+Akcelerometer je namontovaný tesne pod modulom MCU. Externý 5 V zdroj sa pripája cez Micro USB konektor, alebo 3,7 V lítiovú batériu 
+zapojíme cez JST PH 2 pin.
 \begin{figure}[h!]
 \centering
 \begin{subfigure}{0.6\textwidth}
@@ -28,7 +28,7 @@ Akcelerometer je namontovaný tesne pod modulom MCU. Externý 5 V zdroj sa prip�
 \label{board}
 \end{figure}
 
-Po zapnutí si firmvér načíta systémové nastavenia cez Storage API. Inicializuje sa
+Po zapnutí si firmvér načíta systémové nastavenia cez Storage API z SDK. Inicializuje sa
 akcelerometer a naraz sa kompletne alokuje dynamická pamäť pre výpočty dátovej pipeline a pre synchronizačné primitíva.
 Na zamedzenie fragmentácie nie je odvtedy programom prideľovaná žiadna ďalšia pamäť okrem zásobníkov úloh.
 
@@ -100,7 +100,7 @@ if (ulTaskNotifyTake(pdTRUE, portMAX_DELAY)) {
 // Pipeline task
 if (xQueueReceive(k->queue[x], &p.stream[idx], portMAX_DELAY)) {
 	if (++idx < conf.sensor.n) continue;
-    // Process buffer
+    // Process buffer p.stream
     buffer_shift_left(p.stream, conf.sensor.n, leftover);
     idx = conf.sensor.n - leftover;
 }

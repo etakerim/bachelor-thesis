@@ -270,7 +270,7 @@ náhodných premenných. Časový rad predstavuje realizáciu tohto stochastick�
 je náhodná premenná so svojím rozdelením pravdepodobnosti. Všeobecne sa pri ideálnych stacionárnych otrasoch predpokladá, že premenné
 pochádzajú z unimodálnej Gaussovej distribúcie: $X_t \sim N(\mu, \sigma^2)$ \cite{vibrations-shock}.
 
-Sumárna deskripcia nameraného deja pre extrakciu typických čŕt konkrétnych pozorovaných situácií sa uskutočňuje viacerými štatistikami
+Sumárna deskripcia nameraného deja pre extrakciu typických čŕt konkrétnych pozorovaných situácií sa odvíja od viacerých štatistík
 $h(X_1, X_2, ..., X_n)$ zostručňujúcimi opis funkcie hustoty rozdelenia. Na rozmiestnenie hodnôt meraní v priebehu časového úseku
 sa nazerá z pohľadu polohy, rozptýlenosti a tvaru. Rozsah oboru hodnôt je amplitúda špička-špička (,,peak-to-peak''),
 ktorá je rozdielom maximálnej a minimálnej úrovne, údaj známy tiež ako variančné rozpätie \cite{zaklady-statistiky}.
@@ -723,7 +723,7 @@ vektora musí byť násobkom štyroch. Dosahuje okolo 30\% zníženie počtu ná
 oproti radix-2 \cite{split-radix}.
 
 Algoritmus FFT je aplikovateľný taktiež na výpočet DCT vhodným zoradením vstupného vektora. DCT-II $N$-bodovej
-reálnej postupnosti $\mathbf{x}$ sa odvodzuje uskutočnením jej $2N$-bodového párneho rozšírenia a vynásobením výsledku
+reálnej postupnosti $\mathbf{x}$ sa odvodzuje z jej $2N$-bodového párneho rozšírenia a vynásobením výsledku
 twiddle faktorom $2W_{2N}^{k}$ a ponechaním reálnej časti. Ďalej uvádzame prípad
 DCT 4-bodovej sekvencie $(x_1, x_2, x_3, x_4)$, ktorej párnym rozšírením $\mathbf{y}$ je
 $(x_1, x_2, x_3, x_4, x_4, x_3, x_2, x_1)$.
@@ -918,6 +918,6 @@ bezpečnosti sa rozširuje edge computing (,,počítanie na okraji'') (obr. \ref
 Edge computing je viacvrstvová distribuovaná architektúra vyvažujúca zodpovednosti a záťaž medzi
 tri vzájomne sa dopĺňajúce úrovne: Device edge, Local edge a Cloud \cite{edge-computing-survey}. Na okraji sieti
 vrámci device edge pôsobia  samotné IoT zariadenia získavajúce dáta z fyzických veličín prostredia a posielajú ich
-sieťovým edge bránam. Local Edge zahŕňa aktívne sieťové prvky a aplikácie s úlohami, ktoré nie je možné realizovať
+sieťovým edge bránam. Local Edge zahŕňa aktívne sieťové prvky a aplikácie s úlohami, ktoré nie je možné vykonať
 okrajovými zariadeniami. V cloude sa zhromažďujú dáta do dlhodobého úložiska pre komplexnú a celistvú analytiku.
 Cloud obsahuje zároveň softvér na spravovanie a monitorovanie zdrojov.

@@ -1,7 +1,14 @@
 \chapter{Overenie riešenia}
+Funkčnosť a efektivitu riešenia v súlade s kladenými požiadavkami overíme v rozličných scenároch. Zároveň experimentálne
+demonštrujeme odvodenie hyperparametrov klasifikácie špičiek signálu s mriežkovým vyhľadávaním (grid search)
+a vyjadríme úspešnosť zaužívanými metrikami.
 
-
-\section{Využitie pamäte}
+\section{Pamäťová efektivita}
+Skompilovaný program senzorovej jednotky sa zmestí do pamäte inštrukcií so značnou rezervou. Kódový segment zaberá
+64,42\% alebo 81,8 kB dostupného priestoru vynímajúc vyhradené časti na vektory prerušení a vyrovnávacie pamäte procesora.
+Obsadením 43,4 kB v segmente .bss, prevažne na staticky alokované polia reťazcov odosielaných správ, a nárokovania si 14,7 kB
+konštánt, zostáva 82,3\% DRAM na haldu. Spotrebu SRAM v bajtoch podľa segmentov objektového súboru podľa nástroja
+\emph{GNU size} uvádza tabuľka \ref{tab:ram-segments}.
 \begin{table}[h]
 \def\arraystretch{1.25}
 \begin{tabular}{|l|llll|lll|}
@@ -11,7 +18,17 @@
 \textbf{Veľkosť (B)} & \multicolumn{1}{r|}{65536}     & \multicolumn{1}{r|}{1027}     & \multicolumn{1}{r|}{83780} & \multicolumn{1}{r|}{46265} & \multicolumn{1}{r|}{44392} & \multicolumn{1}{r|}{15040} & \multicolumn{1}{r|}{276440} \\ \hline
 \end{tabular}
 \caption{Rozdelenie pamäte medzi sekcie}
+\label{tab:ram-segments}
 \end{table}
+
+Vyťaženie dynamickej pamäte z haldy lineárne závisí od počtu súčasne vyhodnocovaných údajových bodov. Trend sa prejavuje v grafe
+celkovej percentuálnej naplnenosti haldy \ref{graph:mem-usage}. Markantný stály podiel z voľného priestoru až okolo 55 kB sa poskytne na komunikáciu cez WiFi a na TCP/IP protokolový zásobník (graf \ref{graph:task-memory})
+
+Zvyšok sa dá k dispozícii vlákna úloh na manipuláciu so vzorkami osí zrýchlenia (x, y, z), na zdieľané koeficienty FFT a
+konvolučné masky a  relatívne nepatrne si obsadia úlohy vzorkovania (imu) a zápisu na pamäťovú kartu (logger).
+FreeRTOS je nastavený na dynamickú alokáciu zásobníkov, preto už pri veľkosti okna 8 potrebuje spracovateľská úloha 10 kB. Najdlhšie
+akceptovateľné posuvné okno a tým aj veľkosť frekvenčnej transformácie je 1024 bodov, ktoré vzhľadom na 97\% spotreby haldy za istých
+okolností vykazuje nestabilitu systému. Odporúča sa pri zložitejšom procese úpravy signálu vystačiť si s 512 bodmi.
 
 \begin{figure}[h]
 	\centering
@@ -20,35 +37,22 @@
         \centering
      	\includegraphics[width=\textwidth]{figures/verification/memory-usage-percentage.png}
      	 \caption{Celková spotreba pamäte}
+     	 \label{graph:mem-usage}
      \end{subfigure}
      \hfill
       \begin{subfigure}{0.48\textwidth}
     	\centering
         \includegraphics[width=\textwidth]{figures/verification/memory-profile-bytes.png}
          \caption{Rozdelenie pamäte medzi úlohy}
+        \label{graph:task-memory}
      \end{subfigure}
      \caption{Profilovanie dynamickej pamäte z haldy v DRAM}
 \end{figure}
 
-\url{https://blog.espressif.com/esp32-programmers-memory-model-259444d89387}
 
-\section{Veľkosti prenášaných správ cez sieťové spojenie}
-Maximálny počet udalostí, aby to bolo efektívne: Parametrická rovnica s parametrom počtom frekvenčných vedierok $m$ 
-a počtom udalostí $p$ : $26 + 27 \cdot p < 5 \cdot m$. Percentuálny podiel udalostí: $p / m$. Pre $m = 16$: v priemere 
-2 udalosti za okno ($12.5\%$). Pre $m = 512$: v priemere 93 udalostí za okno ($18.16\%$). Výhoda je predspracovanie, 
-v tomto prípade aj dosiahneme menší počet prenesených dát. Štatistiky sa oplatí vytvárať pri najmenšom N = 32. $m = n / 2$
-
-\begin{table}[h]
-\def\arraystretch{1.25}
-\centering
-\begin{tabular}{|l|r|r|r|r|r|}
-\hline
-\textbf{Protokol}         & \textbf{Ethernet II} & \textbf{IPv4} & \textbf{TCP} & \textbf{MQTT}  & \textbf{Spolu}  \\ \hline
-\textbf{Veľkosť hlavičky} & 14                   & 20            & 20           & \textgreater 5 & \textgreater 55 \\ \hline
-\end{tabular}
-\caption{Sieťová réžia}
-\end{table}
-
+Veľkosť vyrovnávacej pamäte má priamy dopad na objem posielanej sieťovej premávky, ako vyčísľuje tabuľka \ref{tab:msg-size} v bajtoch.
+Sekvencia $n$ meraní má za následok $m$ frekvenčných vedierok s násobiacim faktorom veľkosti dátového typu. Nesúrodé
+štruktúry sú vyjadrené úhrnnou mierou informácie.
 \begin{table}[h]
 \def\arraystretch{1.25}
 \centering
@@ -62,13 +66,45 @@ spectrum/+                           & 16                                       
 stats/+                              & 13                                                                                                        & 52                                                                                                     & \multicolumn{1}{r|}{4}             & 8                                  & \multicolumn{1}{r|}{9}             & 12                                 & 127                                                                                                           &           \\ \cline{1-8}
 events/+                             & 14                                                                                                        & $20\cdot m$                                                                                               & \multicolumn{1}{r|}{18}            & 26                                 & \multicolumn{1}{r|}{17}            & 27                                 & $h + p\cdot m$                                                                                                &           \\ \cline{1-8}
 \end{tabular}
-\caption{Veľkosti správ pre MQTT topics}
+\caption{Veľkosti Message Pack správ podľa MQTT topic}
+\label{tab:msg-size}
 \end{table}
 
+Používaný formát Message Pack máp sa zväčša skladá z hlavičky, čo je názov
+pre dvojice spoločne opisujúce variabilný počet obsiahnutých prvkov. Rozpätie v objeme hlavičky a položiek vyplýva z
+balenia menších hodnôt pod kratšiu binárnu reprezentáciu. Produkovaný obsah sa rozčleňuje na základe logických kategórií
+do MQTT topics vkladané do hlavičky protokolu s dĺžkou vyjadrenou vrátane najkratšieho prefixu.
 
+Aby sme detekciou udalostí dosiahli úsporu v množstve prenášaných údajov, je žiaduce dosiahnuť kratšiu správu ako
+zaslaním frekvenčných vedierok bez úpravy. Maximálna celková veľkosť dátovej nálože na tému \emph{events} musí byť menšia
+ako na tému \emph{spectrum}. Pri $m = 16$ to činí 2 udalosti na okno (12,5\% z celkového počtu vedierok) a pri $m = 512$
+93 udalostí na okno (18,16\%). Datasety z autobusov vykazujú emisiu udalostí najviac do približne 4\% z počtu frekvencií
+a v priemere 0.4\%. Štatistiky sa oplatí vytvárať pri najmenšom $n = 32$.
 
-\section{Čas vykonávania algoritmov}
+\begin{table}[h]
+\def\arraystretch{1.25}
+\centering
+\begin{tabular}{|l|r|r|r|r|r|}
+\hline
+\textbf{Protokol}         & \textbf{Ethernet II} & \textbf{IPv4} & \textbf{TCP} & \textbf{MQTT}  & \textbf{Spolu}  \\ \hline
+\textbf{Veľkosť hlavičky} & 14                   & 20            & 20           & \textgreater 5 & \textgreater 55 \\ \hline
+\end{tabular}
+\caption{Réžia sieťového prenosu v bajtoch}
+\label{tab:net-overhead}
+\end{table}
 
+Vysielané správy zapúzdrené v sieťových protokoloch nižších vrstiev OSI modelu pridávajú
+hlavičky na správne doručenie adresátovi, čím zvyšujú celkovú réžiu. V lokálnej WiFi sieti, kde bola infraštruktúra prítomná,
+sa protokol MQTT pôsobiaci nad TCP, prenášal cez IPv4 v Ethernet-ových rámcoch. Každý paket má preto veľkosť vždy najmenej
+podľa tabuľky \ref{tab:net-overhead}. Prenášaný obsah môže prevyšovať MTU, čo zapríčiní fragmentáciu do viacerých TCP segmentov
+a ďalší nárast nadbytku.
+
+\section{Časová efektivita}
+Naplnenie kritérií na rýchlosť odozvy odmeriame systémovým časovačom s mikrosekundovou presnosťou.
+Vplyv jednotlivých algoritmov na trvanie procesu úpravy signálu spriemerovaním 10 behov
+je patrný z tabuľky \ref{tab:algorithm-execution}. Aktívna bola len úloha pre vybranú os zrýchlenia. S ohľadom na odchýlky
+najmä v dôsledku prerušení od vzorkovania a obsluhy plánovača OS sa javí navyšovanie potrebného času priamo úmerne
+s dĺžkou postupnosti bodov.
 \begin{table}[h]
 \def\arraystretch{1.25}
 \centering
@@ -83,10 +119,23 @@ events/+                             & 14                                       
 \textbf{Špičky: horský turista}  & 19          & 32          & 54           & 109          & 199          & 431           \\ \hline
 \textbf{Udalosti}                & 7           & 10          & 17           & 31           & 58           & 114           \\ \hline
 \end{tabular}
-\caption{Čas vykonávania algoritmov od veľkosti vyrovnávacej pamäte v mikrosekundách pri taktovacej frekvencii 80 MHz a preemtívnom
-ticku 100 Hz}
+\caption{Čas vykonávania algoritmov od veľkosti posuvného okna v $\mu s$ pri taktovacej frekvencii 160 MHz a intervale
+plánovania 100 Hz}
+\label{tab:algorithm-execution}
 \end{table}
 
+Výpočet štatistík sa najvýraznejšie podieľa na predlžovaní obratu spracovania rádovo v desiatkach
+milisekúnd, zatiaľ čo väčšina krokov prebehne aspoň 40-krát rýchlejšie. Nevyrovnanosť zapríčiňujú miery vychádzajúce z
+mediánu, pretože sa opakovane aplikuje Quickselect. Okrem toho si povšimneme, že v rýchlosti vykonávania nie je
+žiaden rozdiel medzi frekvenčnou transformáciou s FFT a DCT, z dôvodu spomenutých nedostatkov knižničnej implementácie DCT-II.
+
+Najpomalším hľadaním špičiek je metóda najvyššieho spomedzi susedov, ktorá má najhoršiu asymptotickú časovú zložitosť
+spomedzi preberaných spôsobov. Dosahuje do 4-krát dlhšie časy ako algoritmus horského turistu a do 14-krát oproti prechodu
+nulou do záporu. Výber prístupu ku klasifikácii špičiek nezáleží len od rýchlosti, ale tiež od charakteru rozloženia
+vrcholov líšiaceho sa medzi algoritmami.
+
+Vyhladzovanie v časovej alebo frekvenčnej doméne sa vyznačuje meniteľnou dĺžkou konvolučnej masky a počtom opakovaných
+prechodov. Čas na dokončenie rovnako stúpa lineárne podľa oboch vlastností.
 \begin{table}[h]
 \def\arraystretch{1.25}
 \centering
@@ -97,39 +146,42 @@ ticku 100 Hz}
 \textbf{4x} & 413        & 1041        & 3697        \\ \hline
 \textbf{8x} & 819        & 2065        & 7209        \\ \hline
 \end{tabular}
-\caption{Čas v mikrosekundách na vyhladzovanie frekvenčného spektra v závislosti od veľkosti konvolučného jadra pri N = 512 a počtu opakovaných prechodov}
+\caption{Čas v $\mu s$ na vyhladzovanie v závislosti od veľkosti konvolučného jadra pri N = 512 a počtu opakovaní}
+\label{tab:kernel-execution}
 \end{table}
 
+Porovnávanie variant fáz spracovania separátne nezohľadňuje serializáciu a publikovanie správ zvolených tém, či
+dopad plánovania a synchronizácie na konkurentné úlohy. Pozrieme sa na výkonnosť dátovej pipeline v dvoch odlišných prípadoch
+pri frekvencii procesora 160 MHz a spriemerovaním desiatich spustení.
 
-\section{Čas vykonávania pipeline}
-Hraničný čas na dokončenie úlohy v reálnom čase v sekundách pre jednu vyrovnávaciu pamäť je $t \leq n / f_s$.
-Podľa parametrickej nerovnice vieme určiť pre akú vzorkovaciu frekvenciu pri danej veľkosti okna je prekročená stanovená hranica:
-$ f_s < n / t $. Všetky spracovania prebehnú do limitu zatiaľ čo sa zbiera druhé okno vzoriek. 
-
-Hraničná najvyššia vzorkovacia pre double-buffer je pre jednu os spracovania 61,776 kHz a 12,785 kHz pre 3 osi spracovania.
-Pre posielanie štatistík a spektra je max. vzorkovacia frekevencia 2,1 KHz, ale pri vyšších bufferoch sa pohybuje nad 7 KHz.
-Pri 3 osiach spracovania je to max. 1320 Hz (N=32), 2510 Hz (N=256), 3741 Hz (N=1024)
+Správanie zariadenia v pokoji, bez odvodzovania akýchkoľvek štatistík, netvoriace sieťovú premávku, približuje tabuľka
+\ref{tab:pipeline-simple}. Časy po pridaní výpočtu dostupných štatistík vrátane korelácií a upozorňovanie na udalosti
+cez bezdrôtovú linku s RSSI na hladine cca -40 dBm popisuje tabuľka \ref{tab:pipeline-complex}. Vyhodnocuje sa trvanie behu
+v mikrosekundách vzhľadom na veľkosť posuvného okna podľa algoritmu na hľadanie špičiek (číslovanie: A1, A2, A3, podľa kapitoly analýzy)
+pre aktivovaný počet rozmerov akcelerácie. U troch dimenzií sa zohľadní do priemeru úloha s najdlhším časom vykonávania.
+Frekvenčná transformácia je použitá za každej situácie FFT.
 
 \begin{table*}[h]
      \def\arraystretch{1.25}
 	 \centering
      \captionsetup[subtable]{position=below}
      \captionsetup[table]{position=below}
-     \caption{Čas na spracovanie okna vzoriek v mikrosekundách.}
-     
+     \caption{Čas na spracovanie okna vzoriek v $\mu s$.}
+
      \begin{subtable}{0.48\linewidth}
          \centering
 		\begin{tabular}{|l|l|r|r|r|}
 		\hline
 		\textbf{}                       & \textbf{N}  & \textbf{32} & \textbf{256} & \textbf{1024} \\ \hline
-		\multirow{3}{*}{\textbf{1 os}}  & \textbf{A1} & 518         & 2616         & 6401          \\ \cline{2-5} 
- 		                                & \textbf{A2} & 435         & 1598         & 6209          \\ \cline{2-5} 
+		\multirow{3}{*}{\textbf{1 os}}  & \textbf{A1} & 518         & 2616         & 6401          \\ \cline{2-5}
+ 		                                & \textbf{A2} & 435         & 1598         & 6209          \\ \cline{2-5}
                                         & \textbf{A3} & 467         & 1695         & 3864          \\ \hline
-		\multirow{3}{*}{\textbf{3 osi}} & \textbf{A1} & 2503        & 3077         & 10177         \\ \cline{2-5} 
-                                        & \textbf{A2} & 556         & 3340         & 10334         \\ \cline{2-5} 
+		\multirow{3}{*}{\textbf{3 osi}} & \textbf{A1} & 2503        & 3077         & 10177         \\ \cline{2-5}
+                                        & \textbf{A2} & 556         & 3340         & 10334         \\ \cline{2-5}
                                         & \textbf{A3} & 591         & 1295         & 4670          \\ \hline
 		\end{tabular}
-		\caption{Čas na spracovanie okna vzoriek v mikrosekundách. Zariadenie v pokoji bez spracovania štatistík. FFT}
+		\caption{V pokoji bez posielania správ}
+		\label{tab:pipeline-simple}
 	\end{subtable}
     \hfill
     \begin{subtable}{0.48\linewidth}
@@ -137,23 +189,33 @@ Pri 3 osiach spracovania je to max. 1320 Hz (N=32), 2510 Hz (N=256), 3741 Hz (N=
 		\begin{tabular}{|l|l|r|r|r|}
 		\hline
 		\textbf{}                       & \textbf{N}  & \textbf{32} & \textbf{256} & \textbf{1024} \\ \hline
-		\multirow{3}{*}{\textbf{1 os}}  & \textbf{A1} & 14750       & 34883        & 129190        \\ \cline{2-5} 
-                              			& \textbf{A2} & 8824        & 34351        & 139451        \\ \cline{2-5} 
+		\multirow{3}{*}{\textbf{1 os}}  & \textbf{A1} & 14750       & 34883        & 129190        \\ \cline{2-5}
+                              			& \textbf{A2} & 8824        & 34351        & 139451        \\ \cline{2-5}
                                         & \textbf{A3} & 13795       & 34890        & 137346        \\ \hline
-		\multirow{3}{*}{\textbf{3 osi}} & \textbf{A1} & 23851       & 101978       & 273696        \\ \cline{2-5} 
-                                        & \textbf{A2} & 22981       & 78972        & 272161        \\ \cline{2-5} 
+		\multirow{3}{*}{\textbf{3 osi}} & \textbf{A1} & 23851       & 101978       & 273696        \\ \cline{2-5}
+                                        & \textbf{A2} & 22981       & 78972        & 272161        \\ \cline{2-5}
                                         & \textbf{A3} & 24232       & 100156       & 270110        \\ \hline
 		\end{tabular}
-		\caption{Priemer z maxima z časov potrebných na spracovanie okna ktorejkoľvek osi spracovania. Posielanie štatistík s koreláciou           a frekvenčného spektra s FFT. RSSI je približne -40}
+		\caption{Štatistiky s koreláciami a udalosti}
+		\label{tab:pipeline-complex}
 	\end{subtable}
 \end{table*}
 
-\section{Jednotkové testy}
-% na konzistenciu C a Python verzii
 
+Hraničný čas $t$ pokiaľ si vystačíme s tzv. ,,double buffering'', čiže sa neoneskorujeme od prúdu prichádzajúcich vzoriek o viac ako jednu
+dĺžku vyrovnávacej pamäte $N$ nastáva, keď platí: $t \leq N / f_s$. Na určenie teoreticky najvyššej vzorkovacej frekvencie
+pri danej dĺžke $N$ dosadíme za časový parameter vykonávanie sústavy spracovania.
+
+Ľubovoľné nastavenie spracovania signálu zvládne za okolností podľa \ref{tab:pipeline-simple} $f_s =$ 61.8 kHz pre jednorozmernú
+sekvenciu a $f_s =$ 12,8 kHz pre trojrozmernú. Posielanie štatistík a udalostí z \ref{tab:pipeline-complex} pri jednej osi
+dovoľuje $f_s =$ 2,1 KHz, ale pri väčších $N$ sa $f_s$ pohybuje nad 7 KHz. Tri dimenzie v tejto náročnej konfigurácii stíhajú nanajvýš $f_s$
+od 1,3 KHz ($N = 32$) do 3,7 kHz ($N = 1024$). Limit vzorkovacej frekvencie senzora na 952 Hz zaručuje, že bežné prevádzkové
+situácie sa stíhajú uskutočniť pred naplnením následného posuvného okna.
+
+%TODO
 \section{Úspešnosť algoritmov na detekciu špičiek}
 
-Prevalencia javu - počet špičiek v okne (8 pri 238, 16 pri 476, 32 pri 952) 
+Prevalencia javu - počet špičiek v okne (8 pri 238, 16 pri 476, 32 pri 952)
 Generovanie frekvencií sinusoíd s exponenciálnymi fade-in/out o dĺžke desatiny trvania, aby sa znížili hraničné javy vo frekvenčnom spektre. S pevným počtom komponentov posunutým v čase a trvaním v počte dielikov a podkladový normálne rozdelený šum.
 Vytvorenie testovacom signále s trvaním 60 sekúnd
 so seedom 10 a následne trénovacom signále s trvaním 20 sekúnd. Na trénovacom signále sa vyberú najlepšie parametre
@@ -211,7 +273,7 @@ Relevantná metriky. Vysoká fs zároveň s nízkym n dávajú nižšie presnost
 \centering
 \begin{tabular}{|c|c|ccc|cc|cccc|}
 \hline
-\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}$f_s$\end{tabular}}} & \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}$n$\end{tabular}}} & \multicolumn{3}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}A1: Najvyšší \\ spomedzi  susedov\end{tabular}}} & \multicolumn{2}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}A2: Prechod\\ nulou do záporu\end{tabular}}} & \multicolumn{4}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}A3: Horský\\ turista\end{tabular}}}  \\ \cline{3-11} 
+\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}$f_s$\end{tabular}}} & \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}$n$\end{tabular}}} & \multicolumn{3}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}A1: Najvyšší \\ spomedzi  susedov\end{tabular}}} & \multicolumn{2}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}A2: Prechod\\ nulou do záporu\end{tabular}}} & \multicolumn{4}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}A3: Horský\\ turista\end{tabular}}}  \\ \cline{3-11}
                                                                                   &                                                                         & \multicolumn{1}{c|}{\hspace*{3mm}$k$\hspace*{3mm}}         & \multicolumn{1}{c|}{\hspace*{3mm}$\epsilon$\hspace*{3mm}}         & $h_{rel}$       & \multicolumn{1}{c|}{\hspace*{4mm} $k$ \hspace*{4mm}}                               &  $s$                              & \multicolumn{1}{c|}{$t$} & \multicolumn{1}{c|}{$h$} & \multicolumn{1}{c|}{$p$} & $i$ \\ \hline
 238                                                                               & 128                                                                     & \multicolumn{1}{c|}{12}          & \multicolumn{1}{c|}{3}                  & 32                & \multicolumn{1}{c|}{2}                                 & 12                                & \multicolumn{1}{c|}{16}  & \multicolumn{1}{c|}{0}   & \multicolumn{1}{c|}{10}  & 8   \\ \hline
 238                                                                               & 256                                                                     & \multicolumn{1}{c|}{3}           & \multicolumn{1}{c|}{1}                  & 32                & \multicolumn{1}{c|}{2}                                 & 16                                & \multicolumn{1}{c|}{16}  & \multicolumn{1}{c|}{0}   & \multicolumn{1}{c|}{10}  & 12  \\ \hline
@@ -229,7 +291,7 @@ Relevantná metriky. Vysoká fs zároveň s nízkym n dávajú nižšie presnost
 
 % Best parametre algoritmu z grid search
 
-\section{Spektrá a eventy v syntetických dátach}
+% Spektrá a eventy v syntetických dátach
 \begin{figure}[h]
 	\centering
      \begin{subfigure}{\textwidth}
@@ -246,7 +308,7 @@ Relevantná metriky. Vysoká fs zároveň s nízkym n dávajú nižšie presnost
     	\centering
         \includegraphics[width=\textwidth]{figures/verification/Sythetic-FFT-A3-476-256.png}
         \caption{Algoritmus č.3}
-     \end{subfigure}     
+     \end{subfigure}
      \caption{Ilustrácia detegovaných špičiek pri fs 476Hz a N = 256 a parametrov podľa grid search}
 \end{figure}
 
@@ -254,11 +316,10 @@ Relevantná metriky. Vysoká fs zároveň s nízkym n dávajú nižšie presnost
    \centering
     \includegraphics[width=\textwidth]{figures/verification/Sythetic-A1-events.png}
    \caption{Algoritmus č.1 a detekcia udalostí min duration = 4 a time proximity = 1}
-\end{figure}  
+\end{figure}
 
 
-
-\section{Obrázky spektier z reálnych datasetov}
+% Obrázky spektier z reálnych datasetov
 Popis datasetov - vzorkovacia frekvencia 500 Hz mestská hromadná doprava (autobusy a električky) na suchých nových cestách.
 
 \begin{figure}[h]
@@ -266,7 +327,7 @@ Popis datasetov - vzorkovacia frekvencia 500 Hz mestská hromadná doprava (auto
     \includegraphics[width=\textwidth]{figures/verification/L83-slice-t-20-A1.png}
    \caption{Prierez spektrogramu. Frekvenčná transformácia okna v 20. sekunde s detegovanými špičkami algoritmom č.1. Je patrné, že
    niektoré vrcholy sú ignorované - zložité odlíšiť šum od signálu. V lineárnej mierke by sme ťažko určovali význačnosť vrchola}
-\end{figure} 
+\end{figure}
 
 
 \begin{figure}[h]
@@ -285,8 +346,6 @@ Popis datasetov - vzorkovacia frekvencia 500 Hz mestská hromadná doprava (auto
     	\centering
         \includegraphics[width=\textwidth]{figures/verification/L83-dataset-A3.png}
         \caption{Algoritmus č.3}
-     \end{subfigure}     
+     \end{subfigure}
      \caption{L83 - Ilustrácia detegovaných špičiek pri fs 476Hz a N = 256 a parametrov podľa grid search}
 \end{figure}
-
-\emptypage
