@@ -1,3 +1,22 @@
 \chapter{Zhodnotenie}
+Vytvorili sme model spracovania signálu z vibrácii na existujúcom vzdiealene konfigurovateľnosm IoT zariadení.
+Známe algoritmy detekcie špičiek sme aplikovali na náš problém s ich porovnaním a
+odladením vlastných algoritmov detekcie udalostí.
+Rozšírenia sú početné:
+\begin{itemize}[noitemsep]
+\item Podrobiť (analýze/rozboru) rôzne situácie na vybraných úsekoch ciest opakovane a vypracovať metodiku anotovania datasetu,
+kvôli vzájomnému porovnaniu súvislostí
+\item Testovanie generátora udalostí na vibrátore s vytváraním známeho frekvenčného priebehu nielen na syntetických dátach
+\item Umožniť označiť a pomenovať profil známych javov a dokázať ich odlíšiť pri notifikáciach.
+\item umožniť filtrovanie nad frekvenčným rozsahom záujmu
+\item Brať do úvahy postupný drift alebo tolerovateľné disturbancie, alebo iné stabilné opakujúce sa vzory a zamyslieť sa
+nad ich vhodným oznamovaním
+\item Koordinovať viacero senzorov v prevážanom boxe
+\item Určenie prevažného priestorového smeru pôsobenia frekvenčných zložiek vibrácii napríklad viacrozmernou FFT
+\item Autonómna kalibrácia parametrov hľadania špičiek.
+\item Bližšie sa venovať úspore, ktoré by poskytli verzie DCT svojou lepšiou distribúciou energie v koeficientoch
+\item  Preskúmať reálne nasadenie a monitorovanie v reálnom čase napríklad cez mobilnú aplikáciu cez Bluetooth komunikáciu,
+ktorá sa ukázalo na protokole s väčšími prenosovými rýchlosťami, že by mohli postačovať.
+\end{itemize}
 
- 
+\cleardoublepage

@@ -24,12 +24,14 @@
 \usepackage{setspace}
 \usepackage{fancyhdr}
 \usepackage{fancyvrb}
-\usepackage{pdfpages}
 \usepackage[fleqn]{amsmath}
+\usepackage{pdfpages}
+\usepackage{nomencl}
 \usepackage{nccmath}
 \usepackage{tocloft}
 \usepackage{csquotes}
 \usepackage{diagbox}
+
 \usepackage{expl3}
 \usepackage{etoolbox}
 \preto\tabular{\shorthandoff{-}}
@@ -54,6 +56,12 @@
 % Číslo kapitoly na rovnakom riadku ako názov
 \titleformat{\chapter}{\normalfont\huge\bf}{\thechapter}{1em}{}
 
+% Prázdne strany medzi kapitolami sú nečíslované
+\let\origdoublepage\cleardoublepage
+\newcommand{\clearemptydoublepage}{\clearpage{\pagestyle{empty}\origdoublepage}}
+\let\cleardoublepage\clearemptydoublepage
+
+
 \raggedbottom
 \newcommand{\emptypage}{\newpage\thispagestyle{empty}\mbox{}\newpage}
 \newcommand{\signaturespace}[2]{
@@ -71,8 +79,8 @@
 
 \pagestyle{fancy}
 \fancyhf{}  % clear all header and footers
-\fancyhead[LO]{\leftmark}
-\fancyhead[RE]{\rightmark}
+\fancyhead[LE]{\leftmark}
+\fancyhead[RO]{\rightmark}
 \fancyfoot[LE, RO]{\thepage}
 \fancypagestyle{plain}{
   \fancyhf{}%
@@ -99,6 +107,10 @@
 }
 \renewcommand{\lstlistingname}{Zdrojový kód}
 
+% Zoznam skratiek
+\makenomenclature
+\renewcommand{\nomname}{Slovník skratiek a pojmov}
+
 \setstretch{1.5}
 \newcommand{\University}[0] {Slovenská technická univerzita v Bratislave}
 \newcommand{\UniversityEN}[0] {Slovak University of Technology Bratislava}
@@ -122,6 +134,7 @@
 \newcommand{\Institute}[0] {Ústav počítačového inžinierstva a aplikovanej informatiky}
 \newcommand{\SignPlace}[0] {V Bratislave, }
 \newcommand{\SignDate}[0] {16.5.2022}
+
 
 
 \begin{document}
@@ -163,12 +176,16 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 
 \input{chapters/annotation}
 
+\input{chapters/dictionary}
+
 % Obsah
 \renewcommand{\contentsname}{Obsah}
 \pagestyle{empty}
 \tableofcontents{}
 \listoffigures
 \listofmyequations
+\let\clearpage\relax
+\printnomenclature
 %\listofalgorithms
 \emptypage
 \pagestyle{fancy}
@@ -192,7 +209,6 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 \pagenumbering{gobble}
 %\nocite{*}
 \printbibliography[title={Literatúra}]
-%\emptypage
 
 %Príloha
 \input{chapters/appendix}

@@ -1,5 +1,5 @@
 -Os, 
-80MHz, 100Hz tick, RSSI: -40
+160MHz, 100Hz tick, RSSI: -40
 
 // zariadenie v pokoji
 // deadline pre jeden buffer: N * 1/f <= t_N  (zisti max. vzorkovaciu frekvenciu pre pipeline, resp. počet bufferov pre max. vzorkovaciu frekvenciu)

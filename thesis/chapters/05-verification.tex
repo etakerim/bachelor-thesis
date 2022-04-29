@@ -1,6 +1,6 @@
 \chapter{Overenie riešenia}
 Funkčnosť a efektivitu riešenia v súlade s kladenými požiadavkami overíme v rozličných scenároch. Zároveň experimentálne
-demonštrujeme odvodenie hyperparametrov klasifikácie špičiek signálu s mriežkovým vyhľadávaním (grid search)
+demonštrujeme odvodenie hyperparametrov klasifikácie špičiek s mriežkovým vyhľadávaním (grid search)
 a vyjadríme úspešnosť zaužívanými metrikami.
 
 \section{Pamäťová efektivita}
@@ -103,7 +103,7 @@ a ďalší nárast nadbytku.
 Naplnenie kritérií na rýchlosť odozvy odmeriame systémovým časovačom s mikrosekundovou presnosťou.
 Vplyv jednotlivých algoritmov na trvanie procesu úpravy signálu spriemerovaním 10 behov
 je patrný z tabuľky \ref{tab:algorithm-execution}. Aktívna bola len úloha pre vybranú os zrýchlenia. S ohľadom na odchýlky
-najmä v dôsledku prerušení od vzorkovania a obsluhy plánovača OS sa javí navyšovanie potrebného času priamo úmerne
+najmä v dôsledku prerušení od vzorkovania a obsluhy plánovača OS sa potrebný čas navyšuje priamo úmerne
 s dĺžkou postupnosti bodov.
 \begin{table}[h]
 \def\arraystretch{1.25}
@@ -165,8 +165,6 @@ Frekvenčná transformácia je použitá za každej situácie FFT.
      \def\arraystretch{1.25}
 	 \centering
      \captionsetup[subtable]{position=below}
-     \captionsetup[table]{position=below}
-     \caption{Čas na spracovanie okna vzoriek v $\mu s$.}
 
      \begin{subtable}{0.48\linewidth}
          \centering
@@ -199,31 +197,34 @@ Frekvenčná transformácia je použitá za každej situácie FFT.
 		\caption{Štatistiky s koreláciami a udalosti}
 		\label{tab:pipeline-complex}
 	\end{subtable}
+	
+	 \captionsetup[table]{position=below}
+     \caption{Čas na spracovanie okna vzoriek v $\mu s$.}
+     \label{tab:pipeline}
 \end{table*}
 
 
 Hraničný čas $t$ pokiaľ si vystačíme s tzv. ,,double buffering'', čiže sa neoneskorujeme od prúdu prichádzajúcich vzoriek o viac ako jednu
 dĺžku vyrovnávacej pamäte $N$ nastáva, keď platí: $t \leq N / f_s$. Na určenie teoreticky najvyššej vzorkovacej frekvencie
-pri danej dĺžke $N$ dosadíme za časový parameter vykonávanie sústavy spracovania.
+pri danej dĺžke $N$ vezmeme časový parameter z tabuľky \ref{tab:pipeline}.
 
 Ľubovoľné nastavenie spracovania signálu zvládne za okolností podľa \ref{tab:pipeline-simple} $f_s =$ 61.8 kHz pre jednorozmernú
 sekvenciu a $f_s =$ 12,8 kHz pre trojrozmernú. Posielanie štatistík a udalostí z \ref{tab:pipeline-complex} pri jednej osi
-dovoľuje $f_s =$ 2,1 KHz, ale pri väčších $N$ sa $f_s$ pohybuje nad 7 KHz. Tri dimenzie v tejto náročnej konfigurácii stíhajú nanajvýš $f_s$
+dovoľuje $f_s =$ 2,1 KHz, ale pri väčších $N$ sa $f_s$ pohybuje nad 7 kHz. Tri dimenzie v tejto náročnej konfigurácii stíhajú nanajvýš $f_s$
 od 1,3 KHz ($N = 32$) do 3,7 kHz ($N = 1024$). Limit vzorkovacej frekvencie senzora na 952 Hz zaručuje, že bežné prevádzkové
 situácie sa stíhajú uskutočniť pred naplnením následného posuvného okna.
 
-%TODO
-\section{Úspešnosť algoritmov na detekciu špičiek}
+\section{Úspešnosť detekcie špičiek}
+Syntetický signál so známymi časovo-frekvenčné spektrom sa zložil zo sinusoíd s exponenciálnym nábehom a dobehom.
+Očakávaná kvantita zlúčených tónov na základný úsek sa stanovila podľa frekvencie vzorkovania ovplyvňujúcej rozlišovaciu 
+schopnosť susediacich komponentov. Pri 238 Hz sa zmiešalo 8 rozdielnych frekvencií, pri 476 Hz je ich 16 a pri 952 Hz sa
+ich rozmiestnilo 32. Pseudonáhodný generátor inicializovaný so semienkom 10 vytvoril trénovaciu množinu s trvaním 60 sekúnd
+a vzápätí 20 sekundovú testovaciu množinu. 
 
-Prevalencia javu - počet špičiek v okne (8 pri 238, 16 pri 476, 32 pri 952)
-Generovanie frekvencií sinusoíd s exponenciálnymi fade-in/out o dĺžke desatiny trvania, aby sa znížili hraničné javy vo frekvenčnom spektre. S pevným počtom komponentov posunutým v čase a trvaním v počte dielikov a podkladový normálne rozdelený šum.
-Vytvorenie testovacom signále s trvaním 60 sekúnd
-so seedom 10 a následne trénovacom signále s trvaním 20 sekúnd. Na trénovacom signále sa vyberú najlepšie parametre
-vrámci prehľadávaného priestoru cez grid search. Vyhodnotenie metrík prebieha na testovacom signále v porovnaní s predpisom.
-Stanovenie parametrov je nepresné, vyžaduje sa manuálne adaptovať hyperparametre podľa situácie. Na ilustráciu
-sú presnosti a parametre v tabuľkách, dá sa použiť ako referencia pre výhodný rozsah hodnôt. FFT s prekryvom 50\% a Hannovo okno
-
-Relevantná metriky. Vysoká fs zároveň s nízkym n dávajú nižšie presnosti.
+Prehľadávaním parametrov detekcie špičiek hrubou silou nad trénovacím signálom boli odhalené najlepšie hodnoty z preddefinovanej sady.
+Na testovacom signále sa zistili relevantné metriky úspešnosti klasifikácie vrcholov makro-priemerovaním medzi posuvnými oknami
+o veľkosti $n$. Signál nebol dodatočne filtrovaný. Obdržanie spektrálneho obsahu v decibeloch prebehlo cez FFT s Hannovou 
+oknovou funkciou a 50\%  prekryvom okien. Vyčíslené sú presnosti (tab. \ref{tab:accuracy}), senzitivita (tab. \ref{tab:sensitivity}) a chybovosť (tab.\ref{tab:error-rate}) detekčných stratégií v percentách.
 
 \begin{table}[h]
 \def\arraystretch{1.1}
@@ -236,7 +237,8 @@ Relevantná metriky. Vysoká fs zároveň s nízkym n dávajú nižšie presnost
 \textbf{256}        & \multicolumn{1}{c|}{91.19}        & \multicolumn{1}{c|}{85.41}        & 73.59        & \multicolumn{1}{c|}{90.63}        & \multicolumn{1}{c|}{84.39}        & 71.84        & \multicolumn{1}{c|}{91.30}        & \multicolumn{1}{c|}{84.78}        & 72.00        \\ \hline
 \textbf{512}        & \multicolumn{1}{c|}{95.54}        & \multicolumn{1}{c|}{91.91}        & 85.19        & \multicolumn{1}{c|}{95.45}        & \multicolumn{1}{c|}{91.92}        & 84.05        & \multicolumn{1}{c|}{95.54}        & \multicolumn{1}{c|}{91.93}        & 85.05        \\ \hline
 \end{tabular}
-\caption{Presnosť v percentách}
+\caption{Percentuálna presnosť klasifikácie frekvenčných špičiek}
+\label{tab:accuracy}
 \end{table}
 
 \begin{table}[h]
@@ -250,7 +252,8 @@ Relevantná metriky. Vysoká fs zároveň s nízkym n dávajú nižšie presnost
 \textbf{256}        & \multicolumn{1}{l|}{10.62}        & \multicolumn{1}{l|}{27.42}        & 29.98                             & \multicolumn{1}{l|}{6.58}         & \multicolumn{1}{l|}{15.33}        & 28.03                             & \multicolumn{1}{l|}{13.26}        & \multicolumn{1}{l|}{11.88}        & 9.51                              \\ \hline
 \textbf{512}        & \multicolumn{1}{l|}{12.08}        & \multicolumn{1}{l|}{14.52}        & 32.09                             & \multicolumn{1}{l|}{3.68}         & \multicolumn{1}{l|}{0.00}         & 17.13                             & \multicolumn{1}{l|}{2.35}         & \multicolumn{1}{l|}{1.80}         & 15.26                             \\ \hline
 \end{tabular}
-\caption{TPR - True positive rate (Senzitivita)}
+\caption{Percentuálna senzitivita (TPR) klasifikácie frekvenčných špičiek}
+\label{tab:sensitivity}
 \end{table}
 
 \begin{table}[h]
@@ -264,16 +267,48 @@ Relevantná metriky. Vysoká fs zároveň s nízkym n dávajú nižšie presnost
 \textbf{256}        & \multicolumn{1}{l|}{1.08}         & \multicolumn{1}{l|}{4.10}         & 8.66                              & \multicolumn{1}{l|}{1.26}         & \multicolumn{1}{l|}{3.12}         & 10.33                             & \multicolumn{1}{l|}{1.19}         & \multicolumn{1}{l|}{1.97}         & 2.41                              \\ \hline
 \textbf{512}        & \multicolumn{1}{l|}{5.27}         & \multicolumn{1}{l|}{1.30}         & 5.00                              & \multicolumn{1}{l|}{0.96}         & \multicolumn{1}{l|}{0.00}         & 3.48                              & \multicolumn{1}{l|}{0.96}         & \multicolumn{1}{l|}{0.15}         & 1.95                              \\ \hline
 \end{tabular}
-\caption{FPR - False positive rate (Chybovosť)}
+\caption{Percentuálna chybovosť (FPR) klasifikácie frekvenčných špičiek}
+\label{tab:error-rate}
 \end{table}
+Platnosť získaných percentuálnych metrík v absolútnej škále a hyperparametrov sa vzťahuje výlučne na zvolenú techniku 
+syntézy signálového priebehu, a teda nevieme potvrdiť podobné výsledky pre reálnu prepravu. Napriek tomu môžeme 
+z pravidelných tendencií dedukovať, že pomerne vysoká presnosť cca 84\% zachovávajúca senzitivitu a chybovosťou do 5\%
+sa stabilne objavuje  na diagonálach, kde $n$ je polovicou $f_s$. Vtedy empiricky nachádzame ideálny balans medzi rozlíšením 
+v čase a frekvencii aj v spektrogramoch .
 
+Veľmi nízka senzitivita nezriedka 10 - 30\% je dôsledkom nedokonalej spätnej rekonštrukcie spektrálneho profilu a exaktnou
+lokalizáciou vrchola, čím sa sinusoidy môžu ocitnúť posunuté o pár frekvenčných vedierok vedľa v porovnaní s označením v datasete.
+Malý počet význačných frekvencií spôsobuje, že na prejavenie sa efektu zdanlivého poklesu senzitivity stačí, keď sa 
+mierne zmení poloha jedinej.
 
+Spektrogram nižšie znázorňuje na testovacích dátach schopnosť prúdového algoritmu na detekciu zmien 
+frekvencií sa vysporiadať s nesprávne identifikovanými špičkami. Na vizualizácii je patrné, že
+registrovanie prvého vrchola na súvislom výstupku nastávalo oneskorene prekročením určitej amplitúdy. 
+Ostatné algoritmy sa prejavovali obdobne, najvýraznejšie rozdiely sú v rozmiestnení falošných vrcholov.
+
+\begin{figure}[h]
+	\centering
+     \begin{subfigure}{\textwidth}
+        \centering
+     	\includegraphics[width=\textwidth]{figures/verification/Sythetic-FFT-A1-476-256.png}
+     	\caption{Nájdené špičky algoritmom č.1 v posuvných oknách vyznačené bielym kruhom}
+     \end{subfigure}
+     \begin{subfigure}{\textwidth}
+    	\centering
+    	\includegraphics[width=\textwidth]{figures/verification/Sythetic-A1-events.png}
+   		\caption{Zachytený priebeh udalostí frekvenčnej zmeny pri $t_{min} = 4$ a $t_{\Delta} = 1$}
+     \end{subfigure}
+     \caption{Spektrogramy detegovaných špičiek a udalostí pri $fs = 476$ Hz a $N = 256$}
+\end{figure}
+
+Parametre klasifikácie špičiek nájdené mriežkovým hľadaním, s ktorými sme dosiahli na konkrétnom syntetickom signále 
+najvyššie presnosti sú v tabuľke \ref{tab:grid-serach-parameters}.
 \begin{table}[h]
 \def\arraystretch{1.1}
 \centering
 \begin{tabular}{|c|c|ccc|cc|cccc|}
 \hline
-\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}$f_s$\end{tabular}}} & \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}$n$\end{tabular}}} & \multicolumn{3}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}A1: Najvyšší \\ spomedzi  susedov\end{tabular}}} & \multicolumn{2}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}A2: Prechod\\ nulou do záporu\end{tabular}}} & \multicolumn{4}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}A3: Horský\\ turista\end{tabular}}}  \\ \cline{3-11}
+\multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}$f_s$\end{tabular}}} & \multirow{2}{*}{\textbf{\begin{tabular}[c]{@{}c@{}}$n$\end{tabular}}} & \multicolumn{3}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Algoritmus 1\end{tabular}}} & \multicolumn{2}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Algoritmus 2\end{tabular}}} & \multicolumn{4}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Algoritmus 2\end{tabular}}}  \\ \cline{3-11}
                                                                                   &                                                                         & \multicolumn{1}{c|}{\hspace*{3mm}$k$\hspace*{3mm}}         & \multicolumn{1}{c|}{\hspace*{3mm}$\epsilon$\hspace*{3mm}}         & $h_{rel}$       & \multicolumn{1}{c|}{\hspace*{4mm} $k$ \hspace*{4mm}}                               &  $s$                              & \multicolumn{1}{c|}{$t$} & \multicolumn{1}{c|}{$h$} & \multicolumn{1}{c|}{$p$} & $i$ \\ \hline
 238                                                                               & 128                                                                     & \multicolumn{1}{c|}{12}          & \multicolumn{1}{c|}{3}                  & 32                & \multicolumn{1}{c|}{2}                                 & 12                                & \multicolumn{1}{c|}{16}  & \multicolumn{1}{c|}{0}   & \multicolumn{1}{c|}{10}  & 8   \\ \hline
 238                                                                               & 256                                                                     & \multicolumn{1}{c|}{3}           & \multicolumn{1}{c|}{1}                  & 32                & \multicolumn{1}{c|}{2}                                 & 16                                & \multicolumn{1}{c|}{16}  & \multicolumn{1}{c|}{0}   & \multicolumn{1}{c|}{10}  & 12  \\ \hline
@@ -285,67 +320,45 @@ Relevantná metriky. Vysoká fs zároveň s nízkym n dávajú nižšie presnost
 952                                                                               & 256                                                                     & \multicolumn{1}{c|}{6}           & \multicolumn{1}{c|}{4}                  & 24                & \multicolumn{1}{c|}{2}                                 & 5                                 & \multicolumn{1}{c|}{16}  & \multicolumn{1}{c|}{0}   & \multicolumn{1}{c|}{10}  & 0   \\ \hline
 952                                                                               & 512                                                                     & \multicolumn{1}{c|}{6}           & \multicolumn{1}{c|}{4}                  & 32                & \multicolumn{1}{c|}{2}                                 & 12                                & \multicolumn{1}{c|}{16}  & \multicolumn{1}{c|}{0}   & \multicolumn{1}{c|}{10}  & 0   \\ \hline
 \end{tabular}
-\caption{Parametre algoritmov z grid search detekcie špičiek na syntetických dátach}
+\caption{Parametre algoritmov detekcie špičiek na syntetických dátach (názvy sú skrátené na prvé písmená)}
+\label{tab:grid-serach-parameters}
 \end{table}
 
-
-% Best parametre algoritmu z grid search
-
-% Spektrá a eventy v syntetických dátach
-\begin{figure}[h]
-	\centering
-     \begin{subfigure}{\textwidth}
-        \centering
-     	\includegraphics[width=\textwidth]{figures/verification/Sythetic-FFT-A1-476-256.png}
-     	\caption{Algoritmus č.1}
-     \end{subfigure}
-     \begin{subfigure}{\textwidth}
-    	\centering
-        \includegraphics[width=\textwidth]{figures/verification/Sythetic-FFT-A2-476-256.png}
-        \caption{Algoritmus č.2}
-     \end{subfigure}
-      \begin{subfigure}{\textwidth}
-    	\centering
-        \includegraphics[width=\textwidth]{figures/verification/Sythetic-FFT-A3-476-256.png}
-        \caption{Algoritmus č.3}
-     \end{subfigure}
-     \caption{Ilustrácia detegovaných špičiek pri fs 476Hz a N = 256 a parametrov podľa grid search}
-\end{figure}
-
-\begin{figure}[h]
-   \centering
-    \includegraphics[width=\textwidth]{figures/verification/Sythetic-A1-events.png}
-   \caption{Algoritmus č.1 a detekcia udalostí min duration = 4 a time proximity = 1}
-\end{figure}
-
-
-% Obrázky spektier z reálnych datasetov
-Popis datasetov - vzorkovacia frekvencia 500 Hz mestská hromadná doprava (autobusy a električky) na suchých nových cestách.
-
+Manuálnym odladením parametrov na ukážkových záznamoch z vozidiel sme odskúšali rozdiely v schopnostiach algoritmov 
+na hľadanie špičiek povšimnúť si pretrvávajúce harmonické zložky. Výrez časovo-premenného spektra na obr. \ref{spectrum-slice} 
+s nájdenými špičkami zvýrazňuje prekážky správneho odlíšenia šumu alebo navzájom splývajúcich kopcov. Niektoré lokálne extrémy
+sú prehliadnuté pre nevýraznosť nad svojím okolím alebo pre prílišnú sploštenosť.
 \begin{figure}[h]
    \centering
     \includegraphics[width=\textwidth]{figures/verification/L83-slice-t-20-A1.png}
-   \caption{Prierez spektrogramu. Frekvenčná transformácia okna v 20. sekunde s detegovanými špičkami algoritmom č.1. Je patrné, že
-   niektoré vrcholy sú ignorované - zložité odlíšiť šum od signálu. V lineárnej mierke by sme ťažko určovali význačnosť vrchola}
+   \caption{Prierez spektrogramu okna 256 vzoriek s vrcholmi označenými algoritmom č.1
+   v 20. sekunde záznamu \emph{L83\_4940\_Alexyho\_Svantnerova.csv}}
+   \label{spectrum-slice}
 \end{figure}
 
+Nie je úplne zrejmé aké vodorovné konštelácie výrazných čŕt z obr. \ref{dataset-detection} sú korektne vyznačené, 
+a ktoré sú primerane agregované do spoločných udalostí. Podstatné frekvencie v stabilnej oblasti medzi časmi 22 a 33
+sekundou ako napr. 11, 26, 56 Hz  boli univerzálne zaevidované. Detekcie z iného datasetu sú ilustrované v prílohe.
 
 \begin{figure}[h]
 	\centering
      \begin{subfigure}{\textwidth}
         \centering
      	\includegraphics[width=\textwidth]{figures/verification/L83-dataset-A1.png}
-     	\caption{Algoritmus č.1}
+     	\caption{Algoritmus č.1: $k = 6$, $\epsilon = 0$, $h_{rel} = 10$}
      \end{subfigure}
      \begin{subfigure}{\textwidth}
     	\centering
         \includegraphics[width=\textwidth]{figures/verification/L83-dataset-A2.png}
-        \caption{Algoritmus č.2}
+        \caption{Algoritmus č.2: $k = 3$, $s = 9$}
      \end{subfigure}
       \begin{subfigure}{\textwidth}
     	\centering
         \includegraphics[width=\textwidth]{figures/verification/L83-dataset-A3.png}
-        \caption{Algoritmus č.3}
+        \caption{Algoritmus č.3: $t = 10$, $h = 1$, $p = 10$, $i = 0$}
      \end{subfigure}
-     \caption{L83 - Ilustrácia detegovaných špičiek pri fs 476Hz a N = 256 a parametrov podľa grid search}
+     \caption{Detekcia udalostí v datasete \emph{L83\_4940\_Alexyho\_Svantnerova.csv} s $f_s = 500$ Hz, trvaním 60 s, dĺžkou okna 256,
+     pri $t_{min} = 10$ a $t_{\Delta} = 4$}
+     \label{dataset-detection}
 \end{figure}
+\cleardoublepage
