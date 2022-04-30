@@ -1,22 +1,52 @@
 \chapter{Zhodnotenie}
-Vytvorili sme model spracovania signálu z vibrácii na existujúcom vzdiealene konfigurovateľnosm IoT zariadení.
-Známe algoritmy detekcie špičiek sme aplikovali na náš problém s ich porovnaním a
-odladením vlastných algoritmov detekcie udalostí.
-Rozšírenia sú početné:
-\begin{itemize}[noitemsep]
-\item Podrobiť (analýze/rozboru) rôzne situácie na vybraných úsekoch ciest opakovane a vypracovať metodiku anotovania datasetu,
-kvôli vzájomnému porovnaniu súvislostí
-\item Testovanie generátora udalostí na vibrátore s vytváraním známeho frekvenčného priebehu nielen na syntetických dátach
-\item Umožniť označiť a pomenovať profil známych javov a dokázať ich odlíšiť pri notifikáciach.
-\item umožniť filtrovanie nad frekvenčným rozsahom záujmu
-\item Brať do úvahy postupný drift alebo tolerovateľné disturbancie, alebo iné stabilné opakujúce sa vzory a zamyslieť sa
-nad ich vhodným oznamovaním
-\item Koordinovať viacero senzorov v prevážanom boxe
-\item Určenie prevažného priestorového smeru pôsobenia frekvenčných zložiek vibrácii napríklad viacrozmernou FFT
-\item Autonómna kalibrácia parametrov hľadania špičiek.
-\item Bližšie sa venovať úspore, ktoré by poskytli verzie DCT svojou lepšiou distribúciou energie v koeficientoch
-\item  Preskúmať reálne nasadenie a monitorovanie v reálnom čase napríklad cez mobilnú aplikáciu cez Bluetooth komunikáciu,
-ktorá sa ukázalo na protokole s väčšími prenosovými rýchlosťami, že by mohli postačovať.
-\end{itemize}
+Zaoberali sme sa meraním vibrácií mikromechanickým senzorom trojrozmerného zrýchlenia.
+signálových priebehy sme analyzovali viacerými existujúcimi metódami v časovej a frekvenčnej oblasti.
+Podstatou riešeného problému bolo usporiť bezdrôtovo prenášané množstvo informácií, poskytnutím
+prehľadu nad sledovanou situáciou upozornením na výskyt a amplitúdu významných frekvencií, či súhrnom
+časových úsekov deskriptívnymi štatistikami. Dôležitú etapu v automatizovanej extrakcii
+podstatných harmonických zložiek predstavovalo hľadanie špičiek, kde sme porovnali tri odlišné
+elementárne koncepcie v literatúre často uplatňované na biologické signály.
 
+Prínos spočíva v navrhnutí postupnosti krokov spracovania dátovej pipeline, špecifikovaním
+modifikovateľných parametrov každého stupňa tejto sústavy, a implementácii vzdialene nastaviteľnej
+pipeline do firmvéru senzorovej jednotky. Hardvér zariadenia bol poskytnutý už zhotovený.
+
+Na identifikáciu udalostí zmien spektrálneho obsahu vibrácií v čase sme vytvorili nový prúdový algoritmus.
+Poradí si s krátkodobými záchvevmi v označenej prítomnosti sekvencie vrcholov minimálnej dĺžky. Účinne pôsobí
+v podstate na redukciu šumu z náhlych jednorázových výskytov špičiek. Cez minimálnu testovaciu infraštruktúru
+zvolenými sieťovými protokolmi a serializačným formátom sme schopný posielať tematicky kategorizované správy vlastnej
+štruktúry. Uznávame, že zotavenie firmvéru z chybových stavov spojené s nedostatkom prostriedkov mohla byť
+doriešená vhodnejšie ako reštartom alebo zaslaním všeobecnej hlášky.
+
+Validácia detekčných schopností sa opierala o originálny generátor syntetického signálu so šumom podľa
+predpisu požadovaných zložiek, ktoré sme na vyjadrenie úspešnosti detekcie pridávali pseudonáhodne.
+Stratégie spracovania sa konfrontovali s otrasmi v reálnej premávke datasetmi
+zozbieraných s dostupným zariadením.
+
+Program obsadzujúci 65\% voľnej pamäte na inštrukcie je schopný spoľahlivo pracovať s posuvnými
+oknami do 512 bodov, v priamočiarejších scenároch kde sú výstupom len udalosti až do 1024 vzoriek.
+Posielanie všetkých štatistík sa oplatí nad postupnosť 32 bodov. Počet naraz oznamovaných
+zmien frekvencií by za zachovania efektívnosti nemal presiahnuť 12 - 18\% vedierok individuálneho posuvného
+okna. Skutočná priemerná prevalencia 0.4\% a maximálna na úrovni 4\% dokazuje ušetrenie v prenášanom obsahu.
+Systém spĺňa kladené obmedzenia na rýchlosť spracovania pri taktovacej frekvencii procesora 160 Hz s ľubovoľnými
+nastaveniami. Vyrovnávacia pamäť dokončený obrat cez etapy pipeline pred skompletizovaním ďalšieho posuvného okna.
+
+Vybudovaný model úspešne zakomponovaný na Edge IoT zariadenie tvorí dobrý základ pre početné rozšírenia
+vzťahujúce sa hlavne na detailnejšie preskúmanie vplyvov krokov frekvenčnej transformácie a filtrovania,
+a možností vyplývajúcich z viaccestnej dátovej pipeline. Mohlo by sa jednať o využitie lepších kompresných vlastností
+energetických koeficientov DCT-IV a MDCT než FFT. S filtrovaním sa viaže upravenie údaju o tolerancii podľa
+aplikovaného kernelu vyhladzovania.
+
+Pokiaľ je predmetom záujmu konkrétny frekvenčný rozsah mohlo by sa autonómne stanoviť ich filtrovanie a najlepšie rozlíšenie.
+Rovnako tak sa pre potenciálne produkčné účely ukazuje nepostrádateľnosť samostatnej kalibrácie parametrov hľadania špičiek.
+Zaujímavé by bolo prísť s ošetrením cyklického frekvenčného driftu a umožniť označenie profilu známych javov s ich odlíšením pri
+notifikáciach. Ďalšia pridaná hodnota by spočívala v určení prevažného priestorového smeru frekvencie alebo koordinácii viacerých senzorov
+v spoločnom transportnom boxe.
+
+Dosiaľ dosiahnuté výsledky môžu byť obohatené o silnejšie závery úspešnosti detekcie z opakovaného snímania rôznych stavov
+vozidla na vybraných cestách za vypracovania metodiky anotovania skompilovaného datasetu. Za kontrolovanejších podmienok
+by sa zariadenie mohlo podrobiť skúšaniu na testovacej lavici.
+
+Softvérové riešenie vychádzajúce z mnohostrannej analýzy problematiky je funkčné a napĺňa intencie
+zadania tejto bakalárskej práce.
 \cleardoublepage

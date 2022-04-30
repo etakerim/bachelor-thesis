@@ -71,12 +71,12 @@ Uvádza sa v jednotkách mV/g (milivolt na tiažové zrýchlenie) pri analógovo
 na najmenej významový bit) pri senzoroch so vstavaným analógovo-digitálnym prevodníkom. Jednotka mg/LSB vyjadruje
 o koľko sa zmení zrýchlenie keď zvýšime alebo ponížime binárne číslo na výstupe o jedna. Niekedy sa namiesto
 citlivosti uvádza mierka pre presnosť ako prevrátená hodnota citlivosti v LSB/g. Tiažové zrýchlenie $g$ sa mierne líši podľa
-zemepisnej šírke, ale prepočet na jednotky SI platí: $1$ g = $9.80665\,m/s^2$.
+zemepisnej šírke, ale prepočet na jednotky SI platí: 1 g = 9,80665 $m/s^2$.
 
 \emph{Dynamický rozsah} sa uvádza v tiažovom  zrýchlení $g$. Hovorí o najmenšej a najväčšej rozlíšiteľnej hodnote zrýchlenia nad
 úrovňou ktorej už dochádza k skresleniu signálu orezaním špičiek. Nevyhnutnými drobnými nepresnosťami výroby mikromechaniky vzniká
 \emph{zero-g napätie} popisujúce odchýlku skutočného od ideálneho výstupu, keď na sústavu nepôsobí žiadne zrýchlenie. Za ideálnych
-okolností bez pohybu na vodorovnom povrchu namerajú osi $x$ a $y$ zrýchlenie $0g$, zatiaľčo na $z$ pôsobí $1g$. Očakávaním je nulová
+okolností bez pohybu na vodorovnom povrchu namerajú osi $x$ a $y$ zrýchlenie 0 g, zatiaľčo na $z$ pôsobí 1 g. Očakávaním je nulová
 hodnota výstupného napätia a tým aj výstupného registra.
 
 \emph{Šírka pásma} senzora v Hz predurčuje rozsah frekvencie vibrácií, ktoré je možné zachytiť. Podmienená je zvolenou
@@ -132,17 +132,17 @@ zbernicu SPI alebo I$^\mathrm{2}$C zvoliť zo štyroch dynamických rozsahov, pr
 citlivosťou. Zvolením menšieho dynamického rozsahu zvýšime citlivosť. LSM9DS1 funguje pri rozsahoch $\pm2$g, $\pm4$g a $\pm8$g
 a $\pm16$g, postupne s citlivosťami
 $0.061$ mg/LSB, $0.122$ mg/LSB, $0.244$ mg/LSB, $0.732$ mg/LSB. Výstupný dátový tok (ODR) je možné nastaviť na $10$Hz, $50$Hz,
-$119$Hz, $238$Hz, $476$Hz a najvyššie na $952$ Hz. Navzorkované hodnoty sú ukladané do 16-bitového výstupného registra v
+$119$ Hz, $238$ Hz, $476$ Hz a najvyššie na $952$ Hz. Navzorkované hodnoty sú ukladané do 16-bitového výstupného registra v
 dvojkovom doplnku.
 
 Nízkoenergetický 3DOF MEMS akcelerometer ADXL362 \cite{adxl362} so spotrebou $2\,\mathrm{\mu A}$ pri $100$Hz disponuje
-rozsahmi $\pm2$g, $\pm4$g a $\pm8$g s citlivosťami $1$, $2$ a $4$ mg/LSB. Dostupné vzorkovacie frekvencie 12-bitového A/D prevodníka sú
-$12.5 - 400$Hz v 8 krokoch vždy po násobkoch predošlého kroku. Pre rýchlejšie čítanie pri nižšom rozlíšení dokáže senzor zakódovať dáta
+rozsahmi $\pm2$ g, $\pm4$ g a $\pm8$ g s citlivosťami $1$, $2$ a $4$ mg/LSB. Dostupné vzorkovacie frekvencie 12-bitového A/D prevodníka sú
+$12.5 - 400$ Hz v 8 krokoch vždy po násobkoch predošlého kroku. Pre rýchlejšie čítanie pri nižšom rozlíšení dokáže senzor zakódovať dáta
 do 8-bitového registra.
 
 Vyrábajú sa tiež akcelerometre s väčšími dynamickými rozsahmi a nízkym šumom, ide napríklad o ADXL356 a ADXL357 \cite{adxl357} so
-škálami $\pm 10$g, $\pm 20$g a $\pm 40$g s citlivosťou $0,019$ mg/LSB po $0,078$ mg/LSB a rozlíšením A/D prevodníka 20 bitov pri
-ODR $4 - 4000$Hz. ADXL357 ponúka priamo analógové výstupy s citlivosťou $20 - 80$ mV/g pri napájaní $3.3$ V.
+škálami $\pm 10$ g, $\pm 20$ g a $\pm 40$ g s citlivosťou $0,019$ mg/LSB po $0,078$ mg/LSB a rozlíšením A/D prevodníka 20 bitov pri
+ODR $4 - 4000$ Hz. ADXL357 ponúka priamo analógové výstupy s citlivosťou $20 - 80$ mV/g pri napájaní $3.3$ V.
 
 \subsection{Odvodzovanie rýchlosti a dráhy zo zrýchlenia}
 Meranie akcelerácie umožňuje zároveň nepriamo získať ďalšie údaje o celkovom pohybe v priestore ako aj spôsobenom vibráciami.
@@ -240,7 +240,7 @@ $\mathbf{x} = (x_1, x_2, …, x_n)^T$.
 Pri veľkom objeme prichádzajúcich vzoriek produkovaných senzormi nie je uskutočniteľné ich úplné uchovanie ani spracovanie celkého
 dátového toku naraz. Častokrát by stratégia neuváženého odkladania viedla k plytvaniu zdrojov a zbytočnému archivovaniu
 údajov s nízkou informačnou hodnotou. Vhodnejšie je agregovanie toku údajov podľa preddefinovaného zmysluplného kritéria,
-ktoré zachytáva významné rysy a umožňuje prompte zodpovedať na vyžadované dopyty.
+ktoré zachytáva významné rysy a umožňuje okamžite zodpovedať na vyžadované dopyty.
 
 Priamočiarou realizáciou agregácie je nahliadať na prvky časového radu postupne ako prichádzajú.
 Prúdové algoritmy pôsobiace v reálnom čase, a teda neschopné vidieť finálny vektor vzoriek vstupu sa vyznačujú vlastnosťou,
@@ -256,7 +256,7 @@ Zároveň je žiaduce minimalizovať falošné pozitíva a negatíva pri detekci
 $\mathcal{W}_{l, d}$ na podpostupnosti nazývané okná.
 
 \emph{Posuvné okná} (,,rolling window'') majú spravidla konštatnú dĺžku $l$
-menšiu ako celkovú veľkosť radu a sú aplikované s krokom odstupu $d$ pozorovaní. Rad pozorovaní pozostáva z $ (n - (l  - 1)) / d$
+menšiu ako celkovú veľkosť radu a sú aplikované s krokom odstupu $d$ pozorovaní. Rad pozorovaní pozostáva z $ (n - (l  - 1))\;/\;d$
 okien \cite{online-anomaly-detection}. Prirodzene sa posuvné okná objavujú pri manipulácii s vyrovnávacou pamäťou, ktoré sa využívajú
 pri blokovom prenose z adaptéra senzora do hlavnej pamäte. Vtedy sa veľkosť bloku sa rovná posunu $l = d$.
 
@@ -296,7 +296,7 @@ Nevychýleným bodovým odhadom strednej hodnoty je \emph{výberový priemer}, k
 Najvýznamnejším kvantilmi sú kvartily $Q_q$ vytvárajúce štyri rovnako veľké časti z pôvodných dát, konkrétne dolný kvartil $Q_1$
 oddelí  25\% najmenších údajov, medián $Q_2$ predelí zoradené údaje na polovicu a horný kvartil $Q_3$ zahrnie 75\% nižších hodnôt.
 Hľadaný kvartil je $k$-ty najmenší prvok v utriedenom zozname meraní, pričom podľa želaného kvartilu $q$ a počtu pozorovaní je
-$k = \lceil n \cdot (1 / q) \rceil$.
+$k = \lceil n \cdot (1\;/\;q) \rceil$.
 
 Zistenie $k$-teho najmenšieho prvku s časovou zložitosťou $\mathcal{O}(n \log n)$ umožňuje ľubovoľný lepší triediaci algoritmus
 napríklad triedenie zlučovaním (merge sort). Algoritmus Quickselect dokáže taký prvok objaviť v čase $\mathcal{O}(n)$.
@@ -444,7 +444,6 @@ $k$ hodnôt na obe strany, ak existujú.
 		\EndIf
 	\EndIf
 \EndFor
-%\EndFunction
 \end{algorithmic}
 \label{algo:neighbours}
 \end{algorithm}
@@ -566,7 +565,7 @@ Umiestnením počtov charakteru rozhodnutí do tabuľky vzniká matica zámen \c
 
 Úspešnosť klasifikačných algoritmov pre ich vzájomné porovnanie kvantifikujú viaceré metriky. Na odladenie parametrov
 vplývajúcich na náchylnosť preferovať kladné alebo záporné výsledky sa vzťahuje \emph{prevalencia} výskytu očakávaného
-javu: $P / (P+N)$ v samotných dátach. Snahou rozhodovania je maximalizovať senzitivitu a špecifickosť výsledkov algoritmu.
+javu: $P\;/\;(P+N)$ v samotných dátach. Snahou rozhodovania je maximalizovať senzitivitu a špecifickosť výsledkov algoritmu.
 \emph{Senzitivita} (\ref{equ:sensitivity}) udáva koľko bodov, ktoré sú prehlásené za špičky naozaj je špičkami.
 \emph{Špecifickosť} (\ref{equ:specifity}) sa zameriava na potvrdenie, aké množstvo pozorovaní nepovažovaných za špičky,
 nie sú nimi aj skutočne.
@@ -576,7 +575,7 @@ TPR = \frac{TP}{P} = \frac{TP}{TP + FN} \label{equ:sensitivity} \\
 TNR = \frac{TN}{N} = \frac{TN}{TN + FP} \label{equ:specifity}
 \end{align}\end{ceqn}
 
-Presnosť určenia lokálneho extrému sa skladá z správnosti (\ref{equ:ppv}) a presnosť (\ref{equ:accuracy}),
+Pravdivosť určenia lokálneho extrému sa skladá z precíznosti (\ref{equ:ppv}) a presnosti (\ref{equ:accuracy}),
 ktoré je rovnako žiaduce dosahovať čo najbližšie sto percentám, pri nízkej chybovosti (\ref{equ:error-rate}), čiže
 nízkeho počtu falošných poplachov.
 \myequations{Metriky klasifikátora: správnosť, presnosť, chybovosť}
@@ -766,8 +765,7 @@ w(n) &= 0.42 - 0.5\cos(2\pi n / N) + 0.08\cos(4\pi n / N)\label{equ:window-black
 
 Fourierou transformáciou okna dostávame frekvenčnú odozvu, ktorá má tvar funkcie $\mathrm{sinc}(x) = \sin(x) / x$
 (obr. \ref{fig:window-freq}) Priebeh odozvy sa vyznačuje hlavným a vedľajšími vrcholmi (mainlobe a sidelobes).
-Hlavný vrchol sa snažia
-rôzne oknové funkcie udržať čo najužší, lebo zodpovedá za šírku spektrálneho úniku do okolitých vedierok.
+Hlavný vrchol sa snažia rôzne oknové funkcie udržať čo najužší, lebo zodpovedá za šírku spektrálneho úniku do okolitých vedierok.
 Vedľajšie vrcholy sú nežiaduce a podmieňujú najmä úroveň odstupu od šumu.
 
 \begin{figure}[h]
@@ -858,7 +856,7 @@ u niektorých aplikácií nutnosť odozvy v reálnom čase. Aby sa zachovala ní
 na lokálne dostupnom úložisku, ktoré sa počíta v kilobajtoch nanajvýš megabajtoch.
 
 Senzorové jednotky si buď získané dáta ukladajú na externú flash pamäť, alebo sa od nich vyžaduje komunikácia
-cez bezdrôtové spojenie. Prepojením na internet sa zaraďujú k zariadeniam Internetu vecí (IoT).
+cez bezdrôtové spojenie. Prepojením na internet sa zaraďujú k zariadeniam Internetu vecí.
 Na rýchlosť sieťového prenosu má dopad okrem šírky pásma a réžie protokolov
 vzdialenosť od sieťovej brány v prípade hviezdicovej topológie alebo najbližšieho susedného uzla v mesh
 alebo point-to-point rozložení. Vynaloženým výkonom na príjem a vysielanie je postihnutý dosah, ktorý
@@ -891,7 +889,7 @@ tam voľné frekvenčné pásma s povoľovaním príslušného maximálneho leg�
 zariadení \cite{eu-frequencies}.
 
 V Sub-1 GHz oblasti je k dispozícii rozsah 863 - 870 MHz využívaný LPWAN (Low-Power Wide Area Network) obmedzený
-časom vysielania na 0.1\%, 1\%, alebo 10\% z hodiny a výkonom do 25 mW. Wifi (IEEE 803.11) a Bluetooth zaberajú
+časom vysielania na 0.1\%, 1\%, alebo 10\% z hodiny a výkonom do 25 mW. WiFi (IEEE 803.11) a Bluetooth zaberajú
 rozsah 2400 - 2 483,5 MHz s povoleným výkonom do 100 mW na 100 KHz. Protokoly
 ako Bluetooth sa navyše označujú triedami podľa ponúkaného dosahu. Trieda 1 deklaruje dosah do 100 metrov za výkonu
 do 100 mW, trieda 2 je približne do 10 metrov a do 2,5 mW a trieda 3 je na 1 meter a 1 mW \cite{bluetooth}.

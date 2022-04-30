@@ -17,8 +17,6 @@
 \usepackage{multirow}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
 \usepackage{listings}
 \usepackage{titlesec}
 \usepackage{setspace}
@@ -32,6 +30,8 @@
 \usepackage{csquotes}
 \usepackage{diagbox}
 
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage{expl3}
 \usepackage{etoolbox}
 \preto\tabular{\shorthandoff{-}}
@@ -89,7 +89,7 @@
 }
 
 \renewcommand{\ttdefault}{pcr}
-\lstdefinestyle{cstyle}{ 
+\lstdefinestyle{cstyle}{
     language=C,
 	basicstyle=\linespread{1.1}\ttfamily\footnotesize,
     numbers=left,
@@ -98,8 +98,8 @@
     tabsize=4,
     captionpos=b,
     breaklines=true,
-    texcl=true,  
-	numbersep=8pt, 
+    texcl=true,
+	numbersep=8pt,
 	framexleftmargin=15pt,
 	xleftmargin=5ex,
     xrightmargin=3.4pt,
@@ -109,7 +109,7 @@
 
 % Zoznam skratiek
 \makenomenclature
-\renewcommand{\nomname}{Slovník skratiek a pojmov}
+\renewcommand{\nomname}{Zoznam skratiek a pojmov}
 
 \setstretch{1.5}
 \newcommand{\University}[0] {Slovenská technická univerzita v Bratislave}
@@ -145,7 +145,7 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 \vspace{\medskipamount}
 \Date
 \end{flushleft}
-\emptypage 
+\emptypage
 
 % Titulný list
 \input{chapters/titlepage}
@@ -184,12 +184,12 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 \tableofcontents{}
 \listoffigures
 \listofmyequations
-\let\clearpage\relax
-\printnomenclature
 %\listofalgorithms
+{\let\clearpage\relax \printnomenclature}
 \emptypage
-\pagestyle{fancy}
 
+
+\pagestyle{fancy}
 % Kapitoly
 \pagenumbering{arabic}
 

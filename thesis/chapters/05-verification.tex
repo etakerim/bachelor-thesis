@@ -197,7 +197,7 @@ Frekvenčná transformácia je použitá za každej situácie FFT.
 		\caption{Štatistiky s koreláciami a udalosti}
 		\label{tab:pipeline-complex}
 	\end{subtable}
-	
+
 	 \captionsetup[table]{position=below}
      \caption{Čas na spracovanie okna vzoriek v $\mu s$.}
      \label{tab:pipeline}
@@ -216,14 +216,14 @@ situácie sa stíhajú uskutočniť pred naplnením následného posuvného okna
 
 \section{Úspešnosť detekcie špičiek}
 Syntetický signál so známymi časovo-frekvenčné spektrom sa zložil zo sinusoíd s exponenciálnym nábehom a dobehom.
-Očakávaná kvantita zlúčených tónov na základný úsek sa stanovila podľa frekvencie vzorkovania ovplyvňujúcej rozlišovaciu 
+Očakávaná kvantita zlúčených tónov na základný úsek sa stanovila podľa frekvencie vzorkovania ovplyvňujúcej rozlišovaciu
 schopnosť susediacich komponentov. Pri 238 Hz sa zmiešalo 8 rozdielnych frekvencií, pri 476 Hz je ich 16 a pri 952 Hz sa
 ich rozmiestnilo 32. Pseudonáhodný generátor inicializovaný so semienkom 10 vytvoril trénovaciu množinu s trvaním 60 sekúnd
-a vzápätí 20 sekundovú testovaciu množinu. 
+a vzápätí 20 sekundovú testovaciu množinu.
 
 Prehľadávaním parametrov detekcie špičiek hrubou silou nad trénovacím signálom boli odhalené najlepšie hodnoty z preddefinovanej sady.
 Na testovacom signále sa zistili relevantné metriky úspešnosti klasifikácie vrcholov makro-priemerovaním medzi posuvnými oknami
-o veľkosti $n$. Signál nebol dodatočne filtrovaný. Obdržanie spektrálneho obsahu v decibeloch prebehlo cez FFT s Hannovou 
+o veľkosti $n$. Signál nebol dodatočne filtrovaný. Obdržanie spektrálneho obsahu v decibeloch prebehlo cez FFT s Hannovou
 oknovou funkciou a 50\%  prekryvom okien. Vyčíslené sú presnosti (tab. \ref{tab:accuracy}), senzitivita (tab. \ref{tab:sensitivity}) a chybovosť (tab.\ref{tab:error-rate}) detekčných stratégií v percentách.
 
 \begin{table}[h]
@@ -270,20 +270,20 @@ oknovou funkciou a 50\%  prekryvom okien. Vyčíslené sú presnosti (tab. \ref{
 \caption{Percentuálna chybovosť (FPR) klasifikácie frekvenčných špičiek}
 \label{tab:error-rate}
 \end{table}
-Platnosť získaných percentuálnych metrík v absolútnej škále a hyperparametrov sa vzťahuje výlučne na zvolenú techniku 
-syntézy signálového priebehu, a teda nevieme potvrdiť podobné výsledky pre reálnu prepravu. Napriek tomu môžeme 
+Platnosť získaných percentuálnych metrík v absolútnej škále a hyperparametrov sa vzťahuje výlučne na zvolenú techniku
+syntézy signálového priebehu, a teda nevieme potvrdiť podobné výsledky pre reálnu prepravu. Napriek tomu môžeme
 z pravidelných tendencií dedukovať, že pomerne vysoká presnosť cca 84\% zachovávajúca senzitivitu a chybovosťou do 5\%
-sa stabilne objavuje  na diagonálach, kde $n$ je polovicou $f_s$. Vtedy empiricky nachádzame ideálny balans medzi rozlíšením 
+sa stabilne objavuje  na diagonálach, kde $n$ je polovicou $f_s$. Vtedy empiricky nachádzame ideálny balans medzi rozlíšením
 v čase a frekvencii aj v spektrogramoch .
 
 Veľmi nízka senzitivita nezriedka 10 - 30\% je dôsledkom nedokonalej spätnej rekonštrukcie spektrálneho profilu a exaktnou
 lokalizáciou vrchola, čím sa sinusoidy môžu ocitnúť posunuté o pár frekvenčných vedierok vedľa v porovnaní s označením v datasete.
-Malý počet význačných frekvencií spôsobuje, že na prejavenie sa efektu zdanlivého poklesu senzitivity stačí, keď sa 
+Malý počet význačných frekvencií spôsobuje, že na prejavenie sa efektu zdanlivého poklesu senzitivity stačí, keď sa
 mierne zmení poloha jedinej.
 
-Spektrogram nižšie znázorňuje na testovacích dátach schopnosť prúdového algoritmu na detekciu zmien 
+Spektrogram nižšie znázorňuje na testovacích dátach schopnosť prúdového algoritmu na detekciu zmien
 frekvencií sa vysporiadať s nesprávne identifikovanými špičkami. Na vizualizácii je patrné, že
-registrovanie prvého vrchola na súvislom výstupku nastávalo oneskorene prekročením určitej amplitúdy. 
+registrovanie prvého vrchola na súvislom výstupku nastávalo oneskorene prekročením určitej amplitúdy.
 Ostatné algoritmy sa prejavovali obdobne, najvýraznejšie rozdiely sú v rozmiestnení falošných vrcholov.
 
 \begin{figure}[h]
@@ -298,10 +298,10 @@ Ostatné algoritmy sa prejavovali obdobne, najvýraznejšie rozdiely sú v rozmi
     	\includegraphics[width=\textwidth]{figures/verification/Sythetic-A1-events.png}
    		\caption{Zachytený priebeh udalostí frekvenčnej zmeny pri $t_{min} = 4$ a $t_{\Delta} = 1$}
      \end{subfigure}
-     \caption{Spektrogramy detegovaných špičiek a udalostí pri $fs = 476$ Hz a $N = 256$}
+     \caption{Spektrogramy detegovaných špičiek a udalostí pri $f_s = 476$ Hz a $N = 256$}
 \end{figure}
 
-Parametre klasifikácie špičiek nájdené mriežkovým hľadaním, s ktorými sme dosiahli na konkrétnom syntetickom signále 
+Parametre klasifikácie špičiek nájdené mriežkovým hľadaním, s ktorými sme dosiahli na konkrétnom syntetickom signále
 najvyššie presnosti sú v tabuľke \ref{tab:grid-serach-parameters}.
 \begin{table}[h]
 \def\arraystretch{1.1}
@@ -324,8 +324,8 @@ najvyššie presnosti sú v tabuľke \ref{tab:grid-serach-parameters}.
 \label{tab:grid-serach-parameters}
 \end{table}
 
-Manuálnym odladením parametrov na ukážkových záznamoch z vozidiel sme odskúšali rozdiely v schopnostiach algoritmov 
-na hľadanie špičiek povšimnúť si pretrvávajúce harmonické zložky. Výrez časovo-premenného spektra na obr. \ref{spectrum-slice} 
+Manuálnym odladením parametrov na ukážkových záznamoch z vozidiel sme odskúšali rozdiely v schopnostiach algoritmov
+na hľadanie špičiek povšimnúť si pretrvávajúce harmonické zložky. Výrez časovo-premenného spektra na obr. \ref{spectrum-slice}
 s nájdenými špičkami zvýrazňuje prekážky správneho odlíšenia šumu alebo navzájom splývajúcich kopcov. Niektoré lokálne extrémy
 sú prehliadnuté pre nevýraznosť nad svojím okolím alebo pre prílišnú sploštenosť.
 \begin{figure}[h]
@@ -336,7 +336,7 @@ sú prehliadnuté pre nevýraznosť nad svojím okolím alebo pre prílišnú sp
    \label{spectrum-slice}
 \end{figure}
 
-Nie je úplne zrejmé aké vodorovné konštelácie výrazných čŕt z obr. \ref{dataset-detection} sú korektne vyznačené, 
+Nie je úplne zrejmé aké vodorovné konštelácie výrazných čŕt z obr. \ref{dataset-detection} sú korektne vyznačené,
 a ktoré sú primerane agregované do spoločných udalostí. Podstatné frekvencie v stabilnej oblasti medzi časmi 22 a 33
 sekundou ako napr. 11, 26, 56 Hz  boli univerzálne zaevidované. Detekcie z iného datasetu sú ilustrované v prílohe.
 
