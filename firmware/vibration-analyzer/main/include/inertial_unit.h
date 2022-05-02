@@ -58,12 +58,12 @@ typedef struct {
  * @brief Inicializácia senzora lineárnej akcelerácie
  * 
  * @param  imu   Senzor
- * @return Úspešnosť inicializácie sensora
+ * @return Úspešnosť inicializácie senzora
  */
 esp_err_t imu_setup(InertialUnit *imu);
 
 /**
- * @brief Nastavenie dynamického rozah lineárneho 3D akcelerometra v g
+ * @brief Nastavenie dynamického rozsah lineárneho 3D akcelerometra v g
  * 
  * @param  imu      Senzor
  * @param  range    Dynamický rozsah akcelerometra

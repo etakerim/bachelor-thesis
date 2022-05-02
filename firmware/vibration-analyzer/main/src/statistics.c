@@ -155,11 +155,6 @@ float average_abs_deviation(const float *x, int n, float mean)
 }
 
 /*
-float peek_to_peek(float minimum, float maximum)
-{
-    return maximum - minimum;
-}
-
 // INIT with average = x, variance = 0, k = 1
 // Podeľ k pre výsledok variance
 void welford_algorithm(float x, float *average, float *variance, int k)

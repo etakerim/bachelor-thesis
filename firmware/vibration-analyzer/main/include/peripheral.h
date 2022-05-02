@@ -51,7 +51,7 @@ typedef struct {
  */
 typedef struct {
     char stats[TOPIC_LENGTH];       /**< @brief Názov témy pre štatistické údaje */
-    char spectra[TOPIC_LENGTH];     /**< @brief Názov témy pre frekvenčné spektum */
+    char spectra[TOPIC_LENGTH];     /**< @brief Názov témy pre frekvenčné spektrum */
     char events[TOPIC_LENGTH];      /**< @brief Názov témy pre udalosti zmeny spektra */
 } MqttAxisTopics;
 

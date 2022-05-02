@@ -76,7 +76,7 @@ poľom N-kanál BTS117 na premostenie riadiaceho signálu (obr. \ref{schematics:
 \section{Architektúra systému}
 Celková skladba komponentov systému (\ref{uml:component}) pozostáva zo súčastí pôsobiacich na mikrokontroléri ESP32
 interagujúcimi cez lokálne sériové zbernice s akcelerometrom a zapisovačom. Spracované vektory akcelerácie sú
-odosielané do počítačovej siete prostredníctvom prístupového bodu WiFi aplikačným protokolom MQTT (Message Queue Transport Telemetry)
+odosielané do počítačovej siete prostredníctvom prístupového bodu WiFi aplikačným protokolom MQTT
 na server so službou broker správ. Odoberané témy sú odtiaľ rozšírené klientom metódou publish -- subcribe.
 \begin{figure}[h]
 	\centering

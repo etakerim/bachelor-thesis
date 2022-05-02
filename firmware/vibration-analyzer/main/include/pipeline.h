@@ -10,7 +10,7 @@
 #include "mpack.h"
 #include "events.h"
 
-/** @defgroup pipeline Dátovod
+/** @defgroup pipeline Dátová pipeline
  *  @{
  */
 
@@ -93,11 +93,14 @@ typedef enum {
     TRANSFORM_COUNT     /**< @brief Počet dostupných frekvenčných transformácií. Potrebné pre serializáciu */
 } FrequencyTransform;
 
+/**
+ * @brief Doména odosielaných nespracovaných vzoriek 
+ */
 typedef enum {
-    RAW_NONE_SEND,
-    RAW_TIME_SEND,
-    RAW_FREQUENCY_SEND,
-    SEND_UNPROCESSED_COUNT
+    RAW_NONE_SEND,              /**< @brief Žiadne nespracované vzorky */
+    RAW_TIME_SEND,              /**< @brief Nespracované vzorky v časovej oblasti */
+    RAW_FREQUENCY_SEND,         /**< @brief Nespracované vzorky vo frekvenčnej oblasti  */
+    SEND_UNPROCESSED_COUNT      /**< @brief Počet možností na účely serializácie  */
 } SendUnprocessed;
 
 /**
@@ -112,7 +115,7 @@ typedef struct {
 } SamplingConfig;
 
 /**
- * @brief Nastavenie vyhladzovania signálu alebo frekvenčného spektra
+ * @brief Nastavenie vyhladzovania časovo premenného signálu alebo frekvenčného spektra
  */
 typedef struct {
     bool enable;        /**< @brief Vyhladzovanie signálu povolené */
@@ -177,13 +180,12 @@ typedef struct {
 
 /**
  * @brief Nastavenia ukladania a posielania spracovaných dát
- * 
- * OpenLog bude po spustený aktívny iba ako je povolené `openlog_raw_samples`.
- * Wifi pripojenie a MQTT klient budú spusetný iba ak aspoň jedna z možností `mqtt_*` je povolená.
  */
 typedef struct {
     bool local;                 /**< @brief Záznam vzoriek na SD kartu povolený. OpenLog bude zapnutý po spustení */
-    bool mqtt;                  /**< @brief Posielanie cez MQTT povolené. Wifi a MQTT klient bude zapnutý po spustení */
+    bool mqtt;                  /**< @brief Posielanie cez MQTT povolené. Wifi a MQTT klient bude zapnutý po spustení. 
+                                    Pozor: po deaktivácii sa zariadenie nedá vzdialene rekonfigurovať. 
+                                    Na znovu povolenie sa musí nahrať firmvér so touto možnosťou povolenou. */
     bool mqtt_stats;            /**< @brief Odosielanie štatistík cez MQTT na topic podľa `MQTT_TOPIC_STATS` */
     bool mqtt_events;           /**< @brief Odosielanie zmien spektra cez MQTT na topic podľa `MQTT_TOPIC_EVENT` */
     SendUnprocessed mqtt_samples; /**< @brief Odosielanie nespracovaných vzoriek alebo frekvencií cez MQTT na topic podľa `MQTT_TOPIC_STREAM`,
@@ -192,7 +194,7 @@ typedef struct {
 } SaveFormatConfig;
 
 /**
- * @brief Systémová konfigurácia dátovodu spracovania vzoriek z akcelerometra
+ * @brief Systémová konfigurácia pipeline spracovania vzoriek z akcelerometra
  */
 typedef struct {
     SamplingConfig sensor;
@@ -215,6 +217,10 @@ typedef struct {
 } Provisioning;
 
 
+/**
+ * @brief Medzivýsledky korelácie zdieľanej všetkými osami spracovania s prístupom
+ * cez zahrnutú synchronizačnú bariéru
+ */
 typedef struct {
     EventGroupHandle_t barrier;
     EventBits_t task_mask;
@@ -222,6 +228,9 @@ typedef struct {
     float std[AXIS_COUNT];
 } Correlation;
 
+/**
+ * @brief Výsledky všetkých dostupných štatistík
+ */
 typedef struct {
     float min;
     float max;
@@ -300,7 +309,7 @@ void mean_kernel(float *w, int n);
 /**
  * @brief Obdĺžníkové okno
  * 
- * \f$ w(n) = \frac{2}{N - 1}\left(\frac{N - 1}{2} - \left|n - \frac{N - 1}{2} \right|\right) \f$
+ * \f$ w(n) = 1 \f$
  * @param[out]  w   Váhy oknovej funkcie
  * @param[in]   n   Dĺžka okna
  */
@@ -357,7 +366,7 @@ void window(WindowTypeConfig type, float *w, int n);
 
 
 /** 
- * @defgroup pipeline_buffer Správa pamäti dátovodu
+ * @defgroup pipeline_buffer Správa pamäti pipeline
  * @{
  */
 
@@ -415,7 +424,7 @@ void sender_release(Sender *sender);
 /**
  * @brief Posun vzoriek vo vyrovnávacej pamäti doľava, čím sa dosahuje prekryv okien
  * 
- * Nadbytočné hodnoty od začiatku poľa budú nadhradené vzorkami o `k` pozícii vpravo.  
+ * Nadbytočné hodnoty od začiatku poľa budú nahradené vzorkami o `k` pozícii vpravo.  
  *  
  * @param  buffer   Vyrovnávacia pamäť, ktorej obsah bude posunutý
  * @param  n        Dĺžka vyrovnávacej pamäte
@@ -555,7 +564,7 @@ size_t config_serialize(char *msg, size_t size, const Configuration *config);
 /**
  * @brief Parsovanie systémovej konfigurácie z formátu Message Pack
  * 
- * @param[in]   msg       Serializované konfigurácia
+ * @param[in]   msg       Serializovaná konfigurácia
  * @param[in]   size      Dĺžka konfigurácie v Message Pack
  * @param[out]  conf      Systémová konfigurácia
  * @param[out]  error     Chyba pri parsovaní

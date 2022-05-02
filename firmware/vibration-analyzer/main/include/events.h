@@ -33,10 +33,10 @@ typedef struct {
 /**
  * @brief Hľadanie špičiek absolútnou prahovou úrovňou amplitúdy signálu
  * 
- * @param[out]  peaks   Nájdené špičky v signále. Dĺžka poľa musí byť rovnaká počet vzoriek
+ * @param[out]  peaks   Nájdené špičky v signále. Dĺžka poľa musí byť rovnaká počtu vzoriek
  * @param[in]   y       Vzorky signálu
  * @param[in]   n       Počet vzoriek
- * @param[in]   t       Prahová úroveň amplitúdy. Odporúčaný hodnota je z prípustných hodôt rozsahu pre vzorky
+ * @param[in]   t       Prahová úroveň amplitúdy. Odporúčaná hodnota je z prípustných hodnôt rozsahu pre vzorky
  */
 void find_peaks_above_threshold(bool *peaks, const float *y, int n, float t);
 
@@ -45,7 +45,7 @@ void find_peaks_above_threshold(bool *peaks, const float *y, int n, float t);
  * 
  * \f$ f[t-i] < f[t] > f[t+i],\quad \forall i \in 1, 2, ..., k \f$
  * 
- * @param[out]  peaks   Nájdené špičky v signále. Dĺžka poľa musí byť rovnaká počet vzoriek
+ * @param[out]  peaks   Nájdené špičky v signále. Dĺžka poľa musí byť rovnaká počtu vzoriek
  * @param[in]   y       Vzorky signálu
  * @param[in]   n       Počet vzoriek
  * @param[in]   k       Počet najbližších uvažovaných susedov na každú zo strán od kandidátnej špičky \f$[t-k; t+k]\f$; Rozsah: \f$[1, n / 2]\f$
@@ -60,20 +60,19 @@ void find_peaks_neighbours(bool *peaks, const float *y, int n, int k, float e, f
  * 
  * \f$ \Delta f[i] = 0 \f$
  * 
- * @param[out]  peaks   Nájdené špičky v signále. Dĺžka poľa musí byť rovnaká počet vzoriek
+ * @param[out]  peaks   Nájdené špičky v signále. Dĺžka poľa musí byť rovnaká počtu vzoriek
  * @param[in]   y       Vzorky signálu
  * @param[in]   n       Počet vzoriek
  * @param[in]   k       Dĺžka sečnice na každú stranu od kandidátnej špičky \f$[t-k; t+k]\f$; Rozsah: \f$[1, n / 2]\f$
- * @param[in]   slope   Prahová úroveň strmosti kopca, čiže rozdielu medzi hladiny medzi konacmi sečnice. Rozsah: \f$ slope \geq 0 \f$
+ * @param[in]   slope   Prahová úroveň strmosti kopca, čiže rozdielu medzi hladiny medzi koncami sečnice. Rozsah: \f$ slope \geq 0 \f$
  */
 void find_peaks_zero_crossing(bool *peaks, const float *y, int n, int k, float slope);
 
 /**
  * @brief Hľadanie špičiek s modikovaným algoritmom horského turistu
  * 
- * \f$ \Delta f[i] = 0 \f$
  * 
- * @param[out]  peaks       Nájdené špičky v signále. Dĺžka poľa musí byť rovnaká počet vzoriek
+ * @param[out]  peaks       Nájdené špičky v signále. Dĺžka poľa musí byť rovnaká počtu vzoriek
  * @param[in]   y           Vzorky signálu
  * @param[in]   n           Počet vzoriek
  * @param[in]   tolerance   Prahová úroveň vo vertikálnej osi. Rozsah: \f$[min(y), max(y)]\f$
@@ -88,7 +87,7 @@ void find_peaks_hill_walker(bool *peaks, const float *y, int n, float tolerance,
  * @brief Nastavenie počiatočného stavu online detektora udalostí vo frekvenciách
  * 
  * @param[out]  events     Pole udalostí frekvenčného spektra
- * @param[in]   bins       Počet frekvenčných vedierok a zároveň dĺžka poľa uadlostí
+ * @param[in]   bins       Počet frekvenčných vedierok a zároveň dĺžka poľa udalostí
  */
 void event_init(SpectrumEvent *events, uint16_t bins);
 
@@ -96,16 +95,16 @@ void event_init(SpectrumEvent *events, uint16_t bins);
 /**
  * @brief Online detekcia zmien v časovom priebehu frekvenčných spektier 
  * 
- * @param       t               Poradové číslo posuvného okna. S každým ďalším volaním funckie musí byť navýšené o 1 
+ * @param       t               Poradové číslo posuvného okna. S každým ďalším volaním funkcie musí byť navýšené o 1 
  * @param       events          Pole udalostí frekvenčného spektra s dĺžkou počtu vedierok
  * @param[in]   peaks           Nájdené špičky vo aktuálnom frekvenčnom spektre jedným z klasifikátorov find_peak_*
  * @param[in]   spectrum        Frekvenčné spektrum aktuálneho posuvného okna vzoriek na zistenie priemernej amplitúdy udalostí
  * @param[in]   bins            Počet frekvenčných vedierok
  * @param[in]   min_duration    Minimálne trvanie po koľkých oknách je vyhlásená špička za udalosť. Udáva oneskorenie vyhlásenia začiatku udalosti.
- * @param[in]   time_proximity  Najväčia vzdialenosť súvislej udalosti v počte okien. Najväčšia dĺžka časovej medzery medzi nájdenými špičkami.
- *                              Udáva oneskorenie vyhlásenia ukončujúcej udalosti.
+ * @param[in]   time_proximity  Najväčšia vzdialenosť súvislej udalosti v počte okien. Najväčšia dĺžka časovej medzery medzi nájdenými špičkami.
+ *                              Udáva oneskorenie vyhlásenia ukončenia udalosti.
  * 
- * @return Počet detegovaných zmien, čiže začiatočných a ukončujúcich udalostí v danom spektre posuvného okna
+ * @return Počet detegovaných zmien, čiže začiatočných a koncov udalostí v danom spektre posuvného okna
  */
 size_t event_detection(size_t t, SpectrumEvent *events, const bool *peaks, const float *spectrum, 
                        uint16_t bins, uint16_t min_duration, uint16_t time_proximity);

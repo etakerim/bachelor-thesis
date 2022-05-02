@@ -1,16 +1,15 @@
 \chapter{Úvod}
-Inteligentné senzorové systémy zariadení Internetu vecí (IoT) zaznamenávajú obrovskú kvantitu údajov z prostredia, kde
+Inteligentné senzorové systémy zariadení internetu vecí zaznamenávajú obrovskú kvantitu údajov z prostredia, kde
 pôsobia. Prúdy vzoriek meraných veličín majú sami o sebe nízku informačnú hodnotu a zbytočne zaťažujú
 prenosové pásmo komunikačných kanálov a kapacitu úložísk. Monitorovanie širokého rozsahu kladie požiadavky
 na čo najmenšie výrobné náklady senzorových jednotiek a dlhodobú výdrž pri napájaní z batérií za minimálnej údržby.
 Existuje preto potreba získané dáta spracovať do istej miery už v blízkosti ich zdroja, aby došlo k efektívnemu
 využitiu dostupných prostriedkov.
 
-Zameriame sa na sledovanie vibrácií a dolovanie čŕt záujmu z nich. Význam a dôležitosť sledovania vibrácií spočíva v ich v
-výskyte u každého mechanického zariadenia pohybom jednotlivých súčiastok a trením v ložiskách. Ich nadmerná prítomnosť
-býva spôsobená opotrebením dielov stroja a dôsledkom technických defektov. Ďalšou oblasťou hojnej prítomnosti vibrácií
-je preprava osôb alebo tovaru, kde ich zapríčiňujú nerovnosti povrchu vozovky alebo koľaje v bode styku s kolesami, či aparát
-ovplyvňujúci pohyb vozidla, čiže spaľovací alebo elektrický motor a brzdový systém.
+Význam a dôležitosť sledovania vibrácií spočíva v ich v výskyte u každého mechanického zariadenia pohybom jednotlivých súčiastok
+a trením v ložiskách. Ich nadmerná prítomnosť býva spôsobená opotrebením dielov stroja a dôsledkom technických defektov. 
+Ďalšou oblasťou hojnej prítomnosti vibrácií je preprava osôb alebo tovaru, kde ich zapríčiňujú nerovnosti povrchu vozovky 
+alebo koľaje v bode styku s kolesami, či aparát ovplyvňujúci pohyb vozidla, čiže spaľovací alebo elektrický motor a brzdový systém.
 
 Detekciou nežiaducich vibrácií v preprave sa dokáže zabezpečiť bezpečnosť pasažierov včasnou výmenou súčiastky,
 ktorá by ovplyvnila prevádzkyschopnosť v kritických momentoch, a predísť nenávratnému poškodeniu krehkých materiálov,
@@ -18,17 +17,23 @@ znehodnoteniu reaktívnych substancií, či ich aktivácii v prípade výbušní
 nebezpečných prírodných úkazov a ich správna identifikácia má za následok varovania pre evakuáciu obyvateľstva
 v oblasti postihnutej zemetrasením, či erupciou sopky, vedúcimi k ohrozenia zdravia osôb a poškodenia majetku.
 
-V analýze problematiky sa zapodievame fyzikálnym modelom opisom vibrácií, od čoho sa odvíja metodika ich snímania
-akcelerometrami typu MEMS a prevod do číslicovej podoby analógovo-digitálnym prevodníkom. Na spracovanie priebehu
-signálu zrýchlenia sa pozrieme z troch hlavných hľadísk.
+Vibračný signál je merateľný v digitálnej podobe snímačom pohybového zrýchlenia mikromechanickej konštrukcie. 
+Na postupnosť pozorovaní sa nazerá ako vlnový priebeh, ktorý sa sprehľadňuje agregačnými, korelačnými a testovacími štatistikami
+na odhalenie náhlych zmien. Významne vyčlenené úrovne sa odlišujú od nevýznamných algoritmami na detekciu špičiek.
+Metódami transformácie do frekvenčnej oblasti sa objavujú periodicky prítomné zložky, kde je opäť žiaduce upozorniť 
+na momentálne prevládajúci spektrálny obsah. 
 
-Integračné metódy umožňujú nadobudnúť odhad o relatívnej rýchlosti a polohe z akcelerácie. Na postupnosti pozorovaní
-je možné nahliadať tiež v časovej doméne zužitkovaním základných agregačných a korelačných štatistík na odhalenie
-náhlych zmien. Významne vyčlenené úrovne sú detegované
-algoritmami na detekciu špičiek za rozličnej úspešnosti. Metódami transformácie do frekvenčnej oblasti sa
-objavujú periodicky prítomné zložky, kde je opäť žiaduce upozorniť na momentálne prevládajúci spektrálny obsah.
-Modely operujúce s vibračnými dátami by mali nasadené na IoT zariadenie kladúce svoje špecifické nároky a
-obmedzenia.
+Modely operujúce s dátami prijímanými bezdrôtovým spojením sú podľa potrieb rozsahu záberu nad skupinami zariadení a
+lebo geografickými oblasťami, či výpočtovej náročnosti nasadené do adekvátnej vrstvy senzorovej siete. Imperatívnou 
+požiadavkou je čím skôr premeniť informačnú záplavu na poznatky užitočné koncovému užívateľovi.
 
-Navrhneme kroky postupov na generovanie významných udalostí z nameranej akcelerácie. Po vyhodnotení úspešnosti
-modelov v vlastných dátových sadách bude zámerom implementácia konfigurovateľnej senzorovej IoT jednotky.
+Rozbor vlastností akcelerometrov načrtne vernosť reprezentácie s akou sa nasníma predmetná fyzikálna veličina.
+Analyzovanými technikami na odvodenie rýchlosti a polohy sa utvorí ucelenejší obraz o kinematike pohybu.
+V časovej oblasti sa preberá zmysel a výpočet deskriptívnych štatistík, nasledovaný algoritmami na rozpoznávanie špičiek
+úrovní zrýchlenia. Ďalej, vo frekvenčnej doméne sa nachádza prehľad transformačných 
+funkcií a úprav za dosiahnutia odhadu spektrálneho priebehu. 
+
+Zoznámenie s obmedzeniami limitáciami v senzorových sieťach
+slúži nadväzuje na špecikáciu požiadaviek zohľadnenú v návrhu a implementácii firmvéru mikrokontroléra na konfigurovateľný 
+zber akcelerácie, kde sa majú uplatniť spôsoby úpravy signálu. V overení sa validuje zhoda s predostretými požiadavkami voči
+vlastným syntetických aj reálnym datasetov a poukazuje sa na detekčné schopnosti systému.

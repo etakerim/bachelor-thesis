@@ -1,0 +1,66 @@
+\thispagestyle{empty}
+\chapter{Plán práce}
+\pagenumbering{arabic}
+\renewcommand*{\thepage}{A-\arabic{page}}
+
+\section{Zimný semester}
+
+\begin{table}[h!]
+\def\arraystretch{1.25}
+\begin{tabular}{|l|p{12cm}|}
+\hline
+\textbf{Obdobie} & \textbf{Náplň práce}                                                                                                                                                                                                                         \\ \hline
+1. týždeň         & Základný prehľad relevantnej literatúry.                                                                                                                                                                                                      \\ \hline
+2. týždeň         & Štúdium literatúry ohľadom montorovania vibrácií. Pokusný zber dát akcelerácie z MHD pomocou akcelerometra na smartfóne a ich prieskumná analýza.                                             \\ \hline
+3. týždeň         & Štúdium článkov o frekvenčnej analýze a rešerš algoritmov na hľadanie špičiek. Implementácia objavených prístupov hľadania špičiek a aplikovanie na merania vibrácií z električiek a autobusu. \\ \hline
+4. týždeň         & Flashovanie firmvéru na vývojový kit iCOMOX od Shiratech.                                                                                                                                                                                                  \\ \hline
+5. týždeň         & Osnova práce s referenciami na nájdenú literatúru.                                                                                                                                                                                            \\ \hline
+6. týždeň         & Firmvér pre dosku na platforme ESP32 pre záznam akceleračných dát na SD kartu cez OpenLog \\ \hline
+7. týždeň         & Merania vibrácií v MHD a analýza získaných záznamov v Jupyter notebooku. Doplnenie zdrojov pre časti osnovy s málo referenciami.                                                                  \\ \hline
+8. týždeň         & Sekcia 2.1. práce o monitorovaní vibrácií a šoku.                                                                                                                                                                                             \\ \hline
+9. týždeň         & Doplnenie typov akcelerometrov a časti o numerickej kvadratúre k sekcii 2.1. Úvod do sekcie 2.2. o analýze v časovej doméne.                                                                       \\ \hline
+10. týždeň        & Deskriptívne štatistiky a algoritmy na identifikáciu špičiek.                                                                                                                                                                                 \\ \hline
+11. týždeň        & Sekcia 2.2. o frekvenčnej a časovo-frekvenčnej analýze signálu.                                                                                                                                                                               \\ \hline
+12. týždeň        & Sekcia 2.3 o architektúre senzorových sietí a ich obmedzeniach. Návrh riešenia a úvod k priebežnej správe BP1. \\ \hline
+13. týždeň        & Zapracované pripomienky k prezentovanému návrhu.                                                                                                                                                                             \\ \hline
+\end{tabular}
+\end{table}
+
+Rozvrhnutie pred začiatkom zimného semestra sa držalo dvoch oporných termínov a síce 6. týždňa a 12. týždňa.
+V 6. týždni sme chceli zavŕšiť rešerš podstatných zdrojov literatúry podľa predstavy o charaktere vibračných signálov
+nadobutnutých aj prieskumnými meraniami. V druhej polovici semestra sme tak vedeli zostaviť osnovu a každý týždeň
+sa venovať jednej sekcii analýzy až do 12. týždňa.
+
+\clearpage
+\newpage
+
+
+\section{Letný semester}
+\begin{table}[h!]
+\def\arraystretch{1.25}
+\begin{tabular}{|l|p{12cm}|}
+\hline
+\textbf{Obdobie} & \textbf{Náplň práce}                                                                                                                                            \\ \hline
+1. týždeň        & Tvorba generátora syntetického signálu s mechanizmom vyhodnocovania metrík  klasifikácie detektorov.                                                            \\ \hline
+2. týždeň        & Pripravenie vývojového prostredia s ESP-IDF SDK a výber  vhodných knižníc  pre DSP a Message Pack.                                                              \\ \hline
+3. týždeň        & Odlaďovanie ovládania hardvérových periférií: akcelerometer, pripojenie na Wifi.  Návrh krokov dátovej pipeline.                                                \\ \hline
+4. týždeň        & Zakomponovanie posielania vzoriek cez MQTT. Validácia na syntetických dátach rozdelených na trénovaciu a testovaciu sadu.                                       \\ \hline
+5. týždeň        & Implementácia kostry dátovej pipeline na IoT zariadenie. Message Pack serializácia  konfigurácie a jej publikovanie  cez MQTT. \\ \hline
+6. týždeň        & Parser prijatej konfigurácie, uloženie a aplikácia nastavení na zariadení.  Optimalizácia alokovania dostupnej pamäte.                                          \\ \hline
+7. týždeň        & Návrh algoritmu na identifikáciu udalostí. Jednoduché jednotkové testy na validáciu funkčnosti systému a prvotné výkonnostné testy. Tvorba doxygen dokumentácie. \\ \hline
+8. týždeň        & Experimentálne merania pamäťovej a časovej efektivity. Vyhodnocovanie úspešnosti hľadania špičiek podľa hyperparametrov. \\ \hline
+9. týždeň        & Ilustrácie a diagramy zahrnuté do kapitoly návrhu. \\ \hline
+10. týždeň       & Písanie textu 3. kapitoly ,,Návrh riešenia'' a 4. kapitoly ,,Implementácia''. \\ \hline
+11. týždeň       & Písanie textu, vyhotovenie grafov a tabuliek pre zvyšné kapitoly  hlavnej časti práce. \\ \hline
+12. týždeň       & Doplnenie príloh práce, najmä technickej dokumentácie a  používateľskej príručky.                                                                                 \\ \hline
+13. týždeň       & Prezentácia celkového vypracovania vedúcemu práce a zapracovanie pripomienok.                                                                                                           \\ \hline
+\end{tabular}
+\end{table}
+
+Pôvodný plán vychádzal z trojtýždenných cyklov, kde po každom by kompletná daná časť systému, v skutočnosti sa
+prirodzene prelínali a dopĺňali. Do konca 3. týždňa sme plánovali odladenie modelov na monitorovanie vibrácií na základe
+analyzovaných algoritmov a meranie úspešnosti na synteticky generovaných dátach. Do 6.týždňa mala byť funkčný
+záznamom udalostí na pamäťovú kartu vo firmvéri. Do 9. týždňa sa mala uskutočniť optimalizácia posielaných dát
+a vzdialená konfigurácia. Na posledný beh pripadali experimenty a ich vyhodnotenie, počas ktorých bol už písaný text práce.
+Konzultácie raz za dva týždne tvorili kontrolné body, kedy sme konfrontovali plnenie plánu s postupom.
+\clearpage

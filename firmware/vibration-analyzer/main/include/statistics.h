@@ -41,7 +41,7 @@ float root_mean_square(const float *x, int n);
 float mean(const float *x, int n);
 
 /**
- * @brief Rozptyl populácie
+ * @brief Rozptyl populácie (vychýlená štatistika)
  *  
  * @param[in]  x   Vzorky signálu
  * @param[in]  n   Počet vzoriek signálu
@@ -52,9 +52,9 @@ float variance(const float *x, int n, float mean);
 /**
  * @brief Smerodajná odchýlka
  *  
- * @param[in]  x   Vzorky signálu
+ * @param[in]  variance   Rozptyl signálu
  * @param[in]  n   Počet vzoriek signálu
- * @return  smerodajná odchýlka hodnôt signálu
+ * @return  Smerodajná odchýlka hodnôt signálu
  */
 float standard_deviation(float variance);
 
@@ -63,7 +63,7 @@ float standard_deviation(float variance);
  *  
  * @param[in]  x    Vzorky signálu
  * @param[in]  n    Počet vzoriek signálu
- * @param[in]  m    Rád centrálneho momentu
+ * @param[in]  m    Rád centrálneho momentu.  Kladné číslo väčšie ako 1.
  * @param[in]  mean Aritmetický priemer signálu
  * @return  Centrálny moment
  */
@@ -90,7 +90,7 @@ float skewness(const float *x, int n, float mean);
 float kurtosis(const float *x, int n, float mean);
 
 /**
- * @brief Korelácia
+ * @brief Korelácia z medzivýsledkov
  *  
  * @param[in]  x_diff    Predspracované vzorky prvého signálu odčítané od aritmetického priemeru: \f$ (x_i - \bar{x}) \f$
  * @param[in]  y_diff    Predspracované vzorky druhého signálu odčítané od aritmetického priemeru: \f$ (y_i - \bar{y}) \f$
@@ -103,17 +103,19 @@ float correlation(const float *x_diff, const float *y_diff, int n, float x_std, 
 
 
 /**
- * @brief Quickselect. Algoritmus na nájdenie k-teho najmenšieho prvku v nezoradenom poli.
+ * @brief Quickselect. Algoritmus na nájdenie k-teho najmenšieho prvku v nezoradenom poli. Aby nedochádzalo
+ * k modifikácii poradia pôvodného poľa kopíruje prvky do poľa z premenlivou dĺžkou (Variable-length array)
+ * podľa `n` na zásobníku.
  *  
- * @param      x    Vzorky signálu
+ * @param[in]  x    Vzorky signálu
  * @param[in]  n    Počet vzoriek signálu
  * @param[in]  k    Rád k-teho najmenšieho prvku
- * @return  K-ty najmenší prvok
+ * @return  k-ty najmenší prvok
  */
 float quickselect(const float *x, int n, int k);
 
 /**
- * @brief Medián
+ * @brief Medián cez Quickselect
  *  
  * @param[in]  x    Vzorky signálu
  * @param[in]  n    Počet vzoriek signálu
@@ -122,7 +124,8 @@ float quickselect(const float *x, int n, int k);
 float median(const float *x, int n);
 
 /**
- * @brief Mediánová absolútna odchýlka (MAD)
+ * @brief Mediánová absolútna odchýlka (MAD). Medzi-výsledky odchýlok na nájdenie mediánu ukladá
+ * do poľa z premenlivou dĺžkou (Variable-length array) podľa `n` na zásobníku.
  *  
  * @param[in]  x    Vzorky signálu
  * @param[in]  n    Počet vzoriek signálu

@@ -1,0 +1,66 @@
+ \thispagestyle{empty}
+\setcounter{figure}{0}
+\chapter{Používateľská príručka}
+\pagenumbering{arabic}
+\renewcommand*{\thepage}{C-\arabic{page}}
+Špecifikovať testovaciu platformu
+(esp-idf) v4.4, FreeRTOS v9.0.0, esp-dsp v1.2, MPack v1.1, CMake - nástroj na automatizácie kompilácie (GNU 8.4.0), Platforma Manjaro Linux
+	Linux ThinkPad 5.10.109-1-MANJARO (\url{https://ludocode.github.io/mpack/md_docs_expect.html}), Verzie a návod na inštaláciu v prílohe
+- Python3.10, numpy, scipy (stats, signal, fft, interpolate), pandas, seaborn, matplotlib
+- msgpack, json, cmd,  Eclipse Mosquitto
+
+sudo pacman -S --needed gcc git make flex bison gperf python-pip cmake ninja ccache dfu-util libusb
+\url{git clone -b v4.4 --recursive https://github.com/espressif/esp-idf.git}
+\url{git clone -b v1.2.0 https://github.com/espressif/esp-dsp.git}
+\url{wget https://github.com/ludocode/mpack/releases/download/v1.1/mpack-amalgamation-1.1.tar.gz}
+
+
+cd ~/esp/esp-idf
+./install.sh esp32
+
+
+\textbf{Flashovanie a sprevádzkovanie}
+. ./export.sh
+cd firmware/vibration-analyzer
+idf.py build
+idf.py -p /dev/ttyUSB0 flash
+idf.py -p /dev/ttyUSB0 monitor
+
+na SD kartu dať: config.txt
+
+
+\textbf{MQTT klient na nahrávanie konfigurácií}
+cd  main/tests/
+pip install -r requirements.txt
+python config\_tool.py
+
+Príkazy:
+	connect
+		Device ID [1]:
+      	Broker IP [192.168.1.103]
+        Broker Port [1883]
+	disconnect
+	end
+	^C
+
+	set
+		config>
+	config
+	topic
+		topic>
+		Listen time on topic in sec [10]:
+
+	login
+	credentials
+
+\url{https://github.com/espressif/esp-idf}
+\url{https://github.com/espressif/esp-dsp} s úpravou
+\url{https://github.com/ludocode/mpack/releases/download/v1.1/mpack-amalgamation-1.1.tar.gz}
+
+\textbf{Jupyter notebooky}
+cd measurements
+pip install -r requirements.txt
+jupyter notebook
+
+- Replikovateľnosť experimentov
+

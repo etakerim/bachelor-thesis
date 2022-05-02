@@ -61,7 +61,6 @@
 \newcommand{\clearemptydoublepage}{\clearpage{\pagestyle{empty}\origdoublepage}}
 \let\cleardoublepage\clearemptydoublepage
 
-
 \raggedbottom
 \newcommand{\emptypage}{\newpage\thispagestyle{empty}\mbox{}\newpage}
 \newcommand{\signaturespace}[2]{
@@ -105,6 +104,14 @@
     xrightmargin=3.4pt,
 	morekeywords = {uint8_t,uint16_t,int16_t,uint32_t,int32_t,bool}
 }
+\lstdefinestyle{docs}{
+    language=C,
+	basicstyle=\linespread{1.1}\ttfamily\small\bfseries,
+    tabsize=4,
+    breaklines=true,
+    belowskip=0pt
+}
+
 \renewcommand{\lstlistingname}{Zdrojový kód}
 
 % Zoznam skratiek
@@ -136,10 +143,12 @@
 \newcommand{\SignDate}[0] {16.5.2022}
 
 
-
 \begin{document}
+\pagenumbering{gobble}
+\input{chapters/preliminaries/dictionary}
+
 % Obal
-\input{chapters/titlepage}
+\input{chapters/preliminaries/titlepage}
 \begin{flushleft}
 Vedúci práce:\quad \Supervisor{\Large \par}
 \vspace{\medskipamount}
@@ -148,7 +157,8 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 \emptypage
 
 % Titulný list
-\input{chapters/titlepage}
+\pagenumbering{roman}
+\input{chapters/preliminaries/titlepage}
 \begin{flushleft}
 {\setlength{\mathindent}{0.1cm}
 \begin{align*}
@@ -164,19 +174,15 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 \emptypage
 
 % Zadanie
-\newpage
 \thispagestyle{empty}
-\includepdf[pages=1, scale=0.95]{zadanie}
-\newpage
-
+\includepdf[pages=1]{zadanie}
 \emptypage
-\pagenumbering{roman}
 
-\input{chapters/acknowledgments}
-
-\input{chapters/annotation}
-
-\input{chapters/dictionary}
+\input{chapters/preliminaries/declaration}
+\emptypage
+\input{chapters/preliminaries/acknowledgments}
+\emptypage
+\input{chapters/preliminaries/annotation}
 
 % Obsah
 \renewcommand{\contentsname}{Obsah}
@@ -211,6 +217,18 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 \printbibliography[title={Literatúra}]
 
 %Príloha
-\input{chapters/appendix}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+\addtocontents{toc}{\cftpagenumbersoff{chapter}}
+\appendix
+\titleformat{\chapter}{\normalfont\huge\bf}{Príloha \thechapter:}{1em}{}
+\renewcommand{\chaptermark}[1]{\markboth{\uppercase{Príloha \thechapter.\ #1}}{}}
+
+\input{chapters/appendix/A-plan-of-work}
+
+\input{chapters/appendix/B-technical-docs}
+
+\input{chapters/appendix/C-user-manual}
+
+\input{chapters/appendix/D-digital-medium}
 
 \end{document}

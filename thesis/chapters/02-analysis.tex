@@ -129,8 +129,8 @@ Presnejší prevod dosiahneme zužitkovaním deklarovanej citlivosti senzora pri
 \subsection{Vlastnosti bežných akcelerometrov} \label{section:accelometers}
 Na ilustráciu uvádzame parametre zvolených najrozšírenejších typov akcelerometrov. Akcelerometer LSM9DS1 \cite{lsm9ds1} umožňuje cez
 zbernicu SPI alebo I$^\mathrm{2}$C zvoliť zo štyroch dynamických rozsahov, pričom každé rozpätie sa vyznačuje svojou
-citlivosťou. Zvolením menšieho dynamického rozsahu zvýšime citlivosť. LSM9DS1 funguje pri rozsahoch $\pm2$g, $\pm4$g a $\pm8$g
-a $\pm16$g, postupne s citlivosťami
+citlivosťou. Zvolením menšieho dynamického rozsahu zvýšime citlivosť. LSM9DS1 funguje pri rozsahoch 
+$\pm2$ g, $\pm4$ g a $\pm8$ g a $\pm16$ g, postupne s citlivosťami
 $0.061$ mg/LSB, $0.122$ mg/LSB, $0.244$ mg/LSB, $0.732$ mg/LSB. Výstupný dátový tok (ODR) je možné nastaviť na $10$Hz, $50$Hz,
 $119$ Hz, $238$ Hz, $476$ Hz a najvyššie na $952$ Hz. Navzorkované hodnoty sú ukladané do 16-bitového výstupného registra v
 dvojkovom doplnku.
@@ -173,7 +173,7 @@ integrovaniu funkcie akcelerácie. Dostávame, že rýchlosť je integrálom zr�
 Približný výpočet určitého integrálu funkcie akcelerácie je založený na geometrickej interpretácii integrálu ako plochy pod krivkou.
 Vtedy sa jedná o problém numerickej kvadratúry navrhujúci nahradenie pôvodného integrandu interpolačným polynómom
 \cite{numerical-mathematics}. Rád polynómu $n$ implicitne stanoví priebeh funkcie medzi ekvidištantnými vzorkami a
-má dopad na presnosť aproximácie. Najčastejšie sa používajú konštantný ($n = 0$), lineárny ($n = 1$) alebo kvadratický ($n = 2$)
+má dopad na presnosť aproximácie. Najčastejšie sa používajú konštantný, lineárny alebo kvadratický
 polynóm, podľa toho rozlišujeme obdĺžnikové pravidlo (vzorec \ref{eq:midpoint-rule}),
 lichobežníkové pravidlo (vzorec \ref{eq:trapezodial-rule}) a Simpsonovo pravidlo (vzorec \ref{eq:simpson-rule}).
 \myequations{Pravidlá numerickej kvadratúry: obdĺžníkové, lichobežníkové, Simpsonovo}
@@ -390,8 +390,8 @@ Skutočné signály sa potýkajú so šumom, ktorý sťažuje odlíšenie pravej
 Pred samotným procesom hľadania špičiek je preto aplikovaný vyhladzovací filter, v prípade potreby aj opakovane na už
 vyhladení signál. Najčastejšie sa jedná o filter
 kĺzavého priemeru, Savitzky–Golay alebo Gaussov filter \cite{spectrometry-peak-detection}. Filtrovanie sa realizuje
-diskrétnou jednorozmernou konvolúciou vstupného signálu a masky filtra, ktorá býva hardvérovo akcelerovaná inštrukciami vynásob a sčítaj
-(,,multiply-accumulate'') za zvýšenia presnosti výsledku.
+diskrétnou jednorozmernou konvolúciou vstupného signálu a masky filtra, ktorá býva hardvérovo akcelerovaná inštrukciami ,,vynásob a sčítaj''
+(multiply-accumulate) za zvýšenia presnosti výsledku.
 
 \subsection{Detekcia špičiek prahovou úrovňou}
 Za predpokladu, že priebeh meranej veličiny sa vyznačuje krátkymi impulzmi s viac-menej pravidelnou amplitúdou
@@ -620,7 +620,7 @@ Y[k] &= \sum_{n=0}^{N - 1}{x[n] \cdot W_N^{nk}};\quad k = 0, \dots, N - 1 \label
 W_{N}^{nk} &= \exp{\left(-i2\pi nk \, /\, N\right)} \label{eq:twiddle}
 \end{align}\end{ceqn}
 
-Alternatívne sa exponenciálny faktor vyjadruje v goniometrickom tvare ako kosínusovú reálnu časť a sínusovú imaginárnu časť:
+Alternatívne sa exponenciálny faktor vyjadruje v goniometrickom tvare rozkladom na kosínusovú reálnu časť a sínusovú imaginárnu časť:
 \myequations{Exponenciálny faktor pre DFT v goniometrickom tvare}
 \begin{ceqn}\begin{align}
 W_{N}^{nk} = \cos(2\pi nk/ N) - i \cdot \sin(2\pi nk/ N)
@@ -634,7 +634,7 @@ objavuje reprezentácia relatívneho energetického spektra v decibeloch (\ref{e
 \myequations{Magnitúdové spektrum absolútne a relatívne v decibeloch}
 \begin{ceqn}\begin{align}
 |Y[k]| = \sqrt{\Re\{Y[k]\}^2 + \Im\{Y[k]\}^2} \label{equ:magnitude-spectrum} \\
-Y_{dB}[k] = 20 \cdot \log_{10}{ \left( \frac{|Y[m]|}{\max\{|Y[m]|\}} \right)} \label{equ:decibel-spectrum}
+Y_{dB}[k] = 20 \cdot \log_{10}{ \left( \frac{|Y[k]|}{\max\limits_{0 \leq k < N / 2}\{|Y[k]|\}} \right)} \label{equ:decibel-spectrum}
 \end{align}\end{ceqn}
 
 Sekvencia pozorovaní vyjadrená cez súčet kosínusoid namiesto exponenciálneho faktora tvorí rodinu diskrétnych
@@ -832,7 +832,7 @@ h_{BPF}[n] &= \mathrm{sinc}(2 f_{c2} n) -  \mathrm{sinc}(2 f_{c1} n)  \label{equ
 \end{align}\end{ceqn}
 
 Podľa konvolučnej vety platí, že konvolúcia v čase je násobením vo frekvenciách, umožňujúc urýchlenie filtrovania
-pre veľké masky. Kým vtedy sa blíži zložitosť konvolúcie ku kvadratickej, na násobenie vo frekvenčnej doméne so
+pre veľké masky. Vtedy sa blíži zložitosť konvolúcie ku kvadratickej, kedy na násobenie vo frekvenčnej doméne
 stačí vykonať FFT a IFFT dohromady v rádovo $\mathcal{O}(n \log n)$.
 
 \begin{figure}[h]
