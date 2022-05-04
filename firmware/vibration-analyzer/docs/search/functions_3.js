@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['event_5fdetection_0',['event_detection',['../group__events.html#ga4fea8dd101edab995cc518735bed729d',1,'event_detection(size_t t, SpectrumEvent *events, const bool *peaks, const float *spectrum, uint16_t bins, uint16_t min_duration, uint16_t time_proximity):&#160;events.c'],['../group__events.html#ga4fea8dd101edab995cc518735bed729d',1,'event_detection(size_t t, SpectrumEvent *events, const bool *peaks, const float *spectrum, uint16_t bins, uint16_t min_duration, uint16_t time_proximity):&#160;events.c']]],
+  ['event_5finit_1',['event_init',['../group__events.html#ga8a2adc2bbe865a11c08b4e18185bd23e',1,'event_init(SpectrumEvent *events, uint16_t bins):&#160;events.c'],['../group__events.html#ga8a2adc2bbe865a11c08b4e18185bd23e',1,'event_init(SpectrumEvent *events, uint16_t bins):&#160;events.c']]],
+  ['events_5fserialize_2',['events_serialize',['../group__stages.html#ga95f91944f178345e7e40b11e2a1db8f5',1,'events_serialize(size_t timestamp, float bin_width, char *msg, size_t size, const SpectrumEvent *events, size_t n):&#160;serialize.c'],['../group__stages.html#ga95f91944f178345e7e40b11e2a1db8f5',1,'events_serialize(size_t timestamp, float bin_width, char *msg, size_t size, const SpectrumEvent *events, size_t n):&#160;serialize.c']]]
+];

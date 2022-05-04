@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Spracovanie dát generovaných senzorovou IoT sieťou: Zdrojový súbor /home/miroslav/fiit-stu/BP/bachelor-thesis/firmware/vibration-analyzer/main/include/peripheral.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Spracovanie dát generovaných senzorovou IoT sieťou
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hľadať" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generované programom Doxygen 1.9.3 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Hľadať','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('peripheral_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">peripheral.h</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef PERIPHERAL_H</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define PERIPHERAL_H</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;hal/gpio_types.h&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;driver/timer.h&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;esp_wifi.h&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;mqtt_client.h&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;pipeline.h&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="group__peripheral.html#ga8d3ab490bf0a23205df8ca15333d007b">   20</a></span><span class="preprocessor">#define DEVICE_MQTT_TOPIC           &quot;imu/1/&quot;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="group__peripheral.html#ga0847a0fdb0a7d0242328939deb953183">   22</a></span><span class="preprocessor">#define TOPIC_LENGTH                64</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="group__peripheral.html#gaf35bc7743bed8a493e007b617daece76">   23</a></span><span class="preprocessor">#define DEVICE_MQTT_TOPIC_LENGTH    sizeof(DEVICE_MQTT_TOPIC) / sizeof(char)</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="group__peripheral.html#gab879f7de346ca7b8eb380b419f330303">   25</a></span><span class="preprocessor">#define MQTT_TOPIC_REQUEST          DEVICE_MQTT_TOPIC &quot;config/request&quot;</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="group__peripheral.html#ga2c65c1d87d61489398e542b02ae7ff9f">   26</a></span><span class="preprocessor">#define MQTT_TOPIC_RESPONSE         DEVICE_MQTT_TOPIC &quot;config/response&quot;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="group__peripheral.html#gaf920a5236a62b12c200d394bfee9fbe7">   27</a></span><span class="preprocessor">#define MQTT_TOPIC_CONFIG           DEVICE_MQTT_TOPIC &quot;config/set&quot;</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="group__peripheral.html#ga19a53d56712faf57d5a7ab2675f609e2">   28</a></span><span class="preprocessor">#define MQTT_TOPIC_LOGIN            DEVICE_MQTT_TOPIC &quot;login/set&quot;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="group__peripheral.html#ga5449be6c699d1e83dd2807614bab505f">   29</a></span><span class="preprocessor">#define MQTT_TOPIC_LOGIN_GET        DEVICE_MQTT_TOPIC &quot;login/request&quot;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="group__peripheral.html#ga8f763cb55b1abe335cecf4ab0e8afe12">   30</a></span><span class="preprocessor">#define MQTT_TOPIC_LOGIN_SEND       DEVICE_MQTT_TOPIC &quot;login/response&quot;</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="group__peripheral.html#gac9a9e626c3592e22557371c9621bd8b8">   31</a></span><span class="preprocessor">#define MQTT_TOPIC_SYSLOG           DEVICE_MQTT_TOPIC &quot;syslog&quot;</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="group__peripheral.html#ga15cb8792a6938bdf53570a338b563856">   32</a></span><span class="preprocessor">#define MQTT_TOPIC_STREAM           DEVICE_MQTT_TOPIC &quot;samples&quot;</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="group__peripheral.html#gac434b2eac744b6b3002ccaeaf3f5b596">   33</a></span><span class="preprocessor">#define MQTT_TOPIC_STATS            DEVICE_MQTT_TOPIC &quot;stats/&quot;</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="group__peripheral.html#ga00d748e2d651a7d5aa0f08a390d73c4d">   34</a></span><span class="preprocessor">#define MQTT_TOPIC_SPECTRUM         DEVICE_MQTT_TOPIC &quot;spectrum/&quot;</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="group__peripheral.html#ga1936981e62341b145f90124866a0feac">   35</a></span><span class="preprocessor">#define MQTT_TOPIC_EVENT            DEVICE_MQTT_TOPIC &quot;events/&quot;</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="structOpenLog.html">   40</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="structOpenLog.html#ad0e11d5a9da51659098d14a39e8b8fe9">   41</a></span>    gpio_num_t <a class="code hl_variable" href="structOpenLog.html#ad0e11d5a9da51659098d14a39e8b8fe9">vcc</a>;     </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="structOpenLog.html#a312520524f636bc2712df74c2976a030">   42</a></span>    uint8_t <a class="code hl_variable" href="structOpenLog.html#a312520524f636bc2712df74c2976a030">uart</a>;       </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="structOpenLog.html#add9d1e99f849cdfcf68700ef6f7743e9">   43</a></span>    gpio_num_t <a class="code hl_variable" href="structOpenLog.html#add9d1e99f849cdfcf68700ef6f7743e9">rx</a>;      </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="structOpenLog.html#ad9ffa6f72f62512100fc844b0a51beed">   44</a></span>    gpio_num_t <a class="code hl_variable" href="structOpenLog.html#ad9ffa6f72f62512100fc844b0a51beed">tx</a>;      </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="structOpenLog.html#ac2ac1f9d6d9a4132d6891c5711850b80">   45</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structOpenLog.html#ac2ac1f9d6d9a4132d6891c5711850b80">baudrate</a>;       </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="structOpenLog.html#af56fb5ccf018204426f26a06cc2f6c13">   46</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="structOpenLog.html#af56fb5ccf018204426f26a06cc2f6c13">buffer</a>;         </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>} <a class="code hl_struct" href="structOpenLog.html">OpenLog</a>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="structMqttAxisTopics.html">   52</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="structMqttAxisTopics.html#a788e32707f861c48824e67e8a83ff0d8">   53</a></span>    <span class="keywordtype">char</span> stats[<a class="code hl_define" href="group__peripheral.html#ga0847a0fdb0a7d0242328939deb953183">TOPIC_LENGTH</a>];       </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="structMqttAxisTopics.html#a8b7adc736b82b817174777b2fb0f334f">   54</a></span>    <span class="keywordtype">char</span> spectra[<a class="code hl_define" href="group__peripheral.html#ga0847a0fdb0a7d0242328939deb953183">TOPIC_LENGTH</a>];     </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="structMqttAxisTopics.html#a2f8c71a00e01a053d281a2b083d314b8">   55</a></span>    <span class="keywordtype">char</span> events[<a class="code hl_define" href="group__peripheral.html#ga0847a0fdb0a7d0242328939deb953183">TOPIC_LENGTH</a>];      </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>} <a class="code hl_struct" href="structMqttAxisTopics.html">MqttAxisTopics</a>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__peripheral.html#ga3d367886269df112976fdca504bff983">axis_mqtt_topics</a>(<a class="code hl_struct" href="structMqttAxisTopics.html">MqttAxisTopics</a> *topics, <span class="keywordtype">int</span> axis);</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>esp_err_t <a class="code hl_function" href="group__peripheral.html#gafc232cb3eb6b2beb128b83547fc350f9">nvs_load</a>(<a class="code hl_struct" href="structConfiguration.html">Configuration</a> *conf, <a class="code hl_struct" href="structProvisioning.html">Provisioning</a> *login);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>esp_err_t <a class="code hl_function" href="group__peripheral.html#ga34ae0ae3e66114b25446768faa06f1eb">nvs_save_config</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structConfiguration.html">Configuration</a> *conf);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>esp_err_t <a class="code hl_function" href="group__peripheral.html#gaa0119f0f4e98b56363585d673f9f2780">nvs_save_login</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structProvisioning.html">Provisioning</a> *login);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__peripheral.html#ga9c107895275319ab00a3f06a363900be">openlog_setup</a>(<a class="code hl_struct" href="structOpenLog.html">OpenLog</a> *logger);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__peripheral.html#ga9d2dc47a670019ede5b59414930cf090">mqtt_event_handler</a>(<span class="keywordtype">void</span> *handler_args, esp_event_base_t base, int32_t event_id, <span class="keywordtype">void</span> *event_data);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>esp_mqtt_client_handle_t <a class="code hl_function" href="group__peripheral.html#ga5aa59ae740d28e8495b74d28746cd1fc">mqtt_setup</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *broker_url);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__peripheral.html#ga8c53364ce075696f03b1b1c767afae1c">wifi_connect</a>(wifi_config_t *wifi_config);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__peripheral.html#ga4529365acedaf749c5776211e4cc9c21">clock_setup</a>(uint16_t frequency, timer_isr_t action);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__peripheral.html#ga49dcd4fd239ce7e072ee6998538a604b">clock_reconfigure</a>(uint16_t frequency);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="agroup__peripheral_html_ga0847a0fdb0a7d0242328939deb953183"><div class="ttname"><a href="group__peripheral.html#ga0847a0fdb0a7d0242328939deb953183">TOPIC_LENGTH</a></div><div class="ttdeci">#define TOPIC_LENGTH</div><div class="ttdef"><b>Definition:</b> peripheral.h:22</div></div>
+<div class="ttc" id="agroup__peripheral_html_ga34ae0ae3e66114b25446768faa06f1eb"><div class="ttname"><a href="group__peripheral.html#ga34ae0ae3e66114b25446768faa06f1eb">nvs_save_config</a></div><div class="ttdeci">esp_err_t nvs_save_config(const Configuration *conf)</div><div class="ttdoc">Uloženie nastavení systému na nevolatilné úložisko.</div><div class="ttdef"><b>Definition:</b> peripheral.c:157</div></div>
+<div class="ttc" id="agroup__peripheral_html_ga3d367886269df112976fdca504bff983"><div class="ttname"><a href="group__peripheral.html#ga3d367886269df112976fdca504bff983">axis_mqtt_topics</a></div><div class="ttdeci">void axis_mqtt_topics(MqttAxisTopics *topics, int axis)</div><div class="ttdoc">Poskladanie názvu MQTT tém pre odosieanie dát o osi akcelerácie.</div><div class="ttdef"><b>Definition:</b> peripheral.c:187</div></div>
+<div class="ttc" id="agroup__peripheral_html_ga4529365acedaf749c5776211e4cc9c21"><div class="ttname"><a href="group__peripheral.html#ga4529365acedaf749c5776211e4cc9c21">clock_setup</a></div><div class="ttdeci">void clock_setup(uint16_t frequency, timer_isr_t action)</div><div class="ttdoc">Spustenie časovača na vzorkovanie signálu.</div><div class="ttdef"><b>Definition:</b> peripheral.c:92</div></div>
+<div class="ttc" id="agroup__peripheral_html_ga49dcd4fd239ce7e072ee6998538a604b"><div class="ttname"><a href="group__peripheral.html#ga49dcd4fd239ce7e072ee6998538a604b">clock_reconfigure</a></div><div class="ttdeci">void clock_reconfigure(uint16_t frequency)</div><div class="ttdoc">Zmena frekvencie časovača.</div><div class="ttdef"><b>Definition:</b> peripheral.c:112</div></div>
+<div class="ttc" id="agroup__peripheral_html_ga5aa59ae740d28e8495b74d28746cd1fc"><div class="ttname"><a href="group__peripheral.html#ga5aa59ae740d28e8495b74d28746cd1fc">mqtt_setup</a></div><div class="ttdeci">esp_mqtt_client_handle_t mqtt_setup(const char *broker_url)</div><div class="ttdoc">Pripojenie sa k MQTT broker a zaregistrovanie spätného volanie pre všetky udalosti.</div><div class="ttdef"><b>Definition:</b> peripheral.c:54</div></div>
+<div class="ttc" id="agroup__peripheral_html_ga8c53364ce075696f03b1b1c767afae1c"><div class="ttname"><a href="group__peripheral.html#ga8c53364ce075696f03b1b1c767afae1c">wifi_connect</a></div><div class="ttdeci">void wifi_connect(wifi_config_t *wifi_config)</div><div class="ttdoc">Pripojenie sa k Wifi AP blokujúce.</div><div class="ttdef"><b>Definition:</b> peripheral.c:36</div></div>
+<div class="ttc" id="agroup__peripheral_html_ga9c107895275319ab00a3f06a363900be"><div class="ttname"><a href="group__peripheral.html#ga9c107895275319ab00a3f06a363900be">openlog_setup</a></div><div class="ttdeci">void openlog_setup(OpenLog *logger)</div><div class="ttdoc">Nastavenie UART rozhrania pre zariadenie OpenLog.</div><div class="ttdef"><b>Definition:</b> peripheral.c:65</div></div>
+<div class="ttc" id="agroup__peripheral_html_ga9d2dc47a670019ede5b59414930cf090"><div class="ttname"><a href="group__peripheral.html#ga9d2dc47a670019ede5b59414930cf090">mqtt_event_handler</a></div><div class="ttdeci">void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)</div><div class="ttdoc">Dopredná deklarácia spätného volania. Implementáciu musí poskytnúť hlavný program.</div><div class="ttdef"><b>Definition:</b> main.c:144</div></div>
+<div class="ttc" id="agroup__peripheral_html_gaa0119f0f4e98b56363585d673f9f2780"><div class="ttname"><a href="group__peripheral.html#gaa0119f0f4e98b56363585d673f9f2780">nvs_save_login</a></div><div class="ttdeci">esp_err_t nvs_save_login(const Provisioning *login)</div><div class="ttdoc">Uloženie nastavení sieťového pripojenia na nevolatilné úložisko.</div><div class="ttdef"><b>Definition:</b> peripheral.c:172</div></div>
+<div class="ttc" id="agroup__peripheral_html_gafc232cb3eb6b2beb128b83547fc350f9"><div class="ttname"><a href="group__peripheral.html#gafc232cb3eb6b2beb128b83547fc350f9">nvs_load</a></div><div class="ttdeci">esp_err_t nvs_load(Configuration *conf, Provisioning *login)</div><div class="ttdoc">Načítanie nastavení systému z nevolatilného úložiska.</div><div class="ttdef"><b>Definition:</b> peripheral.c:120</div></div>
+<div class="ttc" id="astructConfiguration_html"><div class="ttname"><a href="structConfiguration.html">Configuration</a></div><div class="ttdoc">Systémová konfigurácia pipeline spracovania vzoriek z akcelerometra.</div><div class="ttdef"><b>Definition:</b> pipeline.h:199</div></div>
+<div class="ttc" id="astructMqttAxisTopics_html"><div class="ttname"><a href="structMqttAxisTopics.html">MqttAxisTopics</a></div><div class="ttdoc">MQTT témy pre os zrýchlenia.</div><div class="ttdef"><b>Definition:</b> peripheral.h:52</div></div>
+<div class="ttc" id="astructOpenLog_html"><div class="ttname"><a href="structOpenLog.html">OpenLog</a></div><div class="ttdoc">SparkFun OpenLog - zaznenávač údajov na SD kartu cez sériovú linku.</div><div class="ttdef"><b>Definition:</b> peripheral.h:40</div></div>
+<div class="ttc" id="astructOpenLog_html_a312520524f636bc2712df74c2976a030"><div class="ttname"><a href="structOpenLog.html#a312520524f636bc2712df74c2976a030">OpenLog::uart</a></div><div class="ttdeci">uint8_t uart</div><div class="ttdoc">Číslo UART rozhrania.</div><div class="ttdef"><b>Definition:</b> peripheral.h:42</div></div>
+<div class="ttc" id="astructOpenLog_html_ac2ac1f9d6d9a4132d6891c5711850b80"><div class="ttname"><a href="structOpenLog.html#ac2ac1f9d6d9a4132d6891c5711850b80">OpenLog::baudrate</a></div><div class="ttdeci">int baudrate</div><div class="ttdoc">Baudová rýchlosť komunikácie. Rovnaká rýchlosť musí byť nastavená v config.txt na SD karte.</div><div class="ttdef"><b>Definition:</b> peripheral.h:45</div></div>
+<div class="ttc" id="astructOpenLog_html_ad0e11d5a9da51659098d14a39e8b8fe9"><div class="ttname"><a href="structOpenLog.html#ad0e11d5a9da51659098d14a39e8b8fe9">OpenLog::vcc</a></div><div class="ttdeci">gpio_num_t vcc</div><div class="ttdoc">GPIO pin na ovládanie napájania cez FET tranzistor.</div><div class="ttdef"><b>Definition:</b> peripheral.h:41</div></div>
+<div class="ttc" id="astructOpenLog_html_ad9ffa6f72f62512100fc844b0a51beed"><div class="ttname"><a href="structOpenLog.html#ad9ffa6f72f62512100fc844b0a51beed">OpenLog::tx</a></div><div class="ttdeci">gpio_num_t tx</div><div class="ttdoc">GPIO pin UART TX.</div><div class="ttdef"><b>Definition:</b> peripheral.h:44</div></div>
+<div class="ttc" id="astructOpenLog_html_add9d1e99f849cdfcf68700ef6f7743e9"><div class="ttname"><a href="structOpenLog.html#add9d1e99f849cdfcf68700ef6f7743e9">OpenLog::rx</a></div><div class="ttdeci">gpio_num_t rx</div><div class="ttdoc">GPIO pin UART RX.</div><div class="ttdef"><b>Definition:</b> peripheral.h:43</div></div>
+<div class="ttc" id="astructOpenLog_html_af56fb5ccf018204426f26a06cc2f6c13"><div class="ttname"><a href="structOpenLog.html#af56fb5ccf018204426f26a06cc2f6c13">OpenLog::buffer</a></div><div class="ttdeci">int buffer</div><div class="ttdoc">Dĺžka vyrovnávacej pamäte pre UART.</div><div class="ttdef"><b>Definition:</b> peripheral.h:46</div></div>
+<div class="ttc" id="astructProvisioning_html"><div class="ttname"><a href="structProvisioning.html">Provisioning</a></div><div class="ttdoc">Sieťové nastavenia pre pripojenie na Wifi AP s WPA2 a MQTT broker.</div><div class="ttdef"><b>Definition:</b> pipeline.h:213</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_5c982d53a68cdbcd421152b4020263a9.html">main</a></li><li class="navelem"><a class="el" href="dir_bad007344d42f4b5340fab5412b591e5.html">include</a></li><li class="navelem"><b>peripheral.h</b></li>
+    <li class="footer">Generované programom <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+  </ul>
+</div>
+</body>
+</html>

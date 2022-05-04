@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Spracovanie dát generovaných senzorovou IoT sieťou: Zdrojový súbor /home/miroslav/fiit-stu/BP/bachelor-thesis/firmware/vibration-analyzer/main/include/inertial_unit.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Spracovanie dát generovaných senzorovou IoT sieťou
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hľadať" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generované programom Doxygen 1.9.3 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Hľadať','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('inertial__unit_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">inertial_unit.h</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef INTERTIAL_UNIT_H</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define INTERTIAL_UNIT_H</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;hal/gpio_types.h&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;driver/spi_master.h&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;driver/gpio.h&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="group__imu.html#ga04cfe2a92247b953c378b7074b920d95">   20</a></span><span class="preprocessor">#define G_CONSTANT      9.80665  / 1000</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">   25</a></span><span class="keyword">typedef</span> <span class="keyword">enum</span> <a class="code hl_enumeration" href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">AccelerationRange</a> {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca06b337dfafcc8e7d7b0145b549dc788d">   26</a></span>    <a class="code hl_enumvalue" href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca06b337dfafcc8e7d7b0145b549dc788d">IMU_2G</a>,             </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca6cd464d382ab3ef672cdb9a4f5d1b3f9">   27</a></span>    <a class="code hl_enumvalue" href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca6cd464d382ab3ef672cdb9a4f5d1b3f9">IMU_4G</a>,             </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca4ac48eaab507e4667b33a8698c039849">   28</a></span>    <a class="code hl_enumvalue" href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca4ac48eaab507e4667b33a8698c039849">IMU_8G</a>,             </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca6a0568572c993b8612545da6c84f7b10">   29</a></span>    <a class="code hl_enumvalue" href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca6a0568572c993b8612545da6c84f7b10">IMU_16G</a>,            </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_enumvalue" href="group__imu.html#gga984641099b78ca8886bbaa110b61495cacab8785eb453ca5a293d4522738ede99">IMU_RANGE_COUNT</a></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="group__imu.html#ga155e706b86ee26c71ab2ff009e7364de">   31</a></span>} <a class="code hl_enumeration" href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">AccelerationRange</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="group__imu.html#ga81e5a9a064791edccf98fa7700f33b86">   36</a></span><span class="keyword">typedef</span> <span class="keywordtype">float</span> <a class="code hl_typedef" href="group__imu.html#ga81e5a9a064791edccf98fa7700f33b86">AccelerationPrecision</a>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="structInertialUnit.html">   41</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="structInertialUnit.html#afba98df2dd08ce2533f0cd86f10626d8">   42</a></span>    gpio_num_t <a class="code hl_variable" href="structInertialUnit.html#afba98df2dd08ce2533f0cd86f10626d8">clk</a>;         </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="structInertialUnit.html#a58bf78c385ddb32e1af148d509db262e">   43</a></span>    gpio_num_t <a class="code hl_variable" href="structInertialUnit.html#a58bf78c385ddb32e1af148d509db262e">miso</a>;        </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="structInertialUnit.html#ab4f71edc4f2fefc0266f6d213b30bf83">   44</a></span>    gpio_num_t <a class="code hl_variable" href="structInertialUnit.html#ab4f71edc4f2fefc0266f6d213b30bf83">mosi</a>;        </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="structInertialUnit.html#a12a90fb0a265bb79cc19215025bd6c89">   45</a></span>    gpio_num_t <a class="code hl_variable" href="structInertialUnit.html#a12a90fb0a265bb79cc19215025bd6c89">xgcs</a>;        </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="structInertialUnit.html#a397c2e8c7dff52767ff4e594ae2ced03">   46</a></span>    gpio_num_t <a class="code hl_variable" href="structInertialUnit.html#a397c2e8c7dff52767ff4e594ae2ced03">mcs</a>;         </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="structInertialUnit.html#a03242407f21592b20462efcd4f3f9356">   47</a></span>    gpio_num_t <a class="code hl_variable" href="structInertialUnit.html#a03242407f21592b20462efcd4f3f9356">int1</a>;        </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="structInertialUnit.html#aa5525292538a9a1307bba366798b5ccf">   48</a></span>    gpio_num_t <a class="code hl_variable" href="structInertialUnit.html#aa5525292538a9a1307bba366798b5ccf">int2</a>;        </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="structInertialUnit.html#ab0b8abd927d2ede7a9a42cdbfe97e453">   49</a></span>    gpio_num_t <a class="code hl_variable" href="structInertialUnit.html#ab0b8abd927d2ede7a9a42cdbfe97e453">en_data</a>;     </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="structInertialUnit.html#a927b0e3e5367c81e78afd0a1435cf2ad">   50</a></span>    gpio_isr_t <a class="code hl_variable" href="structInertialUnit.html#a927b0e3e5367c81e78afd0a1435cf2ad">isr_int1</a>;    </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="structInertialUnit.html#a7fb30ae69d8970d2ea22da5b0e16d996">   51</a></span>    gpio_isr_t <a class="code hl_variable" href="structInertialUnit.html#a7fb30ae69d8970d2ea22da5b0e16d996">isr_int2</a>;    </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="structInertialUnit.html#acc354a7ce8ef662458d3462c767cdfe4">   52</a></span>    spi_host_device_t <a class="code hl_variable" href="structInertialUnit.html#acc354a7ce8ef662458d3462c767cdfe4">spi</a>;  </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="structInertialUnit.html#ac8418cb990278624c1742af8adbb462d">   53</a></span>    spi_device_handle_t <a class="code hl_variable" href="structInertialUnit.html#ac8418cb990278624c1742af8adbb462d">dev</a>;   </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="structInertialUnit.html#ae8b6e5c307a95303b544c1c43ac1bf64">   54</a></span>    <a class="code hl_typedef" href="group__imu.html#ga81e5a9a064791edccf98fa7700f33b86">AccelerationPrecision</a> <a class="code hl_variable" href="structInertialUnit.html#ae8b6e5c307a95303b544c1c43ac1bf64">precision</a>; </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>} <a class="code hl_struct" href="structInertialUnit.html">InertialUnit</a>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>esp_err_t <a class="code hl_function" href="group__imu.html#gac0b054b8aade6e6c489307c6ecf9d5fd">imu_setup</a>(<a class="code hl_struct" href="structInertialUnit.html">InertialUnit</a> *imu);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__imu.html#ga3af49280cbf98260dd598ca654ef04e5">imu_acceleration_range</a>(<a class="code hl_struct" href="structInertialUnit.html">InertialUnit</a> *imu, <a class="code hl_enumeration" href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">AccelerationRange</a> range);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__imu.html#gac341b015be68412d4e525d5f6ab5ef78">imu_output_data_rate</a>(<a class="code hl_struct" href="structInertialUnit.html">InertialUnit</a> *imu, uint16_t fs);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__imu.html#gac29840f536a8d50d112ad094e8458f10">imu_acceleration</a>(<a class="code hl_struct" href="structInertialUnit.html">InertialUnit</a> *imu, <span class="keywordtype">float</span> *x, <span class="keywordtype">float</span> *y, <span class="keywordtype">float</span> *z);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="agroup__imu_html_ga3af49280cbf98260dd598ca654ef04e5"><div class="ttname"><a href="group__imu.html#ga3af49280cbf98260dd598ca654ef04e5">imu_acceleration_range</a></div><div class="ttdeci">void imu_acceleration_range(InertialUnit *imu, AccelerationRange range)</div><div class="ttdoc">Nastavenie dynamického rozsah lineárneho 3D akcelerometra v g.</div><div class="ttdef"><b>Definition:</b> inertial_unit.c:187</div></div>
+<div class="ttc" id="agroup__imu_html_ga81e5a9a064791edccf98fa7700f33b86"><div class="ttname"><a href="group__imu.html#ga81e5a9a064791edccf98fa7700f33b86">AccelerationPrecision</a></div><div class="ttdeci">float AccelerationPrecision</div><div class="ttdoc">Citlivosť akcelerometra podľa dynamického rozsahu v mg/LSB.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:36</div></div>
+<div class="ttc" id="agroup__imu_html_ga984641099b78ca8886bbaa110b61495c"><div class="ttname"><a href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">AccelerationRange</a></div><div class="ttdeci">AccelerationRange</div><div class="ttdoc">Dynamický rozsah akcelerometra v g.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:25</div></div>
+<div class="ttc" id="agroup__imu_html_gac0b054b8aade6e6c489307c6ecf9d5fd"><div class="ttname"><a href="group__imu.html#gac0b054b8aade6e6c489307c6ecf9d5fd">imu_setup</a></div><div class="ttdeci">esp_err_t imu_setup(InertialUnit *imu)</div><div class="ttdoc">Inicializácia senzora lineárnej akcelerácie.</div><div class="ttdef"><b>Definition:</b> inertial_unit.c:127</div></div>
+<div class="ttc" id="agroup__imu_html_gac29840f536a8d50d112ad094e8458f10"><div class="ttname"><a href="group__imu.html#gac29840f536a8d50d112ad094e8458f10">imu_acceleration</a></div><div class="ttdeci">void imu_acceleration(InertialUnit *imu, float *x, float *y, float *z)</div><div class="ttdoc">Meranie aktuálnej hodnoty 3D akcelerácie v m/s^2.</div><div class="ttdef"><b>Definition:</b> inertial_unit.c:216</div></div>
+<div class="ttc" id="agroup__imu_html_gac341b015be68412d4e525d5f6ab5ef78"><div class="ttname"><a href="group__imu.html#gac341b015be68412d4e525d5f6ab5ef78">imu_output_data_rate</a></div><div class="ttdeci">void imu_output_data_rate(InertialUnit *imu, uint16_t fs)</div><div class="ttdoc">Nastavenie výstupného dátového toku (ODR) akcelerometra podľa vzorkovanej frekvencie.</div><div class="ttdef"><b>Definition:</b> inertial_unit.c:165</div></div>
+<div class="ttc" id="agroup__imu_html_gga984641099b78ca8886bbaa110b61495ca06b337dfafcc8e7d7b0145b549dc788d"><div class="ttname"><a href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca06b337dfafcc8e7d7b0145b549dc788d">IMU_2G</a></div><div class="ttdeci">@ IMU_2G</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:26</div></div>
+<div class="ttc" id="agroup__imu_html_gga984641099b78ca8886bbaa110b61495ca4ac48eaab507e4667b33a8698c039849"><div class="ttname"><a href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca4ac48eaab507e4667b33a8698c039849">IMU_8G</a></div><div class="ttdeci">@ IMU_8G</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:28</div></div>
+<div class="ttc" id="agroup__imu_html_gga984641099b78ca8886bbaa110b61495ca6a0568572c993b8612545da6c84f7b10"><div class="ttname"><a href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca6a0568572c993b8612545da6c84f7b10">IMU_16G</a></div><div class="ttdeci">@ IMU_16G</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:29</div></div>
+<div class="ttc" id="agroup__imu_html_gga984641099b78ca8886bbaa110b61495ca6cd464d382ab3ef672cdb9a4f5d1b3f9"><div class="ttname"><a href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca6cd464d382ab3ef672cdb9a4f5d1b3f9">IMU_4G</a></div><div class="ttdeci">@ IMU_4G</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:27</div></div>
+<div class="ttc" id="agroup__imu_html_gga984641099b78ca8886bbaa110b61495cacab8785eb453ca5a293d4522738ede99"><div class="ttname"><a href="group__imu.html#gga984641099b78ca8886bbaa110b61495cacab8785eb453ca5a293d4522738ede99">IMU_RANGE_COUNT</a></div><div class="ttdeci">@ IMU_RANGE_COUNT</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:30</div></div>
+<div class="ttc" id="astructInertialUnit_html"><div class="ttname"><a href="structInertialUnit.html">InertialUnit</a></div><div class="ttdoc">Inerciálna meracia jednotka.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:41</div></div>
+<div class="ttc" id="astructInertialUnit_html_a03242407f21592b20462efcd4f3f9356"><div class="ttname"><a href="structInertialUnit.html#a03242407f21592b20462efcd4f3f9356">InertialUnit::int1</a></div><div class="ttdeci">gpio_num_t int1</div><div class="ttdoc">GPIO vstup prerušenia č.1.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:47</div></div>
+<div class="ttc" id="astructInertialUnit_html_a12a90fb0a265bb79cc19215025bd6c89"><div class="ttname"><a href="structInertialUnit.html#a12a90fb0a265bb79cc19215025bd6c89">InertialUnit::xgcs</a></div><div class="ttdeci">gpio_num_t xgcs</div><div class="ttdoc">GPIO pin SPI Chip select akcelometra a gyroskopu.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:45</div></div>
+<div class="ttc" id="astructInertialUnit_html_a397c2e8c7dff52767ff4e594ae2ced03"><div class="ttname"><a href="structInertialUnit.html#a397c2e8c7dff52767ff4e594ae2ced03">InertialUnit::mcs</a></div><div class="ttdeci">gpio_num_t mcs</div><div class="ttdoc">GPIO pin SPI Chip select magnetometra.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:46</div></div>
+<div class="ttc" id="astructInertialUnit_html_a58bf78c385ddb32e1af148d509db262e"><div class="ttname"><a href="structInertialUnit.html#a58bf78c385ddb32e1af148d509db262e">InertialUnit::miso</a></div><div class="ttdeci">gpio_num_t miso</div><div class="ttdoc">GPIO pin SPI Master In Slave Out.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:43</div></div>
+<div class="ttc" id="astructInertialUnit_html_a7fb30ae69d8970d2ea22da5b0e16d996"><div class="ttname"><a href="structInertialUnit.html#a7fb30ae69d8970d2ea22da5b0e16d996">InertialUnit::isr_int2</a></div><div class="ttdeci">gpio_isr_t isr_int2</div><div class="ttdoc">Podprogram prerušenia pre INT č.2.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:51</div></div>
+<div class="ttc" id="astructInertialUnit_html_a927b0e3e5367c81e78afd0a1435cf2ad"><div class="ttname"><a href="structInertialUnit.html#a927b0e3e5367c81e78afd0a1435cf2ad">InertialUnit::isr_int1</a></div><div class="ttdeci">gpio_isr_t isr_int1</div><div class="ttdoc">Podprogram prerušenia pre INT č.1.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:50</div></div>
+<div class="ttc" id="astructInertialUnit_html_aa5525292538a9a1307bba366798b5ccf"><div class="ttname"><a href="structInertialUnit.html#aa5525292538a9a1307bba366798b5ccf">InertialUnit::int2</a></div><div class="ttdeci">gpio_num_t int2</div><div class="ttdoc">GPIO vstup prerušenia č.2.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:48</div></div>
+<div class="ttc" id="astructInertialUnit_html_ab0b8abd927d2ede7a9a42cdbfe97e453"><div class="ttname"><a href="structInertialUnit.html#ab0b8abd927d2ede7a9a42cdbfe97e453">InertialUnit::en_data</a></div><div class="ttdeci">gpio_num_t en_data</div><div class="ttdoc">GPIO vstup príznaku pripravených dát.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:49</div></div>
+<div class="ttc" id="astructInertialUnit_html_ab4f71edc4f2fefc0266f6d213b30bf83"><div class="ttname"><a href="structInertialUnit.html#ab4f71edc4f2fefc0266f6d213b30bf83">InertialUnit::mosi</a></div><div class="ttdeci">gpio_num_t mosi</div><div class="ttdoc">GPIO pin SPI Master Out Slave In.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:44</div></div>
+<div class="ttc" id="astructInertialUnit_html_ac8418cb990278624c1742af8adbb462d"><div class="ttname"><a href="structInertialUnit.html#ac8418cb990278624c1742af8adbb462d">InertialUnit::dev</a></div><div class="ttdeci">spi_device_handle_t dev</div><div class="ttdoc">SPI zariadenie pre akcelerometer.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:53</div></div>
+<div class="ttc" id="astructInertialUnit_html_acc354a7ce8ef662458d3462c767cdfe4"><div class="ttname"><a href="structInertialUnit.html#acc354a7ce8ef662458d3462c767cdfe4">InertialUnit::spi</a></div><div class="ttdeci">spi_host_device_t spi</div><div class="ttdoc">SPI zbernica.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:52</div></div>
+<div class="ttc" id="astructInertialUnit_html_ae8b6e5c307a95303b544c1c43ac1bf64"><div class="ttname"><a href="structInertialUnit.html#ae8b6e5c307a95303b544c1c43ac1bf64">InertialUnit::precision</a></div><div class="ttdeci">AccelerationPrecision precision</div><div class="ttdoc">Zistená citlivosť akcelerometra v mg/LSB.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:54</div></div>
+<div class="ttc" id="astructInertialUnit_html_afba98df2dd08ce2533f0cd86f10626d8"><div class="ttname"><a href="structInertialUnit.html#afba98df2dd08ce2533f0cd86f10626d8">InertialUnit::clk</a></div><div class="ttdeci">gpio_num_t clk</div><div class="ttdoc">GPIO pin SPI hodinového signálu.</div><div class="ttdef"><b>Definition:</b> inertial_unit.h:42</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_5c982d53a68cdbcd421152b4020263a9.html">main</a></li><li class="navelem"><a class="el" href="dir_bad007344d42f4b5340fab5412b591e5.html">include</a></li><li class="navelem"><b>inertial_unit.h</b></li>
+    <li class="footer">Generované programom <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+  </ul>
+</div>
+</body>
+</html>

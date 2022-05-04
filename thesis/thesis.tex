@@ -1,3 +1,4 @@
+
 \documentclass[12pt, a4paper, twoside, openright, slovak]{book}
 
 \usepackage[slovak]{babel}
@@ -9,6 +10,7 @@
 	right=3.5cm,
 	left=2.5cm
 ]{geometry}
+
 \usepackage{subcaption}
 \usepackage{hyperref}
 \usepackage{enumitem}
@@ -24,20 +26,27 @@
 \usepackage{fancyvrb}
 \usepackage[fleqn]{amsmath}
 \usepackage{pdfpages}
-\usepackage{nomencl}
 \usepackage{nccmath}
 \usepackage{tocloft}
 \usepackage{csquotes}
 \usepackage{diagbox}
-
+\usepackage{ifthen}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+
+
+\usepackage{nomencl}
+\usepackage{makeidx}
 \usepackage{expl3}
 \usepackage{etoolbox}
 \preto\tabular{\shorthandoff{-}}
 
 \usepackage[style=iso-numeric, backend=biber]{biblatex}
 \addbibresource{literature.bib}
+
+% Zoznam skratiek
+\makenomenclature
+\renewcommand{\nomname}{Zoznam skratiek a pojmov}
 
 % Rovnice
 \newcommand{\listequationsname}{Zoznam rovníc}
@@ -55,11 +64,6 @@
 
 % Číslo kapitoly na rovnakom riadku ako názov
 \titleformat{\chapter}{\normalfont\huge\bf}{\thechapter}{1em}{}
-
-% Prázdne strany medzi kapitolami sú nečíslované
-\let\origdoublepage\cleardoublepage
-\newcommand{\clearemptydoublepage}{\clearpage{\pagestyle{empty}\origdoublepage}}
-\let\cleardoublepage\clearemptydoublepage
 
 \raggedbottom
 \newcommand{\emptypage}{\newpage\thispagestyle{empty}\mbox{}\newpage}
@@ -87,6 +91,8 @@
   \fancyhf[lef,rof]{\thepage}%
 }
 
+\setlength{\headheight}{16pt}
+
 \renewcommand{\ttdefault}{pcr}
 \lstdefinestyle{cstyle}{
     language=C,
@@ -111,12 +117,13 @@
     breaklines=true,
     belowskip=0pt
 }
-
+\lstdefinestyle{messages}{
+	basicstyle=\linespread{1.1}\ttfamily\small,
+    tabsize=4,
+    breaklines=true,
+    belowskip=0pt
+}
 \renewcommand{\lstlistingname}{Zdrojový kód}
-
-% Zoznam skratiek
-\makenomenclature
-\renewcommand{\nomname}{Zoznam skratiek a pojmov}
 
 \setstretch{1.5}
 \newcommand{\University}[0] {Slovenská technická univerzita v Bratislave}
@@ -144,33 +151,42 @@
 
 
 \begin{document}
-\pagenumbering{gobble}
-\input{chapters/preliminaries/dictionary}
+\nomenclature{\textbf{DOF}}{Degree of Freedom (stupeň voľnosti mechanického systému)}
+\nomenclature{\textbf{IoT}}{Internet of Things (internet vecí)}
+\nomenclature{\textbf{MEMS}}{Micro-Electro-Mechanical Systems (mikromechanický systém)}
+\nomenclature{\textbf{LSB}}{Least significant bit (najmenej významový bit)}
+\nomenclature{\textbf{ODR}}{Output data rate (výstupný dátový tok)}
+\nomenclature{\textbf{A/D}}{Analógový na digitálny}
+\nomenclature{\textbf{$f_s$}}{Vzorkovacia frekvencia}
+\nomenclature{\textbf{$g$}}{Tiažové zrýchlenie (1 g = 9,80665 $m/s^2$)}
+\nomenclature{\textbf{SPI}}{Serial Peripheral Interface (synchrónne sériové periférne rozhranie)}
+\nomenclature{\textbf{UART}}{Universal asynchronous receiver-transmitter (zbernica asynchrónneho sériového prenosu)}
+\nomenclature{\textbf{I$^\mathrm{2}$C}}{Inter-Integrated Circuit (dvojvodičová synchrónna sériová zbernica)}
+\nomenclature{\textbf{FET}}{Field-effect transistor (tranzistor riadený poľom)}
+\nomenclature{\textbf{MQTT}}{Message Queuing Telemetry Transport (aplikačný protokol na prenos telemetrických údajov cez fronty správ}
+\nomenclature{\textbf{FFT}}{Fast Fourier Transform (algoritmus rýchlej Fourierovej transformácie)}
+\nomenclature{\textbf{DFT}}{Discrete Fourier Transform (diskrétna Fourierová transformácia)}
+\nomenclature{\textbf{DCT}}{Discrete Cosine Transform (diskrétna kosínusová transformácia)}
+\nomenclature{\textbf{SDK}}{Software development kit (nástroje na vývoj softvéru pre špecifickú platformu)}
+\nomenclature{\textbf{TCP}}{Transmission Control Protocol (transportný sieťový protokol riadenia prenosu)}
+\nomenclature{\textbf{ISM pásma}}{Voľné pásma pre rádiové vysielanie v priemyselnom, vedeckom a zdravotníckom sektore}
+\nomenclature{\textbf{Senzitivita}}{Sensitivity, True Positive Rate (TPR), Recall. (pravdepodobnosť pozitívneho testu byť skutočne pozitívnym)}
+\nomenclature{\textbf{Špecifickosť}}{Specificity, True Negative Rate (TNR). (pravdepodobnosť negatívneho testu byť skutočne negatívnym)}
+\nomenclature{\textbf{Precíznosť}}{Precision (tesnosť zhody medzi výsledkami meraní navzájom)}
+\nomenclature{\textbf{Presnosť}}{Accuracy (blízkosť nameraných hodnôt ku pravdivej hodnote)}
+\nomenclature{\textbf{Chybovosť}}{False positive rate (pravdepodobnosť výskytu falošného poplachu)}
+\nomenclature{\textbf{MTU}}{Maximum transmission unit (najdlhší poslaný paket bez fragmentácie)}
+\nomenclature{\textbf{Pipeline}}{Súbor prvkov spracovania údajov zapojených do série, kde výstup jedného prvku je vstupom ďalšieho prvku}
+\nomenclature{\textbf{MQTT téma}}{MQTT topic (logické zoskupenie publikovaných správ so spoločným zameraním)}
 
+% Zákaz!: Pokazí slovník pojmov \pagenumbering{gobble}
 % Obal
-\input{chapters/preliminaries/titlepage}
-\begin{flushleft}
-Vedúci práce:\quad \Supervisor{\Large \par}
-\vspace{\medskipamount}
-\Date
-\end{flushleft}
+\input{chapters/preliminaries/cover}
 \emptypage
 
 % Titulný list
 \pagenumbering{roman}
 \input{chapters/preliminaries/titlepage}
-\begin{flushleft}
-{\setlength{\mathindent}{0.1cm}
-\begin{align*}
-& \text{Študijný program:} && \text{\StudyProgramme} \\
-& \text{Študijný odbor:} && \text{\StudyField} \\
-& \text{Miesto vypracovania:} && \text{\Institute} \\
-& \text{Vedúci práce:} && \text{\Supervisor} \\
-& \text{Pedagogický vedúci:} && \text{\PedagogicalSupervisor}
-\end{align*}}
-\vspace{2\bigskipamount}
-\Date
-\end{flushleft}
 \emptypage
 
 % Zadanie
@@ -190,10 +206,8 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 \tableofcontents{}
 \listoffigures
 \listofmyequations
-%\listofalgorithms
 {\let\clearpage\relax \printnomenclature}
 \emptypage
-
 
 \pagestyle{fancy}
 % Kapitoly
@@ -213,12 +227,16 @@ Vedúci práce:\quad \Supervisor{\Large \par}
 
 
 \pagenumbering{gobble}
-%\nocite{*}
 \printbibliography[title={Literatúra}]
 
 %Príloha
 \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
 \addtocontents{toc}{\cftpagenumbersoff{chapter}}
+\let\svaddcontentsline\addcontentsline
+\renewcommand\addcontentsline[3]{%
+  \ifthenelse{\equal{#1}{lof}}{}%
+  {\ifthenelse{\equal{#1}{lot}}{}{\svaddcontentsline{#1}{#2}{#3}}}}
+
 \appendix
 \titleformat{\chapter}{\normalfont\huge\bf}{Príloha \thechapter:}{1em}{}
 \renewcommand{\chaptermark}[1]{\markboth{\uppercase{Príloha \thechapter.\ #1}}{}}

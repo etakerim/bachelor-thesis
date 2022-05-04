@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Spracovanie dát generovaných senzorovou IoT sieťou: Zdrojový súbor /home/miroslav/fiit-stu/BP/bachelor-thesis/firmware/vibration-analyzer/main/include/events.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Spracovanie dát generovaných senzorovou IoT sieťou
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hľadať" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generované programom Doxygen 1.9.3 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Hľadať','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('events_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">events.h</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef EVENTS_H</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define EVENTS_H</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="group__events.html#gadd1791092297a6cfb55bcccd90fd1c70">   13</a></span><span class="keyword">typedef</span> <span class="keyword">enum</span> {              </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="group__events.html#ggadd1791092297a6cfb55bcccd90fd1c70a78aa76f5985da88c7fc591d20fe56a24">   14</a></span>    <a class="code hl_enumvalue" href="group__events.html#ggadd1791092297a6cfb55bcccd90fd1c70a78aa76f5985da88c7fc591d20fe56a24">SPECTRUM_EVENT_NONE</a>,    </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="group__events.html#ggadd1791092297a6cfb55bcccd90fd1c70a41724db1e39cd024584796779710fa76">   15</a></span>    <a class="code hl_enumvalue" href="group__events.html#ggadd1791092297a6cfb55bcccd90fd1c70a41724db1e39cd024584796779710fa76">SPECTRUM_EVENT_START</a>,   </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <a class="code hl_enumvalue" href="group__events.html#ggadd1791092297a6cfb55bcccd90fd1c70a5371ecd87eec662e739e20e0aa211183">SPECTRUM_EVENT_FINISH</a>   </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="group__events.html#ggadd1791092297a6cfb55bcccd90fd1c70a5371ecd87eec662e739e20e0aa211183">   17</a></span>} <a class="code hl_enumeration" href="group__events.html#gadd1791092297a6cfb55bcccd90fd1c70">SpectrumEventAction</a>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="structSpectrumEvent.html">   22</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="structSpectrumEvent.html#a797fafc8fd1735a2d04f5bb4930345c9">   23</a></span>    <a class="code hl_enumeration" href="group__events.html#gadd1791092297a6cfb55bcccd90fd1c70">SpectrumEventAction</a> <a class="code hl_variable" href="structSpectrumEvent.html#a797fafc8fd1735a2d04f5bb4930345c9">action</a>;  </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="structSpectrumEvent.html#a5408ac6cd11f14fb68f3aa1d74a5d445">   24</a></span>    uint32_t <a class="code hl_variable" href="structSpectrumEvent.html#a5408ac6cd11f14fb68f3aa1d74a5d445">start</a>;              </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="structSpectrumEvent.html#a5b2d59e725ed7e56c0721e2c0cffa7c7">   25</a></span>    uint32_t <a class="code hl_variable" href="structSpectrumEvent.html#a5b2d59e725ed7e56c0721e2c0cffa7c7">duration</a>;           </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="structSpectrumEvent.html#afe69c3468e2f71613d5eafc48aa6cddb">   26</a></span>    int32_t <a class="code hl_variable" href="structSpectrumEvent.html#afe69c3468e2f71613d5eafc48aa6cddb">last_seen</a>;           </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="structSpectrumEvent.html#a523e87dfe1a7b0c62fe6885dd93ee6dd">   27</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structSpectrumEvent.html#a523e87dfe1a7b0c62fe6885dd93ee6dd">amplitude</a>;             </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>} <a class="code hl_struct" href="structSpectrumEvent.html">SpectrumEvent</a>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="group__events.html#gabb702d8b501669a23aa0ab3b281b9384">   30</a></span><span class="preprocessor">#define min(x, y)   (((x) &lt; (y)) ? (x): (y))</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="group__events.html#gac39d9cef6a5e030ba8d9e11121054268">   31</a></span><span class="preprocessor">#define max(x, y)   (((x) &gt; (y)) ? (x): (y))</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__events.html#gabe24ea0a89010dc1fa24097223252d81">find_peaks_above_threshold</a>(<span class="keywordtype">bool</span> *peaks, <span class="keyword">const</span> <span class="keywordtype">float</span> *y, <span class="keywordtype">int</span> n, <span class="keywordtype">float</span> t);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__events.html#ga8da1415de15144c7ed8de6a912d09f48">find_peaks_neighbours</a>(<span class="keywordtype">bool</span> *peaks, <span class="keyword">const</span> <span class="keywordtype">float</span> *y, <span class="keywordtype">int</span> n, <span class="keywordtype">int</span> k, <span class="keywordtype">float</span> e, <span class="keywordtype">float</span> h_rel, <span class="keywordtype">float</span> h);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__events.html#gab425e9f47d3fd66fcbb3621a0eb88df3">find_peaks_zero_crossing</a>(<span class="keywordtype">bool</span> *peaks, <span class="keyword">const</span> <span class="keywordtype">float</span> *y, <span class="keywordtype">int</span> n, <span class="keywordtype">int</span> k, <span class="keywordtype">float</span> slope);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__events.html#ga6d3792ff137c520bd065e9911cfdf1fd">find_peaks_hill_walker</a>(<span class="keywordtype">bool</span> *peaks, <span class="keyword">const</span> <span class="keywordtype">float</span> *y, <span class="keywordtype">int</span> n, <span class="keywordtype">float</span> tolerance, <span class="keywordtype">int</span> hole, <span class="keywordtype">float</span> prominence, <span class="keywordtype">float</span> isolation);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="keywordtype">void</span> <a class="code hl_function" href="group__events.html#ga8a2adc2bbe865a11c08b4e18185bd23e">event_init</a>(<a class="code hl_struct" href="structSpectrumEvent.html">SpectrumEvent</a> *events, uint16_t bins);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keywordtype">size_t</span> <a class="code hl_function" href="group__events.html#ga4fea8dd101edab995cc518735bed729d">event_detection</a>(<span class="keywordtype">size_t</span> t, <a class="code hl_struct" href="structSpectrumEvent.html">SpectrumEvent</a> *events, <span class="keyword">const</span> <span class="keywordtype">bool</span> *peaks, <span class="keyword">const</span> <span class="keywordtype">float</span> *spectrum, </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                       uint16_t bins, uint16_t min_duration, uint16_t time_proximity);</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="agroup__events_html_ga4fea8dd101edab995cc518735bed729d"><div class="ttname"><a href="group__events.html#ga4fea8dd101edab995cc518735bed729d">event_detection</a></div><div class="ttdeci">size_t event_detection(size_t t, SpectrumEvent *events, const bool *peaks, const float *spectrum, uint16_t bins, uint16_t min_duration, uint16_t time_proximity)</div><div class="ttdoc">Online detekcia zmien v časovom priebehu frekvenčných spektier.</div><div class="ttdef"><b>Definition:</b> events.c:116</div></div>
+<div class="ttc" id="agroup__events_html_ga6d3792ff137c520bd065e9911cfdf1fd"><div class="ttname"><a href="group__events.html#ga6d3792ff137c520bd065e9911cfdf1fd">find_peaks_hill_walker</a></div><div class="ttdeci">void find_peaks_hill_walker(bool *peaks, const float *y, int n, float tolerance, int hole, float prominence, float isolation)</div><div class="ttdoc">Hľadanie špičiek s modikovaným algoritmom horského turistu.</div><div class="ttdef"><b>Definition:</b> events.c:56</div></div>
+<div class="ttc" id="agroup__events_html_ga8a2adc2bbe865a11c08b4e18185bd23e"><div class="ttname"><a href="group__events.html#ga8a2adc2bbe865a11c08b4e18185bd23e">event_init</a></div><div class="ttdeci">void event_init(SpectrumEvent *events, uint16_t bins)</div><div class="ttdoc">Nastavenie počiatočného stavu online detektora udalostí vo frekvenciách.</div><div class="ttdef"><b>Definition:</b> events.c:104</div></div>
+<div class="ttc" id="agroup__events_html_ga8da1415de15144c7ed8de6a912d09f48"><div class="ttname"><a href="group__events.html#ga8da1415de15144c7ed8de6a912d09f48">find_peaks_neighbours</a></div><div class="ttdeci">void find_peaks_neighbours(bool *peaks, const float *y, int n, int k, float e, float h_rel, float h)</div><div class="ttdoc">Hľadanie špičiek s algoritmom význačnosti vrchola spomedzi susedov.</div><div class="ttdef"><b>Definition:</b> events.c:14</div></div>
+<div class="ttc" id="agroup__events_html_gab425e9f47d3fd66fcbb3621a0eb88df3"><div class="ttname"><a href="group__events.html#gab425e9f47d3fd66fcbb3621a0eb88df3">find_peaks_zero_crossing</a></div><div class="ttdeci">void find_peaks_zero_crossing(bool *peaks, const float *y, int n, int k, float slope)</div><div class="ttdoc">Hľadanie špičiek s algoritmom prechodu nulou do záporu.</div><div class="ttdef"><b>Definition:</b> events.c:40</div></div>
+<div class="ttc" id="agroup__events_html_gabe24ea0a89010dc1fa24097223252d81"><div class="ttname"><a href="group__events.html#gabe24ea0a89010dc1fa24097223252d81">find_peaks_above_threshold</a></div><div class="ttdeci">void find_peaks_above_threshold(bool *peaks, const float *y, int n, float t)</div><div class="ttdoc">Hľadanie špičiek absolútnou prahovou úrovňou amplitúdy signálu.</div><div class="ttdef"><b>Definition:</b> events.c:8</div></div>
+<div class="ttc" id="agroup__events_html_gadd1791092297a6cfb55bcccd90fd1c70"><div class="ttname"><a href="group__events.html#gadd1791092297a6cfb55bcccd90fd1c70">SpectrumEventAction</a></div><div class="ttdeci">SpectrumEventAction</div><div class="ttdoc">Časové vymedzenie udalosti frekvenčného spektra.</div><div class="ttdef"><b>Definition:</b> events.h:13</div></div>
+<div class="ttc" id="agroup__events_html_ggadd1791092297a6cfb55bcccd90fd1c70a41724db1e39cd024584796779710fa76"><div class="ttname"><a href="group__events.html#ggadd1791092297a6cfb55bcccd90fd1c70a41724db1e39cd024584796779710fa76">SPECTRUM_EVENT_START</a></div><div class="ttdeci">@ SPECTRUM_EVENT_START</div><div class="ttdoc">Značka začiatku udalosti.</div><div class="ttdef"><b>Definition:</b> events.h:15</div></div>
+<div class="ttc" id="agroup__events_html_ggadd1791092297a6cfb55bcccd90fd1c70a5371ecd87eec662e739e20e0aa211183"><div class="ttname"><a href="group__events.html#ggadd1791092297a6cfb55bcccd90fd1c70a5371ecd87eec662e739e20e0aa211183">SPECTRUM_EVENT_FINISH</a></div><div class="ttdeci">@ SPECTRUM_EVENT_FINISH</div><div class="ttdoc">Značka ukončenia udalosti.</div><div class="ttdef"><b>Definition:</b> events.h:16</div></div>
+<div class="ttc" id="agroup__events_html_ggadd1791092297a6cfb55bcccd90fd1c70a78aa76f5985da88c7fc591d20fe56a24"><div class="ttname"><a href="group__events.html#ggadd1791092297a6cfb55bcccd90fd1c70a78aa76f5985da88c7fc591d20fe56a24">SPECTRUM_EVENT_NONE</a></div><div class="ttdeci">@ SPECTRUM_EVENT_NONE</div><div class="ttdoc">Udalosť prebieha alebo žiadna nie je aktívna.</div><div class="ttdef"><b>Definition:</b> events.h:14</div></div>
+<div class="ttc" id="astructSpectrumEvent_html"><div class="ttname"><a href="structSpectrumEvent.html">SpectrumEvent</a></div><div class="ttdoc">Stav udalosti frekvenčného vedierka.</div><div class="ttdef"><b>Definition:</b> events.h:22</div></div>
+<div class="ttc" id="astructSpectrumEvent_html_a523e87dfe1a7b0c62fe6885dd93ee6dd"><div class="ttname"><a href="structSpectrumEvent.html#a523e87dfe1a7b0c62fe6885dd93ee6dd">SpectrumEvent::amplitude</a></div><div class="ttdeci">float amplitude</div><div class="ttdoc">Priemerná amplitúda frekvenčného vedierka počas trvania udalosti.</div><div class="ttdef"><b>Definition:</b> events.h:27</div></div>
+<div class="ttc" id="astructSpectrumEvent_html_a5408ac6cd11f14fb68f3aa1d74a5d445"><div class="ttname"><a href="structSpectrumEvent.html#a5408ac6cd11f14fb68f3aa1d74a5d445">SpectrumEvent::start</a></div><div class="ttdeci">uint32_t start</div><div class="ttdoc">Časová pečiatka alebo poradie posuvného okna, kedy začala aktuálne aktívna udalosť</div><div class="ttdef"><b>Definition:</b> events.h:24</div></div>
+<div class="ttc" id="astructSpectrumEvent_html_a5b2d59e725ed7e56c0721e2c0cffa7c7"><div class="ttname"><a href="structSpectrumEvent.html#a5b2d59e725ed7e56c0721e2c0cffa7c7">SpectrumEvent::duration</a></div><div class="ttdeci">uint32_t duration</div><div class="ttdoc">Trvanie aktívnej udalosti v počte posuvných okien.</div><div class="ttdef"><b>Definition:</b> events.h:25</div></div>
+<div class="ttc" id="astructSpectrumEvent_html_a797fafc8fd1735a2d04f5bb4930345c9"><div class="ttname"><a href="structSpectrumEvent.html#a797fafc8fd1735a2d04f5bb4930345c9">SpectrumEvent::action</a></div><div class="ttdeci">SpectrumEventAction action</div><div class="ttdoc">Značka vymedzenia udalosti: žiadna, začiatok, koniec.</div><div class="ttdef"><b>Definition:</b> events.h:23</div></div>
+<div class="ttc" id="astructSpectrumEvent_html_afe69c3468e2f71613d5eafc48aa6cddb"><div class="ttname"><a href="structSpectrumEvent.html#afe69c3468e2f71613d5eafc48aa6cddb">SpectrumEvent::last_seen</a></div><div class="ttdeci">int32_t last_seen</div><div class="ttdoc">Počet posuvných okien do minulosti, kedy bol detegovaný posledný výskyt špičky vo frekvencii.</div><div class="ttdef"><b>Definition:</b> events.h:26</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_5c982d53a68cdbcd421152b4020263a9.html">main</a></li><li class="navelem"><a class="el" href="dir_bad007344d42f4b5340fab5412b591e5.html">include</a></li><li class="navelem"><b>events.h</b></li>
+    <li class="footer">Generované programom <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+  </ul>
+</div>
+</body>
+</html>

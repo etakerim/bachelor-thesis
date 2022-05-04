@@ -1,0 +1,399 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Spracovanie dát generovaných senzorovou IoT sieťou: Akcelerometer</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Spracovanie dát generovaných senzorovou IoT sieťou
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hľadať" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generované programom Doxygen 1.9.3 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Hľadať','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('group__imu.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Dátové štruktúry</a> &#124;
+<a href="#define-members">Definícia makier</a> &#124;
+<a href="#typedef-members">Definícia typov</a> &#124;
+<a href="#enum-members">Enumerácie</a> &#124;
+<a href="#func-members">Funkcie</a>  </div>
+  <div class="headertitle"><div class="title">Akcelerometer</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Adaptér pre SPI rozhranie senzora LSM9DS1 lineárnej 3D akcelerácie (IMU).  
+<a href="#details">...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Dátové štruktúry</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structInertialUnit.html">InertialUnit</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inerciálna meracia jednotka.  <a href="structInertialUnit.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Definícia makier</h2></td></tr>
+<tr class="memitem:ga04cfe2a92247b953c378b7074b920d95"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__imu.html#ga04cfe2a92247b953c378b7074b920d95">G_CONSTANT</a>&#160;&#160;&#160;9.80665  / 1000</td></tr>
+<tr class="memdesc:ga04cfe2a92247b953c378b7074b920d95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Konverzný faktor pre premenu tiažového zrýchlenia (preťaženia) z mili-g na m/s^2.  <a href="group__imu.html#ga04cfe2a92247b953c378b7074b920d95">...</a><br /></td></tr>
+<tr class="separator:ga04cfe2a92247b953c378b7074b920d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Definícia typov</h2></td></tr>
+<tr class="memitem:ga155e706b86ee26c71ab2ff009e7364de"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">AccelerationRange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__imu.html#ga155e706b86ee26c71ab2ff009e7364de">AccelerationRange</a></td></tr>
+<tr class="memdesc:ga155e706b86ee26c71ab2ff009e7364de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamický rozsah akcelerometra v g.  <a href="group__imu.html#ga155e706b86ee26c71ab2ff009e7364de">...</a><br /></td></tr>
+<tr class="separator:ga155e706b86ee26c71ab2ff009e7364de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81e5a9a064791edccf98fa7700f33b86"><td class="memItemLeft" align="right" valign="top">typedef float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__imu.html#ga81e5a9a064791edccf98fa7700f33b86">AccelerationPrecision</a></td></tr>
+<tr class="memdesc:ga81e5a9a064791edccf98fa7700f33b86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Citlivosť akcelerometra podľa dynamického rozsahu v mg/LSB.  <a href="group__imu.html#ga81e5a9a064791edccf98fa7700f33b86">...</a><br /></td></tr>
+<tr class="separator:ga81e5a9a064791edccf98fa7700f33b86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerácie</h2></td></tr>
+<tr class="memitem:ga984641099b78ca8886bbaa110b61495c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">AccelerationRange</a> { <br />
+&#160;&#160;<a class="el" href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca06b337dfafcc8e7d7b0145b549dc788d">IMU_2G</a>
+, <a class="el" href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca6cd464d382ab3ef672cdb9a4f5d1b3f9">IMU_4G</a>
+, <a class="el" href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca4ac48eaab507e4667b33a8698c039849">IMU_8G</a>
+, <a class="el" href="group__imu.html#gga984641099b78ca8886bbaa110b61495ca6a0568572c993b8612545da6c84f7b10">IMU_16G</a>
+, <br />
+&#160;&#160;<a class="el" href="group__imu.html#gga984641099b78ca8886bbaa110b61495cacab8785eb453ca5a293d4522738ede99">IMU_RANGE_COUNT</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:ga984641099b78ca8886bbaa110b61495c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamický rozsah akcelerometra v g.  <a href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">...</a><br /></td></tr>
+<tr class="separator:ga984641099b78ca8886bbaa110b61495c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funkcie</h2></td></tr>
+<tr class="memitem:gac0b054b8aade6e6c489307c6ecf9d5fd"><td class="memItemLeft" align="right" valign="top">esp_err_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__imu.html#gac0b054b8aade6e6c489307c6ecf9d5fd">imu_setup</a> (<a class="el" href="structInertialUnit.html">InertialUnit</a> *imu)</td></tr>
+<tr class="memdesc:gac0b054b8aade6e6c489307c6ecf9d5fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializácia senzora lineárnej akcelerácie.  <a href="group__imu.html#gac0b054b8aade6e6c489307c6ecf9d5fd">...</a><br /></td></tr>
+<tr class="separator:gac0b054b8aade6e6c489307c6ecf9d5fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3af49280cbf98260dd598ca654ef04e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__imu.html#ga3af49280cbf98260dd598ca654ef04e5">imu_acceleration_range</a> (<a class="el" href="structInertialUnit.html">InertialUnit</a> *imu, <a class="el" href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">AccelerationRange</a> range)</td></tr>
+<tr class="memdesc:ga3af49280cbf98260dd598ca654ef04e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nastavenie dynamického rozsah lineárneho 3D akcelerometra v g.  <a href="group__imu.html#ga3af49280cbf98260dd598ca654ef04e5">...</a><br /></td></tr>
+<tr class="separator:ga3af49280cbf98260dd598ca654ef04e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac341b015be68412d4e525d5f6ab5ef78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__imu.html#gac341b015be68412d4e525d5f6ab5ef78">imu_output_data_rate</a> (<a class="el" href="structInertialUnit.html">InertialUnit</a> *imu, uint16_t fs)</td></tr>
+<tr class="memdesc:gac341b015be68412d4e525d5f6ab5ef78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nastavenie výstupného dátového toku (ODR) akcelerometra podľa vzorkovanej frekvencie.  <a href="group__imu.html#gac341b015be68412d4e525d5f6ab5ef78">...</a><br /></td></tr>
+<tr class="separator:gac341b015be68412d4e525d5f6ab5ef78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac29840f536a8d50d112ad094e8458f10"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__imu.html#gac29840f536a8d50d112ad094e8458f10">imu_acceleration</a> (<a class="el" href="structInertialUnit.html">InertialUnit</a> *imu, float *x, float *y, float *z)</td></tr>
+<tr class="memdesc:gac29840f536a8d50d112ad094e8458f10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Meranie aktuálnej hodnoty 3D akcelerácie v m/s^2.  <a href="group__imu.html#gac29840f536a8d50d112ad094e8458f10">...</a><br /></td></tr>
+<tr class="separator:gac29840f536a8d50d112ad094e8458f10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailný popis</h2>
+<p >Adaptér pre SPI rozhranie senzora LSM9DS1 lineárnej 3D akcelerácie (IMU). </p>
+<h2 class="groupheader">Dokumentácia k definíciám makier</h2>
+<a id="ga04cfe2a92247b953c378b7074b920d95" name="ga04cfe2a92247b953c378b7074b920d95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga04cfe2a92247b953c378b7074b920d95">&#9670;&nbsp;</a></span>G_CONSTANT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define G_CONSTANT&#160;&#160;&#160;9.80665  / 1000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Konverzný faktor pre premenu tiažového zrýchlenia (preťaženia) z mili-g na m/s^2. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Dokumentácia definícií typov</h2>
+<a id="ga81e5a9a064791edccf98fa7700f33b86" name="ga81e5a9a064791edccf98fa7700f33b86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga81e5a9a064791edccf98fa7700f33b86">&#9670;&nbsp;</a></span>AccelerationPrecision</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef float <a class="el" href="group__imu.html#ga81e5a9a064791edccf98fa7700f33b86">AccelerationPrecision</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Citlivosť akcelerometra podľa dynamického rozsahu v mg/LSB. </p>
+
+</div>
+</div>
+<a id="ga155e706b86ee26c71ab2ff009e7364de" name="ga155e706b86ee26c71ab2ff009e7364de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga155e706b86ee26c71ab2ff009e7364de">&#9670;&nbsp;</a></span>AccelerationRange</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">AccelerationRange</a> <a class="el" href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">AccelerationRange</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Dynamický rozsah akcelerometra v g. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Dokumentácia enumeračných typov</h2>
+<a id="ga984641099b78ca8886bbaa110b61495c" name="ga984641099b78ca8886bbaa110b61495c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga984641099b78ca8886bbaa110b61495c">&#9670;&nbsp;</a></span>AccelerationRange</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">AccelerationRange</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Dynamický rozsah akcelerometra v g. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Hodnoty enumerácií</th></tr><tr><td class="fieldname"><a id="gga984641099b78ca8886bbaa110b61495ca06b337dfafcc8e7d7b0145b549dc788d" name="gga984641099b78ca8886bbaa110b61495ca06b337dfafcc8e7d7b0145b549dc788d"></a>IMU_2G&#160;</td><td class="fielddoc"><p >Rozsah: <img class="formulaInl" alt="$ \pm 2\;\mathrm{g} = \pm 19.6133 \;\mathrm{m/s^2} $" src="form_8.png" width="123" height="15"/> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga984641099b78ca8886bbaa110b61495ca6cd464d382ab3ef672cdb9a4f5d1b3f9" name="gga984641099b78ca8886bbaa110b61495ca6cd464d382ab3ef672cdb9a4f5d1b3f9"></a>IMU_4G&#160;</td><td class="fielddoc"><p >Rozsah: <img class="formulaInl" alt="$ \pm 4\;\mathrm{g} = \pm 39.2266 \;\mathrm{m/s^2} $" src="form_9.png" width="123" height="15"/> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga984641099b78ca8886bbaa110b61495ca4ac48eaab507e4667b33a8698c039849" name="gga984641099b78ca8886bbaa110b61495ca4ac48eaab507e4667b33a8698c039849"></a>IMU_8G&#160;</td><td class="fielddoc"><p >Rozsah: <img class="formulaInl" alt="$ \pm 8\;\mathrm{g} = \pm 78.4532 \;\mathrm{m/s^2} $" src="form_10.png" width="123" height="15"/> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga984641099b78ca8886bbaa110b61495ca6a0568572c993b8612545da6c84f7b10" name="gga984641099b78ca8886bbaa110b61495ca6a0568572c993b8612545da6c84f7b10"></a>IMU_16G&#160;</td><td class="fielddoc"><p >Rozsah: <img class="formulaInl" alt="$ \pm 16\;\mathrm{g} = \pm 156.9064 \;\mathrm{m/s^2} $" src="form_11.png" width="135" height="15"/> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga984641099b78ca8886bbaa110b61495cacab8785eb453ca5a293d4522738ede99" name="gga984641099b78ca8886bbaa110b61495cacab8785eb453ca5a293d4522738ede99"></a>IMU_RANGE_COUNT&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Dokumentácia funkcií</h2>
+<a id="gac29840f536a8d50d112ad094e8458f10" name="gac29840f536a8d50d112ad094e8458f10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac29840f536a8d50d112ad094e8458f10">&#9670;&nbsp;</a></span>imu_acceleration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void imu_acceleration </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structInertialUnit.html">InertialUnit</a> *&#160;</td>
+          <td class="paramname"><em>imu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *&#160;</td>
+          <td class="paramname"><em>z</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Meranie aktuálnej hodnoty 3D akcelerácie v m/s^2. </p>
+<dl class="params"><dt>Parametre</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir"></td><td class="paramname">imu</td><td>Senzor </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">x</td><td>Zrýchlenie v osi x. Rozsah je podľa nastavenia dynamického rozsahu. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">y</td><td>Zrýchlenie v osi y </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">z</td><td>Zrýchlenie v osi z </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga3af49280cbf98260dd598ca654ef04e5" name="ga3af49280cbf98260dd598ca654ef04e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3af49280cbf98260dd598ca654ef04e5">&#9670;&nbsp;</a></span>imu_acceleration_range()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void imu_acceleration_range </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structInertialUnit.html">InertialUnit</a> *&#160;</td>
+          <td class="paramname"><em>imu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__imu.html#ga984641099b78ca8886bbaa110b61495c">AccelerationRange</a>&#160;</td>
+          <td class="paramname"><em>range</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Nastavenie dynamického rozsah lineárneho 3D akcelerometra v g. </p>
+<dl class="params"><dt>Parametre</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">imu</td><td>Senzor </td></tr>
+    <tr><td class="paramname">range</td><td>Dynamický rozsah akcelerometra </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac341b015be68412d4e525d5f6ab5ef78" name="gac341b015be68412d4e525d5f6ab5ef78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac341b015be68412d4e525d5f6ab5ef78">&#9670;&nbsp;</a></span>imu_output_data_rate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void imu_output_data_rate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structInertialUnit.html">InertialUnit</a> *&#160;</td>
+          <td class="paramname"><em>imu</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>fs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Nastavenie výstupného dátového toku (ODR) akcelerometra podľa vzorkovanej frekvencie. </p>
+<dl class="params"><dt>Parametre</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">imu</td><td>Senzor </td></tr>
+    <tr><td class="paramname">fs</td><td>Vzorkovacia frekvencia v Herzoch. Hardvér povoľuje max. ODR 956 Hz </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gac0b054b8aade6e6c489307c6ecf9d5fd" name="gac0b054b8aade6e6c489307c6ecf9d5fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac0b054b8aade6e6c489307c6ecf9d5fd">&#9670;&nbsp;</a></span>imu_setup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">esp_err_t imu_setup </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structInertialUnit.html">InertialUnit</a> *&#160;</td>
+          <td class="paramname"><em>imu</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Inicializácia senzora lineárnej akcelerácie. </p>
+<dl class="params"><dt>Parametre</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">imu</td><td>Senzor </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Návratová hodnota</dt><dd>Úspešnosť inicializácie senzora </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generované programom <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+  </ul>
+</div>
+</body>
+</html>

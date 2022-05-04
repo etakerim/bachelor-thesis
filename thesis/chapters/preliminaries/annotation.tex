@@ -13,17 +13,23 @@
 &\text{Pedagogický vedúci:} && \text{\PedagogicalSupervisor} \\
 &\text{\Date}
 \end{align*}}
-%V bakalárskej práci sa zameriavame na spôsoby spracovania signálov z vibrácií pri preprave, zachytených
-%senzorom akcelerácie. Zámerom je extrakcia čŕt záujmu z prúdu vzoriek do udalostí, čím sa redukujú vymieňané
-%dáta v senzorovej sieti. 
-%
-%Analytická časť sa venuje fyzikálnemu opisu a číslicovému meraniu zrýchlenia s MEMS akcelerometrom,
-%od ostatné kinematické veličiny. V časovej doméne nahliadame na sledovaný dej ako stochastický proces opísateľný
-%metrikami deskriptívnej štatistiky. Významné okamihy sa prejavujú náhlou zmenou oproti predošlému správaniu alebo nadprahovou úrovňou, čo sa zachytáva algoritmami na detekciu špičiek formu binárneho klasifikácie. Vibrácie obsahujú rôzne frekvenčné zložky separovateľné 
-%Fourierovou a kosínusovou transformáciou algoritmom rýchlej Fourierovej transformácie vo viacerých obmenách za aplikovania oknových funkcií. 
-%Spomenuté sú tiež filtre s konečnou impulznou odozvou zohrávajúce úlohu pri úprave zdrojového signálu pred ďalšími stupňami 
-%spracovania. Prihliadame na obmedzenia vyplývajúce z nasadenia riešenia na zariadenia Internetu vecí v kontexte Edge computing architektúry.
+V bakalárskej práci sa zameriavame na spôsoby spracovania signálov z vibrácií pri preprave, zachytených
+senzorom akcelerácie. Zámerom je extrakcia čŕt záujmu z prúdu vzoriek do udalostí, čím sa redukuje vymieňaný
+objem správ v senzorovej sieti. Fyzikálny opis javu nadväzuje na číslicové meraniu zrýchlenia s
+MEMS akcelerometrom.
 
+V časovej doméne nahliadame na sledovaný dej ako stochastický proces opísateľný metrikami deskriptívnej štatistiky.
+Vibrácie obsahujú viaceré frekvenčné zložky separovateľné Fourierovou a kosínusovou transformáciou 
+realizované algoritmom rýchlej Fourierovej transformácie vo viacerých obmenách za aplikovania oknových funkcií. 
+Významné okamihy sa prejavujú prudkosťou zmeny alebo výraznou úrovňou lokálneho extrému, ktoré sú odlíšené algoritmami na
+hľadanie špičiek vo forme binárnej klasifikácie. Úlohu pri úprave zdrojového signálu zohrávajú tiež filtre 
+s konečnou impulznou odozvou. 
+
+Prihliadame na obmedzenia vyplývajúce z nasadenia riešenia na zariadenia
+Internetu vecí v kontexte Edge computing architektúry. Konfigurovateľný proces spracovania harmonických zložiek 
+trojosovej akcelerácie sa uplatní na senzorovej jednotke komunikujúcej cez WiFi a aplikačný protokol MQTT. 
+Firmvér je implementovaný na platforme mikrokontroléra ESP32. Overenie úspešnosti detekcie frekvencií bolo vykonané
+na základe syntetických sínusových časových radov a vlastných záznamov z vozidiel verejnej dopravy.
 \emptypage
 
 %Anotácia EN
@@ -41,19 +47,21 @@
 &\text{Departmental advisor:} && \text{\PedagogicalSupervisorEN} \\
 &\text{\DateEN}
 \end{align*}}
-%In the bachelor thesis we focus on signal processing of vibrations during transport, captured
-%using acceleration sensors. The intention is to extract features of interest from the stream of samples into events, 
-%thereby reducing data exchange in the sensor network. The analytical part deals with the physical description of acceleration
-%and its digital measurement with the MEMS accelerometer, from which it is possible to obtain other kinematic quantities.
-%
-%In the time domain, we look at the observed phenomenon as a stochastic process expressed by various descriptive statistics. 
-%Significant moments are manifested by a sudden change from the previous behavior or levels above the threshold
-%noticed by peak detection algorithms, which are a form of binary classifier. The vibrations contain different frequency 
-%components separable by Fourier and cosine transform by the Fast Fourier transform algorithm in several variants with the
-%application of window functions.
-%
-%Finite impulse response filters are also mentioned as playing a role in adjusting the source signal before the next stages of 
-%the pipeline. We take into account the limitations of deployment on the Internet of Things devices in the context of the Edge 
-%computing architecture.
+In the bachelor's thesis we focus on signal processing of vibrations during transport, captured using
+acceleration sensors. The intention is to extract features of interest from the stream of samples into events, 
+thereby reducing the message payload in the sensor network. The physical description of the 
+phenomenon is followed by with its digital measurement with the MEMS accelerometer.
 
+In the time domain, we look at the observed phenomenon as a stochastic process expressed by various descriptive statistics. 
+The vibrations contain several frequency components separable by Fourier and cosine transform with the Fast Fourier transform 
+algorithm in several variants alongside application of window functions. Significant moments are
+are manifested therein by the change intensity or the significant level of the local extremes, which are distinguished by 
+peak-finding algorithms taking a form of the binary classifier. Finite impulse response filters also play a role in adjusting
+the source signal. 
+
+We take into account the limitations of deployment on the Internet of Things devices in the context of the
+Edge computing architecture. Configurable process of three-axis acceleration processing into harmonic components 
+is applied to the sensor unit communicating via WiFi and the MQTT application protocol. The firmware is implemented on 
+the ESP32 microcontroller platform. Verification of the frequency detection success rate was carried out against synthetic 
+sinusoidal time series and custom recordings from public transport vehicles.
 \emptypage 

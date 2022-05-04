@@ -1,0 +1,20 @@
+\_form#0=220x14:$ f[t-i] < f[t] > f[t+i],\quad \forall i \in 1, 2, ..., k $
+\_form#1=65x14:$[t-k; t+k]$
+\_form#2=38x14:$[1, n / 2]$
+\_form#3=51x14:$ \Delta f[i] = 0 $
+\_form#4=50x13:$ slope \geq 0 $
+\_form#5=91x14:$[min(y), max(y)]$
+\_form#6=25x14:$[0, n]$
+\_form#7=113x14:$[0, max(y) - min(y)]$
+\_form#8=123x15:$ \pm 2\;\mathrm{g} = \pm 19.6133 \;\mathrm{m/s^2} $
+\_form#9=123x15:$ \pm 4\;\mathrm{g} = \pm 39.2266 \;\mathrm{m/s^2} $
+\_form#10=123x15:$ \pm 8\;\mathrm{g} = \pm 78.4532 \;\mathrm{m/s^2} $
+\_form#11=135x15:$ \pm 16\;\mathrm{g} = \pm 156.9064 \;\mathrm{m/s^2} $
+\_form#12=156x16:$ w(n) = \frac{1}{n},\, n = 0, 1, ..., N - 1 $
+\_form#13=50x14:$ w(n) = 1 $
+\_form#14=176x16:$ w(n) = \frac{2}{N - 1}\left(\frac{N - 1}{2} - \left|n - \frac{N - 1}{2} \right|\right) $
+\_form#15=106x16:$ w(n) = \sin^2(\pi n / N) $
+\_form#16=170x14:$ w(n) = 0.54 - 0.46\cos(2\pi n / N) $
+\_form#17=268x14:$ w(n) = 0.42 - 0.5\cos(2\pi n / N) + 0.08\cos(4\pi n / N) $
+\_form#18=43x14:$ (x_i - \bar{x}) $
+\_form#19=41x14:$ (y_i - \bar{y}) $

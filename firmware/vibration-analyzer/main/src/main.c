@@ -39,9 +39,9 @@ void memory_measure(const char *reason)
 #endif
 
 static Provisioning login = {
-    .wifi_ssid="Etakerim Crew",
-    .wifi_pass="4priv.hacker-turaw",
-    .mqtt_url="mqtt://192.168.1.103"
+    .wifi_ssid="",
+    .wifi_pass="",
+    .mqtt_url="mqtt://"
 };
 
 static InertialUnit imu = {

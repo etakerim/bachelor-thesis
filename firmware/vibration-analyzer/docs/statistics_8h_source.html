@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Spracovanie dát generovaných senzorovou IoT sieťou: Zdrojový súbor /home/miroslav/fiit-stu/BP/bachelor-thesis/firmware/vibration-analyzer/main/include/statistics.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Spracovanie dát generovaných senzorovou IoT sieťou
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hľadať" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generované programom Doxygen 1.9.3 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Hľadať','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('statistics_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">statistics.h</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef STATISTICS_H</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define STATISTICS_H</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga6f95b3a12df7085e74e3635657524911">minimum</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x, <span class="keywordtype">int</span> n);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga50eb75d05c861d5d827a47cc344d296a">maximum</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x, <span class="keywordtype">int</span> n);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga80f5134900d515cdb8c3e3a9207d8b8f">root_mean_square</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x, <span class="keywordtype">int</span> n);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga16017ffeee08ce0dc3aa2907d1b86993">mean</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x, <span class="keywordtype">int</span> n);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga5252abcd414feef37e50780a2eb97ee5">variance</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x, <span class="keywordtype">int</span> n, <span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga16017ffeee08ce0dc3aa2907d1b86993">mean</a>);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga8272bde18bcc9619eb9245c0a0bd87e8">standard_deviation</a>(<span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga5252abcd414feef37e50780a2eb97ee5">variance</a>);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga99bd8c591041f1a7fc2257f52e27a19b">moment</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x, <span class="keywordtype">int</span> n, <span class="keywordtype">int</span> m, <span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga16017ffeee08ce0dc3aa2907d1b86993">mean</a>);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#gab445dda77199b120310f2a467292f5c1">skewness</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x, <span class="keywordtype">int</span> n, <span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga16017ffeee08ce0dc3aa2907d1b86993">mean</a>);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga1d911e4bab9a38b0785e320fd001920e">kurtosis</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x, <span class="keywordtype">int</span> n, <span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga16017ffeee08ce0dc3aa2907d1b86993">mean</a>);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#gaa822bb9791ab1e646319f64eb902fe2d">correlation</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x_diff, <span class="keyword">const</span> <span class="keywordtype">float</span> *y_diff, <span class="keywordtype">int</span> n, <span class="keywordtype">float</span> x_std, <span class="keywordtype">float</span> y_std);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga3dd458d5d6541da4b5145ed504236622">quickselect</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x, <span class="keywordtype">int</span> n, <span class="keywordtype">int</span> k);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#gab2415d03c6e6b2130346d004636704e5">median</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x, <span class="keywordtype">int</span> n);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#gae83601501cef8c5f39de7e1c56ae9f4e">median_abs_deviation</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x, <span class="keywordtype">int</span> n, <span class="keywordtype">float</span> med);</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga852d30b9258d6f35c4053db09b6b4f48">average_abs_deviation</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *x, <span class="keywordtype">int</span> n, <span class="keywordtype">float</span> <a class="code hl_function" href="group__statistics.html#ga16017ffeee08ce0dc3aa2907d1b86993">mean</a>);</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="ttc" id="agroup__statistics_html_ga16017ffeee08ce0dc3aa2907d1b86993"><div class="ttname"><a href="group__statistics.html#ga16017ffeee08ce0dc3aa2907d1b86993">mean</a></div><div class="ttdeci">float mean(const float *x, int n)</div><div class="ttdoc">Aritmetický výberový priemer.</div><div class="ttdef"><b>Definition:</b> statistics.c:30</div></div>
+<div class="ttc" id="agroup__statistics_html_ga1d911e4bab9a38b0785e320fd001920e"><div class="ttname"><a href="group__statistics.html#ga1d911e4bab9a38b0785e320fd001920e">kurtosis</a></div><div class="ttdeci">float kurtosis(const float *x, int n, float mean)</div><div class="ttdoc">Špicatosť</div><div class="ttdef"><b>Definition:</b> statistics.c:70</div></div>
+<div class="ttc" id="agroup__statistics_html_ga3dd458d5d6541da4b5145ed504236622"><div class="ttname"><a href="group__statistics.html#ga3dd458d5d6541da4b5145ed504236622">quickselect</a></div><div class="ttdeci">float quickselect(const float *x, int n, int k)</div><div class="ttdoc">Quickselect. Algoritmus na nájdenie k-teho najmenšieho prvku v nezoradenom poli. Aby nedochádzalo k m...</div><div class="ttdef"><b>Definition:</b> statistics.c:109</div></div>
+<div class="ttc" id="agroup__statistics_html_ga50eb75d05c861d5d827a47cc344d296a"><div class="ttname"><a href="group__statistics.html#ga50eb75d05c861d5d827a47cc344d296a">maximum</a></div><div class="ttdeci">float maximum(const float *x, int n)</div><div class="ttdoc">Najvyššia hodnota.</div><div class="ttdef"><b>Definition:</b> statistics.c:13</div></div>
+<div class="ttc" id="agroup__statistics_html_ga5252abcd414feef37e50780a2eb97ee5"><div class="ttname"><a href="group__statistics.html#ga5252abcd414feef37e50780a2eb97ee5">variance</a></div><div class="ttdeci">float variance(const float *x, int n, float mean)</div><div class="ttdoc">Rozptyl populácie (vychýlená štatistika)</div><div class="ttdef"><b>Definition:</b> statistics.c:38</div></div>
+<div class="ttc" id="agroup__statistics_html_ga6f95b3a12df7085e74e3635657524911"><div class="ttname"><a href="group__statistics.html#ga6f95b3a12df7085e74e3635657524911">minimum</a></div><div class="ttdeci">float minimum(const float *x, int n)</div><div class="ttdoc">Najnižšia hodnota.</div><div class="ttdef"><b>Definition:</b> statistics.c:5</div></div>
+<div class="ttc" id="agroup__statistics_html_ga80f5134900d515cdb8c3e3a9207d8b8f"><div class="ttname"><a href="group__statistics.html#ga80f5134900d515cdb8c3e3a9207d8b8f">root_mean_square</a></div><div class="ttdeci">float root_mean_square(const float *x, int n)</div><div class="ttdoc">Stredná kvadratická odchýlka.</div><div class="ttdef"><b>Definition:</b> statistics.c:21</div></div>
+<div class="ttc" id="agroup__statistics_html_ga8272bde18bcc9619eb9245c0a0bd87e8"><div class="ttname"><a href="group__statistics.html#ga8272bde18bcc9619eb9245c0a0bd87e8">standard_deviation</a></div><div class="ttdeci">float standard_deviation(float variance)</div><div class="ttdoc">Smerodajná odchýlka.</div><div class="ttdef"><b>Definition:</b> statistics.c:50</div></div>
+<div class="ttc" id="agroup__statistics_html_ga852d30b9258d6f35c4053db09b6b4f48"><div class="ttname"><a href="group__statistics.html#ga852d30b9258d6f35c4053db09b6b4f48">average_abs_deviation</a></div><div class="ttdeci">float average_abs_deviation(const float *x, int n, float mean)</div><div class="ttdoc">Priemerná absolútna odchýlka (AAD)</div><div class="ttdef"><b>Definition:</b> statistics.c:149</div></div>
+<div class="ttc" id="agroup__statistics_html_ga99bd8c591041f1a7fc2257f52e27a19b"><div class="ttname"><a href="group__statistics.html#ga99bd8c591041f1a7fc2257f52e27a19b">moment</a></div><div class="ttdeci">float moment(const float *x, int n, int m, float mean)</div><div class="ttdoc">Centrálny moment.</div><div class="ttdef"><b>Definition:</b> statistics.c:55</div></div>
+<div class="ttc" id="agroup__statistics_html_gaa822bb9791ab1e646319f64eb902fe2d"><div class="ttname"><a href="group__statistics.html#gaa822bb9791ab1e646319f64eb902fe2d">correlation</a></div><div class="ttdeci">float correlation(const float *x_diff, const float *y_diff, int n, float x_std, float y_std)</div><div class="ttdoc">Korelácia z medzivýsledkov.</div><div class="ttdef"><b>Definition:</b> statistics.c:77</div></div>
+<div class="ttc" id="agroup__statistics_html_gab2415d03c6e6b2130346d004636704e5"><div class="ttname"><a href="group__statistics.html#gab2415d03c6e6b2130346d004636704e5">median</a></div><div class="ttdeci">float median(const float *x, int n)</div><div class="ttdoc">Medián cez Quickselect.</div><div class="ttdef"><b>Definition:</b> statistics.c:130</div></div>
+<div class="ttc" id="agroup__statistics_html_gab445dda77199b120310f2a467292f5c1"><div class="ttname"><a href="group__statistics.html#gab445dda77199b120310f2a467292f5c1">skewness</a></div><div class="ttdeci">float skewness(const float *x, int n, float mean)</div><div class="ttdoc">Šikmosť</div><div class="ttdef"><b>Definition:</b> statistics.c:63</div></div>
+<div class="ttc" id="agroup__statistics_html_gae83601501cef8c5f39de7e1c56ae9f4e"><div class="ttname"><a href="group__statistics.html#gae83601501cef8c5f39de7e1c56ae9f4e">median_abs_deviation</a></div><div class="ttdeci">float median_abs_deviation(const float *x, int n, float med)</div><div class="ttdoc">Mediánová absolútna odchýlka (MAD). Medzi-výsledky odchýlok na nájdenie mediánu ukladá do poľa z prem...</div><div class="ttdef"><b>Definition:</b> statistics.c:139</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_5c982d53a68cdbcd421152b4020263a9.html">main</a></li><li class="navelem"><a class="el" href="dir_bad007344d42f4b5340fab5412b591e5.html">include</a></li><li class="navelem"><b>statistics.h</b></li>
+    <li class="footer">Generované programom <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+  </ul>
+</div>
+</body>
+</html>

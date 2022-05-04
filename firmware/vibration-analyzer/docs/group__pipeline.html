@@ -1,0 +1,616 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Spracovanie dát generovaných senzorovou IoT sieťou: Dátová pipeline</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Spracovanie dát generovaných senzorovou IoT sieťou
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Hľadať" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generované programom Doxygen 1.9.3 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Hľadať','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('group__pipeline.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#groups">Moduly</a> &#124;
+<a href="#nested-classes">Dátové štruktúry</a> &#124;
+<a href="#define-members">Definícia makier</a> &#124;
+<a href="#enum-members">Enumerácie</a>  </div>
+  <div class="headertitle"><div class="title">Dátová pipeline</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="groups" name="groups"></a>
+Moduly</h2></td></tr>
+<tr class="memitem:group__window"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__window.html">Oknové funkcie</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group__pipeline__buffer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline__buffer.html">Správa pamäti pipeline</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:group__stages"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__stages.html">Fázy spracovania oknovaného signálu</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Dátové štruktúry</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSamplingConfig.html">SamplingConfig</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nastavenie vzorkovania signálu.  <a href="structSamplingConfig.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSmoothingConfig.html">SmoothingConfig</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nastavenie vyhladzovania časovo premenného signálu alebo frekvenčného spektra.  <a href="structSmoothingConfig.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structStatisticsConfig.html">StatisticsConfig</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nastavenie zberu štatistík posuvného okna.  <a href="structStatisticsConfig.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFFTTransformConfig.html">FFTTransformConfig</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nastavenie frekvenčnej transformácie.  <a href="structFFTTransformConfig.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEventDetectionConfig.html">EventDetectionConfig</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nastavenia algoritmov na detekciu udalostí a ich parametrov.  <a href="structEventDetectionConfig.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSaveFormatConfig.html">SaveFormatConfig</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nastavenia ukladania a posielania spracovaných dát.  <a href="structSaveFormatConfig.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structConfiguration.html">Configuration</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Systémová konfigurácia pipeline spracovania vzoriek z akcelerometra.  <a href="structConfiguration.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structProvisioning.html">Provisioning</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sieťové nastavenia pre pripojenie na Wifi AP s WPA2 a MQTT broker.  <a href="structProvisioning.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structCorrelation.html">Correlation</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Medzivýsledky korelácie zdieľanej všetkými osami spracovania s prístupom cez zahrnutú synchronizačnú bariéru.  <a href="structCorrelation.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structStatistics.html">Statistics</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Výsledky všetkých dostupných štatistík.  <a href="structStatistics.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBufferPipelineKernel.html">BufferPipelineKernel</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vyrovnávacie pamäte spoločné pre celú pipeline.  <a href="structBufferPipelineKernel.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBufferPipelineAxis.html">BufferPipelineAxis</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vyrovnávacie pamäte samostatné pre každú os akcelerácie.  <a href="structBufferPipelineAxis.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSender.html">Sender</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fronta pre záznam vzoriek bez ďalšiho spracovania.  <a href="structSender.html#details">...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Definícia makier</h2></td></tr>
+<tr class="memitem:ga6b7a81520c1eb2b0d346ad37e3d6f225"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga6b7a81520c1eb2b0d346ad37e3d6f225">AXIS_COUNT</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:ga6b7a81520c1eb2b0d346ad37e3d6f225"><td class="mdescLeft">&#160;</td><td class="mdescRight">Celkový počet osí akcelerácie.  <a href="group__pipeline.html#ga6b7a81520c1eb2b0d346ad37e3d6f225">...</a><br /></td></tr>
+<tr class="separator:ga6b7a81520c1eb2b0d346ad37e3d6f225"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02af3d0c09f4611ca65df314b77f0a82"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga02af3d0c09f4611ca65df314b77f0a82">MAX_MPACK_FIELDS_COUNT</a>&#160;&#160;&#160;20</td></tr>
+<tr class="memdesc:ga02af3d0c09f4611ca65df314b77f0a82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximálny počet dvojíc kľúč - hodnota v Message Pack slovníku.  <a href="group__pipeline.html#ga02af3d0c09f4611ca65df314b77f0a82">...</a><br /></td></tr>
+<tr class="separator:ga02af3d0c09f4611ca65df314b77f0a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10d06ab50267a4e0a0c4d0360974cc4e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga10d06ab50267a4e0a0c4d0360974cc4e">SAMPLES_QUEUE_SLOTS</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:ga10d06ab50267a4e0a0c4d0360974cc4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Násobok veľkosti posuvného okna ako počet vzoriek čakajúcich na spracovanie vo fronte.  <a href="group__pipeline.html#ga10d06ab50267a4e0a0c4d0360974cc4e">...</a><br /></td></tr>
+<tr class="separator:ga10d06ab50267a4e0a0c4d0360974cc4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d459637968e6c858ac3b800c535803d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga7d459637968e6c858ac3b800c535803d">MAX_CREDENTIALS_LENGTH</a>&#160;&#160;&#160;64</td></tr>
+<tr class="memdesc:ga7d459637968e6c858ac3b800c535803d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximálna dĺžka prihlasovacieho údaju Wifi pripojenia.  <a href="group__pipeline.html#ga7d459637968e6c858ac3b800c535803d">...</a><br /></td></tr>
+<tr class="separator:ga7d459637968e6c858ac3b800c535803d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c9f723a3cf6abb6120b18e96727fded"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga6c9f723a3cf6abb6120b18e96727fded">MAX_MQTT_URL</a>&#160;&#160;&#160;256</td></tr>
+<tr class="memdesc:ga6c9f723a3cf6abb6120b18e96727fded"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dĺžka URL adresy na MQTT broker.  <a href="group__pipeline.html#ga6c9f723a3cf6abb6120b18e96727fded">...</a><br /></td></tr>
+<tr class="separator:ga6c9f723a3cf6abb6120b18e96727fded"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba6aef7b31dca8764c53b495f6a728d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#gaba6aef7b31dca8764c53b495f6a728d3">MAX_BUFFER_SAMPLES</a>&#160;&#160;&#160;1024</td></tr>
+<tr class="memdesc:gaba6aef7b31dca8764c53b495f6a728d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Najdlhšie povolené posuvné okno (vyššia mocnina 2 ako 1024 sa nezmestí do DRAM)  <a href="group__pipeline.html#gaba6aef7b31dca8764c53b495f6a728d3">...</a><br /></td></tr>
+<tr class="separator:gaba6aef7b31dca8764c53b495f6a728d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1fcff99f421f1bc8a1bbdb641ca0324e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga1fcff99f421f1bc8a1bbdb641ca0324e">MAX_FREQUENCY</a>&#160;&#160;&#160;952</td></tr>
+<tr class="memdesc:ga1fcff99f421f1bc8a1bbdb641ca0324e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Najvyššia vzorkovacia frekvencia daná fyzickým obmedzením akcelerometra.  <a href="group__pipeline.html#ga1fcff99f421f1bc8a1bbdb641ca0324e">...</a><br /></td></tr>
+<tr class="separator:ga1fcff99f421f1bc8a1bbdb641ca0324e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga733e6914161c2550e6c3dd9d8a5b8419"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga733e6914161c2550e6c3dd9d8a5b8419">MAX_OVERLAP</a>&#160;&#160;&#160;0.8</td></tr>
+<tr class="memdesc:ga733e6914161c2550e6c3dd9d8a5b8419"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximálny prekryv posuvných okien v rozsahu 0 - 1.  <a href="group__pipeline.html#ga733e6914161c2550e6c3dd9d8a5b8419">...</a><br /></td></tr>
+<tr class="separator:ga733e6914161c2550e6c3dd9d8a5b8419"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc9a895f6f7208a80722455504a83719"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#gadc9a895f6f7208a80722455504a83719">MAX_SMOOTH_REPEAT</a>&#160;&#160;&#160;8</td></tr>
+<tr class="memdesc:gadc9a895f6f7208a80722455504a83719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximálny počet prechodu konvolučnej masky vyhladzovacieho filtra.  <a href="group__pipeline.html#gadc9a895f6f7208a80722455504a83719">...</a><br /></td></tr>
+<tr class="separator:gadc9a895f6f7208a80722455504a83719"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70d30a38fd6e74498f3811cc97314a06"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga70d30a38fd6e74498f3811cc97314a06">LARGEST_MESSAGE</a>&#160;&#160;&#160;14000</td></tr>
+<tr class="memdesc:ga70d30a38fd6e74498f3811cc97314a06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Najväčšia veľkosť vyrovnávacej pamäte pre serializáciu vzoriek.  <a href="group__pipeline.html#ga70d30a38fd6e74498f3811cc97314a06">...</a><br /></td></tr>
+<tr class="separator:ga70d30a38fd6e74498f3811cc97314a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaffc50e23b5561b52dc5b8899b1fedfb3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#gaffc50e23b5561b52dc5b8899b1fedfb3">LARGEST_CONFIG</a>&#160;&#160;&#160;480</td></tr>
+<tr class="memdesc:gaffc50e23b5561b52dc5b8899b1fedfb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Najväčšia veľkosť serializovanej konfigurácie.  <a href="group__pipeline.html#gaffc50e23b5561b52dc5b8899b1fedfb3">...</a><br /></td></tr>
+<tr class="separator:gaffc50e23b5561b52dc5b8899b1fedfb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6dbf8d45b3bc0c6fec0c7584d2aaac3c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga6dbf8d45b3bc0c6fec0c7584d2aaac3c">square</a>(x)&#160;&#160;&#160;((x) * (x))</td></tr>
+<tr class="memdesc:ga6dbf8d45b3bc0c6fec0c7584d2aaac3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Druhá mocnina čísla.  <a href="group__pipeline.html#ga6dbf8d45b3bc0c6fec0c7584d2aaac3c">...</a><br /></td></tr>
+<tr class="separator:ga6dbf8d45b3bc0c6fec0c7584d2aaac3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb702d8b501669a23aa0ab3b281b9384"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#gabb702d8b501669a23aa0ab3b281b9384">min</a>(x,  y)&#160;&#160;&#160;(((x) &lt; (y)) ? (x): (y))</td></tr>
+<tr class="memdesc:gabb702d8b501669a23aa0ab3b281b9384"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum z dvoch hodnôt.  <a href="group__pipeline.html#gabb702d8b501669a23aa0ab3b281b9384">...</a><br /></td></tr>
+<tr class="separator:gabb702d8b501669a23aa0ab3b281b9384"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac39d9cef6a5e030ba8d9e11121054268"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#gac39d9cef6a5e030ba8d9e11121054268">max</a>(x,  y)&#160;&#160;&#160;(((x) &gt; (y)) ? (x): (y))</td></tr>
+<tr class="memdesc:gac39d9cef6a5e030ba8d9e11121054268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum z dvoch hodnôt.  <a href="group__pipeline.html#gac39d9cef6a5e030ba8d9e11121054268">...</a><br /></td></tr>
+<tr class="separator:gac39d9cef6a5e030ba8d9e11121054268"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerácie</h2></td></tr>
+<tr class="memitem:ga30ae54275f6096deada4dd0d6d9b1fe4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga30ae54275f6096deada4dd0d6d9b1fe4">WindowTypeConfig</a> { <br />
+&#160;&#160;<a class="el" href="group__pipeline.html#gga30ae54275f6096deada4dd0d6d9b1fe4a0b79f24ef9d80ed155c79eb9d338b092">BOXCAR_WINDOW</a>
+, <a class="el" href="group__pipeline.html#gga30ae54275f6096deada4dd0d6d9b1fe4a4876d43434aba671581277ff41035f52">BARTLETT_WINDOW</a>
+, <a class="el" href="group__pipeline.html#gga30ae54275f6096deada4dd0d6d9b1fe4ab2d07fff6f49b86d1b0599cb5791739b">HANN_WINDOW</a>
+, <a class="el" href="group__pipeline.html#gga30ae54275f6096deada4dd0d6d9b1fe4adc190d43171fade1a5674c209d4a4f87">HAMMING_WINDOW</a>
+, <br />
+&#160;&#160;<a class="el" href="group__pipeline.html#gga30ae54275f6096deada4dd0d6d9b1fe4aaec8669fb645e17c3bb3fd41e335d12b">BLACKMAN_WINDOW</a>
+, <a class="el" href="group__pipeline.html#gga30ae54275f6096deada4dd0d6d9b1fe4a37f2e55ace22f0ee6d1a9dbce2410ad6">WINDOW_TYPE_COUNT</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:ga30ae54275f6096deada4dd0d6d9b1fe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Oknové funkcie.  <a href="group__pipeline.html#ga30ae54275f6096deada4dd0d6d9b1fe4">...</a><br /></td></tr>
+<tr class="separator:ga30ae54275f6096deada4dd0d6d9b1fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f6913f93ab067966d3d23e644af3a02"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga5f6913f93ab067966d3d23e644af3a02">PeakFindingStrategy</a> { <br />
+&#160;&#160;<a class="el" href="group__pipeline.html#gga5f6913f93ab067966d3d23e644af3a02a4b8d6cea1ac561b0b7bb443d586aae42">THRESHOLD</a>
+, <a class="el" href="group__pipeline.html#gga5f6913f93ab067966d3d23e644af3a02a4264f5a4413d2735b5345a9242395f96">NEIGHBOURS</a>
+, <a class="el" href="group__pipeline.html#gga5f6913f93ab067966d3d23e644af3a02a4f45129de2c9d67caebee527425fa6f0">ZERO_CROSSING</a>
+, <a class="el" href="group__pipeline.html#gga5f6913f93ab067966d3d23e644af3a02a68100d3b66490486f0c7fe505da26601">HILL_WALKER</a>
+, <br />
+&#160;&#160;<a class="el" href="group__pipeline.html#gga5f6913f93ab067966d3d23e644af3a02a2094ed3dabe30ea047afc85ddf542bfa">STRATEGY_COUNT</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:ga5f6913f93ab067966d3d23e644af3a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Algoritmy na hľadanie špičiek.  <a href="group__pipeline.html#ga5f6913f93ab067966d3d23e644af3a02">...</a><br /></td></tr>
+<tr class="separator:ga5f6913f93ab067966d3d23e644af3a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga809513fb841b44487524df610e6c796c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga809513fb841b44487524df610e6c796c">FrequencyTransform</a> { <a class="el" href="group__pipeline.html#gga809513fb841b44487524df610e6c796cac97a499554efa6ba8803085f3dd04888">DFT</a>
+, <a class="el" href="group__pipeline.html#gga809513fb841b44487524df610e6c796caeb58c884ddcb3e800111b62ea7d3313b">DCT</a>
+, <a class="el" href="group__pipeline.html#gga809513fb841b44487524df610e6c796ca981fcad7502b927ff363d8479504b559">TRANSFORM_COUNT</a>
+ }</td></tr>
+<tr class="memdesc:ga809513fb841b44487524df610e6c796c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frekvenčné transformácie.  <a href="group__pipeline.html#ga809513fb841b44487524df610e6c796c">...</a><br /></td></tr>
+<tr class="separator:ga809513fb841b44487524df610e6c796c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacb03e94e7839291553fc5e7b85c029d6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#gacb03e94e7839291553fc5e7b85c029d6">SendUnprocessed</a> { <a class="el" href="group__pipeline.html#ggacb03e94e7839291553fc5e7b85c029d6a8eaa5395cb127ad3791b2721fa15c91a">RAW_NONE_SEND</a>
+, <a class="el" href="group__pipeline.html#ggacb03e94e7839291553fc5e7b85c029d6a1bc980a04032dc22222e69b81a062fa0">RAW_TIME_SEND</a>
+, <a class="el" href="group__pipeline.html#ggacb03e94e7839291553fc5e7b85c029d6ae4e5ab06d5db4c2b7fbe19a222ef27fe">RAW_FREQUENCY_SEND</a>
+, <a class="el" href="group__pipeline.html#ggacb03e94e7839291553fc5e7b85c029d6a46d4552f8b7b064b9682d862eb37c8ff">SEND_UNPROCESSED_COUNT</a>
+ }</td></tr>
+<tr class="memdesc:gacb03e94e7839291553fc5e7b85c029d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Doména odosielaných nespracovaných vzoriek.  <a href="group__pipeline.html#gacb03e94e7839291553fc5e7b85c029d6">...</a><br /></td></tr>
+<tr class="separator:gacb03e94e7839291553fc5e7b85c029d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailný popis</h2>
+<h2 class="groupheader">Dokumentácia k definíciám makier</h2>
+<a id="ga6b7a81520c1eb2b0d346ad37e3d6f225" name="ga6b7a81520c1eb2b0d346ad37e3d6f225"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6b7a81520c1eb2b0d346ad37e3d6f225">&#9670;&nbsp;</a></span>AXIS_COUNT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define AXIS_COUNT&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Celkový počet osí akcelerácie. </p>
+
+</div>
+</div>
+<a id="gaffc50e23b5561b52dc5b8899b1fedfb3" name="gaffc50e23b5561b52dc5b8899b1fedfb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaffc50e23b5561b52dc5b8899b1fedfb3">&#9670;&nbsp;</a></span>LARGEST_CONFIG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LARGEST_CONFIG&#160;&#160;&#160;480</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Najväčšia veľkosť serializovanej konfigurácie. </p>
+
+</div>
+</div>
+<a id="ga70d30a38fd6e74498f3811cc97314a06" name="ga70d30a38fd6e74498f3811cc97314a06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga70d30a38fd6e74498f3811cc97314a06">&#9670;&nbsp;</a></span>LARGEST_MESSAGE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LARGEST_MESSAGE&#160;&#160;&#160;14000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Najväčšia veľkosť vyrovnávacej pamäte pre serializáciu vzoriek. </p>
+
+</div>
+</div>
+<a id="gac39d9cef6a5e030ba8d9e11121054268" name="gac39d9cef6a5e030ba8d9e11121054268"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac39d9cef6a5e030ba8d9e11121054268">&#9670;&nbsp;</a></span>max</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define max</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">y&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(((x) &gt; (y)) ? (x): (y))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Maximum z dvoch hodnôt. </p>
+
+</div>
+</div>
+<a id="gaba6aef7b31dca8764c53b495f6a728d3" name="gaba6aef7b31dca8764c53b495f6a728d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaba6aef7b31dca8764c53b495f6a728d3">&#9670;&nbsp;</a></span>MAX_BUFFER_SAMPLES</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_BUFFER_SAMPLES&#160;&#160;&#160;1024</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Najdlhšie povolené posuvné okno (vyššia mocnina 2 ako 1024 sa nezmestí do DRAM) </p>
+
+</div>
+</div>
+<a id="ga7d459637968e6c858ac3b800c535803d" name="ga7d459637968e6c858ac3b800c535803d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7d459637968e6c858ac3b800c535803d">&#9670;&nbsp;</a></span>MAX_CREDENTIALS_LENGTH</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_CREDENTIALS_LENGTH&#160;&#160;&#160;64</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Maximálna dĺžka prihlasovacieho údaju Wifi pripojenia. </p>
+
+</div>
+</div>
+<a id="ga1fcff99f421f1bc8a1bbdb641ca0324e" name="ga1fcff99f421f1bc8a1bbdb641ca0324e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1fcff99f421f1bc8a1bbdb641ca0324e">&#9670;&nbsp;</a></span>MAX_FREQUENCY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_FREQUENCY&#160;&#160;&#160;952</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Najvyššia vzorkovacia frekvencia daná fyzickým obmedzením akcelerometra. </p>
+
+</div>
+</div>
+<a id="ga02af3d0c09f4611ca65df314b77f0a82" name="ga02af3d0c09f4611ca65df314b77f0a82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga02af3d0c09f4611ca65df314b77f0a82">&#9670;&nbsp;</a></span>MAX_MPACK_FIELDS_COUNT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_MPACK_FIELDS_COUNT&#160;&#160;&#160;20</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Maximálny počet dvojíc kľúč - hodnota v Message Pack slovníku. </p>
+
+</div>
+</div>
+<a id="ga6c9f723a3cf6abb6120b18e96727fded" name="ga6c9f723a3cf6abb6120b18e96727fded"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6c9f723a3cf6abb6120b18e96727fded">&#9670;&nbsp;</a></span>MAX_MQTT_URL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_MQTT_URL&#160;&#160;&#160;256</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Dĺžka URL adresy na MQTT broker. </p>
+
+</div>
+</div>
+<a id="ga733e6914161c2550e6c3dd9d8a5b8419" name="ga733e6914161c2550e6c3dd9d8a5b8419"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga733e6914161c2550e6c3dd9d8a5b8419">&#9670;&nbsp;</a></span>MAX_OVERLAP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_OVERLAP&#160;&#160;&#160;0.8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Maximálny prekryv posuvných okien v rozsahu 0 - 1. </p>
+
+</div>
+</div>
+<a id="gadc9a895f6f7208a80722455504a83719" name="gadc9a895f6f7208a80722455504a83719"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadc9a895f6f7208a80722455504a83719">&#9670;&nbsp;</a></span>MAX_SMOOTH_REPEAT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_SMOOTH_REPEAT&#160;&#160;&#160;8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Maximálny počet prechodu konvolučnej masky vyhladzovacieho filtra. </p>
+
+</div>
+</div>
+<a id="gabb702d8b501669a23aa0ab3b281b9384" name="gabb702d8b501669a23aa0ab3b281b9384"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabb702d8b501669a23aa0ab3b281b9384">&#9670;&nbsp;</a></span>min</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define min</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">y&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(((x) &lt; (y)) ? (x): (y))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Minimum z dvoch hodnôt. </p>
+
+</div>
+</div>
+<a id="ga10d06ab50267a4e0a0c4d0360974cc4e" name="ga10d06ab50267a4e0a0c4d0360974cc4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga10d06ab50267a4e0a0c4d0360974cc4e">&#9670;&nbsp;</a></span>SAMPLES_QUEUE_SLOTS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SAMPLES_QUEUE_SLOTS&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Násobok veľkosti posuvného okna ako počet vzoriek čakajúcich na spracovanie vo fronte. </p>
+
+</div>
+</div>
+<a id="ga6dbf8d45b3bc0c6fec0c7584d2aaac3c" name="ga6dbf8d45b3bc0c6fec0c7584d2aaac3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6dbf8d45b3bc0c6fec0c7584d2aaac3c">&#9670;&nbsp;</a></span>square</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define square</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td>&#160;&#160;&#160;((x) * (x))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Druhá mocnina čísla. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Dokumentácia enumeračných typov</h2>
+<a id="ga809513fb841b44487524df610e6c796c" name="ga809513fb841b44487524df610e6c796c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga809513fb841b44487524df610e6c796c">&#9670;&nbsp;</a></span>FrequencyTransform</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__pipeline.html#ga809513fb841b44487524df610e6c796c">FrequencyTransform</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Frekvenčné transformácie. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Hodnoty enumerácií</th></tr><tr><td class="fieldname"><a id="gga809513fb841b44487524df610e6c796cac97a499554efa6ba8803085f3dd04888" name="gga809513fb841b44487524df610e6c796cac97a499554efa6ba8803085f3dd04888"></a>DFT&#160;</td><td class="fielddoc"><p >Rýchla Fourierová transformácia radix-2. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga809513fb841b44487524df610e6c796caeb58c884ddcb3e800111b62ea7d3313b" name="gga809513fb841b44487524df610e6c796caeb58c884ddcb3e800111b62ea7d3313b"></a>DCT&#160;</td><td class="fielddoc"><p >Konsínusová transformácia DCT II. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga809513fb841b44487524df610e6c796ca981fcad7502b927ff363d8479504b559" name="gga809513fb841b44487524df610e6c796ca981fcad7502b927ff363d8479504b559"></a>TRANSFORM_COUNT&#160;</td><td class="fielddoc"><p >Počet dostupných frekvenčných transformácií. Potrebné pre serializáciu. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga5f6913f93ab067966d3d23e644af3a02" name="ga5f6913f93ab067966d3d23e644af3a02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5f6913f93ab067966d3d23e644af3a02">&#9670;&nbsp;</a></span>PeakFindingStrategy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__pipeline.html#ga5f6913f93ab067966d3d23e644af3a02">PeakFindingStrategy</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Algoritmy na hľadanie špičiek. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Hodnoty enumerácií</th></tr><tr><td class="fieldname"><a id="gga5f6913f93ab067966d3d23e644af3a02a4b8d6cea1ac561b0b7bb443d586aae42" name="gga5f6913f93ab067966d3d23e644af3a02a4b8d6cea1ac561b0b7bb443d586aae42"></a>THRESHOLD&#160;</td><td class="fielddoc"><p >Špičky nad prahovou úrovňou. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f6913f93ab067966d3d23e644af3a02a4264f5a4413d2735b5345a9242395f96" name="gga5f6913f93ab067966d3d23e644af3a02a4264f5a4413d2735b5345a9242395f96"></a>NEIGHBOURS&#160;</td><td class="fielddoc"><p >Špičky najvýznačnejšieho bodu spomedzi susedov. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f6913f93ab067966d3d23e644af3a02a4f45129de2c9d67caebee527425fa6f0" name="gga5f6913f93ab067966d3d23e644af3a02a4f45129de2c9d67caebee527425fa6f0"></a>ZERO_CROSSING&#160;</td><td class="fielddoc"><p >Špičky prechodou nulou do záporu. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f6913f93ab067966d3d23e644af3a02a68100d3b66490486f0c7fe505da26601" name="gga5f6913f93ab067966d3d23e644af3a02a68100d3b66490486f0c7fe505da26601"></a>HILL_WALKER&#160;</td><td class="fielddoc"><p >Špičky algoritmom horského turistu. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga5f6913f93ab067966d3d23e644af3a02a2094ed3dabe30ea047afc85ddf542bfa" name="gga5f6913f93ab067966d3d23e644af3a02a2094ed3dabe30ea047afc85ddf542bfa"></a>STRATEGY_COUNT&#160;</td><td class="fielddoc"><p >Počet dostupných algoritmov. Potrebné pre serializáciu. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="gacb03e94e7839291553fc5e7b85c029d6" name="gacb03e94e7839291553fc5e7b85c029d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacb03e94e7839291553fc5e7b85c029d6">&#9670;&nbsp;</a></span>SendUnprocessed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__pipeline.html#gacb03e94e7839291553fc5e7b85c029d6">SendUnprocessed</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Doména odosielaných nespracovaných vzoriek. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Hodnoty enumerácií</th></tr><tr><td class="fieldname"><a id="ggacb03e94e7839291553fc5e7b85c029d6a8eaa5395cb127ad3791b2721fa15c91a" name="ggacb03e94e7839291553fc5e7b85c029d6a8eaa5395cb127ad3791b2721fa15c91a"></a>RAW_NONE_SEND&#160;</td><td class="fielddoc"><p >Žiadne nespracované vzorky. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacb03e94e7839291553fc5e7b85c029d6a1bc980a04032dc22222e69b81a062fa0" name="ggacb03e94e7839291553fc5e7b85c029d6a1bc980a04032dc22222e69b81a062fa0"></a>RAW_TIME_SEND&#160;</td><td class="fielddoc"><p >Nespracované vzorky v časovej oblasti. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacb03e94e7839291553fc5e7b85c029d6ae4e5ab06d5db4c2b7fbe19a222ef27fe" name="ggacb03e94e7839291553fc5e7b85c029d6ae4e5ab06d5db4c2b7fbe19a222ef27fe"></a>RAW_FREQUENCY_SEND&#160;</td><td class="fielddoc"><p >Nespracované vzorky vo frekvenčnej oblasti <br  />
+ </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggacb03e94e7839291553fc5e7b85c029d6a46d4552f8b7b064b9682d862eb37c8ff" name="ggacb03e94e7839291553fc5e7b85c029d6a46d4552f8b7b064b9682d862eb37c8ff"></a>SEND_UNPROCESSED_COUNT&#160;</td><td class="fielddoc"><p >Počet možností na účely serializácie <br  />
+ </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ga30ae54275f6096deada4dd0d6d9b1fe4" name="ga30ae54275f6096deada4dd0d6d9b1fe4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga30ae54275f6096deada4dd0d6d9b1fe4">&#9670;&nbsp;</a></span>WindowTypeConfig</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="group__pipeline.html#ga30ae54275f6096deada4dd0d6d9b1fe4">WindowTypeConfig</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Oknové funkcie. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Hodnoty enumerácií</th></tr><tr><td class="fieldname"><a id="gga30ae54275f6096deada4dd0d6d9b1fe4a0b79f24ef9d80ed155c79eb9d338b092" name="gga30ae54275f6096deada4dd0d6d9b1fe4a0b79f24ef9d80ed155c79eb9d338b092"></a>BOXCAR_WINDOW&#160;</td><td class="fielddoc"><p >Obdĺžníkové okno. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga30ae54275f6096deada4dd0d6d9b1fe4a4876d43434aba671581277ff41035f52" name="gga30ae54275f6096deada4dd0d6d9b1fe4a4876d43434aba671581277ff41035f52"></a>BARTLETT_WINDOW&#160;</td><td class="fielddoc"><p >Bartlettovo okno. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga30ae54275f6096deada4dd0d6d9b1fe4ab2d07fff6f49b86d1b0599cb5791739b" name="gga30ae54275f6096deada4dd0d6d9b1fe4ab2d07fff6f49b86d1b0599cb5791739b"></a>HANN_WINDOW&#160;</td><td class="fielddoc"><p >Hannovo okno. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga30ae54275f6096deada4dd0d6d9b1fe4adc190d43171fade1a5674c209d4a4f87" name="gga30ae54275f6096deada4dd0d6d9b1fe4adc190d43171fade1a5674c209d4a4f87"></a>HAMMING_WINDOW&#160;</td><td class="fielddoc"><p >Hammingovo okno. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga30ae54275f6096deada4dd0d6d9b1fe4aaec8669fb645e17c3bb3fd41e335d12b" name="gga30ae54275f6096deada4dd0d6d9b1fe4aaec8669fb645e17c3bb3fd41e335d12b"></a>BLACKMAN_WINDOW&#160;</td><td class="fielddoc"><p >Blackmanovo okno. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga30ae54275f6096deada4dd0d6d9b1fe4a37f2e55ace22f0ee6d1a9dbce2410ad6" name="gga30ae54275f6096deada4dd0d6d9b1fe4a37f2e55ace22f0ee6d1a9dbce2410ad6"></a>WINDOW_TYPE_COUNT&#160;</td><td class="fielddoc"><p >Počet dostupných oknových funkcií. Potrebné pre serializáciu. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generované programom <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+  </ul>
+</div>
+</body>
+</html>

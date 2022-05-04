@@ -353,7 +353,7 @@ enum stats_key_names {
 };
 static const char *stats_keys[KEY_STATS_COUNT] = {
     "min", "max", "rms", "avg", "var", "std",
-    "skew", "kurtosis", "med", "mad", "corr"
+    "skew", "kurt", "med", "mad", "corr"
 };
 
 static void config_stats_serialize(mpack_writer_t *writer, const StatisticsConfig *conf)
