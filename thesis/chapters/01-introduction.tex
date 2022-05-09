@@ -1,27 +1,31 @@
 \chapter{Úvod}
 Inteligentné senzorové systémy zariadení internetu vecí zaznamenávajú obrovskú kvantitu údajov z prostredia, kde
-pôsobia. Prúdy vzoriek meraných veličín majú sami o sebe nízku informačnú hodnotu a zbytočne zaťažujú
+pôsobia. Prúdy vzoriek meraných veličín majú samy osebe nízku informačnú hodnotu. Zbytočne zaťažujú
 prenosové pásmo komunikačných kanálov a kapacitu úložísk. Monitorovanie širokého rozsahu kladie požiadavky
-na čo najmenšie výrobné náklady senzorových jednotiek a dlhodobú výdrž pri napájaní z batérií za minimálnej údržby.
+na nízke výrobné náklady senzorových jednotiek a dlhodobú výdrž pri napájaní z batérií za minimálnej údržby.
 Existuje preto potreba získané dáta spracovať do istej miery už v blízkosti ich zdroja, aby došlo k efektívnemu
 využitiu dostupných prostriedkov.
 
 Význam a dôležitosť sledovania vibrácií spočíva v ich v výskyte u každého mechanického zariadenia pohybom jednotlivých súčiastok
-a trením v ložiskách. Ich nadmerná prítomnosť býva spôsobená opotrebením dielov stroja a dôsledkom technických defektov. 
-Ďalšou oblasťou hojnej prítomnosti vibrácií je preprava osôb alebo tovaru, kde ich zapríčiňujú nerovnosti povrchu vozovky 
-alebo koľaje v bode styku s kolesami, či aparát ovplyvňujúci pohyb vozidla, čiže spaľovací alebo elektrický motor a brzdový systém.
+a trením v ložiskách. Ich nadmerná prítomnosť býva spôsobená opotrebením dielov stroja alebo dôsledkom technických defektov. 
+Ďalšou oblasťou hojnej prítomnosti vibrácií je preprava osôb a tovaru. Tam sú zapríčinené nerovnosťami povrchu vozovky 
+alebo koľaje v bode styku s kolesami, či aparátom ovplyvňujúcim pohyb vozidla. Menovite ich vyvoláva točivý moment 
+spaľovacieho alebo elektrického motora a činnosť brzdového systému.
 
 Detekciou nežiaducich vibrácií v preprave sa dokáže zabezpečiť bezpečnosť pasažierov včasnou výmenou súčiastky,
-ktorá by ovplyvnila prevádzkyschopnosť v kritických momentoch, a predísť nenávratnému poškodeniu krehkých materiálov,
+ktorá by ovplyvnila prevádzkyschopnosť v kritických momentoch. Ich odhalením predchádzame nenávratnému poškodeniu krehkých materiálov,
 znehodnoteniu reaktívnych substancií, či ich aktivácii v prípade výbušnín a pyrotechniky. Vibrácie sú súčasťou
-nebezpečných prírodných úkazov a ich správna identifikácia má za následok varovania pre evakuáciu obyvateľstva
+nebezpečných prírodných úkazov a správna identifikácia má za následok varovania na evakuáciu obyvateľstva
 v oblasti postihnutej zemetrasením, či erupciou sopky, vedúcimi k ohrozenia zdravia osôb a poškodenia majetku.
 
-Vibračný signál je merateľný v digitálnej podobe snímačom pohybového zrýchlenia mikromechanickej konštrukcie. 
-Na postupnosť pozorovaní sa nazerá ako vlnový priebeh, ktorý sa sprehľadňuje agregačnými, korelačnými a testovacími 
-štatistikami na odhalenie náhlych zmien. Významne úrovne sa odlišujú od nevýznamných algoritmami na detekciu špičiek.
-Metódami transformácie do frekvenčnej oblasti sa objavujú periodicky prítomné zložky, kde je opäť žiaduce upozorniť 
-na momentálne prevládajúci spektrálny obsah. 
+Vibračný signál je merateľný v digitálnej podobe snímačom pohybového zrýchlenia mikromechanickej konštrukcie, o čom
+pojednávame v kapitole \ref{chapter:analysis}. Na postupnosť pozorovaní sa nazerá ako vlnový priebeh, 
+ktorý sa sprehľadňuje agregačnými, korelačnými a testovacími štatistikami na odhalenie náhlych zmien. 
+Významne úrovne sa odlišujú od nevýznamných algoritmami na detekciu špičiek. Metódami transformácie do frekvenčnej oblasti
+sa objavujú periodicky prítomné zložky. Modely spracovania majú byť nasadené do adekvátnej vrstvy senzorovej siete. 
+V kapitole \ref{chapter:design} popíšeme hardvér, pre ktorý navrhneme firmvér uskutočňujúci sústavu
+krokov na extrakciu udalostí z vektora zrýchlenia a predstavíme dátové sady na validáciu funkčnosti.
+Ďalej v kapitole \ref{chapter:implementation} je prezentovaná implementácia najdôležitejších štruktúr a komponentov. Nakoniec
+riešenie overíme v kapitole \ref{chapter:verification} a dosiahnuté výsledky okomentujeme v kapitole \ref{chapter:evaluation}. 
 
-Modely operujúce s dátami prijímanými bezdrôtovým spojením sú podľa  potrieb rozsahu záberu nad skupinami zariadení alebo geografickými oblasťami, či výpočtovej náročnosti sa nasadzujú do adekvátnej vrstvy senzorovej siete. Imperatívnou požiadavkou je čím skôr 
-premeniť informačnú záplavu na poznatky užitočné koncovému užívateľovi.
+  

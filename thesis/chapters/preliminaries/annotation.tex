@@ -14,22 +14,21 @@
 &\text{\Date}
 \end{align*}}
 V bakalárskej práci sa zameriavame na spôsoby spracovania signálov z vibrácií pri preprave, zachytených
-senzorom akcelerácie. Zámerom je extrakcia čŕt záujmu z prúdu vzoriek do udalostí, čím sa redukuje vymieňaný
-objem správ v senzorovej sieti. Fyzikálny opis javu nadväzuje na číslicové meraniu zrýchlenia s
-MEMS akcelerometrom.
+senzorom akcelerácie mikromechanickej konštrukcie. Zámerom je extrakcia čŕt záujmu z prúdu vzoriek do udalostí, 
+čím sa redukuje objem posielaných dát v senzorovej sieti.
 
 V časovej doméne nahliadame na sledovaný dej ako stochastický proces opísateľný metrikami deskriptívnej štatistiky.
-Vibrácie obsahujú viaceré frekvenčné zložky separovateľné Fourierovou a kosínusovou transformáciou 
-realizované algoritmom rýchlej Fourierovej transformácie vo viacerých obmenách za aplikovania oknových funkcií. 
-Významné okamihy sa prejavujú prudkosťou zmeny alebo výraznou úrovňou lokálneho extrému, ktoré sú odlíšené algoritmami na
-hľadanie špičiek vo forme binárnej klasifikácie. Úlohu pri úprave zdrojového signálu zohrávajú tiež filtre 
-s konečnou impulznou odozvou. 
+Špecifické okolnosti umožňujú odvodiť zo zrýchlenia ostatné kinematické veličiny numerickou integráciou.
+Vibrácie obsahujú frekvenčné zložky separovateľné Fourierovou a kosínusovou transformáciou 
+realizovaných algoritmom FFT vo viacerých obmenách za aplikovania oknových funkcií. 
+Významné okamihy sa prejavujú prudkosťou zmeny alebo výraznou úrovňou lokálneho extrému, ktoré sú odlíšené binárnou
+klasifikáciou. Úlohu pri úprave zdrojového signálu zohrávajú tiež filtre s konečnou impulznou odozvou. 
 
 Prihliadame na obmedzenia vyplývajúce z nasadenia riešenia na zariadenia
-Internetu vecí v kontexte Edge computing architektúry. Konfigurovateľný proces spracovania harmonických zložiek 
-trojosovej akcelerácie sa uplatní na senzorovej jednotke komunikujúcej cez WiFi a aplikačný protokol MQTT. 
-Firmvér je implementovaný na platforme mikrokontroléra ESP32. Overenie úspešnosti detekcie frekvencií bolo vykonané
-na základe syntetických sínusových časových radov a vlastných záznamov z vozidiel verejnej dopravy.
+Internetu vecí v kontexte Edge computing architektúry. Konfigurovateľný postup spracovania harmonických zložiek 
+trojosovej akcelerácie sa uplatní vo firmvéri na bezdrôtovo komunikujúcom mikrokontroléri vzorom Publish-Subscribe.
+Úspešnosť detekcie frekvencií sa overuje na základe syntetických sínusových časových radov a vlastných záznamov
+z vozidiel verejnej dopravy.
 \emptypage
 
 %Anotácia EN
@@ -48,20 +47,19 @@ na základe syntetických sínusových časových radov a vlastných záznamov z
 &\text{\DateEN}
 \end{align*}}
 In the bachelor's thesis we focus on signal processing of vibrations during transport, captured using
-acceleration sensors. The intention is to extract features of interest from the stream of samples into events, 
-thereby reducing the message payload in the sensor network. The physical description of the 
-phenomenon is followed by with its digital measurement with the MEMS accelerometer.
+microelectromechanical acceleration sensor. The intention is to extract features of interest from the stream 
+of samples into events, thereby reducing the amount of data sent in the sensor network.
 
-In the time domain, we look at the observed phenomenon as a stochastic process expressed by various descriptive statistics. 
-The vibrations contain several frequency components separable by Fourier and cosine transform with the Fast Fourier transform 
+In the time domain, we look at the observed phenomenon as a stochastic process expressed by various descriptive statistics.
+Specific circumstances make it possible to derive other kinematic quantities from the acceleration by numerical integration. 
+The vibrations contain frequency components separable by Fourier and cosine transform with FFT
 algorithm in several variants alongside application of window functions. Significant moments are
-are manifested therein by the change intensity or the significant level of the local extremes, which are distinguished by 
-peak-finding algorithms taking a form of the binary classifier. Finite impulse response filters also play a role in adjusting
-the source signal. 
+are manifested therein by the change intensity or the significant level of the local extremes, which are distinguished by
+binary classification. Finite impulse response filters also play a role in adjusting the source signal.
 
 We take into account the limitations of deployment on the Internet of Things devices in the context of the
-Edge computing architecture. Configurable process of three-axis acceleration processing into harmonic components 
-is applied to the sensor unit communicating via WiFi and the MQTT application protocol. The firmware is implemented on 
-the ESP32 microcontroller platform. Verification of the frequency detection success rate was carried out against synthetic 
-sinusoidal time series and custom recordings from public transport vehicles.
+Edge computing architecture. The configurable harmonic component processing procedure for
+three-axis acceleration is applied in the firmware of a microcontroller with wireless communication capability 
+by the Publish-Subscribe pattern. The success of frequency detection is verified on the basis of synthetic sinusoidal time series and 
+recordings from public transport vehicles.
 \emptypage 

@@ -26,26 +26,25 @@ ktorá je po typografickej úprave súčasťou tejto prílohy.
 \end{itemize}
 
 
-
 \subsection{Udalosti} \label{modules:events}
 Modul s binárnymi klasifikátormi na označenie význačných úrovní v posuvnom okne vzoriek.
 
 \subsubsection*{Dátové štruktúry}
 \textbf{struct SpectrumEvent} - Stav udalosti frekvenčného vedierka.
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{SpectrumEventAction action}: Značka vymedzenia udalosti: žiadna, začiatok, koniec
-	\item \textbf{uint32\_t start}: Časová pečiatka alebo poradie posuvného okna, kedy začala aktuálne aktívna udalosť
-	\item \textbf{uint32\_t duration}: Trvanie aktívnej udalosti v počte posuvných okien
-	\item \textbf{int32\_t last\_seen}: Počet posuvných okien do minulosti, kedy bol detegovaný posledný výskyt špičky vo frekvencii
-	\item \textbf{float amplitude}: Priemerná amplitúda frekvenčného vedierka počas trvania udalosti
+	\item \verb|SpectrumEventAction action|: Značka vymedzenia udalosti
+	\item \verb|uint32_t start|: Časová pečiatka alebo poradie posuvného okna, kedy začala aktuálne aktívna udalosť
+	\item \verb|uint32_t duration|: Trvanie aktívnej udalosti v počte posuvných okien
+	\item \verb|int32_t last_seen|: Počet posuvných okien do minulosti, kedy bol detegovaný posledný výskyt špičky vo frekvencii
+	\item \verb|float amplitude|: Priemerná amplitúda frekvenčného vedierka počas trvania udalosti
 \end{itemize}
 
 \subsubsection*{Enumerácie}
 \textbf{enum SpectrumEventAction} - Časové vymedzenie udalosti frekvenčného spektra.
 	\begin{itemize}[noitemsep, topsep=0pt]
-		\item \verb|SPECTRUM_EVENT_NONE|: Udalosť prebieha alebo žiadna nie je aktívna.
-		\item \verb|SPECTRUM_EVENT_START|: Značka začiatku udalosti.
-		\item \verb|SPECTRUM_EVENT_FINISH|: Značka ukončenia udalosti.
+		\item \verb|SPECTRUM_EVENT_NONE|: Udalosť prebieha alebo žiadna nie je aktívna
+		\item \verb|SPECTRUM_EVENT_START|: Značka začiatku udalosti
+		\item \verb|SPECTRUM_EVENT_FINISH|: Značka ukončenia udalosti
 	\end{itemize}
 
 \subsubsection*{Funkcie}
@@ -71,7 +70,7 @@ void find_peaks_neighbours (
     float e, float h_rel, float h
 )
 \end{lstlisting}
-   Hľadanie špičiek s algoritmom význačnosti vrchola spomedzi susedov. $ f[t-i] < f[t] > f[t+i],\quad \forall i \in 1, 2, ..., k $ \\
+   Hľadanie špičiek s algoritmom význačnosti vrchola spomedzi susedov. \\ $ f[t-i] < f[t] > f[t+i],\quad \forall i \in 1, 2, ..., k $ \\
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
 	\item \textbf{peaks} (out): Nájdené špičky v signále. Dĺžka poľa musí byť rovnaká počtu vzoriek
@@ -90,7 +89,7 @@ void find_peaks_zero_crossing (
 	bool *peaks, const float *y, int n, int k, float slope
 )
 \end{lstlisting}
-   Hľadanie špičiek s algoritmom prechodu nulou do záporu. $Delta f[i] = 0$ \\
+   Hľadanie špičiek s algoritmom prechodu nulou do záporu. $\Delta f[i] = 0$ \\
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
 	\item \textbf{peaks} (out): Nájdené špičky v signále. Dĺžka poľa musí byť rovnaká počtu vzoriek
@@ -101,7 +100,7 @@ void find_peaks_zero_crossing (
 \end{itemize}
 \bigbreak
 \hrule
-
+\newpage
 \begin{lstlisting}[style=docs]
 void find_peaks_hill_walker (
 	bool *peaks, const float *y, int n, 
@@ -115,7 +114,7 @@ void find_peaks_hill_walker (
 	\item \textbf{peaks} (out): Nájdené špičky v signále. Dĺžka poľa musí byť rovnaká počtu vzoriek
 	\item \textbf{y} (in): Vzorky signálu 
 	\item \textbf{n} (in): Počet vzoriek 
-	\item \textbf{tolerance} (in): Prahová úroveň vo vertikálnej osi. Rozsah: $[min(y), max(y)]$
+	\item \textbf{tolerance} (in): Prahová úroveň vo vertikálnej osi. Rozsah: $[\min(y), \max(y)]$
  	\item \textbf{hole} (in): Prahová úroveň v horizontálnej osi. Rozsah: $[0, n]$
  	\item \textbf{prominence} (in):  Relatívna výška oproti predošlej navštívenej doline. Rozsah: $[0, \max(y) - \min(y)]$
  	\item \textbf{isolation} (in)  Vzdialenosť ku najbližšiemu predošlému vrcholu. Rozsah: $[0, n]$
@@ -147,7 +146,7 @@ size_t event_detection (
 \begin{itemize}[noitemsep, topsep=0pt]
 \item \textbf{t}: Poradové číslo posuvného okna. S každým ďalším volaním funkcie musí byť navýšené o 1 
 \item \textbf{events}: Pole udalostí frekvenčného spektra s dĺžkou počtu vedierok
-\item \textbf{peaks} (in): Nájdené špičky vo aktuálnom frekvenčnom spektre jedným z klasifikátorov find\_peak\_*
+\item \textbf{peaks} (in): Nájdené špičky vo aktuálnom frekvenčnom spektre jedným z klasifikátorov \emph{find\_peak\_*}
 \item \textbf{spectrum} (in): Frekvenčné spektrum aktuálneho posuvného okna vzoriek na zistenie priemernej amplitúdy udalostí
 \item \textbf{bins} (in): Počet frekvenčných vedierok
 \item \textbf{min\_duration} (in): Minimálne trvanie po koľkých oknách je vyhlásená špička za udalosť. Udáva oneskorenie vyhlásenia začiatku udalosti.
@@ -159,25 +158,24 @@ size_t event_detection (
 \hrule
 
 
-
 \subsection{Akcelerometer} \label{modules:imu}
 Modul adaptéra pre SPI rozhranie senzora LSM9DS1 lineárnej 3D akcelerácie (IMU)
 
 \subsubsection*{Dátové štruktúry}
 \textbf{struct InertialUnit} - Inerciálna meracia jednotka.
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{gpio\_num\_t clk}: GPIO pin SPI hodinového signálu
-	\item \textbf{gpio\_num\_t miso}: GPIO pin SPI Master In Slave Out
-	\item \textbf{gpio\_num\_t xgcs}: GPIO pin SPI Chip select akcelometra a gyroskopu
-	\item \textbf{gpio\_num\_t mcs}: GPIO pin SPI Chip select magnetometra
-	\item \textbf{gpio\_num\_t int1}: GPIO vstup prerušenia č.1
-	\item \textbf{gpio\_num\_t int2}: GPIO vstup prerušenia č.2
-	\item \textbf{gpio\_num\_t en\_data}: GPIO vstup príznaku pripravených dát
-	\item \textbf{gpio\_num\_t isr\_int1}: Podprogram prerušenia pre INT č.1
-	\item \textbf{gpio\_num\_t isr\_int2}: Podprogram prerušenia pre INT č.2
-	\item \textbf{spi\_host\_device\_t spi}: SPI zbernica
-	\item \textbf{spi\_device\_handle\_t dev}: SPI zariadenie pre akcelerometer
-	\item \textbf{AccelerationPrecision precision}: Zistená citlivosť akcelerometra v mg/LSB
+	\item \verb|gpio_num_t clk|: GPIO pin SPI hodinového signálu
+	\item \verb|gpio_num_t miso|: GPIO pin SPI Master In Slave Out
+	\item \verb|gpio_num_t xgcs|: GPIO pin SPI Chip select akcelometra a gyroskopu
+	\item \verb|gpio_num_t mcs|: GPIO pin SPI Chip select magnetometra
+	\item \verb|gpio_num_t int1|: GPIO vstup prerušenia č.1
+	\item \verb|gpio_num_t int2|: GPIO vstup prerušenia č.2
+	\item \verb|gpio_num_t en_data|: GPIO vstup príznaku pripravených dát
+	\item \verb|gpio_num_t isr_int1|: Podprogram prerušenia pre INT č.1
+	\item \verb|gpio_num_t isr_int2|: Podprogram prerušenia pre INT č.2
+	\item \verb|spi_host_device_t spi|: SPI zbernica
+	\item \verb|spi_device_handle_t dev|: SPI zariadenie pre akcelerometer
+	\item \verb|AccelerationPrecision precision|: Citlivosť akcelerometra v mg/LSB
 \end{itemize}
 
 \subsubsection*{Enumerácie}
@@ -191,10 +189,8 @@ Modul adaptéra pre SPI rozhranie senzora LSM9DS1 lineárnej 3D akcelerácie (IM
 	\end{itemize}
 \bigbreak
 \noindent\textbf{typedef float AccelerationPrecision} - Citlivosť akcelerometra podľa dynamického rozsahu v mg/LSB.
-	
 
 \subsubsection*{Funkcie}
-
 \begin{lstlisting}[style=docs]
 esp_err_t imu_setup(InertialUnit *imu)
 \end{lstlisting}
@@ -208,11 +204,11 @@ esp_err_t imu_setup(InertialUnit *imu)
 \hrule
 
 \begin{lstlisting}[style=docs]
-void imu_acceleration_range(
+void imu_acceleration_range (
 	InertialUnit *imu, AccelerationRange range
 )
 \end{lstlisting}
-   Nastavenie dynamického rozsah lineárneho 3D akcelerometra v g. \\
+   Nastavenie dynamického rozsah lineárneho 3D akcelerometra v $g$. \\
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
 	\item \textbf{imu}: Senzor
@@ -222,7 +218,7 @@ void imu_acceleration_range(
 \hrule
 
 \begin{lstlisting}[style=docs]
-void imu_output_data_rate(InertialUnit *imu, uint16_t fs)
+void imu_output_data_rate (InertialUnit *imu, uint16_t fs)
 \end{lstlisting}
    Nastavenie výstupného dátového toku (ODR) akcelerometra podľa vzorkovanej frekvencie. \\
 \textbf{Parametre}:
@@ -234,7 +230,9 @@ void imu_output_data_rate(InertialUnit *imu, uint16_t fs)
 \hrule
 
 \begin{lstlisting}[style=docs]
-void imu_output_data_rate(InertialUnit *imu, uint16_t fs)
+void imu_acceleration (
+	InertialUnit *imu, float *x, float *y, float *z
+)
 \end{lstlisting}
    Meranie aktuálnej hodnoty 3D akcelerácie v $m/s^2$. \\
 \textbf{Parametre}:
@@ -251,20 +249,20 @@ void imu_output_data_rate(InertialUnit *imu, uint16_t fs)
 \subsubsection*{Dátové štruktúry}
 \textbf{struct OpenLog} - SparkFun OpenLog - zaznenávač údajov na SD kartu cez sériovú linku.
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{gpio\_num\_t vcc}: GPIO pin na ovládanie napájania cez FET tranzistor
-	\item \textbf{uint8\_t uart}: Číslo UART rozhrania
-	\item \textbf{gpio\_num\_t rx}: GPIO pin UART RX
-	\item \textbf{gpio\_num\_t tx}: GPIO pin UART TX
-	\item \textbf{int baudrate}: Baudová rýchlosť komunikácie. Rovnaká rýchlosť musí byť nastavená v \verb|config.txt| na SD karte
-	\item \textbf{int buffer}: Dĺžka vyrovnávacej pamäte pre UART
+	\item \verb|gpio_num_t vcc|: GPIO pin na ovládanie napájania cez FET tranzistor
+	\item \verb|uint8_t uart|: Číslo UART rozhrania
+	\item \verb|gpio_num_t rx|: GPIO pin UART RX
+	\item \verb|gpio_num_t tx|: GPIO pin UART TX
+	\item \verb|int baudrate|: Symbolová rýchlosť komunikácie. Rovnaká rýchlosť musí byť nastavená v \verb|config.txt| na SD karte
+	\item \verb|int buffer|: Dĺžka vyrovnávacej pamäte pre UART
 \end{itemize}
 \bigbreak
 
 \noindent\textbf{struct MqttAxisTopics} - MQTT témy pre os zrýchlenia.
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{char stats[TOPIC\_LENGTH]}: Názov témy pre štatistické údaje
-	\item \textbf{char spectra[TOPIC\_LENGTH]}: Názov témy pre frekvenčné spektrum
-	\item \textbf{char events[TOPIC\_LENGTH]}: Názov témy pre udalosti zmeny spektra
+	\item \verb|char stats[TOPIC_LENGTH]|: Názov témy pre štatistické údaje
+	\item \verb|char spectra[TOPIC_LENGTH]|: Názov témy pre frekvenčné spektrum
+	\item \verb|char events[TOPIC_LENGTH]|: Názov témy pre udalosti zmeny spektra
 \end{itemize}
 
 
@@ -275,8 +273,8 @@ void axis_mqtt_topics (MqttAxisTopics *topics, int axis)
    Poskladanie názvu MQTT tém pre odosieanie dát o osi akcelerácie. \\
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item topics (out): MQTT témy zložené s označením osi x, y, z
-	\item axis (in): Index osi vektora akcelerácie: 0, 1, 2 
+	\item \textbf{topics} (out): MQTT témy zložené s označením osi x, y, z
+	\item \textbf{axis} (in): Index osi vektora akcelerácie: 0, 1, 2 
 \end{itemize}
 \bigbreak
 \hrule
@@ -381,60 +379,60 @@ Pripojenie sa k Wifi AP blokujúce.
 \subsubsection*{Dátové štruktúry}
 \noindent\textbf{struct SamplingConfig} - Nastavenie vzorkovania signálu.
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{uint16\_t frequency}: Vzorkovacia frekvencia v Hz. Najviac \verb|MAX_FREQUENCY|
-	\item \textbf{AccelerationRange range}: Dynamický rozsah akcelerometra
-	\item \textbf{uint16\_t n}: Veľkosť posuvného okna. Musí byť mocninou dvojky a najviac \verb|MAX_BUFFER_SAMPLES|
-	\item \textbf{float overlap}: Pomer prekryvu posuvných okien. Rozsah: 0 až \verb|MAX_OVERLAP|
-	\item \textbf{bool axis[AXIS\_COUNT]}: Osi akcelerácie povolené na spracovanie
+	\item \verb|uint16_t frequency|: Vzorkovacia frekvencia v Hz. Najviac \verb|MAX_FREQUENCY|
+	\item \verb|AccelerationRange range|: Dynamický rozsah akcelerometra
+	\item \verb|uint16_t n|: Veľkosť posuvného okna. Musí byť mocninou dvojky a najviac \verb|MAX_BUFFER_SAMPLES|
+	\item \verb|float overlap|: Pomer prekryvu posuvných okien. Rozsah: 0 až \verb|MAX_OVERLAP|
+	\item \verb|bool axis[AXIS_COUNT]|: Osi akcelerácie povolené na spracovanie
 \end{itemize}
 \bigbreak
 
 \noindent\textbf{struct SmoothingConfig} - Nastavenie vyhladzovania časovo premenného signálu alebo frekvenčného spektra.
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{bool enable}: Vyhladzovanie signálu povolené
-	\item \textbf{uint16\_t n}: Dĺžka konvolučnej masky
-	\item \textbf{uint8\_t repeat}: Počet prechodov konvolučnej masky. Najviac \verb|MAX_SMOOTH_REPEAT|
+	\item \verb|bool enable|: Vyhladzovanie signálu povolené
+	\item \verb|uint16_t n|: Dĺžka konvolučnej masky
+	\item \verb|uint8_t repeat|: Počet prechodov konvolučnej masky.\\ Najviac \verb|MAX_SMOOTH_REPEAT|
 \end{itemize}
 \bigbreak
 
 \noindent\textbf{struct StatisticsConfig} - Nastavenie zberu štatistík posuvného okna.
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{bool min}: Výpočet minimálnej hodnoty povolený
-	\item \textbf{bool max}: Výpočet maximálnej hodnoty povolený
-	\item \textbf{bool rms}: Výpočet strednej kvadratickej odchýlky povolený
-	\item \textbf{bool mean}: Výpočet aritmetického priemeru povolený
-	\item \textbf{bool variance}: Výpočet rozptylu povolený
-	\item \textbf{bool std}: Výpočet smerodajnej odchýlky povolený
-	\item \textbf{bool skewness}: Výpočet šikmosti povolený
-	\item \textbf{bool kurtosis}: Výpočet špicatosti povolený
-	\item \textbf{bool median}: Výpočet mediánu povolený
-	\item \textbf{bool mad}: Výpočet mediánovej absolútnej odchýlky povolený
-	\item \textbf{bool correlation}: Výpočet korelácie medzi osami povolený
+	\item \verb|bool min|: Výpočet minimálnej hodnoty povolený
+	\item \verb|bool max|: Výpočet maximálnej hodnoty povolený
+	\item \verb|bool rms|: Výpočet strednej kvadratickej odchýlky povolený
+	\item \verb|bool mean|: Výpočet aritmetického priemeru povolený
+	\item \verb|bool variance|: Výpočet rozptylu povolený
+	\item \verb|bool std|: Výpočet smerodajnej odchýlky povolený
+	\item \verb|bool skewness|: Výpočet šikmosti povolený
+	\item \verb|bool kurtosis|: Výpočet špicatosti povolený
+	\item \verb|bool median|: Výpočet mediánu povolený
+	\item \verb|bool mad|: Výpočet mediánovej absolútnej odchýlky povolený
+	\item \verb|bool correlation|: Výpočet korelácie medzi osami povolený
 \end{itemize}
 \bigbreak
 
 \noindent\textbf{struct FFTTransformConfig} - Nastavenie frekvenčnej transformácie.
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{WindowTypeConfig window}: Oknová funkcia
-	\item \textbf{FrequencyTransform func}: Typ frekvenčnej transformácie
-	\item \textbf{bool log}: Prevod magnitúdy frekvencie do dB
+	\item \verb|WindowTypeConfig window|: Oknová funkcia
+	\item \verb|FrequencyTransform func|: Typ frekvenčnej transformácie
+	\item \verb|bool log|: Prevod magnitúdy frekvencie do dB
 \end{itemize}
 \bigbreak
 
 \noindent\textbf{struct SaveFormatConfig} - Nastavenia ukladania a posielania spracovaných dát.
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{bool local}: Záznam vzoriek na SD kartu povolený. OpenLog bude zapnutý po spustení
-	\item \textbf{bool mqtt}: Posielanie cez MQTT povolené. Wifi a MQTT klient bude zapnutý po spustení. Pozor: po deaktivácii
+	\item \verb|bool local|: Záznam vzoriek na SD kartu povolený. OpenLog bude zapnutý po spustení
+	\item \verb|bool mqtt|: Posielanie cez MQTT povolené. Wifi a MQTT klient bude zapnutý po spustení. Pozor: po deaktivácii
 	sa zariadenie nedá vzdialene rekonfigurovať. Na znovu povolenie sa musí nahrať firmvér so touto možnosťou povolenou. 
-	\item \textbf{bool mqtt\_stats}: Odosielanie štatistík cez MQTT na topic podľa \verb|MQTT_TOPIC_STATS|
-	\item \textbf{bool mqtt\_events}:  Odosielanie zmien spektra cez MQTT na topic podľa \verb|MQTT_TOPIC_EVENT|
-	\item \textbf{SendUnprocessed mqtt\_samples}:  Odosielanie nespracovaných vzoriek alebo frekvencií cez MQTT na topic podľa \verb|MQTT_TOPIC_STREAM|, \verb|MQTT_TOPIC_SPECTRUM|.
-	\item \textbf{uint16\_t subsampling}: Podvzorkovanie pre záznam vzoriek bez ďalšieho spracovania. Preskočí sa každých \verb|subsampling| vzoriek
+	\item \verb|bool mqtt_stats|: Odosielanie štatistík cez MQTT na topic \\ podľa \verb|MQTT_TOPIC_STATS|
+	\item \verb|bool mqtt_events|:  Odosielanie zmien spektra cez MQTT na topic \\ podľa \verb|MQTT_TOPIC_EVENT|
+	\item \verb|SendUnprocessed mqtt_samples|:  Odosielanie nespracovaných vzoriek alebo frekvencií cez MQTT na topic \\ podľa \verb|MQTT_TOPIC_STREAM|, \verb|MQTT_TOPIC_SPECTRUM|.
+	\item \verb|uint16_t subsampling|: Podvzorkovanie pre záznam vzoriek bez ďalšieho spracovania. Preskočí sa každých \verb|subsampling| vzoriek
 \end{itemize}
 \bigbreak
 
-\noindent\textbf{struct FFTTransformConfig} - Nastavenia algoritmov na detekciu udalostí a ich parametrov (popis s nachádza pri 
-funkciách z modulu ,,Udalosti'' \ref{modules:events}.
+\noindent\textbf{struct FFTTransformConfig} - Nastavenia algoritmov na detekciu udalostí a ich parametrov (popis sa nachádza pri 
+funkciách z modulu ,,Udalosti'' \ref{modules:events}).
 \bigbreak
 
 \noindent\textbf{struct Configuration} - Systémová konfigurácia pipeline spracovania vzoriek z akcelerometra.
@@ -477,7 +475,6 @@ V zátvorkách sú uvedené predvolené hodnoty
 
 
 \subsubsection*{Enumerácie}
-
 \noindent\textbf{enum WindowTypeConfig} - Oknové funkcie.
 	\begin{itemize}[noitemsep, topsep=0pt]
 		\item \verb|BOXCAR_WINDOW|: Obdĺžníkové okno
@@ -502,7 +499,7 @@ V zátvorkách sú uvedené predvolené hodnoty
 \noindent\textbf{enum FrequencyTransform} - Frekvenčné transformácie.
 	\begin{itemize}[noitemsep, topsep=0pt]
 		\item \verb|DFT|: Rýchla Fourierová transformácia radix-2
-		\item \verb|DCT|: Konsínusová transformácia DCT II
+		\item \verb|DCT|: Konsínusová transformácia DCT-II
 		\item \verb|TRANSFORM_COUNT|: Počet dostupných frekvenčných transformácií. Potrebné pre serializáciu
 	\end{itemize}
 \bigbreak
@@ -520,11 +517,12 @@ V zátvorkách sú uvedené predvolené hodnoty
 \subsubsection*{Oknové funkcie}
 \textbf{Parametre všetkých oknových funkcií}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item w (out): Váhy oknovej funkcie
-	\item n (in): Dĺžka okna  
+	\item \textbf{w} (out): Váhy oknovej funkcie
+	\item \textbf{n} (in): Dĺžka okna  
 \end{itemize}
-
+\bigbreak
 \hrule
+
 \begin{lstlisting}[style=docs]
 void bartlett_window (float *w, int n)
 \end{lstlisting}
@@ -583,9 +581,11 @@ void window (WindowTypeConfig type, float *w, int n)
 \subsubsection*{Správa pamäti pipeline}
 
 \begin{lstlisting}[style=docs]
-void axis_allocate (BufferPipelineAxis *p, const Configuration *conf)
+void axis_allocate (
+	BufferPipelineAxis *p, const Configuration *conf
+)
 \end{lstlisting}
-   Alokácia dynamických vyrovnávacích pamätí pre jednu os akcelerácie. \\ 
+   Alokácia vyrovnávacích pamätí pre jednu os akcelerácie. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
 	\item \textbf{p} (out): Dynamické vyrovnávacie pamäte s dĺžkami podľa nastavení
@@ -597,7 +597,7 @@ void axis_allocate (BufferPipelineAxis *p, const Configuration *conf)
 \begin{lstlisting}[style=docs]
 void axis_release (BufferPipelineAxis *p)
 \end{lstlisting}
-   Uvoľnenie pamäte pre dynamické vyrovnávacie pamäte pre jednu os akcelerácie. \\ 
+   Uvoľnenie vyrovnávacích pamätí pre jednu os akcelerácie. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
 	\item \textbf{p} (out): Dynamické vyrovnávacie pamäte
@@ -610,7 +610,7 @@ void process_allocate (
 	BufferPipelineKernel *p, const Configuration *conf
 )
 \end{lstlisting}
-   Alokácia a inicializácia dynamických vyrovnávacích pamätí a synchronizačných primitív. \\ 
+   Alokácia a inicializácia vyrovnávacích pamätí a synchronizačných primitív. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
 	\item \textbf{p} (out): Dynamické vyrovnávacie pamäte s dĺžkami podľa nastavení
@@ -654,7 +654,6 @@ void sender_release (Sender *sender)
 
 
 \subsubsection*{Fázy spracovania oknovaného signálu}
-
 \begin{lstlisting}[style=docs]
 void buffer_shift_left(
 	float *buffer, uint16_t n, uint16_t k
@@ -730,7 +729,6 @@ Frekvenčné spektrum (FFT, FCT) posuvného okna vzoriek vynásobené váhami ok
 \end{itemize}
 \bigbreak
 \hrule
-
 \begin{lstlisting}[style=docs]
 void process_statistics(
 	const float *buffer, uint16_t n, 
@@ -742,7 +740,8 @@ Požadované štatistiky podľa nastavení. \\
 \begin{itemize}[noitemsep, topsep=0pt]
 	\item \textbf{buffer} (in): Posuvné okno vzoriek signálu
  	\item \textbf{n} (in): Dĺžka posuvného okna
- 	\item \textbf{stats} (out): Deskriptívne štatistiky zo vzoriek posuvného okna. Korektné hodnoty majú len tie povolené v nastaveniach `c`
+ 	\item \textbf{stats} (out): Deskriptívne štatistiky zo vzoriek posuvného okna. 
+ 	Korektné hodnoty majú len tie povolené v nastaveniach `c`
 	\item \textbf{c} (in): Povolenia pre zber vybraných štatistík
 \end{itemize}
 \bigbreak
@@ -765,9 +764,7 @@ Hľadanie špičiek vo frekvenčnom spektre podľa nastavení aktívneho algorit
 \bigbreak
 \hrule
 
-
 \subsubsection*{Message Pack serializácia}
-
 \begin{lstlisting}[style=docs]
 size_t stream_serialize(
 	char *msg, size_t size, 
@@ -919,16 +916,20 @@ Parsovanie nastavení sieťového pripojenia z formátu Message Pack. \\
 
 \subsection{Deskriptívna štatistika} \label{modules:statistics}
 
+\textbf{Rovnako označené parametre funkcií}:
+\begin{itemize}[noitemsep, topsep=0pt]
+	\item \textbf{x} (in): Vzorky signálu
+	\item \textbf{n} (in):  Počet vzoriek signálu
+\end{itemize}
+\newpage
+
 \subsubsection*{Funkcie}
-\hrule
 \begin{lstlisting}[style=docs]
 float minimum(const float *x, int n)
 \end{lstlisting}
 Najnižšia hodnota. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{x} (in): Vzorky signálu
-	\item \textbf{n} (in):  Počet vzoriek signálu
 	\item \textbf{Návratová hodnota}: Mimimum z hodnôt signálu
 \end{itemize}
 \bigbreak
@@ -940,8 +941,6 @@ float maximum(const float *x, int n)
 Najvyššia hodnota. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{x} (in): Vzorky signálu
-	\item \textbf{n} (in):  Počet vzoriek signálu
 	\item \textbf{Návratová hodnota}: Maximum z hodnôt signálu
 \end{itemize}
 \bigbreak
@@ -953,8 +952,6 @@ float root_mean_square(const float *x, int n)
 Stredná kvadratická odchýlka. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{x} (in): Vzorky signálu
-	\item \textbf{n} (in):  Počet vzoriek signálu
 	\item \textbf{Návratová hodnota}:  RMS z hodnôt signálu
 \end{itemize}
 \bigbreak
@@ -966,8 +963,6 @@ float mean(const float *x, int n)
 Aritmetický výberový priemer. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{x} (in): Vzorky signálu
-	\item \textbf{n} (in):  Počet vzoriek signálu
 	\item \textbf{Návratová hodnota}:  Priemer hodnôt signálu
 \end{itemize}
 \bigbreak
@@ -979,8 +974,6 @@ float variance(const float *x, int n, float mean)
 Rozptyl populácie (vychýlená štatistika). \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{x} (in): Vzorky signálu
-	\item \textbf{n} (in):  Počet vzoriek signálu
 	\item \textbf{Návratová hodnota}:  Rozptyl hodnôt signálu
 \end{itemize}
 \bigbreak
@@ -992,7 +985,7 @@ float standard_deviation(float variance)
 Smerodajná odchýlka. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{variiance} (in): Rozptyl signálu
+	\item \textbf{variance} (in): Rozptyl signálu
 	\item \textbf{Návratová hodnota}:  Smerodajná odchýlka hodnôt signálu
 \end{itemize}
 \bigbreak
@@ -1004,8 +997,6 @@ float moment(const float *x, int n, int m, float mean)
 Centrálny moment rádu \verb|m|. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{x} (in): Vzorky signálu
-	\item \textbf{n} (in): Počet vzoriek signálu
 	\item \textbf{m} (in): Rád centrálneho momentu. Kladné číslo väčšie ako 1.
 	\item \textbf{mean} (in): Aritmetický priemer signálu
 	\item \textbf{Návratová hodnota}:  Centrálny moment
@@ -1019,8 +1010,6 @@ float skewness(const float *x, int n, float mean)
 Šikmosť. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{x} (in): Vzorky signálu
-	\item \textbf{n} (in): Počet vzoriek signálu
 	\item \textbf{mean} (in): Aritmetický priemer signálu
 	\item \textbf{Návratová hodnota}:  Šikmosť
 \end{itemize}
@@ -1033,8 +1022,6 @@ float kurtosis(const float *x, int n, float mean)
 Špicatosť. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{x} (in): Vzorky signálu
-	\item \textbf{n} (in): Počet vzoriek signálu
 	\item \textbf{mean} (in): Aritmetický priemer signálu
 	\item \textbf{Návratová hodnota}:  Špicatosť
 \end{itemize}
@@ -1068,8 +1055,6 @@ k modifikácii poradia pôvodného poľa kopíruje prvky do poľa z premenlivou 
  podľa \verb|n|, na zásobníku. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{x}: Vzorky signálu
-	\item \textbf{n} (in): Počet vzoriek signálu
 	\item \textbf{k} (in): Rád k-teho najmenšieho prvku
 	\item \textbf{Návratová hodnota}: k-ty najmenší prvok
 \end{itemize}
@@ -1082,8 +1067,6 @@ float median(const float *x, int n)
 Medián cez Quickselect. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{x} (in): Vzorky signálu
-	\item \textbf{n} (in): Počet vzoriek signálu
 	\item \textbf{Návratová hodnota}: Medián
 \end{itemize}
 \bigbreak
@@ -1098,29 +1081,10 @@ Mediánová absolútna odchýlka (MAD).  Medzi-výsledky odchýlok na nájdenie 
 do poľa z premenlivou dĺžkou (Variable-length array) podľa \verb|n|, na zásobníku \\
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{x} (in): Vzorky signálu
-	\item \textbf{n} (in): Počet vzoriek signálu
 	\item \textbf{med} (in):  Medián signálu
 	\item \textbf{Návratová hodnota}: MAD
 \end{itemize}
 \bigbreak
-\hrule
-
-\begin{lstlisting}[style=docs]
-float average_abs_deviation(
-	const float *x, int n, float mean
-)
-\end{lstlisting}
-Priemerná absolútna odchýlka (AAD). \\ 
-\textbf{Parametre}:
-\begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{x} (in): Vzorky signálu
-	\item \textbf{n} (in): Počet vzoriek signálu
-	\item \textbf{mean} (in):  Aritmetický priemer signálu
-	\item \textbf{Návratová hodnota}: AAD
-\end{itemize}
-\bigbreak
-\hrule
 
 \section{MQTT témy}
 Správy s výsledkami spracovania a konfigurácii posielané protokolom MQTT sú kódované v Message Pack.
@@ -1128,7 +1092,7 @@ Obsah je tématicky odlíšený do zvlášť MQTT topics, s ujednotenou štrukt�
 
 Zdrojové zariadenie je navyše identifikovateľné \emph{Device ID} v prefixe názvu témy podľa konštanty
 \verb|DEVICE_MQTT_TOPIC| v hlavičkovom súbore \verb|peripheral.h|. Prefix pre témy z nasledujúceho zoznamu je 
-tvaru \textbf|imu/1/|. 
+tvaru \verb|imu/1/|. 
 
 Operácie publikovania (\emph{Publish}) a odberu (\emph{Subscribe}) témy sú uvádzané z pohľadu
 externého klienta, ktorý má záujem vykonávať zber údajov zo senzorovej jednotky. Štatistiky, frekvenčné spektrum
@@ -1155,7 +1119,7 @@ kódované vo formáte Message Pack.
 			hodnoty sú neprípustné. 
 		\end{itemize}
 	\item \textbf{samples} (\emph{Subscribe}) - Pole nespracovaných vzoriek z akcelerometra v $m/s^2$. Priestorové zložky 
-	trojrozmerného vektora sú usporiadané sekvenčne za použitia jednoduchej presnosti \emph{float32}. V správe sa naraz nachádza
+	trojrozmerného vektora sú usporiadané sekvenčne za použitia jednoduchej presnosti \verb|float32|. V správe sa naraz nachádza
 	$n / 3 + 1$ vektorov. Napríklad pri $f_s$ = 8 sú v poli 3 vektory vzoriek:
 	\begin{lstlisting}[style=messages]
 	[-0.078, -0.910, -9.964, -1.773, -16.439, -0.401, 1.499, 5.202, 1.499]
@@ -1165,18 +1129,10 @@ kódované vo formáte Message Pack.
 	\begin{lstlisting}[style=messages]
 	{
 		"t": 1, 
-		"min": -9.964, 
-		"max": 11.846, 
-		"rms": 8.343, 
-		"avg": 4.126, 
-		"std": 7.251, 
-		"skew": -0.614, 
-		"kurt": -0.821, 
-		"med": 5.773, 
-		"mad": 5.370,
-		"corrXY": 0.528,
-		"corrXZ": 0.648,
-		"corrYZ": 0.431
+		"min": -9.964, "max": 11.846, "rms": 8.343, 
+		"avg": 4.126,  "std": 7.251,  "skew": -0.614, 
+		"kurt": -0.821, "med": 5.773, "mad": 5.370,
+		"corrXY": 0.528, "corrXZ": 0.648, "corrYZ": 0.431
 	}
 	\end{lstlisting}
 	\item \textbf{spectrum/x} (\emph{Subscribe}) - Výstup frekvenčnej transformácie v posuvnom okne s poradím $t$. Počet komponentov
@@ -1209,17 +1165,17 @@ kódované vo formáte Message Pack.
 	\item \textbf{config/request} (\emph{Publish}) - Dopyt aktuálne prítomnej konfigurácie s prázdnym obsahom.
 	 Odpoveď sa očakáva na tému \emph{config/response}.
 	\item \textbf{config/response} (\emph{Subscribe}) - Serializovaná konfigurácia zodpovedajúca vlastnostiam 
-	uložením v zloženej štruktúre \verb|Configuration| za rovnakých obmedzení. 
+	uložením v štruktúre \verb|Configuration| za rovnakých obmedzení. 
 	
 	Enumerácie sa pretvárajú na reťazce s významom priamo vychádzajúcim z pôvodných konštánt:
 	\begin{itemize}[noitemsep, topsep=0pt, label=$\star$]
-		\item Dynamický rozsah senzora ,,range'': ,,2g'', ,,4g'', ,,8g'', ,,16g''
-		\item Názvy oknových funkcií: ,,boxcar'', ,,bartlett'', ,,hann'', ,,hamming'', ,,blackman''
-		\item Transformácie do frekvenčnej domény: ,,dft'', ,,dct''
+		\item Dynamický rozsah senzora ,,range'': \verb|"2g"|, \verb|"4g"|, \verb|"8g"|, \verb|"16g"|
+		\item Názvy oknových funkcií: \verb|"boxcar"|, \verb|"bartlett"|, \verb|"hann"|, \verb|"hamming"|, \verb|"blackman"|
+		\item Transformácie do frekvenčnej domény: \verb|"dft"|, \verb|"dct"|
 		\item Algoritmy hľadania špičiek ,,strategy'' sa nazývajú rovnako ako skupiny možností ich parametrov:
-		,,threshold'', ,,neighbours'', ,,zero\_crossing'', ,,hill\_walker''
-		\item Odosielané nespracované údaje (,,logger'') ,,samples'' sú v časovej doméne ,,t'', frekvenčnej doméne ,,f'', alebo
-		nie sú posielané ,,''. 
+		\verb|"threshold"|, \verb|"neighbours"|, \verb|"zero_crossing"|, \verb|"hill_walker"|
+		\item Odosielané nespracované údaje (,,logger'') ,,samples'' sú v časovej doméne \verb|"t"|, 
+		frekvenčnej doméne \verb|"f"|, alebo nie sú posielané \verb|""|. 
 	\end{itemize}
 	
 	\begin{lstlisting}[style=messages]
@@ -1261,12 +1217,12 @@ kódované vo formáte Message Pack.
 		}
 	}
 	\end{lstlisting}
-	\item \textbf{login/set}  (\emph{Publish}) - Nastavenie sieťového pripojenia pred premiestnením zariadenia. Dokáže aplikovať čiastkové
-	úpravy z atribútov \emph{login/response}.
+	\item \textbf{login/set}  (\emph{Publish}) - Nastavenie sieťového pripojenia pred premiestnením zariadenia. 
+	Dokáže aplikovať čiastkové úpravy z atribútov \emph{login/response}.
 	\item \textbf{login/request} (\emph{Publish}) - Dopyt aktuálnych informácii o sieťovom pripojení s prázdnym obsahom.
-	 Odpoveď sa očakáva na tému \emph{login/response}
+	 Odpoveď sa očakáva na tému \emph{login/response}.
 	\item \textbf{login/response} (\emph{Subscribe}) - Aktuálne sieťové pripojenie: WiFi SSID prísupového bodu, heslo a 
-	URL adresa na MQTT broker. Neodporúča sa ponechávať heslo zahrnuté v tomto zobrazení, ale napomáha sa tým odlaďovaniu.
+	URL adresa na MQTT broker. Neodporúča sa ponechávať heslo zahrnuté v tomto zobrazení, ale napomáha sa tým testovaniu.
 	\begin{lstlisting}[style=messages]
 	{
 		"ssid": "SSID AP",
@@ -1371,5 +1327,3 @@ presahy v nahrávaní boli odstránené. Asfaltové povrchy ciest boli pomerne n
   	\item \textbf{Vozidlo:} električka ČKD Tatra T6A5 \#7954
   	\item \textbf{Umiestnenie:} zadný vozeň v okolí nad ľavou časťou prednej nápravy
   	\end{itemize}
-
-\clearpage

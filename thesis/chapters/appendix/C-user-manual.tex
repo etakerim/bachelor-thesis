@@ -5,106 +5,165 @@
 \renewcommand*{\thepage}{C-\arabic{page}}
 
 \section{Inštalačný manuál}
-Špecifikovať testovaciu platformu
-(esp-idf) v4.4, FreeRTOS v9.0.0, esp-dsp v1.2, MPack v1.1, CMake - nástroj na automatizácie kompilácie (GNU 8.4.0), Platforma Manjaro Linux
-	Linux ThinkPad 5.10.109-1-MANJARO (\url{https://ludocode.github.io/mpack/md_docs_expect.html}), Verzie a návod na inštaláciu v prílohe
-- Python3.10, numpy, scipy (stats, signal, fft, interpolate), pandas, seaborn, matplotlib
-- msgpack, json, cmd,  Eclipse Mosquitto
+Vývojovou platformou bola Linux distribúcia \emph{Manjaro 21.2.6.} KDE Plasma s jadrom verzie 5.10. 
+Uvedenie senzorovej jednotky do prevádzky popisuje ďalej uvedený postup:
 
-sudo pacman -S --needed gcc git make flex bison gperf python-pip cmake ninja ccache dfu-util libusb
-\url{git clone -b v4.4 --recursive https://github.com/espressif/esp-idf.git}
-\url{git clone -b v1.2.0 https://github.com/espressif/esp-dsp.git}
-\url{wget https://github.com/ludocode/mpack/releases/download/v1.1/mpack-amalgamation-1.1.tar.gz}
-
-
-cd ~/esp/esp-idf
-./install.sh esp32
-
-
-\textbf{Flashovanie a sprevádzkovanie}
+\begin{enumerate}
+\item {Najprv je potrebné nainštalovať systémové závislosti pre ESP-IDF SDK a MQTT broker:
 \begin{lstlisting}[style=messages]
-. ./export.sh
-cd firmware/vibration-analyzer
-idf.py build
-idf.py -p /dev/ttyUSB0 flash
-idf.py -p /dev/ttyUSB0 monitor
+$ sudo pacman -S --needed mosquitto gcc git make flex bison gperf python-pip cmake ninja ccache dfu-util libusb
+\end{lstlisting}}
+
+\item {Následne stiahneme knižnice v požadovaných verziách. Pokiaľ použijeme knižnice už
+pribalené na digitálnom médiu v priečinku firmvér, \textbf{môžeme vynechať tento krok} a nie je už nutné 
+pridávať knižnice do CMake zostavenia a vykonať úpravu DCT v esp-dsp. ESP-IDF používame verzie 4.4.1, ESP-DSP 
+je verzie 1.2, a MPack je verzie 1.1:
+\begin{lstlisting}[style=messages]
+$ git clone -b v4.4.1 --recursive https://github.com/espressif/esp-idf.git
+$ git clone -b v1.2.0 https://github.com/espressif/esp-dsp.git
+$ wget https://github.com/ludocode/mpack/releases/download/v1.1/mpack-amalgamation-1.1.tar.gz && tar -xvf mpack-amalgamation-1.1.tar.gz
+\end{lstlisting}}
+
+\item {Nainštalujeme nástroje používané ESP-IDF na kompiláciu programu, spustením príkazu z priečinku \verb|firmware/esp-idf|:
+\begin{lstlisting}[style=messages]
+$ ./install.sh esp32
+\end{lstlisting}}
+
+\item{Na prehliadanie Jupyter notebookov prieskumných analýz doinštalujeme balíčky pre \emph{Python} 3.10, 
+odporúčane vo virtuálnom prostredí, z priečinku \verb|measurements|. Nástroj príkazového riadku na vzdialenú 
+konfiguráciu ESP32 má závislosti v osobitom súbore:
+\begin{lstlisting}[style=messages]
+$ pip install -r requirements.txt
+$ pip install -r test-requirements.txt
+\end{lstlisting}}
+
+\item{MQTT broker \emph{Eclipse Mosquitto} v2.0.14 potrebuje na povolenie pripájania klientov v lokálnej sieti
+aplikovať konfiguráciu zo súboru \verb|mosquitto.conf| a následne musí byť služba reštartovaná.
+Príkazy spúštame z koreňového adresára.
+\begin{lstlisting}[style=messages]
+$ mv firmware/vibration-analyzer/config/mosquitto.conf 
+     /etc/mosquitto/mosquitto.conf 
+$ sudo systemctl restart mosquitto
+$ sudo systemctl status mosquitto
+\end{lstlisting}}
+
+\item {Záznam na SD kartu umožníme umiestnením súboru nastavení OpenLog \verb|config.txt| 
+z priečinku \verb|firmware/vibration-analyzer/conf| na pamäťovú kartu.}
+\end{enumerate}
+
+
+\section{Nahratie firmvéru}
+\begin{enumerate}
+\item {Prinesením IoT zariadenia do novej senzorovej siete v neznámom stave sa očakáva určenie 
+prihlasovacích údajov WiFi prístupového bodu a URL lokácie pre MQTT broker v štruktúre
+\verb|login| v súbore \verb|main.c| a priečinku \verb|firmware/vibration-analyzer/main/src|.
+Odporúča sa, aby URL adresa pozostávala z doménového mena, ale prípustná je aj IP adresa servera
+brokera (Zistená napr. cez \verb|ip addr|). Požadovanú úvodnú systémovú konfiguráciu je možné
+ovplyvniť tam isto, v štruktúre \verb|conf|. Príklad sieťového pripojenia:
+\begin{lstlisting}[style=messages, morekeywords = {"eduroam","12345","mqtt://192.168.1.10:1883"}]
+static Provisioning login = {
+    .wifi_ssid="eduroam",
+    .wifi_pass="12345",
+    .mqtt_url="mqtt://192.168.1.10:1883"
+};
+\end{lstlisting}}
+
+\item V súbore \verb|main.c| musí na nahratie pravidiel konfigurácie, ako atribútu do asociatívnej časti nevolatilnej pamäte, 
+dočasne \textbf{odkomentovaná} direktíva \verb|FACTORY_RESET|.
+
+\item ESP32 pripojíme cez Micro USB na počítač. Pomocný napaľovač nastavení umiestníme do flash pamäte mikrokontroléra spustením nasledovných príkazov z priečinku \verb|firmware/vibration-analyzer|. Sériový port určíme podľa aktuálne priradeného názvu.
+\begin{lstlisting}[style=messages]
+$ . ../esp-idf/export.sh
+$ idf.py build
+$ idf.py -p /dev/ttyUSB0 flash
 \end{lstlisting}
 
-na SD kartu dať: config.txt
-
-na MQTT server dať: mosquitto.conf
-systemctl status
-
-
-\section{Návod na použitie}
-\textbf{MQTT klient na nahrávanie konfigurácií}
-cd  main/tests/
-pip install -r requirements.txt
-python config\_tool.py
-
-Príkazy:
-\begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{connect}
-		Device ID [1]:
-      	Broker IP [192.168.1.103]
-        Broker Port [1883]
-	\item \textbf{disconnect}
-	\item \textbf{end}
-	\item \textbf{^C}
-	\item \textbf{set}
-		config>
-	\item \textbf{config}
-	\item \textbf{topic}
-		topic>
-		Listen time on topic in sec [10]:
-	\item \textbf{login}
-	\item \textbf{credentials}
-\end{itemize}
-
-\url{https://github.com/espressif/esp-idf}
-\url{https://github.com/espressif/esp-dsp} s úpravou
-\url{https://github.com/ludocode/mpack/releases/download/v1.1/mpack-amalgamation-1.1.tar.gz}
-
-\textbf{Jupyter notebooky}
-\begin{lstlisting}[style=messages]
-cd measurements
-pip install -r requirements.txt
-jupyter notebook
-\end{lstlisting}
-
-\section{Replikácia experimentov}
-
-Dôležité prepínače kompilátora cez \verb|idf.py menuconfig|:
-    - Optimalizácia na veľkosť: -Os (\verb|CONFIG_COMPILER_OPTIMIZATION_SIZE=y|)
-    - Taktovacia frekvencia: 160 MHz   (\verb|CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ=160|)
-    - Tick operačného systému: 100 Hz tick  (\verb|CONFIG_FREERTOS_HZ=100|)
-    
-Kompilovanie a nahratie na ESP32:
-
+\item Samotný firmvér nahráme na ESP32 po opätovnom \textbf{zakomentovaní} \verb|FACTORY_RESET|:
 \begin{lstlisting}[style=messages]
 $ idf.py build
-$ idf.py flash
+$ idf.py -p /dev/ttyUSB0 flash
 \end{lstlisting}
 
-Nastav počiatočnú konfiguráciu nástrojom \verb|python config_tool.py|:
-
+\item Schopnosť prihlásiť sa na WiFi prístupový bod overíme:
 \begin{lstlisting}[style=messages]
--> connect
--> set
-    {"sensor": {"fs": 8, "range": "2g", "n": 8, "overlap": 0.5, "axis": [true, true, true]}, "tsmooth": {"on": false, "n": 8, "repeat": 1}, "stats": {"min": true, "max": true, "rms": true, "avg": true, "var": true, "std": true, "skew": true, "kurtosis": true, "med": true, "mad": true, "corr": false}, "transform": {"w": "hann", "f": "dft", "log": true}, "fsmooth": {"on": false, "n": 8, "repeat": 1}, "peak": {"tmin": 4, "tprox": 5, "strategy": "threshold", "threshold": {"t": -15.0}, "neighbours": {"k": 9, "e": 0.0, "h": -100.0, "h_rel": 10.0}, "zero_crossing": {"k": 4, "slope": 3.0}, "hill_walker": {"t": 0.0, "h": 0, "p": 10.0, "i": 3.0}}, "logger": {"local": false, "mqtt": true, "samples": "", "stats": false, "events": false, "subsamp": 1}}
+idf.py -p /dev/ttyUSB0 monitor
+\end{lstlisting}
+Posledný riadok výpisu pre úspešné prihlásenie má vyzerať podobne tomuto:
+\begin{lstlisting}[style=messages]
+W (858) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:3, winSize:64
 \end{lstlisting}
 
-\section{Experiment: Časová efektivita algoritmov na spracovanie signálu}
-V \emph{main.c} je potrebné sa presvedčiť, že z direktív pre meranie je odkomentovaná len direktíva: 
-\verb|MEMORY_MEASUREMENT|
-
-Po každom riadku nastavením novej konfigurácie je potrebné čakať na 10 meraní časov z 
+\item Senzorovú jednotku môžeme odpojiť od počítača a pripojiť na samostatný zdroj napájania.
+Pred zapnutím ESP32 a po prihlásení klienta na MQTT topic ,,syslog'' by sme mali obdržať reťazec ,,imu started''.
+Následne sa začne zber a vyhodnocovanie zrýchlenia zo snímača.
 \begin{lstlisting}[style=messages]
-idf.py monitor | tee memory_usage.txt
+$ mosquitto_sub -h localhost -t imu/1/syslog
+imu started
+\end{lstlisting}
+\end{enumerate}
+
+\section{Konfiguračný klient}
+V priečinku \verb|firmware/vibration-analyzer/tests| sa nachádza nástroj
+na vzdialenú interaktívnu konfiguráciu senzorovej jednotky:
+\begin{lstlisting}[style=messages]
+$ python config_tool.py
 \end{lstlisting}
 
+Nástroj podporuje uvedenú sadu príkazov. Predvolené dodatočne dopytovaných 
+hodnôt sú v hranatých zátvorkách a na ich potvrdenie stačí stlačiť riadkovač.
+
+\begin{itemize}[noitemsep, topsep=0pt]
+	\item \textbf{end} - Ukončenie programu konfiguračného klienta
+	\item \textbf{connect} - Pripojenie k serveru so službou MQTT broker. Ponúkané možnosti:
+		\begin{itemize}
+			\item ,,Device ID [1]'' - ID senzorovej jednotky na filtrovanie komunikácie. Naraz je umožnené spravovanie len 
+			jedného kozového uzla
+      		\item ,,Broker IP [192.168.1.103]'' - IP adresa alebo doménové meno MQTT brokera
+        	\item ,,Broker Port [1883]'' - Číslo TCP portu MQTT brokera
+		\end{itemize}
+	\item \textbf{disconnect} - Odpojenie sa od nastavovania konkrétneho zariadenia
+	\item \textbf{$\wedge$C} - (Ctrl+C) Zrušenie priebehu aktuálneho príkazu
+	\item \textbf{set} - Zmena konfigurácie zadaná vo formáte JSON na výzvu: \verb|config>|
+	\item \textbf{config} - Dopyt konfigurácie prítomnej na senzorovej jednotke
+	\item \textbf{login} - Zmena sieťových nastavení zadaných vo formáte JSON na výzvu: \verb|login>|
+	\item \textbf{credentials} - Dopyt nastavených údajov o sieťovom pripojení
+	\item \textbf{topic} - Odoberanie MQTT témy po stanovení časový interval ohľadom zariadením produkovaných údajov. 
+	Téma sa zadáva bez prefixu na výzvu: \verb|topic>| 
+\end{itemize}
+
+\section{Replikácia experimentov}
+Výsledky experimentov na implementovanom firmvéri sa riadili podľa presne stanoveného poradia
+uplatňovania pravidiel konfigurácie za stabilných podmienok. Najdôležitejšie
+prepínače kompilátora, vložené do \emph{sdkconfig} nástrojom \verb|idf.py menuconfig|, ktoré 
+sa použili plošne sú:
+\begin{itemize}[noitemsep,topsep=0pt]
+    \item Optimalizácia na veľkosť: -Os \\(\emph{CONFIG\_COMPILER\_OPTIMIZATION\_SIZE=y})
+   	\item Taktovacia frekvencia: 160 MHz  \\ (\emph{CONFIG\_ESP32\_DEFAULT\_CPU\_FREQ\_MHZ=160})
+    \item Interval plánovania operačného systému: 100 Hz\\  (\emph{CONFIG\_FREERTOS\_HZ=100})
+\end{itemize}
+    
+Po odkomentovaní príslušnej direktívy na podmienenú kompiláciu v \emph{main.c} podľa typu experimentu
+bol takto pozmenený firmvér nahratý na zariadenie. Predvolená konfigurácia bola
+cez \emph{config\_tool.py} obnovená na začiatku pokusu vždy rovnaká, zachytená v technickej dokumentácii
+k MQTT témam. Následne sa príkazom \verb|set| konfigurácia pozmeňovala a odčítavali
+sa výpisy na konzolu aj do súboru. Realizovalo sa zakaždým 10 meraní, s ktorých bol vypočítaný aritmetický priemer.
 \begin{lstlisting}[style=messages]
--> set
+$ idf.py monitor | tee experiment.txt
+\end{lstlisting}
+\bigbreak
+
+Prieskumná analýza datasetov a vyhodnotenie úspešnosti pipeline na syntetickom signále
+sa nachádza v Jupyter notebookoch, ktoré sa otvárajú z priečinku \verb|measurements| príkazom:
+\begin{lstlisting}[style=messages]
+$ jupyter notebook
+\end{lstlisting}
+
+
+\subsection*{Experiment: Časová efektivita algoritmov na spracovanie signálu}
+Direktíva podmienenej kompilácie: \verb|MEMORY_MEASUREMENT|
+
+Konfigurácie:
+\begin{lstlisting}[style=messages, numbers=left, numberstyle=\tiny]
 {"sensor": {"n": 8}, "tsmooth": {"n": 8}, "fsmooth": {"n": 8}}
 {"sensor": {"n": 16}, "tsmooth": {"n": 16}, "fsmooth": {"n": 16}}
 {"sensor": {"n": 32}, "tsmooth": {"n": 32}, "fsmooth": {"n": 32}}
@@ -115,36 +174,30 @@ idf.py monitor | tee memory_usage.txt
 {"sensor": {"n": 1024}, "tsmooth": {"n": 1024}, "fsmooth": {"n": 1024}}
 \end{lstlisting}
 
-Následné fitrovanie relevantných riadkov:
-\begin{lstlisting}[style=messages]
-$ sed -rn 's/^(.*)(MEM.*)$/\2/p' memory_usage.txt > memory_usage_filter.csv
+Filtrovanie relevantných riadkov:
+\begin{lstlisting}[style=messages, language=sh]
+$ sed -rn `s/^(.*)(MEM.*)$/\2/p' experiment.txt 
+> memory_usage.csv
 \end{lstlisting}
 
+\subsection*{Experiment: Časová efektivita algoritmov na spracovanie signálu}
+Direktíva podmienenej kompilácie: \verb|EXECUTION_TIME_ALGORITHMS|.
 
-\section{Experiment: Časová efektivita algoritmov na spracovanie signálu}
-
-V \emph{main.c} je potrebné sa presvedčiť, že z direktív pre meranie je odkomentovaná len direktíva: 
-\verb|EXECUTION_TIME_ALGORITHMS|.
-
-Nastav počiatočnú konfiguráciu nástrojom \verb|python config_tool.py|:
-\begin{lstlisting}[style=messages]
+\noindent Zmena konfigurácie oproti predvolenej:
+\begin{lstlisting}[style=experiments]
 {"sensor": {"axis": [false, false, true]}}
 \end{lstlisting}
 
-Po každom riadku nastavením novej konfigurácie je potrebné čakať na 10 meraní časov z 
-\begin{lstlisting}[style=messages]
-idf.py monitor | tee execution_algorithms.txt
-\end{lstlisting}
-
-\begin{lstlisting}[style=messages]
+\noindent Odskúšané algoritmy frekvenčnej transformácie a detekcie špičiek:
+\begin{lstlisting}[style=experiments]
 {"sensor": {"n": 32, "fs": 16}, "transform": {"f": "dft"}, "peak": {"strategy": "neighbours"}}
 {"sensor": {"n": 32, "fs": 16}, "transform": {"f": "dft"}, "peak": {"strategy": "zero_crossing"}}
 {"sensor": {"n": 32, "fs": 16}, "transform": {"f": "dft"}, "peak": {"strategy": "hill_walker"}}
 {"sensor": {"n": 32, "fs": 16}, "transform": {"f": "dct"}, "peak": {"strategy": "neighbours"}}
 \end{lstlisting}
 
-Medzi každým:
-\begin{lstlisting}[style=messages]
+\noindent Pre každú predošlú stratégiu sa odmerali postupne rozličné dĺžky okien:
+\begin{lstlisting}[style=experiments]
 {"sensor": {"n": 64, "fs": 32}}
 {"sensor": {"n": 128, "fs": 64}}
 {"sensor": {"n": 256, "fs": 128}}
@@ -153,25 +206,16 @@ Medzi každým:
 \end{lstlisting}
 
 
+\subsection*{Experiment: Časová efektivita vyhladzovacieho filtra}
+\noindent Direktíva podmienenej kompilácie: \verb|EXECUTION_TIME_SMOOTHING|.
 
-\section{Experiment: Časová efektivita vyhladzovacieho filtra}
-
-V \emph{main.c} je potrebné sa presvedčiť, že z direktív pre meranie je odkomentovaná len direktíva:
-\verb|EXECUTION_TIME_SMOOTHING|.
-
-Nastav počiatočnú konfiguráciu nástrojom \verb|python config_tool.py|:
-
-\begin{lstlisting}[style=messages]
+\noindent Zmena konfigurácie oproti predvolenej:
+\begin{lstlisting}[style=experiments]
 {"sensor": {"fs": 256, "n": 512, "axis": [false, false, true]},  {"tsmooth": {"on": true}}
 \end{lstlisting}
 
-Po každom riadku nastavením novej konfigurácie je potrebné čakať na 10 meraní časov:
-\begin{lstlisting}[style=messages]
-idf.py monitor | tee execution_time.txt
-\end{lstlisting}
-
-\begin{lstlisting}[style=messages]
--> set
+\noindent Konfigurácie:
+\begin{lstlisting}[style=experiments]
 {"tsmooth": {"n": 4, "repeat": 1}}
 {"tsmooth": {"n": 16, "repeat": 1}}
 {"tsmooth": {"n": 64, "repeat": 1}}
@@ -184,116 +228,60 @@ idf.py monitor | tee execution_time.txt
 \end{lstlisting}
 
 
-\section{Experiment: Časová efektivita dátovej pipeline}
+\subsection*{Experiment: Časová efektivita dátovej pipeline}
+\noindent Direktíva podmienenej kompilácie: \verb|EXECUTION_TIME_PIPELINE|.
 
-V \emph{main.c} je potrebné sa presvedčiť, že z direktív pre meranie je odkomentovaná len nasledovná: 
-\verb|EXECUTION_TIME_PIPELINE|.
-
-Nastav počiatočnú konfiguráciu nástrojom \verb|python config_tool.py|:
-
-
-{"sensor": {"fs": 16, "range": "2g", "n": 32, "overlap": 0.5, "axis": [false, false, true]}, "stats": {"min": false, "max": false, "rms": false, "avg": false, "var": false, "std": false, "skew": false, "kurtosis": false, "med": false, "mad": false, "corr": false}}
-```
-
-Po každom riadku nastavením novej konfigurácie je potrebné čakať na 10 meraní časov: 
+\noindent Zmena konfigurácie oproti predvolenej:
 \begin{lstlisting}[style=messages]
-idf.py monitor | tee execution_time.txt
+{
+ "sensor": {"fs": 16,"n": 32, "axis": [false, false, true]}, 
+ "stats": {"min": false, "max": false, "rms": false, 
+ 		   "avg": false, "var": false, "std": false, 
+ 		   "skew": false, "kurt": false, "med": false, 
+ 		   "mad": false, "corr": false},
+ "transform": {"log": true}
+}
 \end{lstlisting}
 
-\paragraph{Tabuľka A}
-
-\begin{lstlisting}[style=messages]
--> set
-{"sensor": {"fs": 16, "n": 32, "axis": [false, false, true]}, "transform": {"f": "dft", "log": true}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-
-{"sensor": {"fs": 128, "n": 256}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-
-{"sensor": {"fs": 512, "n": 1024}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-
-{"sensor": {"fs": 16, "n": 32, "axis": [false, false, true]}, "transform": {"f": "dct", "log": true}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-
-{"sensor": {"fs": 128, "n": 256}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-
-{"sensor": {"fs": 512, "n": 1024}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
+\noindent Nastavenie na začiatku série meraní. \textbf{Tabuľka A}:
+\begin{lstlisting}[style=experiments]
+{"sensor": {"axis": [false, false, true]}, "transform": {"f": "dft"}}
+{"sensor": {"axis": [false, false, true]}, "transform": {"f": "dct"}}
 \end{lstlisting}
 
-\paragraph{Tabuľka B (9x) - 3 osi}
+\textbf{Tabuľka B}:
+\begin{lstlisting}[style=experiments]
+{"sensor": {"axis": [true, true, true]}, "transform": {"f": "dft"}}
+{"sensor": {"axis": [true, true, true]}, "transform": {"f": "dct"}}
+\end{lstlisting}
 
-\begin{lstlisting}[style=messages]
-{"sensor": {"fs": 16, "n": 32, "axis": [true, true, true]}, "transform": {"f": "dft", "log": true}, "peak": {"strategy": "neighbours"}}
+\textbf{Tabuľka C}:
+\begin{lstlisting}[style=experiments]
+{"sensor": {"axis": [false, false, true]}, "stats": {"min": true, "max": true, "rms": true, "avg": true, "var": true, "std": true, "skew": true, "kurt": true, "med": true, "mad": true, "corr": true},  "logger": {"samples": "f", "stats": true}, "transform": {"f": "dft"}}
+\end{lstlisting}
+
+\textbf{Tabuľka D}:
+\begin{lstlisting}[style=experiments]
+{"sensor": {"axis": [true, true, true]}, "transform": {"f": "dft"}}
+\end{lstlisting}
+
+\noindent Po každom riadku z predošlých úvodných nastavení nasleduje 9 obmien, kedy
+sa postupne upravuje veľkosť okna a algoritmus detekcie špičiek.
+\begin{lstlisting}[style=experiments]
+{"sensor": {"fs": 16, "n": 32}, "peak": {"strategy": "neighbours"}}
 {"peak": {"strategy": "zero_crossing"}}
 {"peak": {"strategy": "hill_walker"}}
-
 {"sensor": {"fs": 128, "n": 256}, "peak": {"strategy": "neighbours"}}
 {"peak": {"strategy": "zero_crossing"}}
 {"peak": {"strategy": "hill_walker"}}
-
-{"sensor": {"fs": 512, "n": 1024}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-
-{"sensor": {"fs": 16, "n": 32, "axis": [true, true, true]}, "transform": {"f": "dct", "log": true}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-
-{"sensor": {"fs": 128, "n": 256}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-
 {"sensor": {"fs": 512, "n": 1024}, "peak": {"strategy": "neighbours"}}
 {"peak": {"strategy": "zero_crossing"}}
 {"peak": {"strategy": "hill_walker"}}
 \end{lstlisting}
 
-\paragraph{Tabuľka C (stats)}
-
-\begin{lstlisting}[style=messages]
-{"sensor": {"fs": 16, "n": 32, "axis": [false, false, true]},  "stats": {"min": true, "max": true, "rms": true, "avg": true, "var": true, "std": true, "skew": true, "kurtosis": true, "med": true, "mad": true, "corr": true},  "logger": {"samples": "f", "stats": true}, "transform": {"f": "dft", "log": true}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-
-{"sensor": {"fs": 128, "n": 256}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-
-{"sensor": {"fs": 512, "n": 1024}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
+\noindent Výpisy zo separátnych experimentov A, B, C, D sú prehľadané na výskyt riadkov s časmi a odtiaľ 
+manuálne upravené do finálnej podoby
+\begin{lstlisting}[style=messages, language=sh]
+sed -rn `/^(.*)(main:.*)$/p' pipeline_time-X.txt 
+> pipeline_time-X_filter.csv
 \end{lstlisting}
-
-\paragraph{Tabuľka D}
-
-\begin{lstlisting}[style=messages]
-{"sensor": {"fs": 16, "n": 32, "axis": [true, true, true]}, "transform": {"f": "dft", "log": true}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-
-{"sensor": {"fs": 128, "n": 256}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-
-{"sensor": {"fs": 512, "n": 1024}, "peak": {"strategy": "neighbours"}}
-{"peak": {"strategy": "zero_crossing"}}
-{"peak": {"strategy": "hill_walker"}}
-\end{lstlisting}
-
-Pre namiesto X: A, B, C, D
-
-\begin{lstlisting}[style=messages]
-sed -rn '/^(.*)(main:.*)$/p' pipeline_time-X.txt > pipeline_time-X_filter.csv
-\end{lstlisting}
-
-
-

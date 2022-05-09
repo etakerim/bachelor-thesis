@@ -1,0 +1,35 @@
+Abstract
+
+An increasing number of connected IoT devices often rely on the aggregation and analytical processing of produced
+signal by more powerful nodes, unnecessarily wasting the transmission capacity of the wireless line.
+Created pipeline acts directly at the source of the data by adjusting measured levels of vibrational signal
+obtained during transport from the MEMS three-axis accelerometer.
+
+In the time domain, the reduction is achieved by descriptive statistics in the sliding windows. We compare three 
+simple peak-finding algorithms that reveal significant harmonic components in the frequency domain. We also come up 
+with a new stream algorithm to detect changes in the frequency component. We test the acquired efficiency by
+firmware implementation on the ESP32 microcontroller allowing remote configuration and message sending in the Message Pack format 
+via the MQTT protocol and WiFi. 
+
+We never delay by more than the length of the buffer from the stream of samples. Manually tuned
+parameters according to references from synthetically generated spectral profiles, the detector is able to identify
+important frequencies in custom public transport vehicle datasets.
+
+Keywords: vibrations, FFT, accelerometer, peak detection
+
+
+Abstrakt
+
+Narastajúce množstvo pripojených IoT zariadení sa často spolieha na agregáciu a analytické spracovanie produkovaného
+signálu výkonnejšími uzlami, čím sa zbytočne plytvá prenosovou kapacitou bezdrôtovej linky. Priamo pri zdroji dát pôsobí 
+zostavená ucelená postupnosť krokov na úpravu nameraných úrovní na signále vibrácií pri preprave z MEMS trojosového akcelerometra.
+V časovej oblasti sa redukcia dosahuje deskriptívnymi štatistikami po posuvných oknách. 
+Porovnávame tri jednoduché algoritmy na hľadanie špičiek, ktoré vo frekvenčnej doméne odhaľujú významné harmonické zložky. 
+Prichádzame tiež s novým prúdovým algoritmom na detekciu zmien frekvenčnej zložky. Nadobudnutú efektivitu otestujeme implementáciou 
+firmvéru na mikrokontroléri ESP32 umožňujúcom vzdialenú konfiguráciu a posielanie správ vo formáte Message Pack cez protokol 
+MQTT a WiFi. Od prúdu zbieraných vzoriek sa neoneskorujeme nikdy o viac ako dĺžku vyrovnávacej pamäte. Manuálnym nastavením 
+parametrov podľa referencie od synteticky generovaných spektrálnych profilov je detektor schopná identifikovať dôležité 
+frekvencie na vlastných dátových sadách z vozidiel verejnej dopravy.
+
+
+Kľúčové slová: vibrácie, FFT, akcelerometer, detekcia špičiek

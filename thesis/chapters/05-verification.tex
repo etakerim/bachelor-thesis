@@ -1,4 +1,4 @@
-\chapter{Overenie riešenia}
+\chapter{Overenie riešenia} \label{chapter:verification}
 Funkčnosť a efektivitu riešenia v súlade s kladenými požiadavkami overíme v rozličných scenároch. Zároveň experimentálne
 demonštrujeme odvodenie hyperparametrov klasifikácie špičiek s mriežkovým vyhľadávaním (grid search)
 a vyjadríme úspešnosť zaužívanými metrikami.
@@ -15,16 +15,16 @@ konštánt, zostáva 82,3\% DRAM na haldu. Spotrebu SRAM v bajtoch podľa segmen
 \hline
                      & \multicolumn{4}{c|}{\textbf{IRAM (192 kB)}}                                                                              & \multicolumn{3}{c|}{\textbf{DRAM (328 kB)}}                                           \\ \hline
 \textbf{Sekcia}      & \multicolumn{1}{l|}{CPU cache} & \multicolumn{1}{l|}{.vectors} & \multicolumn{1}{l|}{.text} & voľné                      & \multicolumn{1}{l|}{.bss}  & \multicolumn{1}{l|}{.data} & voľné (heap)                \\ \hline
-\textbf{Veľkosť (B)} & \multicolumn{1}{r|}{65536}     & \multicolumn{1}{r|}{1027}     & \multicolumn{1}{r|}{83780} & \multicolumn{1}{r|}{46265} & \multicolumn{1}{r|}{44392} & \multicolumn{1}{r|}{15040} & \multicolumn{1}{r|}{276440} \\ \hline
+\textbf{Veľkosť} & \multicolumn{1}{r|}{65536}     & \multicolumn{1}{r|}{1027}     & \multicolumn{1}{r|}{83780} & \multicolumn{1}{r|}{46265} & \multicolumn{1}{r|}{44392} & \multicolumn{1}{r|}{15040} & \multicolumn{1}{r|}{276440} \\ \hline
 \end{tabular}
-\caption{Rozdelenie pamäte medzi sekcie}
+\caption{Rozdelenie pamäte v bajtoch medzi sekcie}
 \label{tab:ram-segments}
 \end{table}
 
 Vyťaženie dynamickej pamäte z haldy lineárne závisí od počtu súčasne vyhodnocovaných údajových bodov. Trend sa prejavuje v grafe
 celkovej percentuálnej naplnenosti haldy \ref{graph:mem-usage}. Markantný stály podiel z voľného priestoru až okolo 55 kB sa poskytne na komunikáciu cez WiFi a na TCP/IP protokolový zásobník (graf \ref{graph:task-memory})
 
-Zvyšok sa dá k dispozícii vlákna úloh na manipuláciu so vzorkami osí zrýchlenia (x, y, z), na zdieľané koeficienty FFT a
+Zvyšok majú k dispozícii vlákna úloh na manipuláciu so vzorkami osí zrýchlenia (x, y, z), na zdieľané koeficienty FFT a
 konvolučné masky a  relatívne nepatrne si obsadia úlohy vzorkovania (imu) a zápisu na pamäťovú kartu (logger).
 FreeRTOS je nastavený na dynamickú alokáciu zásobníkov, preto už pri veľkosti okna 8 potrebuje spracovateľská úloha 10 kB. Najdlhšie
 akceptovateľné posuvné okno a tým aj veľkosť frekvenčnej transformácie je 1024 bodov, ktoré vzhľadom na 97\% spotreby haldy za istých
@@ -78,8 +78,8 @@ do MQTT topics vkladané do hlavičky protokolu s dĺžkou vyjadrenou vrátane n
 Aby sme detekciou udalostí dosiahli úsporu v množstve prenášaných údajov, je žiaduce dosiahnuť kratšiu správu ako
 zaslaním frekvenčných vedierok bez úpravy. Maximálna celková veľkosť dátovej nálože na tému \emph{events} musí byť menšia
 ako na tému \emph{spectrum}. Pri $m = 16$ to činí 2 udalosti na okno (12,5\% z celkového počtu vedierok) a pri $m = 512$
-93 udalostí na okno (18,16\%). Datasety z autobusov vykazujú emisiu udalostí najviac do približne 4\% z počtu frekvencií
-a v priemere 0.4\%. Štatistiky sa oplatí vytvárať pri najmenšom $n = 32$.
+sa musí vyskytnúť menej ako 93 udalostí na okno (18,16\%). Datasety z autobusov vykazujú emisiu udalostí najviac do 
+približne 6\% z úhrnného počtu frekvencií a 0,5\% v priemere. Štatistiky sa oplatí vytvárať pri najmenšom $n = 32$.
 
 \begin{table}[h]
 \def\arraystretch{1.25}
@@ -273,15 +273,15 @@ oknovou funkciou a 50\%  prekryvom okien. Vyčíslené sú presnosti (tab. \ref{
 Platnosť získaných percentuálnych metrík v absolútnej škále a hyperparametrov sa vzťahuje výlučne na zvolenú techniku
 syntézy signálového priebehu, a teda nevieme potvrdiť podobné výsledky pre reálnu prepravu. Napriek tomu môžeme
 z pravidelných tendencií dedukovať, že pomerne vysoká presnosť cca 84\% zachovávajúca senzitivitu a chybovosťou do 5\%
-sa stabilne objavuje  na diagonálach, kde $n$ je polovicou $f_s$. Vtedy empiricky nachádzame ideálny balans medzi rozlíšením
-v čase a frekvencii aj v spektrogramoch .
+sa stabilne objavuje  na diagonálach, kde $n$ je polovicou $f_s$. Vtedy nachádzame ideálny balans medzi rozlíšením
+v čase a frekvencii aj v spektrogramoch.
 
 Veľmi nízka senzitivita nezriedka 10 - 30\% je dôsledkom nedokonalej spätnej rekonštrukcie spektrálneho profilu a exaktnou
 lokalizáciou vrchola, čím sa sinusoidy môžu ocitnúť posunuté o pár frekvenčných vedierok vedľa v porovnaní s označením v datasete.
 Malý počet význačných frekvencií spôsobuje, že na prejavenie sa efektu zdanlivého poklesu senzitivity stačí, keď sa
 mierne zmení poloha jedinej.
 
-Spektrogram nižšie znázorňuje na testovacích dátach schopnosť prúdového algoritmu na detekciu zmien
+Spektrogram \ref{fig:synthetic-spectrogram} znázorňuje na testovacích dátach schopnosť prúdového algoritmu na detekciu zmien
 frekvencií sa vysporiadať s nesprávne identifikovanými špičkami. Na vizualizácii je patrné, že
 registrovanie prvého vrchola na súvislom výstupku nastávalo oneskorene prekročením určitej amplitúdy.
 Ostatné algoritmy sa prejavovali obdobne, najvýraznejšie rozdiely sú v rozmiestnení falošných vrcholov.
@@ -299,6 +299,7 @@ Ostatné algoritmy sa prejavovali obdobne, najvýraznejšie rozdiely sú v rozmi
    		\caption{Zachytený priebeh udalostí frekvenčnej zmeny pri $t_{min} = 4$ a $t_{\Delta} = 1$}
      \end{subfigure}
      \caption{Spektrogramy detegovaných špičiek a udalostí pri $f_s = 476$ Hz a $N = 256$}
+     \label{fig:synthetic-spectrogram}
 \end{figure}
 
 Parametre klasifikácie špičiek nájdené mriežkovým hľadaním, s ktorými sme dosiahli na konkrétnom syntetickom signále
@@ -338,24 +339,25 @@ sú prehliadnuté pre nevýraznosť nad svojím okolím alebo pre prílišnú sp
 
 Nie je úplne zrejmé aké vodorovné konštelácie výrazných čŕt z obr. \ref{dataset-detection} sú korektne vyznačené,
 a ktoré sú primerane agregované do spoločných udalostí. Podstatné frekvencie v stabilnej oblasti medzi časmi 22 a 33
-sekundou ako napr. 11, 26, 56 Hz  boli univerzálne zaevidované. Detekcie z iného datasetu sú ilustrované v prílohe.
+sekundou ako napr. 11, 26, 56 Hz  boli univerzálne zaevidované. Detekcie z iného datasetu sú ilustrované v prílohe
+\ref{appendix:spectrogram}.
 
 \begin{figure}[h]
 	\centering
      \begin{subfigure}{\textwidth}
         \centering
      	\includegraphics[width=\textwidth]{figures/verification/L83-dataset-A1.png}
-     	\caption{Algoritmus č.1: $k = 6$, $\epsilon = 0$, $h_{rel} = 10$}
+     	\caption{Algoritmus č.1: $k = 5$, $\epsilon = 0$, $h_{rel} = 8$}
      \end{subfigure}
      \begin{subfigure}{\textwidth}
     	\centering
         \includegraphics[width=\textwidth]{figures/verification/L83-dataset-A2.png}
-        \caption{Algoritmus č.2: $k = 3$, $s = 9$}
+        \caption{Algoritmus č.2: $k = 3$, $s = 7$}
      \end{subfigure}
       \begin{subfigure}{\textwidth}
     	\centering
         \includegraphics[width=\textwidth]{figures/verification/L83-dataset-A3.png}
-        \caption{Algoritmus č.3: $t = 10$, $h = 1$, $p = 10$, $i = 0$}
+        \caption{Algoritmus č.3: $t = 8$, $h = 1$, $p = 5$, $i = 0$}
      \end{subfigure}
      \caption{Detekcia udalostí v datasete \emph{L83\_4940\_Alexyho\_Svantnerova.csv} s $f_s = 500$ Hz, trvaním 60 s, dĺžkou okna 256,
      pri $t_{min} = 10$ a $t_{\Delta} = 4$}

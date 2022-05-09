@@ -1,6 +1,6 @@
-\chapter{Zhodnotenie}
-Zaoberali sme sa meraním vibrácií mikromechanickým senzorom trojrozmerného zrýchlenia.
-signálových priebehy sme analyzovali viacerými existujúcimi metódami v časovej a frekvenčnej oblasti.
+\chapter{Zhodnotenie} \label{chapter:evaluation}
+Zaoberali sme sa meraním vibrácií snímačom trojrozmerného zrýchlenia.
+Signálových priebehy sme analyzovali viacerými existujúcimi metódami v časovej a frekvenčnej oblasti.
 Podstatou riešeného problému bolo usporiť bezdrôtovo prenášané množstvo informácií, poskytnutím
 prehľadu nad sledovanou situáciou upozornením na výskyt a amplitúdu významných frekvencií, či súhrnom
 časových úsekov deskriptívnymi štatistikami. Dôležitú etapu v automatizovanej extrakcii
@@ -27,14 +27,14 @@ Program obsadzujúci 65\% voľnej pamäte na inštrukcie je schopný spoľahlivo
 oknami do 512 bodov, v priamočiarejších scenároch kde sú výstupom len udalosti až do 1024 vzoriek.
 Posielanie všetkých štatistík sa oplatí nad postupnosť 32 bodov. Počet naraz oznamovaných
 zmien frekvencií by za zachovania efektívnosti nemal presiahnuť 12 - 18\% vedierok individuálneho posuvného
-okna. Skutočná priemerná prevalencia 0.4\% a maximálna na úrovni 4\% dokazuje ušetrenie v prenášanom obsahu.
+okna. Skutočná priemerná prevalencia 0.5\% a maximálna na úrovni 6\% dokazuje ušetrenie v prenášanom obsahu.
 Systém spĺňa kladené obmedzenia na rýchlosť spracovania pri taktovacej frekvencii procesora 160 Hz s ľubovoľnými
-nastaveniami. Vyrovnávacia pamäť dokončený obrat cez etapy pipeline pred skompletizovaním ďalšieho posuvného okna.
+nastaveniami. Vyrovnávacia pamäť dokončí obrat cez etapy pipeline pred skompletizovaním ďalšieho posuvného okna.
 
 Vybudovaný model úspešne zakomponovaný na Edge IoT zariadenie tvorí dobrý základ pre početné rozšírenia
 vzťahujúce sa hlavne na detailnejšie preskúmanie vplyvov krokov frekvenčnej transformácie a filtrovania,
 a možností vyplývajúcich z viaccestnej dátovej pipeline. Mohlo by sa jednať o využitie lepších kompresných vlastností
-energetických koeficientov DCT-IV a MDCT než FFT. S filtrovaním sa viaže upravenie údaju o tolerancii podľa
+energetických koeficientov od DCT-IV a MDCT, než FFT. S filtrovaním sa viaže upravenie údaju o tolerancii podľa
 aplikovaného kernelu vyhladzovania.
 
 Pokiaľ je predmetom záujmu konkrétny frekvenčný rozsah mohlo by sa autonómne stanoviť ich filtrovanie a najlepšie rozlíšenie.

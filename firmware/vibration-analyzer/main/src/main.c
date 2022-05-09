@@ -69,7 +69,7 @@ static Configuration conf = {
     .sensor = {
         .frequency = 256,
         .range = IMU_2G,
-        .n = 1024,
+        .n = 512,
         .overlap = 0.5,
         .axis = {true, true, true}
     },
@@ -155,7 +155,7 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
             esp_mqtt_client_subscribe(client, MQTT_TOPIC_LOGIN, 1);
             // V prevádzke vypni z bezpečnostných dôvodov
             esp_mqtt_client_subscribe(client, MQTT_TOPIC_LOGIN_GET, 1);
-            esp_mqtt_client_publish(client, MQTT_TOPIC_SYSLOG, "imu started", 0, 1, 1);
+            esp_mqtt_client_publish(client, MQTT_TOPIC_SYSLOG, "imu started", 0, 1, 0);
             break;
 
         case MQTT_EVENT_DATA:

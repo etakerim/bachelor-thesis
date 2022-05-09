@@ -1,14 +1,12 @@
-
 \documentclass[12pt, a4paper, twoside, openright, slovak]{book}
 
 \usepackage[slovak]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[
-	top=2.5cm,
+\usepackage[top=2.5cm,
 	bottom=2.5cm,
-	right=3.5cm,
-	left=2.5cm
+	right=3.2cm,
+	left=3.2cm
 ]{geometry}
 
 \usepackage{subcaption}
@@ -85,10 +83,11 @@
 \fancyhead[LE]{\leftmark}
 \fancyhead[RO]{\rightmark}
 \fancyfoot[LE, RO]{\thepage}
+
 \fancypagestyle{plain}{
-  \fancyhf{}%
-  \renewcommand{\headrulewidth}{0pt}%
-  \fancyhf[lef,rof]{\thepage}%
+  \fancyhf{}
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyhf[lef,rof]{\thepage}
 }
 
 \setlength{\headheight}{16pt}
@@ -122,6 +121,23 @@
     tabsize=4,
     breaklines=true,
     belowskip=0pt
+}
+
+\lstdefinestyle{experiments}{
+	basicstyle=\linespread{1.1}\ttfamily\small,
+    tabsize=4,
+    breaklines=true,
+    belowskip=0pt,
+    numbers=left, 
+    numberstyle=\tiny,
+    framexleftmargin=10pt,
+	xleftmargin=5ex,
+}
+\lstdefinestyle{implementation}{
+	basicstyle=\linespread{1.1}\ttfamily\small,
+    tabsize=4,
+    breaklines=true,
+    frame=single
 }
 \renewcommand{\lstlistingname}{Zdrojový kód}
 
@@ -158,7 +174,7 @@
 \nomenclature{\textbf{ODR}}{Output data rate (výstupný dátový tok)}
 \nomenclature{\textbf{A/D}}{Analógový na digitálny}
 \nomenclature{\textbf{$f_s$}}{Vzorkovacia frekvencia}
-\nomenclature{\textbf{$g$}}{Tiažové zrýchlenie (1 g = 9,80665 $m/s^2$)}
+\nomenclature{\textbf{$g$}}{Tiažové zrýchlenie (1 $g$ = 9,80665 $m/s^2$)}
 \nomenclature{\textbf{SPI}}{Serial Peripheral Interface (synchrónne sériové periférne rozhranie)}
 \nomenclature{\textbf{UART}}{Universal asynchronous receiver-transmitter (zbernica asynchrónneho sériového prenosu)}
 \nomenclature{\textbf{I$^\mathrm{2}$C}}{Inter-Integrated Circuit (dvojvodičová synchrónna sériová zbernica)}
@@ -178,11 +194,14 @@
 \nomenclature{\textbf{MTU}}{Maximum transmission unit (najdlhší poslaný paket bez fragmentácie)}
 \nomenclature{\textbf{Pipeline}}{Súbor prvkov spracovania údajov zapojených do série, kde výstup jedného prvku je vstupom ďalšieho prvku}
 \nomenclature{\textbf{MQTT téma}}{MQTT topic (logické zoskupenie publikovaných správ so spoločným zameraním)}
+\nomenclature{\textbf{MCU}}{Microcontroller unit (mikrokontrolér na jednom integrovanom obvode)}
 
-% Zákaz!: Pokazí slovník pojmov \pagenumbering{gobble}
-% Obal
+% Obal -----------------------------------------------------------------------
 \input{chapters/preliminaries/cover}
 \emptypage
+
+%  Hlavná časť -----------------------------------------------------------------------
+\newgeometry{top=2.5cm, bottom=2.5cm, right=2.5cm, left=3.5cm}
 
 % Titulný list
 \pagenumbering{roman}
@@ -191,7 +210,7 @@
 
 % Zadanie
 \thispagestyle{empty}
-\includepdf[pages=1]{zadanie}
+\includepdf[pages=1, scale=0.9]{zadanie}
 \emptypage
 
 \input{chapters/preliminaries/declaration}
@@ -225,11 +244,9 @@
 
 \input{chapters/06-evaluation}
 
+\printbibliography[heading=bibintoc, title={Literatúra}]
 
-\pagenumbering{gobble}
-\printbibliography[title={Literatúra}]
-
-%Príloha
+%  Prílohy -----------------------------------------------------------------------
 \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
 \addtocontents{toc}{\cftpagenumbersoff{chapter}}
 \let\svaddcontentsline\addcontentsline
@@ -239,13 +256,15 @@
 
 \appendix
 \titleformat{\chapter}{\normalfont\huge\bf}{Príloha \thechapter:}{1em}{}
-\renewcommand{\chaptermark}[1]{\markboth{\uppercase{Príloha \thechapter.\ #1}}{}}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{Príloha \thechapter.\ #1}}{}}
 
 \input{chapters/appendix/A-plan-of-work}
 
 \input{chapters/appendix/B-technical-docs}
+\clearpage
 
 \input{chapters/appendix/C-user-manual}
+\clearpage
 
 \input{chapters/appendix/D-digital-medium}
 

@@ -1,4 +1,4 @@
-\chapter{Implementácia}
+\chapter{Implementácia} \label{chapter:implementation}
 Firmvér senzorovej jednotky je implementovaný v programovacom jazyku C so
 SDK Espressif IoT Development Framework (ESP-IDF). Súbežný beh úloh spravuje operačný systém reálneho času FreeRTOS.
 Optimalizované rutiny spracovania signálu poskytuje Espressif DSP Library. Knižnica MPack má na starosti
@@ -7,7 +7,7 @@ modulov zdrojového kódu. Eclipse Mosquitto pôsobí ako MQTT broker správ.
 
 V jazyku Python sú napísané Jupyter notebooky na analýzu zozbieraných datasetov a otestovanie fáz navrhnutej dátovej pipeline,
 so závislosťami numpy, scipy, pandas a matplotlib. Rozhranie príkazového riadku na nahrávanie konfigurácie a náhľad odoberaných
-správ sa spolieha na balíčky Paho MQTT, cmd a msgpack. Návod na inštaláciu a konkrétne verzie sú uvedené v prílohe.
+správ sa spolieha na balíčky Paho MQTT, cmd a msgpack.
 
 \section{Senzorová sieť}
 Súčiastky FireBeetle ESP32, OpenLog, STEVAL-MKI159V1 a BTS117 sú naspájkované na univerzálny plošný spoj rozmerov 5 x 7 cm
@@ -28,22 +28,20 @@ zapojíme cez JST PH 2 pin.
 \label{board}
 \end{figure}
 
-Po zapnutí si firmvér načíta systémové nastavenia cez Storage API z SDK. Inicializuje sa
+Po zapnutí si firmvér načíta systémové nastavenia cez SDK Storage API z flash. Inicializuje sa
 akcelerometer a naraz sa kompletne alokuje dynamická pamäť pre výpočty dátovej pipeline a pre synchronizačné primitíva.
 Na zamedzenie fragmentácie nie je odvtedy programom prideľovaná žiadna ďalšia pamäť okrem zásobníkov úloh.
 
 Prebehne pokus o pripojenie s prístupovým bodom WiFi so zabezpečením WPA2 a so serverom MQTT broker, na základe prihlasovacích údajov
 a URL adresy v štruktúre \verb|Provisioning|. Proces spustenia OpenLog čaká po zopnutí napájania 10 sekúnd na uvedenie
 periférie do prevádzkyschopného stavu.
-\begin{small}
-\begin{Verbatim}[frame=single, baselinestretch=1.1]
+\begin{lstlisting}[style=implementation]
 Provisioning login = {
     .wifi_ssid="AccessPoint",
     .wifi_pass="password",
     .mqtt_url="mqtt://192.168.1.2:1883"
 };
-\end{Verbatim}
-\end{small}
+\end{lstlisting}
 
 Priame prepísanie predvolenej hodnoty systémového nastavenia v zdrojovom kóde
 sa po nahratí firmvéru neprejaví za behu. Predtým sa musí naflashovať obslužný program vyvolaní direktívou
@@ -51,12 +49,10 @@ sa po nahratí firmvéru neprejaví za behu. Predtým sa musí naflashovať obsl
 
 Broker MQTT správ Eclipse Mosquitto nasadený v lokálnej sieti, má umožnené cez konfiguračný súbor \verb|mosquitto.conf| počúvať
 premávku zo všetkých IP adries na TCP porte 1883, bez nutnosti klientov sa autentifikovať:
-\begin{small}
-\begin{Verbatim}[frame=single, baselinestretch=1.1]
+\begin{lstlisting}[style=implementation]
 listener 1883 0.0.0.0
 allow_anonymous true
-\end{Verbatim}
-\end{small}
+\end{lstlisting}
 
 Vlastný MQTT klient \verb|config_tool.py| je interpreter príkazov na interaktívnu interakciu so senzorovými jednotkami
 pripojenými na broker. Ponúka nadstavbu nad binárnymi správami v Message Pack konverziou z a do ľudsky čitateľnejšej
@@ -71,12 +67,10 @@ Zobrazenie jednotkou publikovaných údajov na MQTT tému alebo skupinu tému sa
 Na SD karte data loggera sa nachádza súbor \verb|config.txt| s uvedenou znakovou rýchlosťou
 rovnakou ako pre UART zbernicu mikrokontoléra. Preferované nastavenia sú najvyššia prenosová rýchlosť 115000
 v móde 0 zakladajúcom nový log súbor po reštarte:
-\begin{small}
-\begin{Verbatim}[frame=single, baselinestretch=1.1]
+\begin{lstlisting}[style=implementation]
 115200,36,3,0,1,1,0
 baud,escape,esc#,mode,verb,echo,ignoreRX
-\end{Verbatim}
-\end{small}
+\end{lstlisting}
 
 \section{Komunikácia medzi úlohami}
 Nezávislé činnosti aplikácie sú prerozdelené medzi vlákna, ktoré si cez fronty posielajú súradnice zrýchlenia.
@@ -146,7 +140,7 @@ algoritmus FFT. Prišlo k úprave zdrojového kódu knižnice, aby sa aspoň pou
 
 Pred oboma typmi transformácii sa vynásobia vzorky v posuvnom okne s pripravenými váhami oknovej funkcie (kód \ref{fft}).
 Líši sa spôsob napĺňania vstupného poľa, kde u FFT tvoria reálne čísla na párnom a nepárnom mieste za sebou
-spoločné komplexné číslo. DCT ponecháva následnosť reálnych vstupov zato prázdna druhá polovica poľa zostáva
+spoločné komplexné číslo. DCT ponecháva následnosť reálnych vstupov, zato prázdna druhá polovica poľa zostáva
 na pracovné účely funkcie.
 
 Poradie vedierok výsledného spektra FFT sa musí explicitne bitovo invertovať a previesť späť na striedanie
@@ -172,7 +166,7 @@ Stav detektora udalostí pozostáva z poľa štruktúr \ref{event:struct}, ktor�
 počiatku, trvania a naposledy videnej špičky od počítadla prebehnutých posuvných okien. Upozornenie na
 zmeny vo frekvencii sa pri prechode prúdovým algoritmom poznačí do vymenovaného typu
 aktuálnej akcie \verb|SpectrumEventAction|. Nadobúda konštanty z množiny ,,nič'', ,,štart'' alebo ,,koniec'' a
-obnovujú sa na začiatku každého ďalšieho kola, aby hlásili neprítomnosť zmeny. Udalosti na odoslanie
+obnovujú sa na začiatku každého ďalšieho kola, na stav neprítomnosti akejkoľvek zmeny. Udalosti na odoslanie
 sú síce pri serializácii správy lineárne prehľadávané, ale vytráca sa potreba udržiavať zásobník emitovaných udalostí.
 
 \begin{lstlisting}[style=cstyle,label={event:struct},
@@ -187,10 +181,10 @@ typedef struct {
 \end{lstlisting}
 
 \section{Systémová konfigurácia}
-Správanie blokov dátovej pipeline určuje globálna inštancia zloženej štruktúry \ref{config:struct}.
+Správanie blokov dátovej pipeline určuje globálna inštancia zloženej štruktúry \emph{Configuration} \ref{config:struct}.
 Vnorené členské premenné definujú vlastnosti jednotlivých funkčných blokov. Po zapnutí je posledná
 konfigurácia zobraná ako blob z nevolatilnej pamäte pod kľúčom ,,config''. Chýbajúca podpora iných ako celočíselných
-typov znamená, že po akejkoľvek úprave musí byť štruktúra znovu nahratá do flash ako celok.
+typov znamená, že po akejkoľvek úprave musí byť štruktúra znovu nahratá do flash pamäte ako celok.
 
 \begin{lstlisting}[style=cstyle,label={config:struct},caption=Štruktúra systémovej konfigurácie,
 morekeywords={Configuration}]
@@ -207,5 +201,5 @@ typedef struct {
 
 Názvy, typy a prípustné hodnoty atribútov vo formáte Message Pack sú vyjadrené imperatívne priamo vo funkciách
 na konštruovanie a rozklad reťazca dátového obsahu paketu. Parsovanie prebieha v jednom prechode s MPack Expect API
-s flexibilným poradím kľúčov, ktoré umožňuje priradiť modifikované pravidlo do kópie štruktúry bez dodatočného
+umožnením flexibilného poradia kľúčov, ktoré umožňuje priradiť modifikované pravidlo do kópie štruktúry bez dodatočného
 syntaktického stromu.

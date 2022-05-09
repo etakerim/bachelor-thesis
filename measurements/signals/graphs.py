@@ -15,7 +15,6 @@ def plot_spectra_slices(bins, magnitudes, peaks=[]):
     for i, amp in enumerate(magnitudes):
         p = peaks[i] if len(peaks) > i else []
         plot_sinusoid(bins, amp, p, axes[i])
-        # axes[i].set_xlim(-5, 5)
 
 
 def plot_spectrogram(spectrum, ax, ylog, yrange):
@@ -27,10 +26,11 @@ def plot_spectrogram(spectrum, ax, ylog, yrange):
     if yrange is not None:
         ax.set_ylim(*yrange)
 
-    ax.pcolormesh(spectrum['t_windows'], spectrum['bins'], spectrum['magnitudes'].T, shading='gouraud')
+    im = ax.pcolormesh(spectrum['t_windows'], spectrum['bins'], spectrum['magnitudes'].T, shading='gouraud')
     ax.set_xlabel('Čas [s]')
     ax.set_ylabel('Frekvencia [Hz]')
     ax.grid(True)
+    return im
 
             
 def draw_peaks(ax, spectrum, peaks):
@@ -50,26 +50,24 @@ def draw_events(ax, spectrum, events):
             ax.plot((t_start, t_end), (f, f), color='r')
 
             
-def plot_spectra_heatmap(spectrum, peaks=[], ylog=False, yrange=None, figsize=(20, 10), ax=None):
-    if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=figsize)
-    plot_spectrogram(spectrum, ax, ylog, yrange)
+def plot_spectra_heatmap(spectrum, peaks=[], ylog=False, yrange=None, figsize=(20, 6)):
+    fig, ax = plt.subplots(1, 1, figsize=figsize)
+    im = plot_spectrogram(spectrum, ax, ylog, yrange)
+    fig.colorbar(im, ax=ax, pad=0.01)
     draw_peaks(ax, spectrum, peaks)
 
 
-def plot_spectra_events(spectrum, events, ylog=False, yrange=None, figsize=(20, 10), ax=None):
-    if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=figsize)
-    plot_spectrogram(spectrum, ax, ylog, yrange)
+def plot_spectra_events(spectrum, events, ylog=False, yrange=None, figsize=(20, 6)):
+    fig, ax = plt.subplots(1, 1, figsize=figsize)
+    im = plot_spectrogram(spectrum, ax, ylog, yrange)
     draw_events(ax, spectrum, events)
+    fig.colorbar(im, ax=ax, pad=0.01)
 
             
-def plot_spectra_event_vs_peaks(spectrum, events, peaks=[], ylog=False, yrange=None, figsize=(20, 10), ax=None):
-    if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=figsize)
-    plot_spectrogram(spectrum, ax, ylog, yrange)
-    
-    plot_spectrogram(spectrum, ax, ylog, yrange)
+def plot_spectra_event_vs_peaks(spectrum, events, peaks=[], ylog=False, yrange=None, figsize=(20, 6), ax=None):
+    fig, ax = plt.subplots(1, 1, figsize=figsize)
+    im = plot_spectrogram(spectrum, ax, ylog, yrange)
+    fig.colorbar(im, ax=ax, pad=0.01)
     draw_peaks(ax, spectrum, peaks)
     draw_events(ax, spectrum, events)
 
