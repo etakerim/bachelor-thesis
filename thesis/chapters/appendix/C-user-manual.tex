@@ -30,7 +30,7 @@ $ ./install.sh esp32
 \end{lstlisting}}
 
 \item{Na prehliadanie Jupyter notebookov prieskumných analýz doinštalujeme balíčky pre \emph{Python} 3.10, 
-odporúčane vo virtuálnom prostredí, z priečinku \verb|measurements|. Nástroj príkazového riadku na vzdialenú 
+odporúčane vo virtuálnom prostredí, z priečinku \\ \verb|measurements|. Nástroj príkazového riadku na vzdialenú 
 konfiguráciu ESP32 má závislosti v osobitom súbore:
 \begin{lstlisting}[style=messages]
 $ pip install -r requirements.txt
@@ -88,7 +88,7 @@ $ idf.py -p /dev/ttyUSB0 flash
 \begin{lstlisting}[style=messages]
 idf.py -p /dev/ttyUSB0 monitor
 \end{lstlisting}
-Posledný riadok výpisu pre úspešné prihlásenie má vyzerať podobne tomuto:
+Posledný riadok výpisu pre úspešné prihlásenie do siete má vyzerať podobne tomuto:
 \begin{lstlisting}[style=messages]
 W (858) wifi:<ba-add>idx:0 (ifx:0, 98:da:c4:79:6a:fa), tid:0, ssn:3, winSize:64
 \end{lstlisting}
@@ -159,7 +159,7 @@ $ jupyter notebook
 \end{lstlisting}
 
 
-\subsection*{Experiment: Časová efektivita algoritmov na spracovanie signálu}
+\subsection*{Experiment: Pamäťová efektivita}
 Direktíva podmienenej kompilácie: \verb|MEMORY_MEASUREMENT|
 
 Konfigurácie:
@@ -180,7 +180,7 @@ $ sed -rn `s/^(.*)(MEM.*)$/\2/p' experiment.txt
 > memory_usage.csv
 \end{lstlisting}
 
-\subsection*{Experiment: Časová efektivita algoritmov na spracovanie signálu}
+\subsection*{Experiment: Časová efektivita algoritmov}
 Direktíva podmienenej kompilácie: \verb|EXECUTION_TIME_ALGORITHMS|.
 
 \noindent Zmena konfigurácie oproti predvolenej:

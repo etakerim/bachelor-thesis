@@ -211,7 +211,7 @@ pri danej dĺžke $N$ vezmeme časový parameter z tabuľky \ref{tab:pipeline}.
 Ľubovoľné nastavenie spracovania signálu zvládne za okolností podľa \ref{tab:pipeline-simple} $f_s =$ 61,8 kHz pre jednorozmernú
 sekvenciu a $f_s =$ 12,8 kHz pre trojrozmernú. Posielanie štatistík a udalostí z \ref{tab:pipeline-complex} pri jednej osi
 dovoľuje $f_s =$ 2,1 KHz, ale pri väčších $N$ sa $f_s$ pohybuje nad 7 kHz. Tri dimenzie v tejto náročnej konfigurácii stíhajú nanajvýš $f_s$
-od 1,3 KHz ($N = 32$) do 3,7 kHz ($N = 1024$). Limit vzorkovacej frekvencie senzora na 952 Hz zaručuje, že bežné prevádzkové
+od 1,3 KHz ($N = 1024$) do 3,7 kHz ($N = 32$). Limit vzorkovacej frekvencie senzora na 952 Hz zaručuje, že bežné prevádzkové
 situácie sa stíhajú uskutočniť pred naplnením následného posuvného okna.
 
 \section{Úspešnosť detekcie špičiek}
@@ -224,7 +224,7 @@ a vzápätí 20 sekundovú testovaciu množinu.
 Prehľadávaním parametrov detekcie špičiek hrubou silou nad trénovacím signálom boli odhalené najlepšie hodnoty z preddefinovanej sady.
 Na testovacom signále sa zistili relevantné metriky úspešnosti klasifikácie vrcholov makro-priemerovaním medzi posuvnými oknami
 o veľkosti $n$. Signál nebol dodatočne filtrovaný. Obdržanie spektrálneho obsahu v decibeloch prebehlo cez FFT s Hannovou
-oknovou funkciou a 50\%  prekryvom okien. Vyčíslené sú presnosti (tab. \ref{tab:accuracy}), senzitivita (tab. \ref{tab:sensitivity}) a chybovosť (tab.\ref{tab:error-rate}) detekčných stratégií v percentách.
+oknovou funkciou a 50\%  prekryvom okien. Vyčíslené sú presnosti (tab. \ref{tab:accuracy}), senzitivita (tab. \ref{tab:sensitivity}) a chybovosť (tab. \ref{tab:error-rate}) detekčných stratégií v percentách.
 
 \begin{table}[h]
 \def\arraystretch{1.1}
@@ -272,8 +272,8 @@ oknovou funkciou a 50\%  prekryvom okien. Vyčíslené sú presnosti (tab. \ref{
 \end{table}
 Platnosť získaných percentuálnych metrík v absolútnej škále a hyperparametrov sa vzťahuje výlučne na zvolenú techniku
 syntézy signálového priebehu, a teda nevieme potvrdiť podobné výsledky pre reálnu prepravu. Napriek tomu môžeme
-z pravidelných tendencií dedukovať, že pomerne vysoká presnosť cca 84\% zachovávajúca senzitivitu a chybovosťou do 5\%
-sa stabilne objavuje  na diagonálach, kde $n$ je polovicou $f_s$. Vtedy nachádzame ideálny balans medzi rozlíšením
+z pravidelných tendencií dedukovať, že pomerne vysoká presnosť cca 84\%, ktorá zachováva senzitivitu, a chybovosťou do 5\%
+sa stabilne objavuje na diagonálach, kde $n$ je polovicou $f_s$. Vtedy nachádzame ideálny balans medzi rozlíšením
 v čase a frekvencii aj v spektrogramoch.
 
 Veľmi nízka senzitivita nezriedka 10 - 30\% je dôsledkom nedokonalej spätnej rekonštrukcie spektrálneho profilu a exaktnou
@@ -363,4 +363,3 @@ sekundou ako napr. 11, 26, 56 Hz  boli univerzálne zaevidované. Detekcie z in�
      pri $t_{min} = 10$ a $t_{\Delta} = 4$}
      \label{dataset-detection}
 \end{figure}
-\cleardoublepage

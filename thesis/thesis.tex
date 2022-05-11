@@ -60,6 +60,16 @@
 \algrenewcommand\algorithmicensure{\textbf{Výstup:}}
 \makeatother
 
+% Empty even pages at the end of chapter
+\makeatletter
+\renewcommand*{\cleardoublepage}{\clearpage\if@twoside \ifodd\c@page\else
+\hbox{}%
+\thispagestyle{empty}%
+\newpage%
+\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother
+
+
 % Číslo kapitoly na rovnakom riadku ako názov
 \titleformat{\chapter}{\normalfont\huge\bf}{\thechapter}{1em}{}
 
@@ -261,10 +271,10 @@
 \input{chapters/appendix/A-plan-of-work}
 
 \input{chapters/appendix/B-technical-docs}
-\clearpage
+\cleardoublepage
 
 \input{chapters/appendix/C-user-manual}
-\clearpage
+\cleardoublepage
 
 \input{chapters/appendix/D-digital-medium}
 
