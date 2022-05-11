@@ -60,9 +60,9 @@ prihlasovacích údajov WiFi prístupového bodu a URL lokácie pre MQTT broker 
 Odporúča sa, aby URL adresa pozostávala z doménového mena, ale prípustná je aj IP adresa servera
 brokera (Zistená napr. cez \verb|ip addr|). Požadovanú úvodnú systémovú konfiguráciu je možné
 ovplyvniť tam isto, v štruktúre \verb|conf|. Príklad sieťového pripojenia:
-\begin{lstlisting}[style=messages, morekeywords = {"eduroam","12345","mqtt://192.168.1.10:1883"}]
+\begin{lstlisting}[style=messages, morekeywords = {"ap","12345","mqtt://192.168.1.10:1883"}]
 static Provisioning login = {
-    .wifi_ssid="eduroam",
+    .wifi_ssid="ap",
     .wifi_pass="12345",
     .mqtt_url="mqtt://192.168.1.10:1883"
 };
@@ -78,7 +78,7 @@ $ idf.py build
 $ idf.py -p /dev/ttyUSB0 flash
 \end{lstlisting}
 
-\item Samotný firmvér nahráme na ESP32 po opätovnom \textbf{zakomentovaní} \verb|FACTORY_RESET|:
+\item Samotný firmvér nahráme na ESP32 po opätovnom \textbf{zakomentovaní} \\ \verb|FACTORY_RESET|:
 \begin{lstlisting}[style=messages]
 $ idf.py build
 $ idf.py -p /dev/ttyUSB0 flash

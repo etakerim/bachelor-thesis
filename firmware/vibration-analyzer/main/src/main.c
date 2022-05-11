@@ -89,7 +89,7 @@ static Configuration conf = {
         .kurtosis = true,
         .median = true,
         .mad = true,
-        .correlation = true
+        .correlation = false
     },
     .transform = {
         .window = HANN_WINDOW,
