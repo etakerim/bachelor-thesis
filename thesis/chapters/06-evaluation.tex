@@ -1,22 +1,21 @@
 \chapter{Zhodnotenie} \label{chapter:evaluation}
 Zaoberali sme sa meraním vibrácií snímačom trojrozmerného zrýchlenia.
-Signálových priebehy sme analyzovali viacerými existujúcimi metódami v časovej a frekvenčnej oblasti.
+Signálové priebehy sme analyzovali viacerými existujúcimi metódami v časovej a frekvenčnej oblasti.
 Podstatou riešeného problému bolo usporiť bezdrôtovo prenášané množstvo informácií, poskytnutím
 prehľadu nad sledovanou situáciou upozornením na výskyt a amplitúdu významných frekvencií, či súhrnom
 časových úsekov deskriptívnymi štatistikami. Dôležitú etapu v automatizovanej extrakcii
 podstatných harmonických zložiek predstavovalo hľadanie špičiek, kde sme porovnali tri odlišné
 elementárne koncepcie v literatúre často uplatňované na biologické signály.
 
-Prínos spočíva v navrhnutí postupnosti krokov spracovania dátovej pipeline, špecifikovaním
-modifikovateľných parametrov každého stupňa tejto sústavy, a implementácii vzdialene nastaviteľnej
-pipeline do firmvéru senzorovej jednotky. Hardvér zariadenia bol poskytnutý už zhotovený.
+Prínos spočíva v navrhnutí postupnosti krokov spracovania vzoriek z vibrácií, špecifikovaním
+modifikovateľných parametrov každého stupňa tejto sústavy so vzdialenou konfiguráciou cez WiFi,
+a implementácii do firmvéru senzorovej jednotky. Hardvér zariadenia bol poskytnutý už zhotovený.
 
 Na identifikáciu udalostí zmien spektrálneho obsahu vibrácií v čase sme vytvorili nový prúdový algoritmus.
 Poradí si s krátkodobými záchvevmi v označenej prítomnosti sekvencie vrcholov minimálnej dĺžky. Účinne pôsobí
 v podstate na redukciu šumu z náhlych jednorázových výskytov špičiek. Cez minimálnu testovaciu infraštruktúru
 zvolenými sieťovými protokolmi a serializačným formátom sme schopný posielať tematicky kategorizované správy vlastnej
-štruktúry. Uznávame, že zotavenie firmvéru z chybových stavov spojené s nedostatkom prostriedkov sa mohlo
-hlásiť obšírnejšie ako reštartom alebo zaslaním všeobecnej hlášky.
+štruktúry.
 
 Validácia detekčných schopností sa opierala o originálny generátor syntetického signálu so šumom podľa
 predpisu požadovaných zložiek, ktoré sme na vyjadrenie úspešnosti detekcie pridávali pseudonáhodne.
@@ -29,12 +28,12 @@ Posielanie všetkých štatistík sa oplatí nad postupnosť 32 bodov. Počet na
 zmien frekvencií by za zachovania efektívnosti nemal presiahnuť 12 - 18\% vedierok posuvného
 okna. Skutočná priemerná prevalencia 0.5\% a maximálna na úrovni 6\% dokazuje ušetrenie v prenášanom obsahu.
 Systém spĺňa kladené obmedzenia na rýchlosť spracovania pri taktovacej frekvencii procesora 160 Hz s ľubovoľnými
-nastaveniami. Vyrovnávacia pamäť dokončí obrat cez etapy pipeline pred skompletizovaním ďalšieho posuvného okna.
+nastaveniami. Vyrovnávacia pamäť dokončí obrat cez etapy spracovania údajov pred skompletizovaním ďalšieho posuvného okna.
 
 Vybudovaný model úspešne zakomponovaný na Edge IoT zariadenie tvorí dobrý základ pre početné rozšírenia
 vzťahujúce sa hlavne na detailnejšie preskúmanie vplyvov krokov frekvenčnej transformácie a filtrovania,
-a možností vyplývajúcich z viaccestnej dátovej pipeline. Mohlo by sa jednať o využitie lepších kompresných vlastností
-energetických koeficientov od DCT-IV a MDCT, než FFT. S filtrovaním sa viaže upravenie údaju o tolerancii podľa
+a možností vyplývajúcich z viaccestného spracovania. Mohlo by sa jednať o využitie lepších kompresných vlastností
+energetických koeficientov od DCT-IV a MDCT, než od FFT. S filtrovaním sa viaže upravenie údaju o tolerancii podľa
 aplikovaného kernelu vyhladzovania.
 
 Pokiaľ je predmetom záujmu konkrétny frekvenčný rozsah mohlo by sa autonómne stanoviť ich filtrovanie a najlepšie rozlíšenie.

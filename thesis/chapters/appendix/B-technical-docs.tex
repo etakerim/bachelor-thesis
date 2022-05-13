@@ -15,10 +15,10 @@ ktorá je po typografickej úprave súčasťou tejto prílohy.
 	Zdrojový kód: \verb|inertial_unit.h|, \verb|inertial_unit.c|
 	\item \textbf{Hardvérové adaptéry} (\ref{modules:hardware}) - Rozhrania na komunikáciu s perifériami.
 	Zdrojový kód: \verb|peripheral.h|, \verb|peripheral.c|
-	\item \textbf{Dátová pipeline} (\ref{modules:pipeline}) - Fázy spracovania zdrojového signálu. Zdrojový kód: \verb|pipeline.h|
+	\item \textbf{Spracovanie dát} (\ref{modules:pipeline}) - Fázy spracovania zdrojového signálu. Zdrojový kód: \verb|pipeline.h|
 	\begin{itemize}[noitemsep, topsep=0pt]
 		\item \textbf{Oknové funkcie} - \verb|window.c|
-		\item \textbf{Správa pamäti pipeline} - \verb|pipeline.c|
+		\item \textbf{Správa pamäti systému} - \verb|pipeline.c|
 		\item \textbf{Fázy spracovania oknovaného signálu} - \verb|pipeline.c|
 		\item \textbf{Message Pack serializácia} - Serializácia a parsovanie nameraných dát a konfigurácie. \verb|serialize.c|
 	\end{itemize}
@@ -374,7 +374,7 @@ void wifi_connect (wifi_config_t *wifi_config)
 Pripojenie sa k Wifi AP blokujúce.
 
 
-\subsection{Dátová pipeline} \label{modules:pipeline}
+\subsection{Spracovanie dát} \label{modules:pipeline}
 
 \subsubsection*{Dátové štruktúry}
 \noindent\textbf{struct SamplingConfig} - Nastavenie vzorkovania signálu.
@@ -435,7 +435,7 @@ Pripojenie sa k Wifi AP blokujúce.
 funkciách z modulu ,,Udalosti'' \ref{modules:events}).
 \bigbreak
 
-\noindent\textbf{struct Configuration} - Systémová konfigurácia pipeline spracovania vzoriek z akcelerometra.
+\noindent\textbf{struct Configuration} - Systémová konfigurácia spracovania vzoriek z akcelerometra.
 \bigbreak
 
 \noindent\textbf{struct Provisioning} - Sieťové nastavenia pre pripojenie na Wifi AP s WPA2 a MQTT broker.
@@ -448,13 +448,13 @@ cez zahrnutú synchronizačnú bariéru.
 \noindent\textbf{struct Statistics} - Výsledky všetkých dostupných štatistík.
 \bigbreak
 
-\noindent\textbf{struct BufferPipelineKernel} - Vyrovnávacie pamäte spoločné pre celú pipeline.
+\noindent\textbf{struct BufferPipelineKernel} - Vyrovnávacie pamäte spoločné pre všetky spracovateľské úlohy.
 \bigbreak
 
 \noindent\textbf{struct BufferPipelineAxis} - Vyrovnávacie pamäte samostatné pre každú os akcelerácie.
 \bigbreak
 
-\noindent\textbf{struct Sender} - Fronta pre záznam vzoriek bez ďalšiho spracovania.
+\noindent\textbf{struct Sender} - Rad pre záznam vzoriek bez ďalšiho spracovania.
 \bigbreak
 
 \subsubsection*{Konštanty}
@@ -462,7 +462,7 @@ V zátvorkách sú uvedené predvolené hodnoty
 \begin{itemize}[noitemsep, topsep=0pt]
 	\item \verb|AXIS_COUNT|: Celkový počet osí akcelerácie (3)
 	\item \verb|MAX_MPACK_FIELDS_COUNT|: Maximálny počet dvojíc ,,kľúč - hodnota'' v Message Pack slovníku (20)
-	\item \verb|SAMPLES_QUEUE_SLOTS|: Násobok veľkosti posuvného okna ako počet vzoriek čakajúcich na spracovanie vo fronte (3)
+	\item \verb|SAMPLES_QUEUE_SLOTS|: Násobok veľkosti posuvného okna ako počet vzoriek čakajúcich na spracovanie v rade (3)
 	\item \verb|MAX_CREDENTIALS_LENGTH|: Maximálna dĺžka prihlasovacieho údaju Wifi pripojenia (64)
 	\item \verb|MAX_MQTT_URL|: Dĺžka URL adresy na MQTT broker (256)
 	\item \verb|MAX_BUFFER_SAMPLES|: Najdlhšie povolené posuvné okno, vyššia mocnina 2 ako 1024 sa nezmestí do DRAM (1024)
@@ -578,7 +578,7 @@ void window (WindowTypeConfig type, float *w, int n)
 \bigbreak
 \hrule
 
-\subsubsection*{Správa pamäti pipeline}
+\subsubsection*{Správa pamäti systému}
 
 \begin{lstlisting}[style=docs]
 void axis_allocate (
@@ -610,7 +610,7 @@ void process_allocate (
 	BufferPipelineKernel *p, const Configuration *conf
 )
 \end{lstlisting}
-   Alokácia a inicializácia vyrovnávacích pamätí a synchronizačných primitív. \\ 
+   Alokácia a inicializácia spoločných vyrovnávacích pamätí a synchronizačných primitív. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
 	\item \textbf{p} (out): Dynamické vyrovnávacie pamäte s dĺžkami podľa nastavení
@@ -622,7 +622,7 @@ void process_allocate (
 \begin{lstlisting}[style=docs]
 void process_release (BufferPipelineKernel *p)
 \end{lstlisting}
-   Uvoľnenie pamäte pre dynamické vyrovnávacie pamäte. \\ 
+   Uvoľnenie spoločných vyrovnávacích pamätí. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
 	\item \textbf{p} (out): Dynamické vyrovnávacie pamäte
@@ -633,7 +633,7 @@ void process_release (BufferPipelineKernel *p)
 \begin{lstlisting}[style=docs]
 void axis_release (BufferPipelineAxis *p)
 \end{lstlisting}
-   Uvoľnenie pamäte pre dynamické vyrovnávacie pamäte pre jednu os akcelerácie. \\ 
+   Uvoľnenie vyrovnávacích pamätí pre jednu os akcelerácie. \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
 	\item \textbf{p} (out): Dynamické vyrovnávacie pamäte
@@ -642,12 +642,24 @@ void axis_release (BufferPipelineAxis *p)
 \hrule
 
 \begin{lstlisting}[style=docs]
-void sender_release (Sender *sender)
+void sender_allocate (Sender *sender, uint16_t length)
 \end{lstlisting}
-   Odstránenie fronty na odosielanie nameraných vzoriek. \\ 
+    Vytvorenie radu na odosielanie nameraných vzoriek odlišnou systémovou úlohou. \\ 
 \textbf{Parametre}
 \begin{itemize}[noitemsep, topsep=0pt]
-	\item \textbf{sender}: Fronta s vyhradenou kapacitou
+	\item \textbf{sender}: Vyhradený rad s požadovanou maximálnou kapacitou
+	\item \textbf{length}: Dĺžka radu
+\end{itemize}
+\bigbreak
+\hrule
+
+\begin{lstlisting}[style=docs]
+void sender_release (Sender *sender)
+\end{lstlisting}
+   Odstránenie radu na odosielanie nameraných vzoriek. \\ 
+\textbf{Parametre}
+\begin{itemize}[noitemsep, topsep=0pt]
+	\item \textbf{sender}: Rad s vyhradenou kapacitou
 \end{itemize}
 \bigbreak
 \hrule
@@ -703,7 +715,6 @@ Vyhladzovanie signálu. \\
 \begin{itemize}[noitemsep, topsep=0pt]
 	\item \textbf{buffer}: Posuvné okno vzoriek signálu s dĺžkou \verb|n|, ktoré bude vyhladené
 	\item \textbf{tmp}: Pomocné pole o dĺžke \verb|n + c.n - 1|
- 	\item \textbf{window} (in): Váhy oknovej funkcie  s dĺžkou \verb|n|
  	\item \textbf{n} (in): Dĺžka posuvného okna
  	\item \textbf{kernel} (in): Konvolučná maska vyhladzovania
  	\item \textbf{c} (in): Nastavenia vyhladzovanie
@@ -796,7 +807,7 @@ Serializácia štatistík signálu v posuvnom okne do formátu Message Pack. \\
  	\item \textbf{msg} (out): Serializované štatistiky
  	\item \textbf{size} (in): Vyhradená veľkosť pre správu do \verb|msg|
  	\item \textbf{stats} (in): Štatistiky signálu
- 	\item \textbf{n} (in): Nastavenia zberu štatistík. Do serializovanej správy sa zahrnú len aktívne štatistiky.
+ 	\item \textbf{c} (in): Nastavenia zberu štatistík. Do serializovanej správy sa zahrnú len aktívne štatistiky.
  	\item \textbf{Návratová hodnota}: Dĺžka serializovanej správy
 \end{itemize}
 \bigbreak
@@ -974,6 +985,7 @@ float variance(const float *x, int n, float mean)
 Rozptyl populácie (vychýlená štatistika). \\ 
 \textbf{Parametre}:
 \begin{itemize}[noitemsep, topsep=0pt]
+	\item \textbf{mean} (in): Aritmetický priemer signálu
 	\item \textbf{Návratová hodnota}:  Rozptyl hodnôt signálu
 \end{itemize}
 \bigbreak

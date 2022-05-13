@@ -78,7 +78,7 @@ do MQTT topics vkladané do hlavičky protokolu s dĺžkou vyjadrenou vrátane n
 Aby sme detekciou udalostí dosiahli úsporu v množstve prenášaných údajov, je žiaduce dosiahnuť kratšiu správu ako
 zaslaním frekvenčných vedierok bez úpravy. Maximálna celková veľkosť dátovej nálože na tému \emph{events} musí byť menšia
 ako na tému \emph{spectrum}. Pri $m = 16$ to činí 2 udalosti na okno (12,5\% z celkového počtu vedierok) a pri $m = 512$
-sa musí vyskytnúť menej ako 93 udalostí na okno (18,16\%). Datasety z autobusov vykazujú emisiu udalostí najviac do 
+sa musí vyskytnúť menej ako 93 udalostí na okno (18,16\%). Datasety z autobusov vykazujú emisiu udalostí najviac do
 približne 6\% z úhrnného počtu frekvencií a 0,5\% v priemere. Štatistiky sa oplatí vytvárať pri najmenšom $n = 32$.
 
 \begin{table}[h]
@@ -151,7 +151,7 @@ prechodov. Čas na dokončenie rovnako stúpa lineárne podľa oboch vlastností
 \end{table}
 
 Porovnávanie variant fáz spracovania separátne nezohľadňuje serializáciu a publikovanie správ zvolených tém, či
-dopad plánovania a synchronizácie na konkurentné úlohy. Pozrieme sa na výkonnosť dátovej pipeline v dvoch odlišných prípadoch
+dopad plánovania a synchronizácie na konkurentné úlohy. Pozrieme sa na výkonnosť postupu spracovania dát v dvoch odlišných prípadoch
 pri frekvencii procesora 160 MHz a spriemerovaním desiatich spustení.
 
 Správanie zariadenia v pokoji, bez odvodzovania akýchkoľvek štatistík, netvoriace sieťovú premávku, približuje tabuľka
@@ -273,7 +273,7 @@ oknovou funkciou a 50\%  prekryvom okien. Vyčíslené sú presnosti (tab. \ref{
 Platnosť získaných percentuálnych metrík v absolútnej škále a hyperparametrov sa vzťahuje výlučne na zvolenú techniku
 syntézy signálového priebehu, a teda nevieme potvrdiť podobné výsledky pre reálnu prepravu. Napriek tomu môžeme
 z pravidelných tendencií dedukovať, že pomerne vysoká presnosť cca 84\%, ktorá zachováva senzitivitu, a chybovosťou do 5\%
-sa stabilne objavuje na diagonálach, kde $n$ je polovicou $f_s$. Vtedy nachádzame ideálny balans medzi rozlíšením
+sa stabilne objavuje na diagonálach, kde $n$ je polovicou $f_s$. Vtedy nachádzame ideálny pomer medzi rozlíšením
 v čase a frekvencii aj v spektrogramoch.
 
 Veľmi nízka senzitivita nezriedka 10 - 30\% je dôsledkom nedokonalej spätnej rekonštrukcie spektrálneho profilu a exaktnou
@@ -327,7 +327,7 @@ najvyššie presnosti sú v tabuľke \ref{tab:grid-serach-parameters}.
 
 Manuálnym odladením parametrov na ukážkových záznamoch z vozidiel sme odskúšali rozdiely v schopnostiach algoritmov
 na hľadanie špičiek povšimnúť si pretrvávajúce harmonické zložky. Výrez časovo-premenného spektra na obr. \ref{spectrum-slice}
-s nájdenými špičkami zvýrazňuje prekážky správneho odlíšenia šumu alebo navzájom splývajúcich kopcov. Niektoré lokálne extrémy
+s nájdenými špičkami zvýrazňuje prekážky správneho odlíšenia šumu alebo navzájom splývajúcich vrcholov. Niektoré lokálne extrémy
 sú prehliadnuté pre nevýraznosť nad svojím okolím alebo pre prílišnú sploštenosť.
 \begin{figure}[h]
    \centering

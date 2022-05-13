@@ -20,11 +20,11 @@ voľnosti (1DOF) kmitajúceho telesa s pružinou a tlmičom na obr. \ref{fig:1do
 
 Pri pôsobení vonkajšej sily $F$ na hmotu upevnenú na pružine vznikajú nútené vibrácie, ktoré ju vychyľujú z rovnovážnej polohy.
 Uvedená sila je charakterizovaná druhým Newtonovým zákonom v tvare $F = ma$, kde $m$ je hmotnosť telesa, $a$ predstavuje zrýchlenie.
-V protismere pôsobí sila vyvolaná pružinou $F_s = -kx$ a tlmiacim členom $F_d = -cv$, kde $k$ je tuhosť pružiny ovplyvnená 
+V protismere pôsobí sila vyvolaná pružinou $F_s = -kx$ a tlmiacim členom $F_d = -cv$, kde $k$ je tuhosť pružiny ovplyvnená
 jej konštrukciou, $c$ je tlmiaci koeficient, $x$ je vychýlenie z rovnovážneho stavu, $v$ je rýchlosť vychýlenia.
 
 Obmedzením telesa viazaním na pevnú podložku dochádza pri zanedbaní deformácie k takmer zaručenému návratu do rovnovážnej
-polohy, a to nám umožňuje merať intenzitu vibrácií cez zrýchlenie ťažidla. Výslednú silu v jednom smere získame 
+polohy, a to nám umožňuje merať intenzitu vibrácií cez zrýchlenie ťažidla. Výslednú silu v jednom smere získame
 sčítaním síl podieľajúcich sa na dynamike telesa:
 \myequations{Fyzikálny model oscilujúceho systému s pružinou a tlmičom}
 \begin{ceqn}\begin{align}
@@ -93,8 +93,8 @@ nevýznamné fluktuácie, za predpokladu dostatočného odstupu signálu od šum
 \subsection{Analógovo-digitálny prevodník}
 Spojitú napäťovú úroveň transformuje analógovo-digitálny (A/D) prevodník pre spracovanie digitálnym systémom do množiny diskrétnych
 hodnôt. Vstupný signál najprv prechádza fázou vzorkovania, kedy sa vzorky zaznamenávajú v pravidelných intervaloch. Počet vzoriek
-odčítaných za sekundu je vyjadrený vzorkovacou frekvenciou $f_s$ v Hz. Časový rozdiel medzi vzorkami, nazývaný perióda vzorkovania,
-je prevrátenou hodnotou vzorkovacej frekvencie $T_s = 1 / f_s$. Pre presnú rekonštrukciu pásmovo obmedzeného signálu v hraniciach
+odčítaných za sekundu je vyjadrený vzorkovacou frekvenciou $f_s$ v Hz. Časový rozdiel medzi vzorkami, nazývaný perióda vzorkovania $T_s$,
+je prevrátenou hodnotou vzorkovacej frekvencie. Pre presnú rekonštrukciu pásmovo obmedzeného signálu v hraniciach
 $[-f_{max}; f_{max}]$ je nevyhnuté podľa \emph{Nyquist-Shannonovej vety} o vzorkovaní, aby vzorkovacia frekvencia bola najmenej
 dvojnásobkom maximálnej frekvencie snímaného signálu:
 \myequations{Nyquist-Shannonova veta o vzorkovaní}
@@ -113,9 +113,9 @@ zmeny signálu.
 	\caption{Digitalizácia signálu v analógovo-digitálnom prevodníku \cite{music-processing}}
 \end{figure}
 Pri $n$ bitoch je k dispozícii $2^n$ rozličných čísel. Kódovaním v dvojkovom doplnku na zachytenie záporných hodnôt
-sa uvažuje s intervalom $[-2^\frac{n}{2}; 2^\frac{n}{2} - 1]$. Digitálna hodnota v dvojkovom doplnku získaná konverziou
-$\hat{x}$ je prepočítaná na štandardné fyzikálne jednotky pre zrýchlenie, na $m/s^2$. $R$ prestavuje nastavený
-dynamický rozsah v jednotkách $g$ a $n$ je počet bitov A/D prevodníka:
+sa uvažuje s uzavretým intervalom od $-2^\frac{n}{2}$ do $2^\frac{n}{2} - 1$. Digitálna hodnota v dvojkovom doplnku získaná konverziou
+$\hat{x}$, sa prepočíta na štandardné fyzikálne jednotky zrýchlenia na $m/s^2$. $R$ prestavuje nastavený
+dynamický rozsah v jednotkách $g$, $n$ je počet bitov A/D prevodníka:
 \myequations{Konverzia merania na akceleráciu podľa rozlíšenia A/D prevodníka}
 \begin{ceqn}\begin{align}
    a = \hat{x} \cdot ((R \cdot g)\;/\;2^{n\;/\;2})
@@ -130,7 +130,7 @@ Presnejší prevod dosiahneme zužitkovaním deklarovanej citlivosti senzora pri
 \subsection{Vlastnosti bežných akcelerometrov} \label{section:accelometers}
 Na ilustráciu uvádzame parametre zvolených najrozšírenejších typov akcelerometrov. Akcelerometer LSM9DS1 \cite{lsm9ds1} umožňuje cez
 zbernicu SPI alebo I$^\mathrm{2}$C zvoliť zo štyroch dynamických rozsahov, pričom každé rozpätie sa vyznačuje svojou
-citlivosťou. Zvolením menšieho dynamického rozsahu zvýšime citlivosť. LSM9DS1 funguje pri rozsahoch 
+citlivosťou. Zvolením menšieho dynamického rozsahu zvýšime citlivosť. LSM9DS1 funguje pri rozsahoch
 $\pm2$ g, $\pm4$ g a $\pm8$ g a $\pm16$ g, postupne s citlivosťami
 $0.061$ mg/LSB, $0.122$ mg/LSB, $0.244$ mg/LSB, $0.732$ mg/LSB. Výstupný dátový tok je možné nastaviť na $10$Hz, $50$Hz,
 $119$ Hz, $238$ Hz, $476$ Hz a najvyššie na $952$ Hz. Navzorkované hodnoty sú ukladané do 16-bitového výstupného registra v
@@ -234,7 +234,7 @@ ako akcelerácia je signál rýchlosti opäť integrovaný a korigovaný obálka
 Pozorovania veličiny predstavujú udalosti merané sekvenčne v čase, kde sa s každou obdržanou hodnotou $x_i$ viaže unikátna
 časová značka $t_i$. Postupnosť jednotlivých čítaní je jednorozmerný časový rad znázorniteľný ako usporiadaná množina dvojíc pečiatky
 rastúcej v čase a nasnímanej úrovne: $T = \{(t_1, x_1),(t_2, x_2), …, (t_n, x_n)\}$. Vzorkovaním v pravidelných intervaloch stačí
-uvažovať namiesto časových značiek o celočíselných indexoch, ktoré určujú pozíciu prvkov vo vektore pozorovaní:
+uvažovať namiesto časových značiek o celočíselných indexoch, ktoré určujú pozíciu prvkov vo vektore pozorovaní: \\
 $\mathbf{x} = (x_1, x_2, …, x_n)^T$.
 
 \subsection{Prúdové algoritmy}
@@ -509,7 +509,9 @@ ignorovaná, lebo ani na lesnom chodníku sa nepovažuje každá jama za dolinu 
 \end{figure}
 
 Domnelý vrchol je označený za lokálne maximum, keď spĺňa parametre pre topografické vlastnosti minimálnej akceptovateľnej
-prominencie a izolácie (obr. \ref{fig:topography}). Prominencia znamená relatívnu výšku oproti predošlej navštívenej doline. Izolácia vyčísľuje vzdialenosť k najbližšiemu skoršiemu vrcholu. Podobný algoritmus už existuje v literatúre \cite{peek-mountaineer-method}, avšak prezentovaný pseudokód je oproti nemu zjednodušený a doplnený o požadované tolerancie.
+prominencie a izolácie (obr. \ref{fig:topography}). Prominencia znamená relatívnu výšku oproti predošlej navštívenej doline.
+Izolácia vyčísľuje vzdialenosť k najbližšiemu skoršiemu vrcholu. Podobný algoritmus už existuje
+v literatúre \cite{peek-mountaineer-method}, avšak prezentovaný pseudokód je oproti nemu zjednodušený a doplnený o požadované tolerancie.
 
 \begin{algorithm}[h]
 \caption{Hľadanie špičiek metódou horského turistu}
@@ -566,7 +568,7 @@ Umiestnením počtov charakteru rozhodnutí do tabuľky vzniká matica zámen \c
 
 Úspešnosť klasifikačných algoritmov, pre ich vzájomné porovnanie, kvantifikujú viaceré metriky. Na odladenie parametrov
 vplývajúcich na náchylnosť preferovať kladné alebo záporné výsledky sa vzťahuje \emph{prevalencia} výskytu očakávaného
-javu: $P\;/\;(P+N)$ v samotných dátach. Snahou rozhodovania je maximalizovať senzitivitu a špecifickosť výsledkov algoritmu.
+javu $P$ v celej množine dát. Snahou rozhodovania je maximalizovať senzitivitu a špecifickosť výsledkov algoritmu.
 \emph{Senzitivita} (\ref{equ:sensitivity}) udáva koľko bodov, ktoré sú prehlásené za špičky je naozaj špičkami.
 \emph{Špecifickosť} (\ref{equ:specifity}) sa zameriava na potvrdenie, aké množstvo pozorovaní nepovažovaných za špičky,
 nie sú nimi aj skutočne.
@@ -617,7 +619,7 @@ prvky sekvencie pozorovaní prenásobené zodpovedajúcim exponenciálnym členo
 transformácia sa líši iba opačným znamienkom exponenta a získané hodnoty sa zvyknú normovať podelením $N$.
 \myequations{Diskrétna Fourierová transformácia}
 \begin{ceqn}\begin{align}
-Y[k] &= \sum_{n=0}^{N - 1}{x[n] \cdot W_N^{nk}};\quad k = 0, \dots, N - 1 \label{eq:dft}\\
+Y_k &= \sum_{n=0}^{N - 1}{x_n \cdot W_N^{nk}};\quad k = 0, \dots, N - 1 \label{eq:dft}\\
 W_{N}^{nk} &= \exp{\left(-i2\pi nk \, /\, N\right)} \label{eq:twiddle}
 \end{align}\end{ceqn}
 
@@ -634,8 +636,8 @@ nad pozíciou  $N/2$. Rovnako naznačuje reformulácia vety o vzorkovaní, že z
 objavuje reprezentácia relatívneho energetického spektra v decibeloch (\ref{equ:decibel-spectrum}) \cite{understanding-dsp}.
 \myequations{Magnitúdové spektrum absolútne a relatívne v decibeloch}
 \begin{ceqn}\begin{align}
-|Y[k]| = \sqrt{\Re\{Y[k]\}^2 + \Im\{Y[k]\}^2} \label{equ:magnitude-spectrum} \\
-Y_{dB}[k] = 20 \cdot \log_{10}{ \left( \frac{|Y[k]|}{\max\limits_{0 \leq k < N / 2}\{|Y[k]|\}} \right)} \label{equ:decibel-spectrum}
+|Y_k| = \sqrt{\Re\{Y_k\}^2 + \Im\{Y_k\}^2} \label{equ:magnitude-spectrum} \\
+Y^{(dB)}_k = 20 \cdot \log_{10}{ \left( \frac{|Y_k|}{\max\limits_{k \in \{0, \dots, N - 1\}}\{|Y_k|\}} \right)} \label{equ:decibel-spectrum}
 \end{align}\end{ceqn}
 
 Sekvencia pozorovaní vyjadrená cez súčet kosínusoid namiesto exponenciálneho faktora tvorí rodinu diskrétnych
@@ -654,8 +656,7 @@ výpočtovej náročnosti odstránením súčinov v komplexných číslach.
 Podľa charakteru obmien kosínusovej bázy rozlišujeme štyri typy DCT,  z nich najvýznačnejšie sú transformácie DCT-II, ktorej inverziou je DCT-III, a DCT-IV, ktorá je inverzná
 sama sebe \cite{dct}. Z DCT-IV vychádza MDCT, ktorá navyše spracováva prekrývajúce sa bloky, tak že druhá polovica vzoriek
 pochádza z prvej polovice ďalšieho bloku. Dokopy vytvorí z $2N$ vzoriek $N$ koeficientov. MDCT sa hojne využíva pri stratovej
-kompresii zvuku, pretože sa prelínaním blokom vyvaruje artefaktom na hraniciach blokov
-\cite{mdct}.
+kompresii zvuku, pretože sa prelínaním blokom vyvaruje artefaktom na hraniciach blokov \cite{mdct}.
 
 \subsection{Algoritmus FFT}
 Priamočiarou implementáciou vzťahu na výpočet Fourierovej a kosínusovej transformácie dosiahneme časovú zložitosť
@@ -766,7 +767,7 @@ w(n) &= 0.42 - 0.5\cos(2\pi n / N) + 0.08\cos(4\pi n / N)\label{equ:window-black
 
 Fourierou transformáciou okna dostávame frekvenčnú odozvu, ktorá má tvar funkcie $\mathrm{sinc}(x) = \sin(x) / x$
 (obr. \ref{fig:window-freq}) Priebeh odozvy sa vyznačuje hlavným a vedľajšími vrcholmi (mainlobe a sidelobes).
-Hlavný vrchol sa snažia rôzne oknové funkcie udržať čo najužší, lebo zodpovedá za šírku spektrálneho úniku 
+Hlavný vrchol sa snažia rôzne oknové funkcie udržať čo najužší, lebo zodpovedá za šírku spektrálneho úniku
 do okolitých vedierok. Vedľajšie vrcholy sú nežiaduce a podmieňujú najmä úroveň odstupu od šumu.
 
 \begin{figure}[h]
@@ -804,7 +805,7 @@ sa energetických spektier \cite{welch-method}.
 Predspracovanie signálu do podoby vhodnejšej na analýzu, extrakciu čŕt a detekciu udalostí sa vykonáva filtrovaním.
 Častými činnosťami býva odstránenie posunu alebo jednosmernej zložky, eliminovanie šumu rozptýleného medzi
 vysokofrekvenčné komponenty, a oddelenie známeho frekvenčného pásma od zvyšku spektra. Dolná priepusť prepustí
-nízke frekvencie až po medznú frekvencie, od ktorej nahor frekvencie utlmuje. Horná priepusť sa správa opačne
+nízke frekvencie až po medznú frekvenciu, od ktorej nahor frekvencie utlmuje. Horná priepusť sa správa opačne
 a potláča nižšie frekvencie. Pásmová priepusť ponechá frekvencie v obmedzenom rozsahu z oboch strán.
 
 Ideálne filtre majú okamžitý útlm dovoľujúci prechod striktne vymedzeným zložkám signálu. Vo frekvenčnej doméne
@@ -850,9 +851,9 @@ pretože doba funkčnosti zariadenia ohraničuje kapacita batérií, ktoré sú 
 v nedostupných lokalitách alebo pozíciach. Senzor musí byť ideálne schopný autonómnej konfigurácie
 reakciou na zmenu nastatých okolností a s tým súvisí zotavenie z neočakávaných a chybových stavov \cite{wsn-overview}.
 
-Výpočtový výkon býva za cenu zníženia elektrického odberu redukovaný znížením taktovacej frekvencie a snahou o efektívny manažment 
-periférií distribúciou hodín alebo použitím úsporných režimov. Menej dostupných cyklov procesora povoľuje realizáciu len 
-jednoduchších výpočtov. Navyše niektoré aplikácií aj za týchto okolností očakávajú okamžitú odozvu. Aby sa zachovala nízka 
+Výpočtový výkon býva za cenu zníženia elektrického odberu redukovaný znížením taktovacej frekvencie a snahou o efektívny manažment
+periférií distribúciou hodín alebo použitím úsporných režimov. Menej dostupných cyklov procesora povoľuje realizáciu len
+jednoduchších výpočtov. Navyše niektoré aplikácií aj za týchto okolností očakávajú okamžitú odozvu. Aby sa zachovala nízka
 cena zariadení šetrí sa na lokálne dostupnom úložisku, ktoré sa počíta v kilobajtoch nanajvýš megabajtoch.
 
 Senzorové jednotky si buď získané dáta ukladajú na externú flash pamäť, alebo sa od nich vyžaduje komunikácia

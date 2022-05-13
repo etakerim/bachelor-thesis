@@ -5,14 +5,14 @@ Optimalizované rutiny spracovania signálu poskytuje Espressif DSP Library. Kni
 kódovanie a dekódovanie formátu Message Pack. CMake riadi zostavovanie
 modulov zdrojového kódu. Eclipse Mosquitto pôsobí ako MQTT broker správ.
 
-V jazyku Python sú napísané Jupyter notebooky na analýzu zozbieraných datasetov a otestovanie fáz navrhnutej dátovej pipeline,
+V jazyku Python sú napísané Jupyter notebooky na analýzu zozbieraných datasetov a otestovanie fáz navrhnutého spracovania dát,
 so závislosťami numpy, scipy, pandas a matplotlib. Rozhranie príkazového riadku na nahrávanie konfigurácie a náhľad odoberaných
 správ sa spolieha na balíčky Paho MQTT, cmd a msgpack.
 
 \section{Senzorová sieť}
 Súčiastky FireBeetle ESP32, OpenLog, STEVAL-MKI159V1 a BTS117 sú naspájkované na univerzálny plošný spoj rozmerov 5 x 7 cm
 (obr. \ref{board}). Doska je vsadená do plastovej krabičky s hrúbkou stien 3 mm vo výške 2 cm nad povrchom.
-Akcelerometer je namontovaný tesne pod modulom MCU. Externý 5 V zdroj sa pripája cez Micro USB konektor, alebo 3,7 V lítiovú batériu 
+Akcelerometer je namontovaný tesne pod modulom MCU. Externý 5 V zdroj sa pripája cez Micro USB konektor, alebo 3,7 V lítiovú batériu
 zapojíme cez JST PH 2 pin.
 \begin{figure}[h!]
 \centering
@@ -29,7 +29,7 @@ zapojíme cez JST PH 2 pin.
 \end{figure}
 
 Po zapnutí si firmvér načíta systémové nastavenia cez SDK Storage API z flash. Inicializuje sa
-akcelerometer a naraz sa kompletne alokuje dynamická pamäť pre výpočty dátovej pipeline a pre synchronizačné primitíva.
+akcelerometer a naraz sa kompletne alokuje dynamická pamäť na výpočty a pre synchronizačné primitíva.
 Na zamedzenie fragmentácie nie je odvtedy programom prideľovaná žiadna ďalšia pamäť okrem zásobníkov úloh.
 
 Prebehne pokus o pripojenie s prístupovým bodom WiFi so zabezpečením WPA2 a so serverom MQTT broker, na základe prihlasovacích údajov
@@ -73,7 +73,7 @@ baud,escape,esc#,mode,verb,echo,ignoreRX
 \end{lstlisting}
 
 \section{Komunikácia medzi úlohami}
-Nezávislé činnosti aplikácie sú prerozdelené medzi vlákna, ktoré si cez fronty posielajú súradnice zrýchlenia.
+Nezávislé činnosti aplikácie sú prerozdelené medzi vlákna, ktoré si cez rady posielajú súradnice zrýchlenia.
 FreeRTOS úlohy sú funkcie vykonávajúce opakované sekvenciu príkazov v nekonečnom cykle.
 
 Procedúra obsluhy prerušenia hardvérového časovača nesmie čakať, preto je načítaná rovno z IRAM a upovedomí úlohu vzorkovania
@@ -81,7 +81,7 @@ Procedúra obsluhy prerušenia hardvérového časovača nesmie čakať, preto j
 akcelerácie od bázovej adresy registra x-ovej osi. Získaná trojica 16-bitových slov sa podľa aktuálneho rozlíšenia prevedie
 do štandardnej fyzikálnej jednotky v type \verb|float|.
 
-\begin{lstlisting}[style=cstyle,caption=Posielanie vzoriek medzi úlohami cez fronty,label={lst:sampling},
+\begin{lstlisting}[style=cstyle,caption=Posielanie vzoriek medzi úlohami cez rad správ,label={lst:sampling},
  morekeywords={ulTaskNotifyTake,xQueueSend,xQueueReceive,buffer_shift_left,p.stream}]
 // Sampling task
 if (ulTaskNotifyTake(pdTRUE, portMAX_DELAY)) {
@@ -99,8 +99,8 @@ if (xQueueReceive(k->queue[x], &p.stream[idx], portMAX_DELAY)) {
     idx = conf.sensor.n - leftover;
 }
 \end{lstlisting}
-Vkladanie vzoriek do fronty neblokuje, lebo sa nepočíta s úplným vyčerpaním voľných slotov. Posiela sa do fronty
-iba vtedy, ak beží úloha pipeline pre danú dimenziu. Na opačnom konci fronty sa čísla po jednom pripájajú do
+Vkladanie vzoriek do radu neblokuje, lebo sa nepočíta s úplným vyčerpaním voľných slotov. Posiela sa do radu
+iba vtedy, ak beží úloha spracovania dát pre danú dimenziu. Na opačnom konci radu sa čísla po jednom pripájajú do
 cirkulárnej vyrovnávacej pamäte. Pole sa prenechá zvyšku úlohy na spracovanie až po naplnení
 dosiahnutím \verb|conf.sensor.n| položiek.
 
@@ -120,7 +120,7 @@ if (axis[0] && axis[1])
    stats->corr_xy = correlation(diff[0],diff[1],n,std[0],std[1]);
 \end{lstlisting}
 
-Okrem synchronizácie úloh posielaním správ cez fronty sa zužitkúvajú bariéry. Event Groups riadia toky
+Okrem synchronizácie úloh posielaním správ cez rady sa zužitkúvajú bariéry. Event Groups riadia toky
 synchronizovaných úloh v bodoch stretu čakaním na nastavenie bitov podľa očakávanej bitovej masky. Počas
 autorizácie voči prístupovému bodu WiFi čaká podprogram hlavného vlákna na príznak pridelenia IP adresy
 od obsluhy udalosti nadviazania spojenia.
@@ -181,7 +181,7 @@ typedef struct {
 \end{lstlisting}
 
 \section{Systémová konfigurácia}
-Správanie blokov dátovej pipeline určuje globálna inštancia zloženej štruktúry \emph{Configuration} \ref{config:struct}.
+Správanie blokov spracovania dát určuje globálna inštancia zloženej štruktúry \emph{Configuration} \ref{config:struct}.
 Vnorené členské premenné definujú vlastnosti jednotlivých funkčných blokov. Po zapnutí je posledná
 konfigurácia zobraná ako blob z nevolatilnej pamäte pod kľúčom ,,config''. Chýbajúca podpora iných ako celočíselných
 typov znamená, že po akejkoľvek úprave musí byť štruktúra znovu nahratá do flash pamäte ako celok.

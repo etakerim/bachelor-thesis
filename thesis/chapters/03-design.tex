@@ -88,11 +88,11 @@ na server so službou broker správ. Odoberané témy sú odtiaľ rozšírené k
 Odčítavanie úrovní z akcelerometra zabezpečuje \textbf{časovač vzorkovania}, ktorý si v pravidelných intervaloch pýta aktuálne
 hodnoty rozhraním periférneho adaptéra pre prístup ku SPI zbernici. Po vypršaní vzorkovacej periódy je zavolaná obsluha prerušenia, ktorá
 odblokuje vlákno úlohy na synchrónne načítanie okamžitého vektora zrýchlenia konvertovaného z číslicovej úrovne prevodníka na metre za
-sekundu na druhú (\ref{uml:sequence}). Zachytené hodnoty sú preposlané cez thread-safe fronty analyzátora signálu zvlásť pre každú
-priestorovú os akcelerácie. V prípade zachytávania časového priebehu s voliteľným podvzorkovaním sa vektor umiestni do frontu do
-vlákna loggera.
+sekundu na druhú (\ref{uml:sequence}). Zachytené hodnoty sú preposlané cez thread-safe rady analyzátora signálu zvlásť pre každú
+priestorovú os akcelerácie. V prípade zachytávania časového priebehu s voliteľným podvzorkovaním sa vektor umiestni do radu pre
+vlákno loggera.
 
-\textbf{Pipeline spracovania signálu} (\ref{uml:component}) rozdeľuje vzorky do prelínajúcich sa posuvných okien, počíta z nich štatistiky
+\textbf{Etapy spracovania signálu} (\ref{uml:component}) rozdeľuje vzorky do prelínajúcich sa posuvných okien, počíta z nich štatistiky
 a vyhľadáva udalosti vo frekvenčnom spektre. Nespracované hodnoty sú podľa potreby ukladané na pamäťovú kartu.
 
 \textbf{Správa konfigurácie} zaobstaráva zmenu a uchovanie parametrov pipelinov pre jednotlivé bloky spracovania.
@@ -114,8 +114,8 @@ informáciou o počte údajov. Dĺžka položky predchádzajúca zloženými atr
 	\label{uml:sequence}
 \end{figure}
 
-\section{Fázy dátovej pipeline}
-Poskladaná dátová pipeline sa sústredí primárne na odhalenie pretrvávajúcich spektrálnych zložiek. Úloha jednotlivých
+\section{Etapy spracovania dát}
+Poskladaná etapy spracovania sa sústredia primárne na odhalenie pretrvávajúcich spektrálnych zložiek. Úloha jednotlivých
 zakomponovaných blokov spočíva v prevedení pôvodne obdržaných vzoriek podľa globálnych pravidiel definujúcich ich správanie.
 
 Vo všeobecnosti sa v nej nachádzajú bloky filtrácie, transformácie a serializácie signálu. Sústava sa
@@ -126,14 +126,14 @@ vizualizuje navrhovaný beh činností na zariadení.
 \subsection{Nastaviteľné vlastnosti}
 Utváranie charakteru výstupov sa deje hneď na začiatku voľbou nastavení snímača.
 Vzťahuje sa naň vzorkovacia frekvencia časovača, podmieňujúca výstupný dátový tok konštrukčne obmedzený do 952 Hz,
-a dynamický rozsah v rozmedzí do 16g. Keďže sú priestorové osi zrýchlenia analyzované nezávisle, vyžadujú sa pre každú ďalšiu
+a dynamický rozsah v rozmedzí do 16 $g$. Keďže sú priestorové osi zrýchlenia analyzované nezávisle, vyžadujú sa pre každú ďalšiu
 dimenziu systémové prostriedky navyše. Preto je výhodná možnosť aktivácia len niektorých osí.
 
 Postupnosť hodnôt je rozkúskovaná podľa dĺžky vyrovnávacej pamäte pre prevod do frekvenčnej domény s počtom slotov
 o mocnine dvojky. Pomer prekryvu okien sa odporúča od 0, čo znamená bez zanechania predošlého obsahu, nanajvýš
 do 0,75 výhradne pre úzke oknové funkcie.
 
-Po naplnení miest v cyklickej fronte sa pristúpi k prenásobeniu bodov s koeficientami oknovej funkcie
+Po naplnení miest v cyklickom rade sa pristúpi k prenásobeniu bodov s koeficientami oknovej funkcie
 z ponuky: obdĺžnik, Bartlett, Hann, Hamming, Blackman, a následnej Fourierovej alebo kosínusovej transformácii
 o veľkosti totožnej s dĺžkou okna. Z frekvenčných vedierok sa zistí magnitúda v lineárnej alebo decibelovej škále.
 Pred a po transformácii sa môže doplnkovo uplatniť filter vyhladzovania priemerom, v časovej i vo frekvenčnej doméne.
@@ -151,19 +151,19 @@ algoritmy: nad prahovú úroveň, najvyššieho spomedzi susedov, prechodu nulou
 	\label{pipeline}
 \end{figure}
 
-Medzi dôležitými fázami pipeline dochádza podľa povolených modulov na odosielanie správ k odovzdaniu medziproduktov na formátovanie
+Medzi dôležitými fázami spracovania dochádza podľa povolených modulov na odosielanie správ k odovzdaniu medziproduktov na formátovanie
 cez Message Pack a synchrónne publikovanie na MQTT tému. Umožňuje sa poslanie vzoriek po decimácii celočíselným faktorom $\geq 1$,
 požadovaných štatistík z časového priebehu (minimum, maximum, stredná kvadratická odchýlka, priemer, rozptyl, smerodajná odchýlka,
 šikmosť, špicatosť, medián, mediánová absolútna odchýlka, medzi-osová korelácia), výsledku frekvenčnej transformácie alebo udalostí
 o zmene významných frekvencií.
 
-Reguláciu toku dát a vlastnosti úpravy v blokoch pipeline ovplyvňuje globálna systémová konfigurácia. Obvykle sa nahrá
+Reguláciu toku dát a vlastnosti úpravy v etapách spracovania dát ovplyvňuje globálna systémová konfigurácia. Obvykle sa nahrá
 z nevolatilnej pamäte, ale je umožnené aby pravidlá boli upraviteľné vzdialene správami vo formáte Message Pack (\ref{config-change}).
 Zariadenie sa prihlási na odber MQTT témy na zmenu konfigurácie. Postačuje, aby na tému klient odoslal vlastnosti, ktoré mieni
 upraviť. Ak sú parametre syntakticky korektné a spadajú do dovoleného číselného intervalu príde k reštartu zariadenia a ich
 následnému uplatneniu. V opačnom prípade sa na samostatnú MQTT tému odošle chybová hláška.
 
-Vzdialený klient si taktiež dokáže zobraziť všetky momentálne platné pravidlá odberom témy \emph{config/request} a publikovaním na tému 
+Vzdialený klient si taktiež dokáže zobraziť všetky momentálne platné pravidlá odberom témy \emph{config/request} a publikovaním na tému
 \emph{config/response}, čím sa imituje query-driven vzor požiadavka -- odpoveď.
 
 \begin{figure}[h]
@@ -173,7 +173,7 @@ Vzdialený klient si taktiež dokáže zobraziť všetky momentálne platné pra
 	\label{config-change}
 \end{figure}
 
-\subsection{Preskúmané obmeny pipeline}
+\subsection{Preskúmané obmeny postupu spracovania}
 Uvažovalo sa o vložení voliteľného kroku zníženia šumu v transformovanom spektre Welchovou metódou, ktorý by vedel prispieť
 k eliminácii záchvevov krátkodobého výpadku frekvenčnej zložky. Nespolupracuje však dobre s ideou zdieľanej veľkosti okna a
 ich prekryvu. Vo všestrannom riešení môžu byť body delené do viacerých segmentov, čo naráža na pamäťové obmedzenia zariadenia
