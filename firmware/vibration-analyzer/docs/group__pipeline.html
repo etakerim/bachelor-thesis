@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Spracovanie dát generovaných senzorovou IoT sieťou: Dátová pipeline</title>
+<title>Spracovanie dát generovaných senzorovou IoT sieťou: Spracovanie údajov</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,7 +96,7 @@ $(document).ready(function(){initNavTree('group__pipeline.html',''); initResizab
 <a href="#nested-classes">Dátové štruktúry</a> &#124;
 <a href="#define-members">Definícia makier</a> &#124;
 <a href="#enum-members">Enumerácie</a>  </div>
-  <div class="headertitle"><div class="title">Dátová pipeline</div></div>
+  <div class="headertitle"><div class="title">Spracovanie údajov</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('group__pipeline.html',''); initResizab
 Moduly</h2></td></tr>
 <tr class="memitem:group__window"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__window.html">Oknové funkcie</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__pipeline__buffer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline__buffer.html">Správa pamäti pipeline</a></td></tr>
+<tr class="memitem:group__pipeline__buffer"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline__buffer.html">Správa pamäti systému</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:group__stages"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__stages.html">Fázy spracovania oknovaného signálu</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,7 +130,7 @@ Dátové štruktúry</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nastavenia ukladania a posielania spracovaných dát.  <a href="structSaveFormatConfig.html#details">...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structConfiguration.html">Configuration</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Systémová konfigurácia pipeline spracovania vzoriek z akcelerometra.  <a href="structConfiguration.html#details">...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Systémová konfigurácia spracovania vzoriek z akcelerometra.  <a href="structConfiguration.html#details">...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structProvisioning.html">Provisioning</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sieťové nastavenia pre pripojenie na Wifi AP s WPA2 a MQTT broker.  <a href="structProvisioning.html#details">...</a><br /></td></tr>
@@ -142,13 +142,13 @@ Dátové štruktúry</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Výsledky všetkých dostupných štatistík.  <a href="structStatistics.html#details">...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBufferPipelineKernel.html">BufferPipelineKernel</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vyrovnávacie pamäte spoločné pre celú pipeline.  <a href="structBufferPipelineKernel.html#details">...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vyrovnávacie pamäte spoločné pre všetky spracovateľské úlohy.  <a href="structBufferPipelineKernel.html#details">...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBufferPipelineAxis.html">BufferPipelineAxis</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vyrovnávacie pamäte samostatné pre každú os akcelerácie.  <a href="structBufferPipelineAxis.html#details">...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSender.html">Sender</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fronta pre záznam vzoriek bez ďalšiho spracovania.  <a href="structSender.html#details">...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rad pre záznam vzoriek bez ďalšiho spracovania.  <a href="structSender.html#details">...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -160,7 +160,7 @@ Definícia makier</h2></td></tr>
 <tr class="memdesc:ga02af3d0c09f4611ca65df314b77f0a82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximálny počet dvojíc kľúč - hodnota v Message Pack slovníku.  <a href="group__pipeline.html#ga02af3d0c09f4611ca65df314b77f0a82">...</a><br /></td></tr>
 <tr class="separator:ga02af3d0c09f4611ca65df314b77f0a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga10d06ab50267a4e0a0c4d0360974cc4e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga10d06ab50267a4e0a0c4d0360974cc4e">SAMPLES_QUEUE_SLOTS</a>&#160;&#160;&#160;3</td></tr>
-<tr class="memdesc:ga10d06ab50267a4e0a0c4d0360974cc4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Násobok veľkosti posuvného okna ako počet vzoriek čakajúcich na spracovanie vo fronte.  <a href="group__pipeline.html#ga10d06ab50267a4e0a0c4d0360974cc4e">...</a><br /></td></tr>
+<tr class="memdesc:ga10d06ab50267a4e0a0c4d0360974cc4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Násobok veľkosti posuvného okna ako počet vzoriek čakajúcich na spracovanie vo rade.  <a href="group__pipeline.html#ga10d06ab50267a4e0a0c4d0360974cc4e">...</a><br /></td></tr>
 <tr class="separator:ga10d06ab50267a4e0a0c4d0360974cc4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7d459637968e6c858ac3b800c535803d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline.html#ga7d459637968e6c858ac3b800c535803d">MAX_CREDENTIALS_LENGTH</a>&#160;&#160;&#160;64</td></tr>
 <tr class="memdesc:ga7d459637968e6c858ac3b800c535803d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximálna dĺžka prihlasovacieho údaju Wifi pripojenia.  <a href="group__pipeline.html#ga7d459637968e6c858ac3b800c535803d">...</a><br /></td></tr>
@@ -469,7 +469,7 @@ Enumerácie</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Násobok veľkosti posuvného okna ako počet vzoriek čakajúcich na spracovanie vo fronte. </p>
+<p>Násobok veľkosti posuvného okna ako počet vzoriek čakajúcich na spracovanie vo rade. </p>
 
 </div>
 </div>

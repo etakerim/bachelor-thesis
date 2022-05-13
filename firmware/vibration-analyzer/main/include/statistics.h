@@ -45,6 +45,7 @@ float mean(const float *x, int n);
  *  
  * @param[in]  x   Vzorky signálu
  * @param[in]  n   Počet vzoriek signálu
+ * @param[in]  mean Aritmetický priemer signálu
  * @return  Rozptyl hodnôt signálu
  */
 float variance(const float *x, int n, float mean);
@@ -53,7 +54,6 @@ float variance(const float *x, int n, float mean);
  * @brief Smerodajná odchýlka
  *  
  * @param[in]  variance   Rozptyl signálu
- * @param[in]  n   Počet vzoriek signálu
  * @return  Smerodajná odchýlka hodnôt signálu
  */
 float standard_deviation(float variance);

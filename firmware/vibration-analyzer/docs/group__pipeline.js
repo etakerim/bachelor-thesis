@@ -1,7 +1,7 @@
 var group__pipeline =
 [
     [ "Oknové funkcie", "group__window.html", "group__window" ],
-    [ "Správa pamäti pipeline", "group__pipeline__buffer.html", "group__pipeline__buffer" ],
+    [ "Správa pamäti systému", "group__pipeline__buffer.html", "group__pipeline__buffer" ],
     [ "Fázy spracovania oknovaného signálu", "group__stages.html", "group__stages" ],
     [ "SamplingConfig", "structSamplingConfig.html", [
       [ "axis", "structSamplingConfig.html#ae42201e9ff01883926b5ca4ba3fa446e", null ],

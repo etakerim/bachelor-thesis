@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Spracovanie dát generovaných senzorovou IoT sieťou: Správa pamäti pipeline</title>
+<title>Spracovanie dát generovaných senzorovou IoT sieťou: Správa pamäti systému</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -93,29 +93,29 @@ $(document).ready(function(){initNavTree('group__pipeline__buffer.html',''); ini
 <div class="header">
   <div class="summary">
 <a href="#func-members">Funkcie</a>  </div>
-  <div class="headertitle"><div class="title">Správa pamäti pipeline<div class="ingroups"><a class="el" href="group__pipeline.html">Dátová pipeline</a></div></div></div>
+  <div class="headertitle"><div class="title">Správa pamäti systému<div class="ingroups"><a class="el" href="group__pipeline.html">Spracovanie údajov</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Funkcie</h2></td></tr>
 <tr class="memitem:ga198073719a04e2b0e0d4ed220ec7ae17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline__buffer.html#ga198073719a04e2b0e0d4ed220ec7ae17">process_allocate</a> (<a class="el" href="structBufferPipelineKernel.html">BufferPipelineKernel</a> *p, const <a class="el" href="structConfiguration.html">Configuration</a> *conf)</td></tr>
-<tr class="memdesc:ga198073719a04e2b0e0d4ed220ec7ae17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alokácia a inicializácia dynamických vyrovnávacích pamätí a synchronizačných primitív.  <a href="group__pipeline__buffer.html#ga198073719a04e2b0e0d4ed220ec7ae17">...</a><br /></td></tr>
+<tr class="memdesc:ga198073719a04e2b0e0d4ed220ec7ae17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alokácia a inicializácia spoločných vyrovnávacích pamätí a synchronizačných primitív.  <a href="group__pipeline__buffer.html#ga198073719a04e2b0e0d4ed220ec7ae17">...</a><br /></td></tr>
 <tr class="separator:ga198073719a04e2b0e0d4ed220ec7ae17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa28312c5123cf67d9e3f3bb1555d4ad7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline__buffer.html#gaa28312c5123cf67d9e3f3bb1555d4ad7">axis_allocate</a> (<a class="el" href="structBufferPipelineAxis.html">BufferPipelineAxis</a> *p, const <a class="el" href="structConfiguration.html">Configuration</a> *conf)</td></tr>
 <tr class="memdesc:gaa28312c5123cf67d9e3f3bb1555d4ad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alokácia dynamických vyrovnávacích pamätí pre jednu os akcelerácie.  <a href="group__pipeline__buffer.html#gaa28312c5123cf67d9e3f3bb1555d4ad7">...</a><br /></td></tr>
 <tr class="separator:gaa28312c5123cf67d9e3f3bb1555d4ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf62246f4e71b39ba3b0227494ca3143c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline__buffer.html#gaf62246f4e71b39ba3b0227494ca3143c">sender_allocate</a> (<a class="el" href="structSender.html">Sender</a> *sender, uint16_t length)</td></tr>
-<tr class="memdesc:gaf62246f4e71b39ba3b0227494ca3143c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vytvorenie fronty na odosielanie nameraných vzoriek odlišnou systémovou úlohou.  <a href="group__pipeline__buffer.html#gaf62246f4e71b39ba3b0227494ca3143c">...</a><br /></td></tr>
+<tr class="memdesc:gaf62246f4e71b39ba3b0227494ca3143c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vytvorenie radu na odosielanie nameraných vzoriek odlišnou systémovou úlohou.  <a href="group__pipeline__buffer.html#gaf62246f4e71b39ba3b0227494ca3143c">...</a><br /></td></tr>
 <tr class="separator:gaf62246f4e71b39ba3b0227494ca3143c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafd6bb8392861c9dee4d8dfb375715768"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline__buffer.html#gafd6bb8392861c9dee4d8dfb375715768">process_release</a> (<a class="el" href="structBufferPipelineKernel.html">BufferPipelineKernel</a> *p)</td></tr>
-<tr class="memdesc:gafd6bb8392861c9dee4d8dfb375715768"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uvoľnenie pamäte pre dynamické vyrovnávacie pamäte.  <a href="group__pipeline__buffer.html#gafd6bb8392861c9dee4d8dfb375715768">...</a><br /></td></tr>
+<tr class="memdesc:gafd6bb8392861c9dee4d8dfb375715768"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uvoľnenie spoločných vyrovnávacích pamätí  <a href="group__pipeline__buffer.html#gafd6bb8392861c9dee4d8dfb375715768">...</a><br /></td></tr>
 <tr class="separator:gafd6bb8392861c9dee4d8dfb375715768"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga24d077f8af3859aaf4e361fc4f1ad55d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline__buffer.html#ga24d077f8af3859aaf4e361fc4f1ad55d">axis_release</a> (<a class="el" href="structBufferPipelineAxis.html">BufferPipelineAxis</a> *p)</td></tr>
-<tr class="memdesc:ga24d077f8af3859aaf4e361fc4f1ad55d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uvoľnenie pamäte pre dynamické vyrovnávacie pamäte pre jednu os akcelerácie.  <a href="group__pipeline__buffer.html#ga24d077f8af3859aaf4e361fc4f1ad55d">...</a><br /></td></tr>
+<tr class="memdesc:ga24d077f8af3859aaf4e361fc4f1ad55d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uvoľnenie vyrovnávacích pamätí pre jednu os akcelerácie.  <a href="group__pipeline__buffer.html#ga24d077f8af3859aaf4e361fc4f1ad55d">...</a><br /></td></tr>
 <tr class="separator:ga24d077f8af3859aaf4e361fc4f1ad55d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf1b54cb09755a12773a308a07e9a3591"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pipeline__buffer.html#gaf1b54cb09755a12773a308a07e9a3591">sender_release</a> (<a class="el" href="structSender.html">Sender</a> *sender)</td></tr>
-<tr class="memdesc:gaf1b54cb09755a12773a308a07e9a3591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Odstránenie fronty na odosielanie nameraných vzoriek.  <a href="group__pipeline__buffer.html#gaf1b54cb09755a12773a308a07e9a3591">...</a><br /></td></tr>
+<tr class="memdesc:gaf1b54cb09755a12773a308a07e9a3591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Odstránenie radu na odosielanie nameraných vzoriek.  <a href="group__pipeline__buffer.html#gaf1b54cb09755a12773a308a07e9a3591">...</a><br /></td></tr>
 <tr class="separator:gaf1b54cb09755a12773a308a07e9a3591"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailný popis</h2>
@@ -173,7 +173,7 @@ Funkcie</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Uvoľnenie pamäte pre dynamické vyrovnávacie pamäte pre jednu os akcelerácie. </p>
+<p>Uvoľnenie vyrovnávacích pamätí pre jednu os akcelerácie. </p>
 <dl class="params"><dt>Parametre</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">p</td><td>Dynamické vyrovnávacie pamäte </td></tr>
@@ -209,7 +209,7 @@ Funkcie</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Alokácia a inicializácia dynamických vyrovnávacích pamätí a synchronizačných primitív. </p>
+<p>Alokácia a inicializácia spoločných vyrovnávacích pamätí a synchronizačných primitív. </p>
 <dl class="params"><dt>Parametre</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">p</td><td>Dynamické vyrovnávacie pamäte s dĺžkami podľa nastavení </td></tr>
@@ -236,7 +236,7 @@ Funkcie</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Uvoľnenie pamäte pre dynamické vyrovnávacie pamäte. </p>
+<p>Uvoľnenie spoločných vyrovnávacích pamätí </p>
 <dl class="params"><dt>Parametre</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">p</td><td>Dynamické vyrovnávacie pamäte </td></tr>
@@ -272,11 +272,11 @@ Funkcie</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Vytvorenie fronty na odosielanie nameraných vzoriek odlišnou systémovou úlohou. </p>
+<p>Vytvorenie radu na odosielanie nameraných vzoriek odlišnou systémovou úlohou. </p>
 <dl class="params"><dt>Parametre</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">sender</td><td>Vyhradená fronta s požadovanou maximálnou kapacitou </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Dĺžka fronty </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">sender</td><td>Vyhradený rad s požadovanou maximálnou kapacitou </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Dĺžka radu </td></tr>
   </table>
   </dd>
 </dl>
@@ -299,7 +299,7 @@ Funkcie</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Odstránenie fronty na odosielanie nameraných vzoriek. </p>
+<p>Odstránenie radu na odosielanie nameraných vzoriek. </p>
 <dl class="params"><dt>Parametre</dt><dd>
   <table class="params">
     <tr><td class="paramname">sender</td><td>Fronta s vyhradenou kapacitou </td></tr>

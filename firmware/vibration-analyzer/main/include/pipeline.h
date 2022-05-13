@@ -10,7 +10,7 @@
 #include "mpack.h"
 #include "events.h"
 
-/** @defgroup pipeline Dátová pipeline
+/** @defgroup pipeline Spracovanie údajov
  *  @{
  */
 
@@ -23,7 +23,7 @@
  */
 #define MAX_MPACK_FIELDS_COUNT      20
 /**
- * @brief Násobok veľkosti posuvného okna ako počet vzoriek čakajúcich na spracovanie vo fronte
+ * @brief Násobok veľkosti posuvného okna ako počet vzoriek čakajúcich na spracovanie vo rade
  */
 #define SAMPLES_QUEUE_SLOTS         3
 /**
@@ -194,7 +194,7 @@ typedef struct {
 } SaveFormatConfig;
 
 /**
- * @brief Systémová konfigurácia pipeline spracovania vzoriek z akcelerometra
+ * @brief Systémová konfigurácia spracovania vzoriek z akcelerometra
  */
 typedef struct {
     SamplingConfig sensor;
@@ -249,7 +249,7 @@ typedef struct {
 
 
 /**
- * @brief Vyrovnávacie pamäte spoločné pre celú pipeline
+ * @brief Vyrovnávacie pamäte spoločné pre všetky spracovateľské úlohy
  */
 typedef struct {
     float *smooth;
@@ -270,7 +270,7 @@ typedef struct {
 } BufferPipelineAxis;
 
 /**
- * @brief Fronta pre záznam vzoriek bez ďalšiho spracovania
+ * @brief Rad pre záznam vzoriek bez ďalšiho spracovania
  */
 typedef struct {
     uint16_t max_send_samples;
@@ -366,12 +366,12 @@ void window(WindowTypeConfig type, float *w, int n);
 
 
 /** 
- * @defgroup pipeline_buffer Správa pamäti pipeline
+ * @defgroup pipeline_buffer Správa pamäti systému
  * @{
  */
 
 /**
- * @brief Alokácia a inicializácia dynamických vyrovnávacích pamätí a synchronizačných primitív
+ * @brief Alokácia a inicializácia spoločných vyrovnávacích pamätí a synchronizačných primitív
  *  
  * @param[out]  p       Dynamické vyrovnávacie pamäte s dĺžkami podľa nastavení
  * @param[in]   conf     Konfigurácia systému
@@ -387,28 +387,28 @@ void process_allocate(BufferPipelineKernel *p, const Configuration *conf);
 void axis_allocate(BufferPipelineAxis *p, const Configuration *conf);
 
 /**
- * @brief Vytvorenie fronty na odosielanie nameraných vzoriek odlišnou systémovou úlohou
+ * @brief Vytvorenie radu na odosielanie nameraných vzoriek odlišnou systémovou úlohou
  *  
- * @param[out]  sender   Vyhradená fronta s požadovanou maximálnou kapacitou
- * @param[in]   length    Dĺžka fronty
+ * @param[out]  sender   Vyhradený rad s požadovanou maximálnou kapacitou
+ * @param[in]   length   Dĺžka radu
  */
 void sender_allocate(Sender *sender, uint16_t length);
 
 /**
- * @brief Uvoľnenie pamäte pre dynamické vyrovnávacie pamäte
+ * @brief Uvoľnenie spoločných vyrovnávacích pamätí
  *  
  * @param[out]  p       Dynamické vyrovnávacie pamäte
  */
 void process_release(BufferPipelineKernel *p);
 
 /**
- * @brief Uvoľnenie pamäte pre dynamické vyrovnávacie pamäte pre jednu os akcelerácie
+ * @brief Uvoľnenie vyrovnávacích pamätí pre jednu os akcelerácie
  *  
  * @param[out]  p       Dynamické vyrovnávacie pamäte
  */
 void axis_release(BufferPipelineAxis *p);
 /**
- * @brief Odstránenie fronty na odosielanie nameraných vzoriek
+ * @brief Odstránenie radu na odosielanie nameraných vzoriek
  *  
  * @param  sender   Fronta s vyhradenou kapacitou
  */
@@ -473,7 +473,6 @@ int process_spectrum(float *spectrum, const float *buffer, const float *window, 
  * 
  * @param       buffer     Posuvné okno vzoriek signálu s dĺžkou `n`, ktoré bude vyhladené
  * @param       tmp        Pomocné pole o dĺžke `n + c.n - 1`
- * @param[in]   window     Váhy oknovej funkcie  s dĺžkou `n`
  * @param[in]   n          Dĺžka posuvného okna
  * @param[in]   kernel     Konvolučná maska vyhladzovania
  * @param[in]   c          Nastavenia vyhladzovanie
@@ -516,7 +515,7 @@ size_t stream_serialize(char *msg, size_t size, const float *stream, size_t n);
  * @param[out]  msg         Serializované štatistiky
  * @param[in]   size        Vyhradená veľkosť pre správu do `msg`
  * @param[in]   stats       Štatistiky signálu
- * @param[in]   n           Nastavenia zberu štatistík. Do serializovanej správy sa zahrnú len aktívne štatistiky.
+ * @param[in]   c           Nastavenia zberu štatistík. Do serializovanej správy sa zahrnú len aktívne štatistiky.
  * 
  * @return Dĺžka serializovanej správy
  */
@@ -578,7 +577,7 @@ bool config_parse(const char *msg, int size, Configuration *conf, bool *error);
  * 
  * @param[out]  msg         Serializované nastavenia pripojenia
  * @param[in]   size        Vyhradená veľkosť pre správu do `msg`
- * @param[in]   config      Nastavenia pripojenia
+ * @param[in]   conf      Nastavenia pripojenia
  * 
  * @return Dĺžka serializovanej správy
  */

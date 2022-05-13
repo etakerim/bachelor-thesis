@@ -93,7 +93,7 @@ $(document).ready(function(){initNavTree('group__stages.html',''); initResizable
 <div class="header">
   <div class="summary">
 <a href="#func-members">Funkcie</a>  </div>
-  <div class="headertitle"><div class="title">Fázy spracovania oknovaného signálu<div class="ingroups"><a class="el" href="group__pipeline.html">Dátová pipeline</a></div></div></div>
+  <div class="headertitle"><div class="title">Fázy spracovania oknovaného signálu<div class="ingroups"><a class="el" href="group__pipeline.html">Spracovanie údajov</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
@@ -441,7 +441,7 @@ Funkcie</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">msg</td><td>Serializované nastavenia pripojenia </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Vyhradená veľkosť pre správu do <code>msg</code> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">config</td><td>Nastavenia pripojenia</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conf</td><td>Nastavenia pripojenia</td></tr>
   </table>
   </dd>
 </dl>
@@ -612,7 +612,6 @@ Funkcie</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir"></td><td class="paramname">buffer</td><td>Posuvné okno vzoriek signálu s dĺžkou <code>n</code>, ktoré bude vyhladené </td></tr>
     <tr><td class="paramdir"></td><td class="paramname">tmp</td><td>Pomocné pole o dĺžke <code>n + c.n - 1</code> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">window</td><td>Váhy oknovej funkcie s dĺžkou <code>n</code> </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>Dĺžka posuvného okna </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">kernel</td><td>Konvolučná maska vyhladzovania </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>Nastavenia vyhladzovanie </td></tr>
@@ -849,7 +848,7 @@ Funkcie</h2></td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">msg</td><td>Serializované štatistiky </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Vyhradená veľkosť pre správu do <code>msg</code> </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">stats</td><td>Štatistiky signálu </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>Nastavenia zberu štatistík. Do serializovanej správy sa zahrnú len aktívne štatistiky.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>Nastavenia zberu štatistík. Do serializovanej správy sa zahrnú len aktívne štatistiky.</td></tr>
   </table>
   </dd>
 </dl>
