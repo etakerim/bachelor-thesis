@@ -1,30 +1,13 @@
 Abstract
 
-An increasing number of connected IoT devices often rely on the aggregation and analytical processing of produced
-data by more powerful nodes, unnecessarily wasting the transmission capacity of the wireless line.
-Created pipeline acts directly at the source of the data by adjusting measured levels of vibrational signal
-obtained during transport from the MEMS three-axis accelerometer. In the time domain, the reduction is 
-achieved by descriptive statistics in the sliding windows. We compare simple peak-finding algorithms that reveal
-significant harmonic components in the frequency domain. We also come up with a streaming algorithm to detect changes 
-in the frequency component. We test the acquired efficiency by firmware implementation on the ESP32 microcontroller 
-allowing remote configuration and message sending in the Message Pack format via the MQTT protocol and WiFi.  
-Manually tuned parameters according to references from synthetically generated spectral profiles, the detector
-is able to identify important frequencies in custom public transport vehicle datasets.
+An increasing number of connected IoT devices often rely on the aggregation and analytical processing of produced data by more powerful nodes, unnecessarily wasting the goodput of the wireless line. Created pipeline acts directly at the source of the data by adjusting measured levels of vibrational signal obtained during transport from the MEMS three-axis accelerometer. In the time domain, the reduction is achieved by descriptive statistics in the sliding windows. We compare simple peak-finding algorithms that reveal significant harmonic components in the frequency domain. We also come up with a streaming algorithm to detect changes in the frequency component. We test the acquired efficiency by firmware implementation on the ESP32 microcontroller. It enables remote configuration and message sending in the Message Pack format via the MQTT protocol and WiFi. The detector is able to identify important frequencies in custom public transport vehicle datasets with manually tuned parameters according to reference from synthetically generated spectral profiles.
 
 Keywords: IoT, vibration monitoring, data processing, edge computing
 
 
 Abstrakt
 
-Narastajúce množstvo pripojených IoT zariadení sa často spolieha na agregáciu a analytické spracovanie produkovaných
-dát výkonnejšími uzlami, čím sa zbytočne plytvá prenosovou kapacitou bezdrôtovej linky. Priamo pri zdroji dát pôsobí 
-zostavená ucelená postupnosť krokov na úpravu nameraných úrovní na signále vibrácií pri preprave z MEMS trojosového akcelerometra.
-V časovej oblasti sa redukcia dosahuje deskriptívnymi štatistikami po posuvných oknách. Porovnávame jednoduché algoritmy 
-na hľadanie špičiek, ktoré vo frekvenčnej doméne odhaľujú významné harmonické zložky. Prichádzame tiež s prúdovým algoritmom
-na detekciu zmien frekvenčnej zložky. Nadobudnutú efektivita je odtestovaná implementáciou firmvéru na mikrokontroléri ESP32 
-umožňujúcom vzdialenú konfiguráciu a posielanie správ vo formáte Message Pack cez protokol MQTT a WiFi. Manuálnym nastavením 
-parametrov podľa referencie od synteticky generovaných spektrálnych profilov je detektor schopný identifikovať dôležité 
-frekvencie na vlastných dátových sadách z vozidiel verejnej dopravy.
+Narastajúce množstvo pripojených IoT zariadení sa často spolieha na agregáciu a analytické spracovanie produkovaných dát výkonnejšími uzlami, čím sa zbytočne plytvá priepustnosťou bezdrôtového spojenia. Priamo pri zdroji dát pôsobí zostavená ucelená postupnosť krokov na úpravu nameraných úrovní signálu z vibrácií pri preprave z MEMS trojosového akcelerometra. V časovej oblasti sa redukcia dosahuje deskriptívnymi štatistikami po posuvných oknách. Porovnávame jednoduché algoritmy na hľadanie špičiek, ktoré vo frekvenčnej doméne odhaľujú významné harmonické zložky. Prichádzame tiež s prúdovým algoritmom na detekciu zmien frekvenčnej zložky. Nadobudnutá efektivita je odtestovaná implementáciou firmvéru na mikrokontroléri ESP32. Umožňuje vzdialenú konfiguráciu a posielanie správ vo formáte Message Pack cez MQTT protokol a WiFi. Manuálnym nastavením  parametrov podľa referencie od synteticky generovaných spektrálnych profilov je detektor schopný identifikovať dôležité frekvencie na vlastných dátových sadách z vozidiel verejnej dopravy.
 
 
 Kľúčové slová: IoT, monitorovanie vibrácií, spracovanie dát, edge computing

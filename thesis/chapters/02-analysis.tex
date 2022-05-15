@@ -641,7 +641,7 @@ Y^{(dB)}_k = 20 \cdot \log_{10}{ \left( \frac{|Y_k|}{\max\limits_{k \in \{0, \do
 \end{align}\end{ceqn}
 
 Sekvencia pozorovaní vyjadrená cez súčet kosínusoid namiesto exponenciálneho faktora tvorí rodinu diskrétnych
-kosínusových transformácií (DCT). Vyznačujú sa dobrou dekoreláciu vstupu a energetickou kompresiou, čiže pomerne veľká
+kosínusových transformácií (DCT). Vyznačujú sa dobrou dekoreláciou vstupu a energetickou kompresiou, čiže pomerne veľká
 časť celkovej spektrálne energie je sústredená v málo koeficientoch \cite{dct-applications}. Navyše oproti DFT umožňuje redukciu
 výpočtovej náročnosti odstránením súčinov v komplexných číslach.
 
@@ -655,7 +655,7 @@ výpočtovej náročnosti odstránením súčinov v komplexných číslach.
 
 Podľa charakteru obmien kosínusovej bázy rozlišujeme štyri typy DCT,  z nich najvýznačnejšie sú transformácie DCT-II, ktorej inverziou je DCT-III, a DCT-IV, ktorá je inverzná
 sama sebe \cite{dct}. Z DCT-IV vychádza MDCT, ktorá navyše spracováva prekrývajúce sa bloky, tak že druhá polovica vzoriek
-pochádza z prvej polovice ďalšieho bloku. Dokopy vytvorí z $2N$ vzoriek $N$ koeficientov. MDCT sa hojne využíva pri stratovej
+pochádza z prvej polovice ďalšieho bloku. Spolu vytvorí z $2N$ vzoriek $N$ koeficientov. MDCT sa hojne využíva pri stratovej
 kompresii zvuku, pretože sa prelínaním blokom vyvaruje artefaktom na hraniciach blokov \cite{mdct}.
 
 \subsection{Algoritmus FFT}
@@ -849,7 +849,7 @@ Zber údajov meraní z prostredia zabezpečujú samočinné senzorové jednotky 
 často za vystavenia nepriaznivým okolitým podmienkam. Hlavnou limitáciou prevádzky senzoriky je spotreba energie,
 pretože doba funkčnosti zariadenia ohraničuje kapacita batérií, ktoré sú obtiažne vymeniteľné pri nasadení
 v nedostupných lokalitách alebo pozíciach. Senzor musí byť ideálne schopný autonómnej konfigurácie
-reakciou na zmenu nastatých okolností a s tým súvisí zotavenie z neočakávaných a chybových stavov \cite{wsn-overview}.
+reakciou na zmenu vzniknutých okolností a s tým súvisí zotavenie z neočakávaných a chybových stavov \cite{wsn-overview}.
 
 Výpočtový výkon býva za cenu zníženia elektrického odberu redukovaný znížením taktovacej frekvencie a snahou o efektívny manažment
 periférií distribúciou hodín alebo použitím úsporných režimov. Menej dostupných cyklov procesora povoľuje realizáciu len
@@ -914,8 +914,8 @@ bezpečnosti sa rozširuje ,,počítanie na okraji'' (edge computing) (obr. \ref
 	\label{fig:edge-computing}
 \end{figure}
 
-Edge computing je viacvrstvová distribuovaná architektúra vyvažujúca zodpovednosti a záťaž medzi
-tri vzájomne sa dopĺňajúce úrovne: Device edge, Local edge a Cloud \cite{edge-computing-survey}. Na okraji sieti
+Edge computing je viacvrstvová distribuovaná architektúra rozdeľujúca zodpovednosť a vyvažujúca záťaž medzi
+troma vzájomne sa dopĺňajúcimi úrovňami: Device edge, Local edge a Cloud \cite{edge-computing-survey}. Na okraji sieti
 v rámci device edge pôsobia samotné IoT zariadenia získavajúce dáta z fyzikálnych veličín prostredia a posielajú ich
 sieťovým edge bránam. Local Edge zahŕňa aktívne sieťové prvky a aplikácie s úlohami, ktoré nie je možné vykonať
 okrajovými zariadeniami. V cloude sa zhromažďujú dáta do dlhodobého úložiska pre komplexnú a celistvú analytiku.

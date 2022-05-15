@@ -101,7 +101,7 @@ medzi spusteniami zachované vo vyhradenej partícií nevolatilnej flash pamäte
 správanie načítané za nedostupnosti konfigurácie z flash úložiska určujú konštanty v programovej pamäti.
 
 Binárny serializačný formát Message Pack zaobaľuje vzorky, udalosti a konfiguráciu posielané na rozličné MQTT témy. Vychádza z
-formátu JSON (JavaScript Object Notation), ale narozdiel od neho sa sústredí na efektívne kódovanie dátových typov. Namiesto prevodu
+formátu JSON (JavaScript Object Notation), ale na rozdiel od neho sa sústredí na efektívne kódovanie dátových typov. Namiesto prevodu
 číselných údajov do znakového kódovania, napr. Unicode, ponecháva ich pôvodnú binárnu reprezentáciu so štandardom špecifikovanými bytovými
 značkami určujúcimi typ údaju. Hodnoty vyjadriteľné menším počtom bajtov reprezentuje dokonca v kratšom tvare než
 podmieňuje ich celkový rozsah. V zoznamoch a slovníkov sa zaobchádza bez oddelovacích znakov, ktoré nahrádza
@@ -115,7 +115,7 @@ informáciou o počte údajov. Dĺžka položky predchádzajúca zloženými atr
 \end{figure}
 
 \section{Etapy spracovania dát}
-Poskladaná etapy spracovania sa sústredia primárne na odhalenie pretrvávajúcich spektrálnych zložiek. Úloha jednotlivých
+Poskladané etapy spracovania sa sústredia primárne na odhalenie pretrvávajúcich spektrálnych zložiek. Úloha jednotlivých
 zakomponovaných blokov spočíva v prevedení pôvodne obdržaných vzoriek podľa globálnych pravidiel definujúcich ich správanie.
 
 Vo všeobecnosti sa v nej nachádzajú bloky filtrácie, transformácie a serializácie signálu. Sústava sa
@@ -158,7 +158,7 @@ požadovaných štatistík z časového priebehu (minimum, maximum, stredná kva
 o zmene významných frekvencií.
 
 Reguláciu toku dát a vlastnosti úpravy v etapách spracovania dát ovplyvňuje globálna systémová konfigurácia. Obvykle sa nahrá
-z nevolatilnej pamäte, ale je umožnené aby pravidlá boli upraviteľné vzdialene správami vo formáte Message Pack (\ref{config-change}).
+z nevolatilnej pamäte, ale je umožnené, aby pravidlá boli upraviteľné vzdialene správami vo formáte Message Pack (\ref{config-change}).
 Zariadenie sa prihlási na odber MQTT témy na zmenu konfigurácie. Postačuje, aby na tému klient odoslal vlastnosti, ktoré mieni
 upraviť. Ak sú parametre syntakticky korektné a spadajú do dovoleného číselného intervalu príde k reštartu zariadenia a ich
 následnému uplatneniu. V opačnom prípade sa na samostatnú MQTT tému odošle chybová hláška.
@@ -214,7 +214,7 @@ označíme logickou jednotkou, na obr. \ref{event-detector} tieňované šedou f
 detekcií klasifikátora špičiek je považovaná za súvislú udalosť.
 
 Parameter $t_{min}$ je najkratšie akceptovateľné trvanie udalosti a predurčuje oneskorenie notifikácie od počiatku objavenia sa zreteľne
-vyčlenenej magnitúdy. Čas $t_{\Delta}$ je najdlhšia medzera medzi špičkami tak aby pretrvávajúca udalosť nebola pri zákmite ukončená alebo
+vyčlenenej magnitúdy. Čas $t_{\Delta}$ je najdlhšia medzera medzi špičkami tak, aby pretrvávajúca udalosť nebola pri zákmite ukončená alebo
 príliš krátka zahodená, ale hluché miesto sa má preklenúť. Tiež vplýva na omeškanie upozornenia na záver udalosti.
 Obe premenné sú celočíselné a uvádzajú sa v počte posuvných okien. Najjednoduchší prípad, kedy je udalosťou
 neprerušovaná postupnosť jedničiek platí pri $t_{min} = 1$ a $t_{\Delta} = 0$.
