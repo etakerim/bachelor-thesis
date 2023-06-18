@@ -1,6 +1,6 @@
 # Bachelor's thesis
 
-*Won dean's award for an excellent bachelor's thesis in year 2022/23*
+*Won dean's award for an excellent bachelor's thesis in year 2021/22*
 
 - **Title (SK)**: Spracovanie dát generovaných senzorovou IoT sieťou
 - **Title (EN)**: Data processing for sensor IoT network
